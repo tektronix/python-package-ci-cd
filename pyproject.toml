@@ -1,0 +1,80 @@
+[tool]
+
+[tool.docformatter]
+close-quotes-on-newline = true
+in-place = true
+recursive = true
+wrap-descriptions = 100
+wrap-summaries = 0
+
+[tool.poetry]
+package-mode = false
+version = "0.0.0"
+
+[tool.poetry.dependencies]
+pip = "^24.0"
+poetry = "^1.8.0"
+poetry-audit-plugin = "^0.4.0"
+poetry-core = "^1.9.0"
+poetry-plugin-export = "^1.7.1"
+poetry-pre-commit-plugin = "^0.1.2"
+pre-commit = "^3.7"
+python = "^3.11"
+requests = "^2.32.3"
+toml-sort = "^0.23.1"
+tomli = "^2.0.1"
+tomli-w = "^1.0.0"
+yamlfix = "^1.16.0"
+
+[tool.ruff]
+line-length = 100
+output-format = "concise"
+src = ["."]
+
+[tool.ruff.lint]
+allowed-confusables = ["¸", "×"]
+fixable = ["ALL"]
+flake8-pytest-style = {mark-parentheses = false}
+flake8-quotes = {docstring-quotes = "double"}
+ignore = [
+]
+pydocstyle = {convention = "google"}
+pylint = {max-args = 7}
+# https://beta.ruff.rs/docs/rules/
+select = [
+  "ALL"
+]
+task-tags = ["FIXME", "FUTURE", "RELIC", "TODO"]
+
+[tool.ruff.lint.isort]
+force-sort-within-sections = false
+known-first-party = []
+lines-between-types = 1
+order-by-type = false
+
+[tool.ruff.lint.per-file-ignores]
+
+[tool.semantic_release]
+version_toml = [
+  "pyproject.toml:tool.poetry.version"
+]
+
+[tool.semantic_release.changelog]
+exclude_commit_patterns = []
+template_dir = "python_semantic_release_templates"
+
+[tool.semantic_release.changelog.environment]
+extensions = []
+
+[tool.semantic_release.commit_parser_options]
+# These settings allow python-semantic-release to be used without triggering on any commits
+allowed_tags = []
+minor_tags = []
+patch_tags = []
+
+[tool.tomlsort]
+all = true
+in_place = true
+spaces_before_inline_comment = 2
+overrides."tool.poetry.*".inline_arrays = false
+overrides."tool.pylint.*".table_keys = false

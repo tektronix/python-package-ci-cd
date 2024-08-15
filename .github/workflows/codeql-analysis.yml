@@ -1,0 +1,27 @@
+---
+name: CodeQL
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: 17 16 * * 4
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [python, javascript]
+    steps:
+      - name: Run CodeQL Analysis
+        uses: tektronix/python-package-ci-cd/actions/codeql-analysis@main
+        with:
+          language: ${{ matrix.language }}
+          codeql-queries: security-extended,security-and-quality
