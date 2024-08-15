@@ -17,9 +17,12 @@ Python Packaging CI/CD.
 
 ## Reusable Workflows
 
-- [`check-api-for-breaking-changes`](./workflows/check-api-for-breaking-changes.md)
+- [`check-api-for-breaking-changes.yml`](./workflows/check-api-for-breaking-changes.md)
     - This workflow will use the [`griffe`](https://mkdocstrings.github.io/griffe/) Python package to check for
         any major or breaking changes in a package's API.
+- [`enforce-community-standards.yml`](./workflows/enforce-community-standards.md)
+    - This workflow will ensure that all necessary files are in place in order to meet the
+        Open Source Community Standards for a repository.
 
 ## Maintainers
 
