@@ -1,10 +1,7 @@
 ---
 name: Enforce Open Source Community Standards
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  workflow_call:
 jobs:
   enforce-community-standards:
     runs-on: ubuntu-latest
