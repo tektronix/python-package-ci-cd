@@ -36,7 +36,7 @@ on:
     branches: [main]
 jobs:
   check-api-for-breaking-changes:
-    uses: 
+    uses:
       tektronix/python-package-ci-cd/workflows/check-api-for-breaking-changes.yml@v0.1.0
     with:
       package-name: my_package_name
