@@ -15,6 +15,8 @@ Python Packaging CI/CD.
 
 ## Actions
 
+---
+
 ### codeql-analysis
 
 This composite Action will checkout the code and then run a CodeQL analysis against the
@@ -56,6 +58,8 @@ jobs:
 
 ## Reusable Workflows
 
+---
+
 ### check-api-for-breaking-changes
 
 This workflow will use the [`griffe`](https://mkdocstrings.github.io/griffe/) package to check for
@@ -86,6 +90,8 @@ jobs:
       package-name: my_package_name  # required
 ```
 
+---
+
 ## Maintainers
 
 Before reaching out to any maintainers directly, please first check if
@@ -99,6 +105,8 @@ the maintainers will review and respond there.
 
 - <opensource@tektronix.com> - For open-source policy and license questions.
 
+---
+
 ## Contributing
 
 Interested in contributing? Check out
@@ -106,6 +114,8 @@ the [contributing guidelines](https://github.com/tektronix/python-package-ci-cd/
 note that this project is released with
 a [Code of Conduct](https://github.com/tektronix/python-package-ci-cd/blob/main/CODE_OF_CONDUCT.md). By
 contributing to this project, you agree to abide by its terms.
+
+---
 
 ## License
 
