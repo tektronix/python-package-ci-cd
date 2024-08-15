@@ -3,7 +3,8 @@
 This composite Action will checkout the code and then run a CodeQL analysis against the
 provided languages in the repository. See the
 [CodeQL docs](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning#changing-the-languages-that-are-analyzed)
-for the complete list of supported languages.
+for the complete list of supported languages. The `security-events` permission must be set to
+`write` in order to allow CodeQL to create security events that show up in the repository's Security tab.
 
 ## Inputs
 
