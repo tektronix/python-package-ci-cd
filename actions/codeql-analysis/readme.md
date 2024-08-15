@@ -31,7 +31,7 @@ jobs:
       security-events: write  # Allow CodeQL to create security events
     steps:
       - name: Run CodeQL Analysis
-        uses: tektronix/python-package-ci-cd/actions/codeql-analysis@v0.1.0
+        uses: tektronix/python-package-ci-cd/actions/codeql-analysis@main  # it is recommended to use the latest release tag instead of `main`
         with:
           language: python  # required
           codeql-queries: security-extended,security-and-quality  # optional

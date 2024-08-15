@@ -23,7 +23,7 @@ on:
 jobs:
   check-api-for-breaking-changes:
     uses:
-      tektronix/python-package-ci-cd/workflows/check-api-for-breaking-changes.yml@v0.1.0
+      tektronix/python-package-ci-cd/workflows/check-api-for-breaking-changes.yml@main  # it is recommended to use the latest release tag instead of `main`
     with:
       package-name: my_package_name  # required
 ```
