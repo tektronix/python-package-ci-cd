@@ -35,6 +35,7 @@ repos:
       - id: check-github-actions
       - id: check-github-workflows
         args: [--verbose]
+        files: ^(\.github/workflows/[^/]+|workflows/[^/]+)$
   - repo: https://github.com/commitizen-tools/commitizen
     rev: d7e01aa9b0cfe3c1b732e66d523bbd0656221127  # frozen: v3.29.0
     hooks:

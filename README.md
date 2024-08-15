@@ -10,9 +10,37 @@
 
 # python-package-ci-cd: GitHub Actions and Re-usable Workflows for Python Packaging CI/CD
 
-`python-package-ci-cd` is a collection of GitHub Actions and re-usable Workflows that enable Python Packaging CI/CD.
+`python-package-ci-cd` is a collection of GitHub Actions and re-usable Workflows that enable
+Python Packaging CI/CD.
 
-## Usage
+## Actions
+
+### Usage
+
+## Reusable Workflows
+
+### check-api-for-breaking-changes
+
+This workflow will use the [`griffe`](https://mkdocstrings.github.io/griffe/) package to check for
+any major or breaking changes in a package's API. It runs on the `ubuntu-latest` runner label.
+It uploads a file called `breaking_changes.md` as a workflow artifact that can be used with the
+`publish-api-comparison.yml` workflow to post a comment on Pull Requests with details of changed APIs.
+
+Usage Example:
+
+```yaml
+# .github/workflows/check-api-for-breaking-changes.yml
+name: Check Public API for Breaking Changes
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  check-api-for-breaking-changes:
+    uses: 
+      tektronix/python-package-ci-cd/workflows/check-api-for-breaking-changes.yml@v0.1.0
+    with:
+      package-name: my_package_name
+```
 
 ## Maintainers
 
