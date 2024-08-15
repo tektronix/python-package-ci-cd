@@ -21,7 +21,7 @@ jobs:
         language: [python, javascript]
     steps:
       - name: Run CodeQL Analysis
-        uses: tektronix/python-package-ci-cd/actions/codeql-analysis@main
+        uses: ./actions/codeql-analysis
         with:
           language: ${{ matrix.language }}
           codeql-queries: security-extended,security-and-quality

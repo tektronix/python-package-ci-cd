@@ -23,6 +23,10 @@ Python Packaging CI/CD.
 - [`enforce-community-standards.yml`](./workflows/enforce-community-standards.md)
     - This workflow will ensure that all necessary files are in place in order to meet the
         Open Source Community Standards for a repository.
+- [`sbom-scan.yml`](./workflows/sbom-scan.md)
+    - This workflow will create a Software Bill of Materials (SBOM) for the repository using the
+        [`anchore/sbom-action`](https://github.com/anchore/sbom-action) Action and then scan the
+        SBOM using the [`anchore/scan-action`](https://github.com/anchore/scan-action) Action.
 
 ## Maintainers
 

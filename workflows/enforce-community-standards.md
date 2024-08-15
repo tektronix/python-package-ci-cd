@@ -32,5 +32,5 @@ on:
     branches: [main]
 jobs:
   enforce-community-standards:
-    uses: tektronix/python-package-ci-cd/.github/workflows/reusable-enforce-community-standards.yml@main  # it is recommended to use the latest release tag instead of `main`
+    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-enforce-community-standards.yml@main  # it is recommended to use the latest release tag instead of `main`
 ```
