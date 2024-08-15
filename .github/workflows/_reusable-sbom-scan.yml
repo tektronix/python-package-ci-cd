@@ -2,14 +2,14 @@
 name: Create & Scan SBOM
 on:
   workflow_call:
+permissions:
+  security-events: write
+  contents: write
+  id-token: write
+  attestations: write
 jobs:
   create-and-scan-sbom:
     runs-on: ubuntu-latest
-    permissions:
-      security-events: write
-      contents: write
-      id-token: write
-      attestations: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
