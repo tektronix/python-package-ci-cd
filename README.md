@@ -8,7 +8,7 @@
 
 ---
 
-# python-package-ci-cd: GitHub Actions and Re-usable Workflows for Python Packaging CI/CD
+# GitHub Actions and Re-usable Workflows for Python Packaging CI/CD
 
 `python-package-ci-cd` is a collection of GitHub Actions and re-usable Workflows that enable
 Python Packaging CI/CD.
@@ -22,14 +22,14 @@ provided languages in the repository. See the
 [CodeQL docs](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning#changing-the-languages-that-are-analyzed)
 for the complete list of supported languages.
 
-- Inputs
-    - required
-        - `language`: The language to analyze.
-    - optional
-        - `codeql-queries`: A comma-separate list of CodeQL query sets to use.
-            Defaults to `security-extended,security-and-quality`.
+#### Inputs
 
-Sample workflow file that uses this action to run CodeQL analysis on Python code:
+| Input variable   | Necessity | Description                                        | Default                                |
+| ---------------- | --------- | -------------------------------------------------- | -------------------------------------- |
+| `language`       | required  | The language to analyze.                           |                                        |
+| `codeql-queries` | optional  | A comma-separate list of CodeQL query sets to use. | security-extended,security-and-quality |
+
+#### Example
 
 ```yaml
 # .github/workflows/codeql-analysis.yml
@@ -64,11 +64,13 @@ any major or breaking changes in a package's API. It requires that the package b
 It uploads a file called `breaking_changes.md` as a workflow artifact that can be used with the
 `publish-api-comparison.yml` workflow to post a comment on Pull Requests with details of changed APIs.
 
-- Inputs
-    - required
-        - `package-name`: The name of the package to check for breaking changes.
+#### Inputs
 
-Usage Example:
+| Input variable | Necessity | Description                                            | Default |
+| -------------- | --------- | ------------------------------------------------------ | ------- |
+| `package-name` | required  | The name of the package to check for breaking changes. |         |
+
+#### Example
 
 ```yaml
 # .github/workflows/check-api-for-breaking-changes.yml
@@ -99,8 +101,10 @@ the maintainers will review and respond there.
 
 ## Contributing
 
-Interested in contributing? Check out the [contributing guidelines](https://github.com/tektronix/python-package-ci-cd/blob/main/CONTRIBUTING.md). Please
-note that this project is released with a [Code of Conduct](https://github.com/tektronix/python-package-ci-cd/blob/main/CODE_OF_CONDUCT.md). By
+Interested in contributing? Check out
+the [contributing guidelines](https://github.com/tektronix/python-package-ci-cd/blob/main/CONTRIBUTING.md). Please
+note that this project is released with
+a [Code of Conduct](https://github.com/tektronix/python-package-ci-cd/blob/main/CODE_OF_CONDUCT.md). By
 contributing to this project, you agree to abide by its terms.
 
 ## License
