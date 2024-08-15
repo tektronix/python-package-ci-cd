@@ -33,6 +33,7 @@ repos:
     hooks:
       - id: check-dependabot
       - id: check-github-actions
+        files: action\.(yml|yaml)
       - id: check-github-workflows
         args: [--verbose]
         files: ^(\.github/workflows/[^/]+|workflows/[^/]+)$

@@ -15,7 +15,44 @@ Python Packaging CI/CD.
 
 ## Actions
 
-### Usage
+### codeql-analysis
+
+This composite Action will checkout the code and then run a CodeQL analysis against the
+provided languages in the repository. See the
+[CodeQL docs](https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning#changing-the-languages-that-are-analyzed)
+for the complete list of supported languages.
+
+- Inputs
+    - required
+        - `language`: The language to analyze.
+    - optional
+        - `codeql-queries`: A comma-separate list of CodeQL query sets to use.
+            Defaults to `security-extended,security-and-quality`.
+
+Sample workflow file that uses this action to run CodeQL analysis on Python code:
+
+```yaml
+# .github/workflows/codeql-analysis.yml
+name: CodeQL
+on:
+  push:
+    branches: [main]
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write  # Allow CodeQL to create security events
+    steps:
+      - name: Run CodeQL Analysis
+        uses: tektronix/python-package-ci-cd/actions/codeql-analysis@v0.1.0
+        with:
+          language: python  # required
+          codeql-queries: security-extended,security-and-quality  # optional
+
+```
 
 ## Reusable Workflows
 
@@ -26,6 +63,10 @@ any major or breaking changes in a package's API. It requires that the package b
 `src` package layout. It runs on the `ubuntu-latest` runner label.
 It uploads a file called `breaking_changes.md` as a workflow artifact that can be used with the
 `publish-api-comparison.yml` workflow to post a comment on Pull Requests with details of changed APIs.
+
+- Inputs
+    - required
+        - `package-name`: The name of the package to check for breaking changes.
 
 Usage Example:
 
