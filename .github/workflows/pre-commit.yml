@@ -1,0 +1,21 @@
+---
+name: Run pre-commit
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  publish-test-results:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: pyproject.toml
+      - name: Install dependencies
+        run: |
+          pip install poetry
+          poetry install
+      - name: Run pre-commit
+        run: poetry run pre-commit run --all-files
