@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main]
 jobs:
-  publish-test-results:
+  pre-commit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
