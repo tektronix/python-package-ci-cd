@@ -3,7 +3,7 @@ name: Publish Test Results
 on:
   workflow_call:
     inputs:
-      operating_systems_array:
+      operating-systems-array:
         description: A valid JSON array of operating system names to publish test
           results for.
         required: true
@@ -19,13 +19,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os_name: ${{ fromJSON(inputs.operating_systems_array) }}
+        os-name: ${{ fromJSON(inputs.operating-systems-array) }}
     steps:
       - name: Download and Extract Artifacts
         uses: dawidd6/action-download-artifact@v6
         with:
           run_id: ${{ github.event.workflow_run.id }}
-          name: artifact_${{ matrix.os_name }}_tests
+          name: artifact_${{ matrix.os-name }}_tests
           path: artifacts
       - name: Fetch PR number
         id: pr
@@ -35,14 +35,14 @@ jobs:
       - name: Publish Test Results
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          header: test-results-${{ matrix.os_name }}
+          header: test-results-${{ matrix.os-name }}
           number: ${{ steps.pr.outputs.number }}
           recreate: true
           path: artifacts/.results_tests/github_report.md
       - name: Add workflow link to comment
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          header: test-results-${{ matrix.os_name }}
+          header: test-results-${{ matrix.os-name }}
           number: ${{ steps.pr.outputs.number }}
           append: true
           message: |-

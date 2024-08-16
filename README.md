@@ -35,6 +35,9 @@ Python Packaging CI/CD.
     - This workflow will create a Software Bill of Materials (SBOM) for the repository using the
         [`anchore/sbom-action`](https://github.com/anchore/sbom-action) Action and then scan the
         SBOM using the [`anchore/scan-action`](https://github.com/anchore/scan-action) Action.
+- [`test-code.yml`](./workflows/test-code.md)
+    - This workflow will run the tests for the code in the repository that are defined by its
+        [`tox`](https://tox.readthedocs.io/en/latest/) configuration.
 
 ## Maintainers
 
