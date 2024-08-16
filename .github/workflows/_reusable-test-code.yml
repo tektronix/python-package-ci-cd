@@ -1,0 +1,124 @@
+---
+name: Test code
+on:
+  workflow_call:
+    inputs:
+      repo-name:
+        description: The full name of the repository to use to gate Codecov uploads,
+          in the format `owner/repo`.
+        required: true
+        type: string
+      python-versions-array:
+        description: A valid JSON array of Python versions to test against.
+        required: true
+        type: string
+      operating-systems-array:
+        description: A valid JSON array of operating system names to run tests on.
+        required: false
+        default: '["ubuntu", "windows", "macos"]'
+        type: string
+      upload-to-codecov:
+        description: A boolean indicating if coverage results should be uploaded to
+          Codecov.
+        required: false
+        default: false
+        type: boolean
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }} (Reusable)
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+jobs:
+  # Basic testing & linting
+  test-general:
+    runs-on: ${{ matrix.os-name }}-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os-name: ${{ fromJSON(inputs.operating-systems-array) }}
+        python-version: ${{ fromJSON(inputs.python-versions-array) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          check-latest: true
+      - name: Install dependencies
+        run: python -m pip install tox tox-gh-actions
+      - name: Run tox
+        run: tox -v
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: artifact_${{ matrix.os-name }}_${{ matrix.python-version }}_tests_and_linting
+          path: |
+            .results_*/**
+            .coverage*
+  # Quick testing with coverage (no linting)
+  test-fast:
+    runs-on: ${{ matrix.os-name }}-latest
+    env:
+      REPO_NAME: ${{ inputs.repo-name }}
+      pytest_report_title: Test Results (${{ matrix.os-name }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os-name: ${{ fromJSON(inputs.operating-systems-array) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: pyproject.toml
+      - name: Install tox
+        run: python -m pip install tox
+      - name: Run tox
+        run: tox -ve tests
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: artifact_${{ matrix.os-name }}_tests
+          path: |
+            .results_*/**
+            .coverage*
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4.5.0
+        if: ${{ github.repository == env.REPO_NAME && !cancelled() }}
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./.coverage_tests.xml
+          name: codecov-${{ matrix.os-name }}
+          fail_ci_if_error: true
+          verbose: true
+  # Update the workflow summary with test results
+  create-job-summary:
+    name: Test Results
+    if: ${{ !cancelled() }}
+    needs: test-fast
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Generate Summary
+        uses: phoenix-actions/test-reporting@v15
+        with:
+          name: Test Results
+          only-summary: false
+          output-to: step-summary
+          path: artifacts/**/.results_tests/results.xml
+          reporter: java-junit
+          fail-on-error: false
+          max-annotations: 0
+  # Check that all jobs passed
+  check-tests-passed:
+    if: ${{ !cancelled() }}
+    needs: [test-general, test-fast, create-job-summary]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Decide whether the needed jobs succeeded or failed
+        uses: re-actors/alls-green@release/v1
+        with:
+          jobs: ${{ toJSON(needs) }}

@@ -4,6 +4,7 @@ default_stages: [pre-commit]
 ci:
   autofix_prs: false
   autoupdate_schedule: quarterly
+  skip: [check-poetry, pyright, poetry-audit]
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: 2c9f875913ee60ca25ce70243dc24d5b6415598c  # frozen: v4.6.0
@@ -47,7 +48,7 @@ repos:
     hooks:
       - id: blacken-docs
         files: \.(rst|md|markdown|tex)$
-        additional_dependencies: [black==24.4.2]  # This may need to be updated/removed in the future once ruff supports formatting python code blocks in markdown
+        additional_dependencies: [black==24.4.2]  # This may need to be updated/removed in the future once ruff supports formatting Python code blocks in markdown
         args: [--line-length=100]
   - repo: https://github.com/lyz-code/yamlfix
     rev: 47039c9bf8039e81f092c9777a1bc8be32fb7870  # frozen: 1.16.0
@@ -74,12 +75,37 @@ repos:
           - mdformat-toc
           - mdformat-web
           - mdformat-wikilink
+# TODO: enable after repo is made public
+#  - repo: https://github.com/tcort/markdown-link-check
+#    rev: 6f18a0fe55028917b06edbbd56554d9f975fd2f4  # frozen: v3.12.2
+#    hooks:
+#      - id: markdown-link-check
+  - repo: https://gitlab.com/smop/pre-commit-hooks
+    rev: df034f88cf92b394e6f00a78fa97a2aa4e270e60  # frozen: v1.0.0
+    hooks:
+      - id: check-poetry
   - repo: https://github.com/pappasam/toml-sort
     rev: b9b6210da457c38122995e434b314f4c4a4a923e  # frozen: v0.23.1
     hooks:
       - id: toml-sort-fix
+  - repo: local
+    hooks:
+      - id: pyright
+        name: pyright
+        entry: pyright
+        language: system
+        types: [python]
+        pass_filenames: false
+      - id: poetry-audit
+        name: poetry-audit
+        entry: poetry
+        language: system
+        types: [toml]
+        pass_filenames: false
+        always_run: true
+        args: [audit, --json, --ignore-code=CVE-2019-8341]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 718fbf5fa5fb8cbe6aeac32a863271695104cd5d  # frozen: v0.6.0
+    rev: 8b5112a3b2ad121439a2092f8ff548c0d80f2514  # frozen: v0.6.1
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]

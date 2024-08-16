@@ -1,0 +1,30 @@
+---
+name: Run pre-commit
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+# Cancel running jobs for the same workflow and branch.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: pyproject.toml
+      - name: Install dependencies
+        run: |
+          pip install poetry
+          poetry install
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml')
+            }}
+      - name: Run pre-commit
+        run: poetry run pre-commit run --all-files

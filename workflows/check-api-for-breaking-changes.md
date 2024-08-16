@@ -2,7 +2,11 @@
 
 This workflow will use the [`griffe`](https://mkdocstrings.github.io/griffe/) package to check for
 any major or breaking changes in a package's API. It requires that the package be using the
-`src` package layout. It runs on the `ubuntu-latest` runner label.
+`src` package layout and the [Poetry package manager](https://python-poetry.org/). It runs on the
+`ubuntu-latest` runner label, uses the
+default version of Python available on the runner, will install the package from the current
+working directory of the calling repository using `pip install --upgrade .`, and will use the latest
+compatible version of [`griffe`](https://pypi.org/project/griffe/) to check for changes.
 It uploads a file called `breaking_changes.md` as a workflow artifact that can be used with the
 `publish-api-comparison.yml` workflow to post a comment on Pull Requests with details of changed APIs.
 

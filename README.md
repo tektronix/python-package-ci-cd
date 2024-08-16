@@ -23,10 +23,29 @@ Python Packaging CI/CD.
 - [`enforce-community-standards.yml`](./workflows/enforce-community-standards.md)
     - This workflow will ensure that all necessary files are in place in order to meet the
         Open Source Community Standards for a repository.
+- [`package-build.yml`](./workflows/package-build.md)
+    - This workflow will build the package using the
+        [`hynek/build-and-inspect-python-package`](https://github.com/hynek/build-and-inspect-python-package)
+        action, and then verify that the package can be installed on each combination of Python version
+        and operating system specified.
+- [`publish-api-comparison.yml`](./workflows/publish-api-comparison.md)
+    - This workflow will use the output from the
+        [`check-api-for-breaking-changes.yml`](./workflows/check-api-for-breaking-changes.md) workflow to create a
+        comment on the Pull Request that introduces the changes with a detailed breakdown of the changes.
+- [`publish-test-results.yml`](./workflows/publish-test-results.md)
+    - This workflow will publish the test results from the `artifact_<operating-system-name>_tests` artifacts
+        uploaded by the [`test-code.yml`](./workflows/test-code.md) workflow by creating a
+        comment on the Pull Request that triggered the test run.
 - [`sbom-scan.yml`](./workflows/sbom-scan.md)
     - This workflow will create a Software Bill of Materials (SBOM) for the repository using the
         [`anchore/sbom-action`](https://github.com/anchore/sbom-action) Action and then scan the
         SBOM using the [`anchore/scan-action`](https://github.com/anchore/scan-action) Action.
+- [`test-code.yml`](./workflows/test-code.md)
+    - This workflow will run the tests for the code in the repository that are defined by its
+        [`tox`](https://tox.wiki/en/stable/) configuration.
+- [`test-docs.yml`](./workflows/test-docs.md)
+    - This workflow will run the documentation tests for the code in the repository that are defined by its
+        [`tox`](https://tox.wiki/en/stable/) configuration.
 
 ## Maintainers
 
