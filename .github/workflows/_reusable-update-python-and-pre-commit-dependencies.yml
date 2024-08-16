@@ -1,0 +1,76 @@
+---
+name: Update python linting dependencies in-sync with pre-commit
+on:
+  workflow_call:
+    inputs:
+      commit-user-name:
+        description: The username to use for the commit.
+        required: true
+        type: string
+      commit-user-email:
+        description: The email to use for the commit.
+        required: true
+        type: string
+      run-pre-commit:
+        description: Whether to run pre-commit to perform auto-fixing (this job will
+          ignore pre-commit errors) after updating the dependencies.
+        required: false
+        default: false
+        type: boolean
+      pre-commit-hook-skip-list:
+        description: A comma-separated list of pre-commit hooks to not run after updating
+          the dependencies during this job.
+        required: false
+        type: string
+    secrets:
+      checkout-token:
+        description: The token to use for checking out the repository, must have permissions
+          to write back to the repository.
+        required: true
+      gpg-signing-key-private:
+        description: The private GPG key to use for signing the commit.
+        required: true
+      gpg-signing-key-passphrase:
+        description: The passphrase for the private GPG key.
+        required: true
+jobs:
+  update-python-and-pre-commit-deps:
+    name: Update python linters and pre-commit dependencies
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' && contains(github.head_ref, '/pip/') }}
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.checkout-token }}
+      - uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.gpg-signing-key-private }}
+          passphrase: ${{ secrets.gpg-signing-key-passphrase }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+      ##############################################################################################
+      - name: Set up Python  # TODO: convert to action
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: pyproject.toml  # this can be any version the action needs
+      - name: Install workflow dependencies  # TODO: convert to action
+        run: pip install -r scripts/requirements.txt
+      - name: Run updater script  # TODO: convert to action
+        run: python scripts/update_development_dependencies.py --no-install
+      - name: Run pre-commit  # TODO: convert to action?
+        if: ${{ inputs.run-pre-commit }}
+        continue-on-error: true
+        env:
+          SKIP: ${{ inputs.pre-commit-hook-skip-list }}
+        run: python -m pre_commit run --all
+      ##############################################################################################
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: Update python linters and pre-commit dependencies.'
+          commit_user_name: ${{ inputs.commit-user-name }}
+          commit_user_email: ${{ inputs.commit-user-email }}
+          commit_author: ${{ inputs.commit-user-name }} <${{ inputs.commit-user-email }}>

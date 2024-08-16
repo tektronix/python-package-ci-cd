@@ -13,18 +13,17 @@ version = "0.0.0"
 
 [tool.poetry.dependencies]
 pip = "^24.0"
-poetry = "^1.8.0"
 poetry-audit-plugin = "^0.4.0"
-poetry-core = "^1.9.0"
-poetry-plugin-export = "^1.7.1"
 poetry-pre-commit-plugin = "^0.1.2"
-pre-commit = "^3.7"
 pyright = "1.1.376"
 python = "~3.12"
-requests = "^2.32.3"
+
+[tool.poetry.group.upd.dependencies]  # dependencies for actions/update-dependencies-in-poetry-and-pre-commit
+poetry = "^1.8.0"
+poetry-plugin-export = "^1.7.1"
+pre-commit = "^3.7"
+pypi-simple = "^1.6.0"
 toml-sort = "^0.23.1"
-tomli = "^2.0.1"
-tomli-w = "^1.0.0"
 yamlfix = "^1.16.0"
 
 [tool.pyright]
@@ -34,7 +33,7 @@ ignore = [
 pythonPlatform = "All"
 reportCallInDefaultInitializer = "error"
 reportImplicitOverride = "error"
-reportImplicitStringConcatenation = "error"
+reportImplicitStringConcatenation = "none"  # this is allowed
 reportImportCycles = "error"
 reportMissingModuleSource = "error"
 reportMissingSuperCall = "error"
@@ -42,7 +41,7 @@ reportPropertyTypeMismatch = "error"
 reportShadowedImports = "error"
 reportUninitializedInstanceVariable = "error"
 reportUnnecessaryTypeIgnoreComment = "error"
-reportUnusedCallResult = "error"
+reportUnusedCallResult = "none"  # this can safely be ignored
 strict = ["**"]
 typeCheckingMode = "strict"
 useLibraryCodeForTypes = true
@@ -58,6 +57,13 @@ fixable = ["ALL"]
 flake8-pytest-style = {mark-parentheses = false}
 flake8-quotes = {docstring-quotes = "double"}
 ignore = [
+  "COM812",  # Trailing comma missing (handled by the formatter)
+  "FIX002",  # Line contains TO DO, consider resolving the issue
+  "INP001",  # File is part of an implicit namespace package. Add an `__init__.py`.
+  "ISC001",  # single-line-implicit-string-concatenation (handled by formatter)
+  "T201",  # `print` found
+  "TD002",  # Missing author in TO DO
+  "TD003"  # TD003 Missing issue link on the line following this TO DO
 ]
 pydocstyle = {convention = "google"}
 pylint = {max-args = 7}
