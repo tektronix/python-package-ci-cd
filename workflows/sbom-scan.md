@@ -2,7 +2,10 @@
 
 This workflow will create a Software Bill of Materials (SBOM) for the repository using the
 [`anchore/sbom-action`](https://github.com/anchore/sbom-action) Action and then scan the SBOM
-using the [`anchore/scan-action`](https://github.com/anchore/scan-action) Action.
+using the [`anchore/scan-action`](https://github.com/anchore/scan-action) Action. It runs on the `ubuntu-latest` runner label,
+uses the default version of Python available on the runner, and will use the latest compatible
+version of [`poetry`](https://pypi.org/project/poetry/) to generate the lock file for the calling
+repository's Python package.
 
 In order to use this workflow, the Python package must be using the
 [Poetry package manager](https://python-poetry.org/). When calling the reusable workflow, the
