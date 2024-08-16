@@ -37,7 +37,10 @@ Python Packaging CI/CD.
         SBOM using the [`anchore/scan-action`](https://github.com/anchore/scan-action) Action.
 - [`test-code.yml`](./workflows/test-code.md)
     - This workflow will run the tests for the code in the repository that are defined by its
-        [`tox`](https://tox.readthedocs.io/en/latest/) configuration.
+        [`tox`](https://tox.wiki/en/stable/) configuration.
+- [`test-docs.yml`](./workflows/test-docs.md)
+    - This workflow will run the documentation tests for the code in the repository that are defined by its
+        [`tox`](https://tox.wiki/en/stable/) configuration.
 
 ## Maintainers
 

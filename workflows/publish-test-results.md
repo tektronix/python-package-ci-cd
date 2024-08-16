@@ -23,7 +23,7 @@ Workflow named `Test code`.
 
 | Input variable            | Necessity | Description                                                               | Default                            |
 | ------------------------- | --------- | ------------------------------------------------------------------------- | ---------------------------------- |
-| `operating-systems-array` | required  | A valid JSON array of operating system names to publish test results for. | `'["ubuntu", "windows", "macos"]'` |
+| `operating-systems-array` | optional  | A valid JSON array of operating system names to publish test results for. | `'["ubuntu", "windows", "macos"]'` |
 
 ## Example
 

@@ -6,7 +6,7 @@ on:
       operating-systems-array:
         description: A valid JSON array of operating system names to publish test
           results for.
-        required: true
+        required: false
         default: '["ubuntu", "windows", "macos"]'
         type: string
 permissions:

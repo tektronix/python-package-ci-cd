@@ -1,7 +1,8 @@
 # test-code.yml
 
 This workflow will run the tests for the code in the repository that are defined by its
-[`tox`](https://tox.readthedocs.io/en/latest/) configuration. The test results and coverage data
+[`tox`](https://tox.wiki/en/stable/) configuration. The test results
+(anything matching the `.results*/**` glob) and coverage data (matching the `.coverage*` glob)
 will be uploaded as artifacts and code coverage results can optionally be uploaded to the Codecov application.
 
 This workflow runs two categories of tox environments: a general category and a fast category. The
@@ -87,8 +88,8 @@ commands_pre =
 | Input variable            | Necessity | Description                                                                                 | Default                            |
 | ------------------------- | --------- | ------------------------------------------------------------------------------------------- | ---------------------------------- |
 | `repo-name`               | required  | The full name of the repository to use to gate Codecov uploads, in the format `owner/repo`. |                                    |
-| `operating-systems-array` | required  | A valid JSON array of operating system names to run tests on.                               | `'["ubuntu", "windows", "macos"]'` |
 | `python-versions-array`   | required  | A valid JSON array of Python versions to test against.                                      |                                    |
+| `operating-systems-array` | optional  | A valid JSON array of operating system names to run tests on.                               | `'["ubuntu", "windows", "macos"]'` |
 | `upload-codecov`          | optional  | A boolean indicating if coverage results should be uploaded to Codecov.                     | `false`                            |
 
 ## Example

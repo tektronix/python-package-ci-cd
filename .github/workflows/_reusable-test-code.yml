@@ -8,14 +8,14 @@ on:
           in the format `owner/repo`.
         required: true
         type: string
-      operating-systems-array:
-        description: A valid JSON array of operating system names to run tests on.
-        required: true
-        default: '["ubuntu", "windows", "macos"]'
-        type: string
       python-versions-array:
         description: A valid JSON array of Python versions to test against.
         required: true
+        type: string
+      operating-systems-array:
+        description: A valid JSON array of operating system names to run tests on.
+        required: false
+        default: '["ubuntu", "windows", "macos"]'
         type: string
       upload-to-codecov:
         description: A boolean indicating if coverage results should be uploaded to
@@ -23,7 +23,6 @@ on:
         required: false
         default: false
         type: boolean
-# Cancel running jobs for the same workflow and branch.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }} (Reusable)
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
