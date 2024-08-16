@@ -5,6 +5,10 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+# Cancel running jobs for the same workflow and branch.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
