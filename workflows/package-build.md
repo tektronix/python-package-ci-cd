@@ -29,10 +29,10 @@ and operating system specified.
 name: Package Build
 on:
   push:
-    branches: [ main ]
-    tags: [ '*' ]
+    branches: [main]
+    tags: ['*']
   pull_request:
-    branches: [ main ]
+    branches: [main]
 # Cancel running jobs for the same workflow and branch.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

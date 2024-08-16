@@ -15,8 +15,9 @@ to create a markdown file that can be uploaded as an artifact and then used by t
 [`publish-test-results.yml`](./publish-test-results.md) workflow to add comments to Pull Requests
 that contain the test results.
 
-In order for the Codecov upload to work, a `CODECOV_TOKEN` secret must be available to the
-calling workflow, and secrets must be set to `inherit`.
+> [!IMPORTANT]
+> In order for the Codecov upload to work, a `CODECOV_TOKEN` secret must be available to the
+> calling workflow, and secrets must be set to `inherit`.
 
 See this sample tox configuration for an example of how to set up the tox environments so that
 this workflow can be used. This example makes use of the following Python packages:

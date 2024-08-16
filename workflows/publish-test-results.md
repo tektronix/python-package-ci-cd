@@ -9,10 +9,18 @@ to the reduced permissions of workflows that are run against Pull Requests from 
 workflow must be a separate workflow so that it has the elevated permissions necessary to
 create a comment on the Pull Request.
 
-In order to use this workflow, the following permissions must be set to
-`write`: `checks` and `pull-requests`. The workflow calling this reusable workflow must be set to
+The workflow calling this reusable workflow must be set to
 trigger on a `completed` `workflow_run` event of the workflow that tests the code, usually a
-Workflow named `Test code`.
+Workflow named `Test code`, see the [example](#example) below for the correct yaml syntax.
+
+> [!IMPORTANT]
+> When calling this reusable workflow, the permissions must be set as follows:
+>
+> ```yaml
+> permissions:
+>   checks: write
+>   pull-requests: write
+> ```
 
 ## Inputs
 
@@ -31,8 +39,8 @@ Workflow named `Test code`.
 name: Publish Test Results
 on:
   workflow_run:
-    workflows: [ Test code ]
-    types: [ completed ]
+    workflows: [Test code]
+    types: [completed]
 jobs:
   publish-test-results:
     uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-publish-test-results.yml@main  # it is recommended to use the latest release tag instead of `main`
