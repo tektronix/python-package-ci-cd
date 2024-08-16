@@ -19,12 +19,32 @@ poetry-core = "^1.9.0"
 poetry-plugin-export = "^1.7.1"
 poetry-pre-commit-plugin = "^0.1.2"
 pre-commit = "^3.7"
-python = "^3.11"
+python = "~3.12"
 requests = "^2.32.3"
 toml-sort = "^0.23.1"
 tomli = "^2.0.1"
 tomli-w = "^1.0.0"
 yamlfix = "^1.16.0"
+
+[tool.pyright]
+ignore = [
+  "temp_*.py"
+]
+pythonPlatform = "All"
+reportCallInDefaultInitializer = "error"
+reportImplicitOverride = "error"
+reportImplicitStringConcatenation = "error"
+reportImportCycles = "error"
+reportMissingModuleSource = "error"
+reportMissingSuperCall = "error"
+reportPropertyTypeMismatch = "error"
+reportShadowedImports = "error"
+reportUninitializedInstanceVariable = "error"
+reportUnnecessaryTypeIgnoreComment = "error"
+reportUnusedCallResult = "error"
+strict = ["**"]
+typeCheckingMode = "strict"
+useLibraryCodeForTypes = true
 
 [tool.ruff]
 line-length = 100
@@ -77,4 +97,3 @@ all = true
 in_place = true
 spaces_before_inline_comment = 2
 overrides."tool.poetry.*".inline_arrays = false
-overrides."tool.pylint.*".table_keys = false
