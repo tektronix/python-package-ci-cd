@@ -27,6 +27,10 @@ Python Packaging CI/CD.
     - This workflow will use the output from the
         [`check-api-for-breaking-changes.yml`](./workflows/check-api-for-breaking-changes.md) workflow to create a
         comment on the Pull Request that introduces the changes with a detailed breakdown of the changes.
+- [`publish-test-results.yml`](./workflows/publish-test-results.md)
+    - This workflow will publish the test results from the `artifact_<operating-system-name>_tests` artifacts
+        uploaded by the [`test-code.yml`](./workflows/test-code.md) workflow by creating a
+        comment on the Pull Request that triggered the test run.
 - [`sbom-scan.yml`](./workflows/sbom-scan.md)
     - This workflow will create a Software Bill of Materials (SBOM) for the repository using the
         [`anchore/sbom-action`](https://github.com/anchore/sbom-action) Action and then scan the

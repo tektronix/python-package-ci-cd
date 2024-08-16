@@ -11,7 +11,8 @@ create a comment on the Pull Request.
 
 In order to use this workflow, the following permissions must be set to
 `write`: `checks` and `pull-requests`. The workflow calling this reusable workflow must be set to
-trigger on a `completed` `workflow_run` event of the workflow that checks for API breaking changes.
+trigger on a `completed` `workflow_run` event of the workflow that checks for API breaking
+changes, usually a Workflow named `Check Public API for Breaking Changes`.
 
 ## Example
 

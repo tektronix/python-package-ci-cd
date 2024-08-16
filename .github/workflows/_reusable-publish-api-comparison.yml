@@ -25,44 +25,15 @@ jobs:
           fi
       - name: Fetch PR number
         id: pr
-        uses: actions/github-script@v7
+        uses: 8BitJonny/gh-get-current-pr@3.0.0
         with:
-          script: |
-            const maxAttempts = 5;
-            let attempt = 0;
-            let pullRequestNumber;
-            while (attempt < maxAttempts) {
-              try {
-                const response = await github.rest.search.issuesAndPullRequests({
-                  q: 'repo:${{ github.repository }} is:pr sha:${{ github.event.workflow_run.head_sha }}',
-                  per_page: 1,
-                });
-                const items = response.data.items;
-                if (items.length < 1) {
-                  throw new Error('No PRs found');
-                }
-                pullRequestNumber = items[0].number;
-                console.info("Pull request number is", pullRequestNumber);
-                break; // Exit loop on success
-              } catch (error) {
-                console.error(`Attempt ${attempt + 1} failed:`, error.message);
-                if (attempt < maxAttempts - 1) { // Check if not last attempt
-                  console.log(`Waiting for 2 minutes before retrying...`);
-                  await new Promise(resolve => setTimeout(resolve, 120000)); // Wait for 2 minutes
-                }
-              }
-              attempt++;
-            }
-            if (!pullRequestNumber) {
-              core.setFailed("Failed to fetch PR number after 5 attempts");
-            }
-            return pullRequestNumber;
+          sha: ${{ github.event.workflow_run.head_sha }}
       - name: Publish API Breaking Changes Check Results
         uses: marocchino/sticky-pull-request-comment@v2
         if: ${{ env.BREAKING_CHANGES == 'true' }}
         with:
           header: breaking-api-changes
-          number: ${{ steps.pr.outputs.result }}
+          number: ${{ steps.pr.outputs.number }}
           recreate: true
           path: artifacts/breaking_changes.md
       - name: Add workflow link to comment
@@ -70,7 +41,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: breaking-api-changes
-          number: ${{ steps.pr.outputs.result }}
+          number: ${{ steps.pr.outputs.number }}
           append: true
           message: |-
             <p><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}">Link to workflow run</a></p>
@@ -79,5 +50,5 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: breaking-api-changes
-          number: ${{ steps.pr.outputs.result }}
+          number: ${{ steps.pr.outputs.number }}
           delete: true
