@@ -23,6 +23,11 @@ Python Packaging CI/CD.
 - [`enforce-community-standards.yml`](./workflows/enforce-community-standards.md)
     - This workflow will ensure that all necessary files are in place in order to meet the
         Open Source Community Standards for a repository.
+- [`package-build.yml`](./workflows/package-build.md)
+    - This workflow will build the package using the
+        [`hynek/build-and-inspect-python-package`](https://github.com/hynek/build-and-inspect-python-package)
+        action, and then verify that the package can be installed on each combination of Python version
+        and operating system specified.
 - [`publish-api-comparison.yml`](./workflows/publish-api-comparison.md)
     - This workflow will use the output from the
         [`check-api-for-breaking-changes.yml`](./workflows/check-api-for-breaking-changes.md) workflow to create a
