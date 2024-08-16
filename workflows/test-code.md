@@ -15,10 +15,6 @@ to create a markdown file that can be uploaded as an artifact and then used by t
 [`publish-test-results.yml`](./publish-test-results.md) workflow to add comments to Pull Requests
 that contain the test results.
 
-> [!IMPORTANT]
-> In order for the Codecov upload to work, a `CODECOV_TOKEN` secret must be available to the
-> calling workflow, and secrets must be set to `inherit`.
-
 See this sample tox configuration for an example of how to set up the tox environments so that
 this workflow can be used. This example makes use of the following Python packages:
 
@@ -91,7 +87,13 @@ commands_pre =
 | `repo-name`               | required  | The full name of the repository to use to gate Codecov uploads, in the format `owner/repo`. |                                    |
 | `python-versions-array`   | required  | A valid JSON array of Python versions to test against.                                      |                                    |
 | `operating-systems-array` | optional  | A valid JSON array of operating system names to run tests on.                               | `'["ubuntu", "windows", "macos"]'` |
-| `upload-codecov`          | optional  | A boolean indicating if coverage results should be uploaded to Codecov.                     | `false`                            |
+| `upload-to-codecov`       | optional  | A boolean indicating if coverage results should be uploaded to Codecov.                     | `false`                            |
+
+## Secrets
+
+| Secret variable | Necessity | Description                                                                                                                         |
+| --------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `codecov-token` | optional  | The token to use to upload coverage results to Codecov. Only required when the `upload-to-codecov` input variable is set to `true`. |
 
 ## Example
 
@@ -113,6 +115,7 @@ jobs:
       repo-name: owner/repo  # required
       operating-systems-array: '["ubuntu", "windows", "macos"]'  # required
       python-versions-array: '["3.9", "3.10", "3.11", "3.12"]'  # required
-      upload-codecov: true  # optional
-    secrets: inherit
+      upload-to-codecov: true  # optional
+    secrets:
+      codecov-token: ${{ secrets.CODECOV_TOKEN }}  # optional
 ```

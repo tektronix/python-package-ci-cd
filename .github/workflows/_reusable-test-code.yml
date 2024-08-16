@@ -23,6 +23,11 @@ on:
         required: false
         default: false
         type: boolean
+    secrets:
+      codecov-token:
+        description: The token to use to upload coverage results to Codecov. Only
+          required when the `upload-codecov` input variable is set to `true`.
+        required: false
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }} (Reusable)
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
@@ -84,9 +89,9 @@ jobs:
             .coverage*
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4.5.0
-        if: ${{ github.repository == env.REPO_NAME && !cancelled() }}
+        if: ${{ inputs.upload-to-codecov && github.repository == env.REPO_NAME && !cancelled() }}
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          token: ${{ secrets.codecov-token }}
           files: ./.coverage_tests.xml
           name: codecov-${{ matrix.os-name }}
           fail_ci_if_error: true
