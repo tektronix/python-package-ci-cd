@@ -211,15 +211,11 @@ def _update_pre_commit_dependencies(
         repository_root_directory: The root directory of the repository.
     """
     _run_cmd_in_subprocess(
-        f'git config --global --add safe.directory "{repository_root_directory.resolve().as_posix()}"'
+        f"git config --global --add safe.directory "
+        f'"{repository_root_directory.resolve().as_posix()}"'
     )
     # Update pre-commit config file
-    try:
-        _run_cmd_in_subprocess(f'"{python_executable}" -m pre_commit autoupdate --freeze')
-    except:
-        with open("/github/home/.cache/pre-commit/pre-commit.log") as f:
-            print(f.read())
-        raise
+    _run_cmd_in_subprocess(f'"{python_executable}" -m pre_commit autoupdate --freeze')
 
     # Fix the formatting of the pre-commit config file
     with warnings.catch_warnings():
@@ -249,6 +245,8 @@ def _export_requirements_files(python_executable: str, dependency_groups: list[s
         with file_path.open("w") as file:
             file.writelines(lines)
 
+    _run_cmd_in_subprocess(f'"{python_executable}" -m poetry config warnings.export false')
+
     for group_output_pair in dependency_groups:
         if ":" in group_output_pair:
             group, output_folder = group_output_pair.split(":", maxsplit=1)
@@ -268,9 +266,9 @@ def main() -> None:
 
     args = _parse_arguments()
 
-    print(f"\nUpdating development dependencies in {args.repo_root}")
-    repo_root = Path(args.repo_root)
-    os.chdir(repo_root)
+    repo_root_path = Path(args.repo_root).resolve()
+    os.chdir(repo_root_path)
+    print(f"\nUpdating development dependencies in {Path.cwd()}")
 
     _update_poetry_dependencies(
         python_executable,
@@ -279,7 +277,7 @@ def main() -> None:
         lock_only=not args.install_dependencies,
     )
     if args.update_pre_commit or args.run_pre_commit:
-        _update_pre_commit_dependencies(python_executable, args.repo_root)
+        _update_pre_commit_dependencies(python_executable, repo_root_path)
     if args.dependency_groups:
         _export_requirements_files(python_executable, args.dependency_groups)
     if args.run_pre_commit:

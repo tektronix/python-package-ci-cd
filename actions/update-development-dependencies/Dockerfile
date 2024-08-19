@@ -13,4 +13,4 @@ RUN echo 'APT::Install-Recommends "0";' > /etc/apt/apt.conf.d/00-docker && \
 RUN python -m pip install --no-cache-dir --requirement /requirements.txt
 
 # Run the updater script as the entrypoint
-CMD ["python", "/update_development_dependencies.py"]
+CMD ["python", "-u", "/update_development_dependencies.py"]
