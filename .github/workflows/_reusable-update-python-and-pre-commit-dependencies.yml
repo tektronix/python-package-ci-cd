@@ -11,15 +11,21 @@ on:
         description: The email to use for the commit.
         required: true
         type: string
+      update-pre-commit:
+        description: Whether to update the pre-commit dependencies.
+        required: false
+        default: false
+        type: boolean
       run-pre-commit:
-        description: Whether to run pre-commit to perform auto-fixing (this job will
-          ignore pre-commit errors) after updating the dependencies.
+        description: Whether to run pre-commit to perform auto-fixing after updating
+          the dependencies. Setting this to `true` will also set the `update-pre-commit`
+          input to `true`.
         required: false
         default: false
         type: boolean
       pre-commit-hook-skip-list:
-        description: A comma-separated list of pre-commit hooks to not run after updating
-          the dependencies during this job.
+        description: A comma-separated list of pre-commit hooks to skip running. Only
+          applicable when `run-pre-commit=true`.
         required: false
         type: string
     secrets:

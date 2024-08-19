@@ -11,7 +11,9 @@ accessible on the commandline. If you want to use this script to update pre-comm
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
+import os
 import shlex
 import subprocess
 import sys
@@ -56,10 +58,21 @@ def _parse_arguments() -> argparse.Namespace:
         default={},
     )
     parser.add_argument(
-        "--no-pre-commit",
-        dest="no_pre_commit",
+        "--update-pre-commit",
+        dest="update_pre_commit",
         action="store_true",
-        help="Skip updating pre-commit hooks.",
+        help="Update the pre-commit hooks.",
+    )
+    parser.add_argument(
+        "--run-pre-commit", dest="run_pre_commit", action="store_true", help="Run pre-commit hooks."
+    )
+    parser.add_argument(
+        "--pre-commit-hook-skip-list",
+        dest="pre_commit_hook_skip_list",
+        help=(
+            "Specify a list of pre-commit hooks to skip "
+            "(only applicable when using the --run-pre-commit flag)."
+        ),
     )
     parser.add_argument(
         "--export-dependency-group",
@@ -241,10 +254,16 @@ def main() -> None:
     _update_poetry_dependencies(
         python_executable, args.repo_root, args.dependency_dict, lock_only=args.no_install
     )
-    if not args.no_pre_commit:
+    if args.update_pre_commit:
         _update_pre_commit_dependencies(python_executable, args.repo_root)
     if args.dependency_groups:
         _export_requirements_files(python_executable, args.dependency_groups)
+    if args.run_pre_commit:
+        # Run the pre-commit hooks, ignore any errors since they are
+        # just being run to auto-fix files.
+        with contextlib.suppress(subprocess.CalledProcessError):
+            os.environ["SKIP"] = args.pre_commit_hook_skip_list
+            _run_cmd_in_subprocess(f'"{python_executable}" -m pre_commit run --all-files')
 
 
 if __name__ == "__main__":
