@@ -18,7 +18,7 @@ poetry-pre-commit-plugin = "^0.1.2"
 pyright = "1.1.376"
 python = "~3.12"
 
-[tool.poetry.group.upd.dependencies]  # dependencies for actions/update-dependencies-in-poetry-and-pre-commit
+[tool.poetry.group.udd.dependencies]  # dependencies for actions/update-development-dependencies
 maison = "^1.4.3"  # yamlfix is broken with v2.0+
 poetry = "^1.8.0"
 poetry-plugin-export = "^1.7.1"
