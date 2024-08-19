@@ -44,6 +44,7 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
           token: ${{ secrets.checkout-token }}
+
       - uses: tektronix/python-package-ci-cd/actions/update-development-dependencies@main  # it is recommended to use the latest release tag instead of `main`
         with:
           repo-root: .  # optional, defaults to the current working directory
@@ -53,6 +54,7 @@ jobs:
           run-pre-commit: true  # optional
           pre-commit-hook-skip-list: 'pylint'  # optional, hooks that don't auto-fix things can (and probably should be) skipped
           export-dependency-groups: 'docs,tests:custom-path/to/test/folder'  # optional
+
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'chore: Update python dependencies and pre-commit dependencies.'

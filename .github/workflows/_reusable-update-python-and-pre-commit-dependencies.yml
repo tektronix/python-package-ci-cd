@@ -4,11 +4,11 @@ on:
   workflow_call:
     inputs:
       commit-user-name:
-        description: The username to use for the commit.
+        description: The name of the user to use when committing changes to the repository.
         required: true
         type: string
       commit-user-email:
-        description: The email to use for the commit.
+        description: The email of the user to use when committing changes to the repository.
         required: true
         type: string
     dependency-dict:
