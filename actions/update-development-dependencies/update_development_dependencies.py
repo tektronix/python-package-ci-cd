@@ -211,10 +211,15 @@ def _update_pre_commit_dependencies(
         repository_root_directory: The root directory of the repository.
     """
     _run_cmd_in_subprocess(
-        f'git config --global --add safe.directory "{repository_root_directory}"'
+        f'git config --global --add safe.directory "{repository_root_directory.as_posix()}"'
     )
     # Update pre-commit config file
-    _run_cmd_in_subprocess(f'"{python_executable}" -m pre_commit autoupdate --freeze')
+    try:
+        _run_cmd_in_subprocess(f'"{python_executable}" -m pre_commit autoupdate --freeze')
+    except:
+        with open("/github/home/.cache/pre-commit/pre-commit.log") as f:
+            print(f.read())
+        raise
 
     # Fix the formatting of the pre-commit config file
     with warnings.catch_warnings():
@@ -264,7 +269,8 @@ def main() -> None:
     args = _parse_arguments()
 
     print(f"\nUpdating development dependencies in {args.repo_root}")
-    os.chdir(args.repo_root)
+    repo_root = Path(args.repo_root)
+    os.chdir(repo_root)
 
     _update_poetry_dependencies(
         python_executable,
