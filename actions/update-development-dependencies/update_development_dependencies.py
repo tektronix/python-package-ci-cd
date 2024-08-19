@@ -283,6 +283,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    print("\n__main__\n")
     # Handle GitHub Actions environment variables
     # See https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables
     if os.getenv("GITHUB_ACTION"):
@@ -313,4 +314,5 @@ if __name__ == "__main__":
         sys.argv.extend(script_args)
 
     # Run the main function
+    print("\nmain()\n")
     main()
