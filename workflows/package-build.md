@@ -15,6 +15,9 @@ and operating system specified.
 >   attestations: write
 > ```
 
+> [!NOTE]
+> See the [Workflow file](../.github/workflows/_reusable-package-build.yml) for implementation details.
+
 ## Inputs
 
 | Input variable            | Necessity | Description                                                                               | Default                            |

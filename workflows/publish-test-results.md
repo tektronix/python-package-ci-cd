@@ -22,6 +22,9 @@ Workflow named `Test code`, see the [example](#example) below for the correct ya
 >   pull-requests: write
 > ```
 
+> [!NOTE]
+> See the [Workflow file](../.github/workflows/_reusable-publish-test-results.yml) for implementation details.
+
 ## Inputs
 
 > [!IMPORTANT]

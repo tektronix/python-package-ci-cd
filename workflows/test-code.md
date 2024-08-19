@@ -80,6 +80,9 @@ commands_pre =
 """
 ```
 
+> [!NOTE]
+> See the [Workflow file](../.github/workflows/_reusable-test-code.yml) for implementation details.
+
 ## Inputs
 
 | Input variable            | Necessity | Description                                                                                 | Default                            |

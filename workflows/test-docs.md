@@ -45,6 +45,9 @@ commands =
 """
 ```
 
+> [!NOTE]
+> See the [Workflow file](../.github/workflows/_reusable-test-docs.yml) for implementation details.
+
 ## Inputs
 
 | Input variable   | Necessity | Description                                    | Default                  |
