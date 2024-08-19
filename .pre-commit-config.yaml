@@ -54,6 +54,7 @@ repos:
     rev: 47039c9bf8039e81f092c9777a1bc8be32fb7870  # frozen: 1.16.0
     hooks:
       - id: yamlfix
+        additional_dependencies: [maison<2.0.0]
   - repo: https://github.com/executablebooks/mdformat
     rev: 08fba30538869a440b5059de90af03e3502e35fb  # frozen: 0.7.17
     hooks:
