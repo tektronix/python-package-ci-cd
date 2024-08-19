@@ -11,6 +11,11 @@ Python Packaging CI/CD.
 
 ## Actions
 
+- [`update-development-dependencies`](./actions/update-development-dependencies.md)
+    - This action enables updating Python development dependencies using the
+        [`Poetry`](https://python-poetry.org/) package manager in-sync with
+        [`pre-commit`](https://pre-commit.com/) hooks.
+
 ## Reusable Workflows
 
 - [`check-api-for-breaking-changes.yml`](./workflows/check-api-for-breaking-changes.md)
@@ -45,6 +50,12 @@ Python Packaging CI/CD.
 - [`test-docs.yml`](./workflows/test-docs.md)
     - This workflow will run the documentation tests for the code in the repository that are defined by its
         [`tox`](https://tox.wiki/en/stable/) configuration.
+- [`update-python-and-pre-commit-dependencies.yml`](./workflows/update-python-and-pre-commit-dependencies.md)
+    - This workflow updates Python development dependencies using the
+        [`Poetry`](https://python-poetry.org/) package manager in-sync with
+        [`pre-commit`](https://pre-commit.com/) hooks when triggered as a part of
+        [`Dependabot`](https://docs.github.com/en/code-security/getting-started/dependabot-quickstart-guide)
+        updates for the Python dependencies.
 
 ## Maintainers
 

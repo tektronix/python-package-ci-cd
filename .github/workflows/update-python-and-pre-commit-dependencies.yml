@@ -8,7 +8,7 @@ jobs:
     # TODO: switch to using the Reusable Workflow
     name: Update python linters and pre-commit dependencies
     runs-on: ubuntu-latest
-#    if: ${{ github.actor == 'dependabot[bot]' && contains(github.head_ref, '/pip/') }}
+    if: ${{ github.actor == 'dependabot[bot]' && contains(github.head_ref, '/pip/') }}
     permissions:
       contents: write
     steps:
