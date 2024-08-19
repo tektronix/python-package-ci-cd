@@ -11,15 +11,19 @@ Python Packaging CI/CD.
 
 ## Actions
 
-- [`codeql-analysis`](./actions/codeql-analysis/readme.md)
-    - This composite Action will checkout the code and then run a CodeQL analysis against the
-        provided languages in the repository.
+- [`update-development-dependencies`](./actions/update-development-dependencies.md)
+    - This action enables updating Python development dependencies using the
+        [`Poetry`](https://python-poetry.org/) package manager in-sync with
+        [`pre-commit`](https://pre-commit.com/) hooks.
 
 ## Reusable Workflows
 
 - [`check-api-for-breaking-changes.yml`](./workflows/check-api-for-breaking-changes.md)
     - This workflow will use the [`griffe`](https://mkdocstrings.github.io/griffe/) Python package to check for
         any major or breaking changes in a package's API.
+- [`codeql-analysis.yml`](./workflows/codeql-analysis.md)
+    - This workflow will checkout the code and then run a CodeQL analysis against the
+        specified languages.
 - [`enforce-community-standards.yml`](./workflows/enforce-community-standards.md)
     - This workflow will ensure that all necessary files are in place in order to meet the
         Open Source Community Standards for a repository.
@@ -46,6 +50,12 @@ Python Packaging CI/CD.
 - [`test-docs.yml`](./workflows/test-docs.md)
     - This workflow will run the documentation tests for the code in the repository that are defined by its
         [`tox`](https://tox.wiki/en/stable/) configuration.
+- [`update-python-and-pre-commit-dependencies.yml`](./workflows/update-python-and-pre-commit-dependencies.md)
+    - This workflow updates Python development dependencies using the
+        [`Poetry`](https://python-poetry.org/) package manager in-sync with
+        [`pre-commit`](https://pre-commit.com/) hooks when triggered as a part of
+        [`Dependabot`](https://docs.github.com/en/code-security/getting-started/dependabot-quickstart-guide)
+        updates for the Python dependencies.
 
 ## Maintainers
 

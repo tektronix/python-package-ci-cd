@@ -15,6 +15,15 @@ and operating system specified.
 >   attestations: write
 > ```
 
+> [!NOTE]
+> This workflow uses concurrency to limit the number of builds that can run at the same time
+> to a single build. For builds on the `main` branch, the workflow will simply create a queue.
+> For builds on other branches (or builds triggered by Pull Requests), the workflow will cancel
+> any currently running builds for the same branch (or Pull Request).
+
+> [!TIP]
+> See the [Workflow file](../.github/workflows/_reusable-package-build.yml) for implementation details.
+
 ## Inputs
 
 | Input variable            | Necessity | Description                                                                               | Default                            |

@@ -1,0 +1,37 @@
+---
+name: Update python linting dependencies in-sync with pre-commit
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  update-python-and-pre-commit-deps:
+    # TODO: switch to using the Reusable Workflow
+    name: Update python linters and pre-commit dependencies
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' && contains(github.head_ref, '/pip/') }}
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.TEK_OPENSOURCE_TOKEN }}
+      - uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.TEK_OPENSOURCE_GPG_SIGNING_KEY_PRIVATE }}
+          passphrase: ${{ secrets.TEK_OPENSOURCE_GPG_SIGNING_KEY_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+      - uses: ./actions/update-development-dependencies
+        with:
+          update-pre-commit: true
+          run-pre-commit: true
+          pre-commit-hook-skip-list: pyright,poetry-audit
+          export-dependency-groups: udd:actions/update-development-dependencies
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: Update python linters and pre-commit dependencies.'
+          commit_user_name: ${{ vars.TEK_OPENSOURCE_NAME }}
+          commit_user_email: ${{ vars.TEK_OPENSOURCE_EMAIL }}
+          commit_author: ${{ vars.TEK_OPENSOURCE_NAME }} <${{ vars.TEK_OPENSOURCE_EMAIL }}>

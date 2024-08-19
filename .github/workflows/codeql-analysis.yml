@@ -9,19 +9,11 @@ on:
     - cron: 17 16 * * 4
 jobs:
   analyze:
-    name: Analyze
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/_reusable-codeql-analysis.yml
+    with:
+      languages-array: '["python", "javascript"]'
+      codeql-queries: security-extended,security-and-quality
     permissions:
       actions: read
       contents: read
       security-events: write
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [python, javascript]
-    steps:
-      - name: Run CodeQL Analysis
-        uses: ./actions/codeql-analysis
-        with:
-          language: ${{ matrix.language }}
-          codeql-queries: security-extended,security-and-quality
