@@ -260,7 +260,8 @@ def main() -> None:
 
     args = _parse_arguments()
 
-    print(f"\nUpdating development dependencies in {args.repo_root}\n")
+    print(f"\nUpdating development dependencies in {args.repo_root}")
+    print(f"Arguments: {args}\n")
     os.chdir(args.repo_root)
 
     _update_poetry_dependencies(
