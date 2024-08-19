@@ -211,7 +211,7 @@ def _update_pre_commit_dependencies(
         repository_root_directory: The root directory of the repository.
     """
     _run_cmd_in_subprocess(
-        f'git config --global --add safe.directory "{repository_root_directory.as_posix()}"'
+        f'git config --global --add safe.directory "{repository_root_directory.resolve().as_posix()}"'
     )
     # Update pre-commit config file
     try:
