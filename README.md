@@ -11,15 +11,14 @@ Python Packaging CI/CD.
 
 ## Actions
 
-- [`codeql-analysis`](./actions/codeql-analysis/readme.md)
-    - This composite Action will checkout the code and then run a CodeQL analysis against the
-        provided languages in the repository.
-
 ## Reusable Workflows
 
 - [`check-api-for-breaking-changes.yml`](./workflows/check-api-for-breaking-changes.md)
     - This workflow will use the [`griffe`](https://mkdocstrings.github.io/griffe/) Python package to check for
         any major or breaking changes in a package's API.
+- [`codeql-analysis.yml`](./workflows/codeql-analysis.md)
+    - This workflow will checkout the code and then run a CodeQL analysis against the
+        specified languages.
 - [`enforce-community-standards.yml`](./workflows/enforce-community-standards.md)
     - This workflow will ensure that all necessary files are in place in order to meet the
         Open Source Community Standards for a repository.

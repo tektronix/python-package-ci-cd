@@ -1,0 +1,37 @@
+---
+name: CodeQL
+on:
+  workflow_call:
+    inputs:
+      languages-array:
+        type: string
+        description: A valid JSON array of languages to analyze.
+        required: true
+      codeql-queries:
+        type: string
+        description: A comma-separate list of CodeQL query sets to use.
+        default: security-extended,security-and-quality
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ${{ fromJSON(inputs.languages-array) }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: ${{ inputs.codeql-queries }}
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: /language:${{matrix.language}}
