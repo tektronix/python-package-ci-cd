@@ -55,6 +55,10 @@ repos:
     hooks:
       - id: yamlfix
         additional_dependencies: [maison<2.0.0]
+  - repo: https://github.com/AleksaC/hadolint-py
+    rev: e70baeefd566058716df2f29eae8fe8ffc213a9f  # frozen: v2.12.1b3
+    hooks:
+      - id: hadolint
   - repo: https://github.com/executablebooks/mdformat
     rev: 08fba30538869a440b5059de90af03e3502e35fb  # frozen: 0.7.17
     hooks:

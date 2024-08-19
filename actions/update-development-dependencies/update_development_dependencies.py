@@ -24,6 +24,8 @@ from pathlib import Path
 from pypi_simple import PyPISimple
 from yamlfix import fix_files  # pyright: ignore[reportUnknownVariableType]
 
+_ENV_VAR_TRUE_VALUES = {"1", "true", "yes"}
+
 
 def _parse_arguments() -> argparse.Namespace:
     """Parse the command line arguments.
@@ -41,9 +43,10 @@ def _parse_arguments() -> argparse.Namespace:
         help="The root directory of the repository.",
     )
     parser.add_argument(
-        "--no-install",
+        "--install-dependencies",
         action="store_true",
-        dest="no_install",
+        default=False,
+        dest="install_dependencies",
         help="Indicate if packages should not be installed via poetry (Primarily used in CI).",
     )
     parser.add_argument(
@@ -64,13 +67,19 @@ def _parse_arguments() -> argparse.Namespace:
         help="Update the pre-commit hooks.",
     )
     parser.add_argument(
-        "--run-pre-commit", dest="run_pre_commit", action="store_true", help="Run pre-commit hooks."
+        "--run-pre-commit",
+        dest="run_pre_commit",
+        action="store_true",
+        help=(
+            "Run pre-commit hooks. Setting this flag will also set the "
+            "--update-pre-commit flag to True."
+        ),
     )
     parser.add_argument(
         "--pre-commit-hook-skip-list",
         dest="pre_commit_hook_skip_list",
         help=(
-            "Specify a list of pre-commit hooks to skip "
+            "Specify a comma-separated list of pre-commit hooks to skip "
             "(only applicable when using the --run-pre-commit flag)."
         ),
     )
@@ -252,9 +261,12 @@ def main() -> None:
     args = _parse_arguments()
 
     _update_poetry_dependencies(
-        python_executable, args.repo_root, args.dependency_dict, lock_only=args.no_install
+        python_executable,
+        args.repo_root,
+        args.dependency_dict,
+        lock_only=not args.install_dependencies,
     )
-    if args.update_pre_commit:
+    if args.update_pre_commit or args.run_pre_commit:
         _update_pre_commit_dependencies(python_executable, args.repo_root)
     if args.dependency_groups:
         _export_requirements_files(python_executable, args.dependency_groups)
@@ -267,4 +279,34 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    # Handle GitHub Actions environment variables
+    # See https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables
+    if os.getenv("GITHUB_ACTION"):
+        repo_root = os.getenv("INPUT_REPO-ROOT", "")
+        install_dependencies = os.getenv("INPUT_INSTALL-DEPENDENCIES", "")
+        dependency_dict = os.getenv("INPUT_DEPENDENCY-DICT", "")
+        update_pre_commit = os.getenv("INPUT_UPDATE-PRE-COMMIT", "")
+        run_pre_commit = os.getenv("INPUT_RUN-PRE-COMMIT", "")
+        pre_commit_hook_skip_list = os.getenv("INPUT_PRE-COMMIT-HOOK-SKIP-LIST", "")
+        export_dependency_groups = os.getenv("INPUT_EXPORT-DEPENDENCY-GROUPS", "")
+        script_args = [
+            "--repo-root",
+            repo_root,
+        ]
+        if install_dependencies.lower() in _ENV_VAR_TRUE_VALUES:
+            script_args.append("--install-dependencies")
+        if dependency_dict:
+            script_args.extend(["--dependency-dict", dependency_dict])
+        if update_pre_commit.lower() in _ENV_VAR_TRUE_VALUES:
+            script_args.append("--update-pre-commit")
+        if run_pre_commit.lower() in _ENV_VAR_TRUE_VALUES:
+            script_args.append("--run-pre-commit")
+        if pre_commit_hook_skip_list:
+            script_args.extend(["--pre-commit-hook-skip-list", pre_commit_hook_skip_list])
+        if export_dependency_groups:
+            for dep_group in export_dependency_groups.split(","):
+                script_args.extend(["--export-dependency-group", dep_group])
+        sys.argv.extend(script_args)
+
+    # Run the main function
     main()

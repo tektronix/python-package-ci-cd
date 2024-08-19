@@ -1,0 +1,46 @@
+---
+name: Update Development Dependencies
+description: Update Python development dependencies using the Poetry package manager
+  in-sync with pre-commit dependencies
+inputs:
+  repo-root:
+    description: The root directory of the repository.
+    required: false
+    default: .
+  install-dependencies:
+    description: A boolean indicating if packages should be installed via poetry (this
+      is not usually needed).
+    required: false
+    default: 'false'
+  dependency-dict:
+    description: 'Specify a valid dictionary of dependency groups to update, where
+      each key is a dependency group name, and each value is a tuple of dependencies
+      to update within that group, e.g. {"dev": ("pylint", "ruff"), "tests": ("ruff")}.'
+    required: false
+    default: ''
+  update-pre-commit:
+    description: A boolean indicating if the pre-commit hooks should be updated.
+    required: false
+    default: 'false'
+  run-pre-commit:
+    description: A boolean indicating to run the pre-commit hooks to perform auto-fixing
+      after updating the dependencies. Setting this input to `true` will also set
+      the update-pre-commit input to `true`.
+    required: false
+    default: 'false'
+  pre-commit-hook-skip-list:
+    description: A comma-separated list of pre-commit hooks to skip (only applicable
+      when `run-pre-commit=true`).
+    required: false
+    default: ''
+  export-dependency-groups:
+    description: A comma-separated list of dependency groups that should have their
+      requirements exported. An output folder can be specified by appending a ":"
+      followed by the custom output folder path to the provided group name, e.g. "tests:custom/folder/path".
+      The created file will always be named "requirements.txt", and the folder will
+      default to matching the group name if no custom folder path is given.
+    required: false
+    default: ''
+runs:
+  using: docker
+  image: Dockerfile
