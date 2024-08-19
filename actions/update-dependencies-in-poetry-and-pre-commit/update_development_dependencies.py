@@ -2,6 +2,10 @@
 
 This script will update the development dependencies that are pinned in the pyproject.toml and .pre-
 commit-config.yaml files.
+
+In order to use this script, you must be using the poetry package manager and `poetry` must be
+accessible on the commandline. If you want to use this script to update pre-commit dependencies,
+`pre-commit` must be installed in the current Python environment.
 """
 
 from __future__ import annotations
@@ -50,6 +54,12 @@ def _parse_arguments() -> argparse.Namespace:
             '(e.g., \'{"dev": ("pylint", "ruff"), "tests": ("ruff")}\').'
         ),
         default={},
+    )
+    parser.add_argument(
+        "--no-pre-commit",
+        dest="no_pre_commit",
+        action="store_true",
+        help="Skip updating pre-commit hooks.",
     )
     parser.add_argument(
         "--export-dependency-group",
@@ -231,7 +241,8 @@ def main() -> None:
     _update_poetry_dependencies(
         python_executable, args.repo_root, args.dependency_dict, lock_only=args.no_install
     )
-    _update_pre_commit_dependencies(python_executable, args.repo_root)
+    if not args.no_pre_commit:
+        _update_pre_commit_dependencies(python_executable, args.repo_root)
     if args.dependency_groups:
         _export_requirements_files(python_executable, args.dependency_groups)
 
