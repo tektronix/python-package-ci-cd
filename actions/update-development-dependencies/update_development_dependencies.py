@@ -210,6 +210,9 @@ def _update_pre_commit_dependencies(
         python_executable: The path to the python executable to use.
         repository_root_directory: The root directory of the repository.
     """
+    _run_cmd_in_subprocess(
+        f'git config --global --add safe.directory "{repository_root_directory}"'
+    )
     # Update pre-commit config file
     _run_cmd_in_subprocess(f'"{python_executable}" -m pre_commit autoupdate --freeze')
 
@@ -261,7 +264,6 @@ def main() -> None:
     args = _parse_arguments()
 
     print(f"\nUpdating development dependencies in {args.repo_root}")
-    print(f"Arguments: {args}\n")
     os.chdir(args.repo_root)
 
     _update_poetry_dependencies(
@@ -283,7 +285,6 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    print("\n__main__\n")
     # Handle GitHub Actions environment variables
     # See https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables
     if os.getenv("GITHUB_ACTION"):
@@ -314,5 +315,4 @@ if __name__ == "__main__":
         sys.argv.extend(script_args)
 
     # Run the main function
-    print("\nmain()\n")
     main()
