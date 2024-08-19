@@ -74,7 +74,7 @@ jobs:
           passphrase: ${{ secrets.gpg-signing-key-passphrase }}
           git_user_signingkey: true
           git_commit_gpgsign: true
-      - uses: tektronix/python-package-ci-cd/actions/update-development-dependencies@main  # TODO: pin to a version
+      - uses: ./actions/update-development-dependencies
         with:
           dependency-dict: ${{ inputs.dependency-dict }}
           update-pre-commit: ${{ inputs.update-pre-commit }}
