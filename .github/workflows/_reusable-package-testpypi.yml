@@ -1,0 +1,95 @@
+---
+name: Publish to TestPyPI
+on:
+  workflow_call:
+    inputs:
+      package-name:
+        description: The name of the package.
+        required: true
+        type: string
+      repo-name:
+        description: The full name of the repository to use to gate uploads, in the
+          format `owner/repo`.
+        required: true
+        type: string
+concurrency:
+  group: pypi
+env:
+  PACKAGE_NAME: ${{ inputs.package-name }}
+jobs:
+  test-pypi-build:
+    name: Build package with unique version for test.pypi.org
+    needs: [job-variables]
+    if: github.repository == inputs.repo-name
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      ##############################################################################################
+      # TODO: Convert this into an action
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: pyproject.toml  # any version will work, just use 3.12 for the action
+      - name: Install workflow dependencies
+        run: pip install -r scripts/requirements.txt
+      - name: Create unique package version
+        id: create-version
+        run: |
+          CURRENT_VERSION=$(python scripts/pypi_latest_version.py --package="$PACKAGE_NAME" --index=test.pypi)
+          echo CURRENT_VERSION: $CURRENT_VERSION
+          NEW_VERSION=$(python scripts/create_post_version_for_testpypi.py --version=$CURRENT_VERSION)
+          echo NEW_VERSION: $NEW_VERSION
+          python scripts/project_version.py --set-version=$NEW_VERSION
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_OUTPUT
+      ##############################################################################################
+      - name: Build package
+        uses: hynek/build-and-inspect-python-package@v2.8.0
+        with:
+          attest-build-provenance-github: 'true'
+    outputs:
+      built-version: ${{ steps.create-version.outputs.NEW_VERSION }}
+  test-pypi-upload:
+    name: Upload package to test.pypi.org
+    needs: [job-variables, test-pypi-build]
+    if: github.repository == inputs.repo-name
+    runs-on: ubuntu-latest
+    environment: package-testpypi
+    permissions:
+      id-token: write
+    steps:
+      - name: Download built packages
+        uses: actions/download-artifact@v4
+        with:
+          name: Packages
+          path: dist
+      - name: Upload package to Test PyPI
+        uses: pypa/gh-action-pypi-publish@v1.9.0
+        with:
+          repository-url: https://test.pypi.org/legacy/
+  test-pypi-install:
+    name: Install package from test.pypi.org
+    needs: [job-variables, test-pypi-build, test-pypi-upload]
+    if: github.repository == inputs.repo-name
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: pyproject.toml
+      - name: Test installing from test.pypi.org
+        # A retry is used to allow for some downtime before the package is installable
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 10
+          max_attempts: 5
+          retry_wait_seconds: 30
+          warning_on_retry: false
+          command: pip install --index-url=https://test.pypi.org/simple/ --extra-index-url=https://pypi.org/simple
+            "$PACKAGE_NAME==${{ needs.test-pypi-build.outputs.built-version }}"
