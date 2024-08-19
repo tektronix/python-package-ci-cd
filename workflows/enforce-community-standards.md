@@ -20,7 +20,7 @@ The full list of files that this workflow checks for is as follows:
 - `.github/dependabot.@(yml|yaml)`
 - `.github/workflows/codeql-analysis.@(yml|yaml)`
 
-> [!NOTE]
+> [!TIP]
 > See the [Workflow file](../.github/workflows/_reusable-enforce-community-standards.yml) for implementation details.
 
 ## Example

@@ -23,7 +23,7 @@ changes, usually a Workflow named `Check Public API for Breaking Changes`, see t
 >   pull-requests: write
 > ```
 
-> [!NOTE]
+> [!TIP]
 > See the [Workflow file](../.github/workflows/_reusable-publish-api-comparison.yml) for implementation details.
 
 ## Example

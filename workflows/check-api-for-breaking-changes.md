@@ -10,7 +10,7 @@ compatible version of [`griffe`](https://pypi.org/project/griffe/) to check for 
 It uploads a file called `breaking_changes.md` as a workflow artifact that can be used with the
 `publish-api-comparison.yml` workflow to post a comment on Pull Requests with details of changed APIs.
 
-> [!NOTE]
+> [!TIP]
 > See the [Workflow file](../.github/workflows/_reusable-check-api-for-breaking-changes.yml) for implementation details.
 
 ## Inputs

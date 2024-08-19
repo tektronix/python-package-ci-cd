@@ -9,7 +9,8 @@ This workflow runs two categories of tox environments: a general category and a 
 fast category is intended to run just the unit tests, while the general category should run a
 more comprehensive set of linting, build checks, and tests. The general category needs to use the
 [`tox-gh-actions`](https://pypi.org/project/tox-gh-actions/) Python package to be able to run
-specific tox environments based on the installed Python version. The fast category needs to use the
+specific tox environments based on the installed Python version. The fast category runs the
+`[testenv:tests]` tox environment and needs to use the
 [`pytest-github-report`](https://pypi.org/project/pytest-github-report/) Python package in order
 to create a markdown file that can be uploaded as an artifact and then used by the
 [`publish-test-results.yml`](./publish-test-results.md) workflow to add comments to Pull Requests
@@ -81,6 +82,12 @@ commands_pre =
 ```
 
 > [!NOTE]
+> This workflow uses concurrency to limit the number of builds that can run at the same time
+> to a single build. For builds on the `main` branch, the workflow will simply create a queue.
+> For builds on other branches (or builds triggered by Pull Requests), the workflow will cancel
+> any currently running builds for the same branch (or Pull Request).
+
+> [!TIP]
 > See the [Workflow file](../.github/workflows/_reusable-test-code.yml) for implementation details.
 
 ## Inputs

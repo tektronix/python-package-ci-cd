@@ -22,7 +22,7 @@ repository's Python package.
 >   attestations: write
 > ```
 
-> [!NOTE]
+> [!TIP]
 > See the [Workflow file](../.github/workflows/_reusable-sbom-scan.yml) for implementation details.
 
 ## Example
