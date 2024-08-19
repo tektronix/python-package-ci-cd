@@ -59,6 +59,7 @@ repos:
     rev: e70baeefd566058716df2f29eae8fe8ffc213a9f  # frozen: v2.12.1b3
     hooks:
       - id: hadolint
+        args: [--ignore=DL3008]
   - repo: https://github.com/executablebooks/mdformat
     rev: 08fba30538869a440b5059de90af03e3502e35fb  # frozen: 0.7.17
     hooks:
