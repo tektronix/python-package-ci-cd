@@ -9,7 +9,7 @@ cfgv==3.4.0 ; python_version >= "3.12" and python_version < "3.13"
 charset-normalizer==3.3.2 ; python_version >= "3.12" and python_version < "3.13"
 cleo==2.1.0 ; python_version >= "3.12" and python_version < "3.13"
 click==8.1.7 ; python_version >= "3.12" and python_version < "3.13"
-colorama==0.4.6 ; python_version >= "3.12" and python_version < "3.13" and (os_name == "nt" or platform_system == "Windows")
+colorama==0.4.6 ; python_version >= "3.12" and python_version < "3.13" and (platform_system == "Windows" or os_name == "nt")
 crashtest==0.4.1 ; python_version >= "3.12" and python_version < "3.13"
 cryptography==43.0.0 ; python_version >= "3.12" and python_version < "3.13" and sys_platform == "linux"
 distlib==0.3.8 ; python_version >= "3.12" and python_version < "3.13"

@@ -7,6 +7,7 @@ commit-config.yaml files.
 from __future__ import annotations
 
 import argparse
+import json
 import shlex
 import subprocess
 import sys
@@ -16,9 +17,6 @@ from pathlib import Path
 
 from pypi_simple import PyPISimple
 from yamlfix import fix_files  # pyright: ignore[reportUnknownVariableType]
-
-DEPENDENCIES_TO_UPDATE: dict[str, tuple[str, ...]] = {  # TODO: convert to inputs
-}
 
 
 def _parse_arguments() -> argparse.Namespace:
@@ -43,6 +41,17 @@ def _parse_arguments() -> argparse.Namespace:
         help="Indicate if packages should not be installed via poetry (Primarily used in CI).",
     )
     parser.add_argument(
+        "--dependency-dict",
+        dest="dependency_dict",
+        type=_convert_dict_input,
+        help=(
+            "Specify a dictionary of dependency groups to update, where each key is a dependency "
+            "group name, and each value is a tuple of dependencies to update within that group "
+            '(e.g., \'{"dev": ("pylint", "ruff"), "tests": ("ruff")}\').'
+        ),
+        default={},
+    )
+    parser.add_argument(
         "--export-dependency-group",
         dest="dependency_groups",
         action="append",
@@ -59,6 +68,35 @@ def _parse_arguments() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def _convert_dict_input(input_str: str) -> dict[str, tuple[str, ...]]:
+    """Parse the input string into a dictionary of the required type.
+
+    Args:
+        input_str: The input string to parse.
+
+    Returns:
+        The parsed dictionary.
+
+    Raises:
+        argparse.ArgumentTypeError: If the input string does not match the required format.
+    """
+    try:
+        # Convert the string to a dictionary using ast.literal_eval for safety
+        result_dict = json.loads(input_str)
+
+        # Check if the result is a dictionary with the correct type
+        if isinstance(result_dict, dict) and all(
+            isinstance(k, str) and isinstance(v, tuple) and all(isinstance(i, str) for i in v)  # pyright: ignore[reportUnknownVariableType]
+            for k, v in result_dict.items()  # pyright: ignore[reportUnknownVariableType]
+        ):
+            return result_dict  # pyright: ignore[reportUnknownVariableType]
+        msg = "Input does not match the required type of `dict[str, tuple[str, ...]]`."
+        raise ValueError(msg)  # noqa: TRY301
+    except (SyntaxError, ValueError) as e:
+        msg = f"Error parsing input: {e}"
+        raise argparse.ArgumentTypeError(msg)  # noqa: B904
+
+
 def _run_cmd_in_subprocess(command: str) -> None:
     """Run the given command in a subprocess.
 
@@ -71,7 +109,11 @@ def _run_cmd_in_subprocess(command: str) -> None:
 
 
 def _update_poetry_dependencies(
-    python_executable: str, repository_root_directory: Path, *, lock_only: bool
+    python_executable: str,
+    repository_root_directory: Path,
+    dependencies_to_update: dict[str, tuple[str, ...]],
+    *,
+    lock_only: bool,
 ) -> None:
     """Update the specified dependencies via poetry in the pyproject.toml file.
 
@@ -80,19 +122,21 @@ def _update_poetry_dependencies(
     Args:
         python_executable: The path to the python executable to use.
         repository_root_directory: The root directory of the repository.
+        dependencies_to_update: A dictionary of dependency groups to update, where each key is a
+            group and each value is a tuple of dependencies to update within that group.
         lock_only: A boolean indicating if only the lock file should be updated.
     """
     pypi_server = PyPISimple()
 
     # Remove the dependencies from poetry to avoid issues if they are in multiple groups
-    for group, dependencies_list in DEPENDENCIES_TO_UPDATE.items():
+    for group, dependencies_list in dependencies_to_update.items():
         dependencies = " ".join(f'"{x.split("[", maxsplit=1)[0]}"' for x in dependencies_list)
         _run_cmd_in_subprocess(
             f'"{python_executable}" -m poetry remove --lock --group={group} {dependencies}',
         )
 
     # Get the latest versions for each of the dependencies to update
-    for group, dependencies_list in DEPENDENCIES_TO_UPDATE.items():
+    for group, dependencies_list in dependencies_to_update.items():
         latest_dependency_versions: list[str] = []
         for dependency in dependencies_list:
             latest_dep_version = (
@@ -161,7 +205,7 @@ def _export_requirements_files(python_executable: str, dependency_groups: list[s
             file_path: The path to the requirements file to sort.
         """
         with file_path.open() as file:
-            lines = sorted(file.readlines())
+            lines = sorted(file.readlines(), key=lambda x: x.lower().split("==")[0])
         with file_path.open("w") as file:
             file.writelines(lines)
 
@@ -184,7 +228,9 @@ def main() -> None:
 
     args = _parse_arguments()
 
-    _update_poetry_dependencies(python_executable, args.repo_root, lock_only=args.no_install)
+    _update_poetry_dependencies(
+        python_executable, args.repo_root, args.dependency_dict, lock_only=args.no_install
+    )
     _update_pre_commit_dependencies(python_executable, args.repo_root)
     if args.dependency_groups:
         _export_requirements_files(python_executable, args.dependency_groups)
