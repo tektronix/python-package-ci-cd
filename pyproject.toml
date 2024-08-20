@@ -19,6 +19,12 @@ pyright = "1.1.376"
 python = "~3.12"
 python-semantic-release = "^9.8.7"
 
+[tool.poetry.group.cutv.dependencies]  # dependencies for actions/create-unique-testpypi-version
+poetry-core = "^1.9.0"
+pypi-simple = "^1.6.0"
+tomli = "^2.0.1"
+tomli-w = "^1.0.0"
+
 [tool.poetry.group.udd.dependencies]  # dependencies for actions/update-development-dependencies
 maison = "^1.4.3"  # yamlfix is broken with v2.0+
 poetry = "^1.8.0"

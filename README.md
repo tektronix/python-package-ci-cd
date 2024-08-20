@@ -11,7 +11,7 @@ Python Packaging CI/CD.
 
 ## Actions
 
-- [`update-development-dependencies`](./actions/update-development-dependencies.md)
+- [`update-development-dependencies`](./actions/update-development-dependencies/readme.md)
     - This action enables updating Python development dependencies using the
         [`Poetry`](https://python-poetry.org/) package manager in-sync with
         [`pre-commit`](https://pre-commit.com/) hooks.
@@ -32,6 +32,11 @@ Python Packaging CI/CD.
         [`hynek/build-and-inspect-python-package`](https://github.com/hynek/build-and-inspect-python-package)
         action, and then verify that the package can be installed on each combination of Python version
         and operating system specified.
+- [`package-testpypi.yml`](./workflows/package-testpypi.md)
+    - This workflow will build the package using the
+        [`hynek/build-and-inspect-python-package`](https://github.com/hynek/build-and-inspect-python-package)
+        action, upload the package to [TestPyPI](https://test.pypi.org), and then verify that the package
+        can be installed from [TestPyPI](https://test.pypi.org).
 - [`publish-api-comparison.yml`](./workflows/publish-api-comparison.md)
     - This workflow will use the output from the
         [`check-api-for-breaking-changes.yml`](./workflows/check-api-for-breaking-changes.md) workflow to create a
