@@ -292,28 +292,21 @@ if __name__ == "__main__":
     # Handle GitHub Actions environment variables
     # See https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables
     if os.getenv("GITHUB_ACTION"):
-        repo_root = os.getenv("INPUT_REPO-ROOT", "")
-        install_dependencies = os.getenv("INPUT_INSTALL-DEPENDENCIES", "")
-        dependency_dict = os.getenv("INPUT_DEPENDENCY-DICT", "")
-        update_pre_commit = os.getenv("INPUT_UPDATE-PRE-COMMIT", "")
-        run_pre_commit = os.getenv("INPUT_RUN-PRE-COMMIT", "")
-        pre_commit_hook_skip_list = os.getenv("INPUT_PRE-COMMIT-HOOK-SKIP-LIST", "")
-        export_dependency_groups = os.getenv("INPUT_EXPORT-DEPENDENCY-GROUPS", "")
         script_args = [
             "--repo-root",
-            repo_root,
+            os.getenv("INPUT_REPO-ROOT", ""),
         ]
-        if install_dependencies.lower() in _ENV_VAR_TRUE_VALUES:
+        if (os.getenv("INPUT_INSTALL-DEPENDENCIES", "")).lower() in _ENV_VAR_TRUE_VALUES:
             script_args.append("--install-dependencies")
-        if dependency_dict:
+        if dependency_dict := os.getenv("INPUT_DEPENDENCY-DICT"):
             script_args.extend(["--dependency-dict", dependency_dict])
-        if update_pre_commit.lower() in _ENV_VAR_TRUE_VALUES:
+        if os.getenv("INPUT_UPDATE-PRE-COMMIT", "").lower() in _ENV_VAR_TRUE_VALUES:
             script_args.append("--update-pre-commit")
-        if run_pre_commit.lower() in _ENV_VAR_TRUE_VALUES:
+        if os.getenv("INPUT_RUN-PRE-COMMIT", "").lower() in _ENV_VAR_TRUE_VALUES:
             script_args.append("--run-pre-commit")
-        if pre_commit_hook_skip_list:
+        if pre_commit_hook_skip_list := os.getenv("INPUT_PRE-COMMIT-HOOK-SKIP-LIST"):
             script_args.extend(["--pre-commit-hook-skip-list", pre_commit_hook_skip_list])
-        if export_dependency_groups:
+        if export_dependency_groups := os.getenv("INPUT_EXPORT-DEPENDENCY-GROUPS"):
             for dep_group in export_dependency_groups.split(","):
                 script_args.extend(["--export-dependency-group", dep_group])
         sys.argv.extend(script_args)

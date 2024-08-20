@@ -25,6 +25,9 @@ pypi-simple = "^1.6.0"
 tomli = "^2.0.1"
 tomli-w = "^1.0.0"
 
+[tool.poetry.group.fci.dependencies]  # dependencies for actions/find-unreleased-changelog-items
+tomli = "^2.0.1"
+
 [tool.poetry.group.udd.dependencies]  # dependencies for actions/update-development-dependencies
 maison = "^1.4.3"  # yamlfix is broken with v2.0+
 poetry = "^1.8.0"

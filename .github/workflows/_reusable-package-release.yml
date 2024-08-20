@@ -28,10 +28,18 @@ on:
           major for non-backward compatible changes.
         required: true
         type: string
+      build-and-publish-python-package:
+        description: A boolean value that determines whether to build and publish
+          the Python package. If set to `false`, the package binaries will not be
+          built or published to PyPI, TestPyPI, or GitHub Releases.
+        required: false
+        default: true
+        type: boolean
       python-versions-array:
         description: A valid JSON array of Python versions to validate the installation
-          with.
-        required: true
+          with. If `build-and-publish-python-package` is set to `true`, this input
+          must be provided or the build will fail.
+        required: false
         type: string
       operating-systems-array:
         description: A valid JSON array of operating system names to validate the
@@ -80,30 +88,22 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-      ##############################################################################################
-      # TODO: Convert to action? Add template file names as inputs, grab template directory from pyproject.toml
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: x
-      - name: Check for unreleased entries in the Changelog
-        run: python scripts/check_unreleased_changelog_items.py
-      ##############################################################################################
-      ##############################################################################################
-      # TODO: Convert to action? Maybe combine with the above action? Make sure to remove the `## Unreleased` section when adding to the step summary
-      - name: Create summary of workflow inputs and incoming changes
+      - name: python-versions-array input missing
+        if: ${{ inputs.build-and-publish-python-package == true && (inputs.python-versions-array == null || inputs.python-versions-array == '') }}
         run: |
-          echo "## Workflow Inputs" >> $GITHUB_STEP_SUMMARY
-          echo "- release-level: ${{ inputs.release-level }}" >> $GITHUB_STEP_SUMMARY
-          echo "## Incoming Changes" >> $GITHUB_STEP_SUMMARY
-          cat python_semantic_release_templates/.previous_release_notes_for_template.md >> $GITHUB_STEP_SUMMARY
-      ##############################################################################################
+          echo "The `python-versions-array` input is required when `build-and-publish-python-package` is set to `true`."
+          exit 1
+      - uses: ./actions/find-unreleased-changelog-items
+        with:
+          release-level: ${{ inputs.release-level }}
+          previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
+          previous-release-notes-filename: ${{ inputs.previous-release-notes-filename }}
   # Update the package version using the python-semantic-release package (https://github.com/python-semantic-release/python-semantic-release)
   # This job requires a Personal Access Token (Classic) with
   # the public_repo permission. It also needs a private/public
   # ssh key pair that can be used for signing. The public key must
   # be attached to the account as an SSH signing key.
-  pypi-version:
+  bump-version:
     name: Update package version
     needs: [print-inputs]
     if: github.repository == inputs.repo-name && github.ref == 'refs/heads/main'
@@ -117,16 +117,10 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.checkout-token }}
-      ##############################################################################################
-      # TODO: Convert to action?
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: ./actions/find-unreleased-changelog-items
         with:
-          python-version: x
-          check-latest: true
-      - name: Check for unreleased entries in the Changelog and copy files to templates
-        run: python scripts/check_unreleased_changelog_items.py
-      ##############################################################################################
+          previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
+          previous-release-notes-filename: ${{ inputs.previous-release-notes-filename }}
       - name: Python Semantic Release
         uses: python-semantic-release/python-semantic-release@v9.8.3
         id: release
@@ -143,8 +137,9 @@ jobs:
   # Build the newly updated package
   pypi-build:
     name: Build package
-    needs: [print-inputs, pypi-version]
-    if: github.repository == inputs.repo-name && github.ref == 'refs/heads/main'
+    needs: [print-inputs, bump-version]
+    if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
+      && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -162,7 +157,8 @@ jobs:
   upload-testpypi:
     name: Upload package to TestPyPI
     needs: [print-inputs, pypi-build]
-    if: github.repository == inputs.repo-name && github.ref == 'refs/heads/main'
+    if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
+      && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: package-testpypi
     permissions:
@@ -181,7 +177,8 @@ jobs:
   upload-pypi:
     name: Upload package to PyPI
     needs: [print-inputs, upload-testpypi]
-    if: github.repository == inputs.repo-name && github.ref == 'refs/heads/main'
+    if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
+      && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: package-release
     permissions:
@@ -198,7 +195,8 @@ jobs:
   upload-github:
     name: Upload package to GitHub Release
     needs: [print-inputs, upload-pypi]
-    if: github.repository == inputs.repo-name && github.ref == 'refs/heads/main'
+    if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
+      && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -223,12 +221,13 @@ jobs:
     name: Install package
     needs:
       - print-inputs
-      - pypi-version
+      - bump-version
       - pypi-build
       - upload-testpypi
       - upload-pypi
       - upload-github
-    if: github.repository == inputs.repo-name && github.ref == 'refs/heads/main'
+    if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
+      && github.ref == 'refs/heads/main'
     runs-on: ${{ matrix.os-name }}-latest
     permissions: {}
     strategy:
@@ -254,4 +253,4 @@ jobs:
           retry_wait_seconds: 30
           warning_on_retry: false
           command: pip install${{ matrix.index_urls }} "${{ env.PACKAGE_NAME }}==${{
-            needs.pypi-version.outputs.built-version }}"
+            needs.bump-version.outputs.built-version }}"

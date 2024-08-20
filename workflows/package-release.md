@@ -4,6 +4,7 @@ This workflow will create a new release of the package using the
 [`python-semantic-release`](https://python-semantic-release.readthedocs.io/en/latest/) tool.
 It will then build the package, upload the package to
 [TestPyPI](https://test.pypi.org) and [PyPI](https://pypi.org),
+create a new GitHub Release for the project,
 and then verify that the package can be installed from
 [TestPyPI](https://test.pypi.org) and [PyPI](https://pypi.org).
 
@@ -13,6 +14,22 @@ One of those files will contain the contents of the `CHANGELOG.md` file in the
 repo prior to creating the new release. The other file will contain the
 contents of the `## Unreleased` section of the `CHANGELOG.md` file that
 will be used to fill in the GitHub Release Notes.
+
+> [!IMPORTANT]
+> This workflow requires the `CHANGELOG.md` file to be in a format that is based on
+> [Keep a Changelog](https://keepachangelog.com)
+> (the primary difference is the `## [Unreleased]` section is replaced by an `## Unreleased` section),
+> and this project adheres to [Semantic Versioning](https://semver.org). See this repo's
+> [CHANGELOG.md](../CHANGELOG.md) for an example of the format to use.
+>
+> Valid subsections within a version are:
+>
+> - Added
+> - Changed
+> - Deprecated
+> - Removed
+> - Fixed
+> - Security
 
 > [!IMPORTANT]
 > When calling this reusable workflow, the permissions must be set as follows:
@@ -34,17 +51,18 @@ will be used to fill in the GitHub Release Notes.
 
 ## Inputs
 
-| Input variable                    | Necessity | Description                                                                                                                                                                                                                                                                             | Default                                     |
-| --------------------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| `package-name`                    | required  | The name of the package to build, upload, and install.                                                                                                                                                                                                                                  |                                             |
-| `repo-name`                       | required  | The full name of the repository to use to gate uploads, in the format `owner/repo`.                                                                                                                                                                                                     |                                             |
-| `commit-user-name`                | required  | The name of the user to use when committing changes to the repository.                                                                                                                                                                                                                  |                                             |
-| `commit-user-email`               | required  | The email of the user to use when committing changes to the repository.                                                                                                                                                                                                                 |                                             |
-| `release-level`                   | required  | The level of the release to create. Must be one of `major`, `minor`, or `patch`.                                                                                                                                                                                                        |                                             |
-| `python-versions-array`           | required  | A valid JSON array of Python versions to test against.                                                                                                                                                                                                                                  |                                             |
-| `operating-systems-array`         | optional  | A valid JSON array of operating system names to run tests on.                                                                                                                                                                                                                           | `'["ubuntu", "windows", "macos"]'`          |
-| `previous-changelog-filename`     | optional  | The name of the file to copy the contents of the changelog into for use in the `python-semantic-release` templates. This file will be created inside of the directory defined by the `[tool.semantic_release.changelog.template_dir]` key in the `pyproject.toml` file.                 | `'.previous_changelog_for_template.md'`     |
-| `previous-release-notes-filename` | optional  | The name of the file to copy the contents of the `## Unreleased` section of the changelog into for use in the GitHub Release Notes. This file will be created inside of the directory defined by the `[tool.semantic_release.changelog.template_dir]` key in the `pyproject.toml` file. | `'.previous_release_notes_for_template.md'` |
+| Input variable                     | Necessity | Description                                                                                                                                                                                                                                                                             | Default                                     |
+| ---------------------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `package-name`                     | required  | The name of the package to build, upload, and install.                                                                                                                                                                                                                                  |                                             |
+| `repo-name`                        | required  | The full name of the repository to use to gate uploads, in the format `owner/repo`.                                                                                                                                                                                                     |                                             |
+| `commit-user-name`                 | required  | The name of the user to use when committing changes to the repository.                                                                                                                                                                                                                  |                                             |
+| `commit-user-email`                | required  | The email of the user to use when committing changes to the repository.                                                                                                                                                                                                                 |                                             |
+| `release-level`                    | required  | The level of the release to create. Must be one of `major`, `minor`, or `patch`.                                                                                                                                                                                                        |                                             |
+| `build-and-publish-python-package` | optional  | A boolean value that determines whether to build and publish the Python package. If set to `false`, the package binaries will not be built or published to PyPI, TestPyPI, or GitHub Releases.                                                                                          | `true`                                      |
+| `python-versions-array`            | optional  | A valid JSON array of Python versions to test against.                                                                                                                                                                                                                                  |                                             |
+| `operating-systems-array`          | optional  | A valid JSON array of operating system names to run tests on.                                                                                                                                                                                                                           | `'["ubuntu", "windows", "macos"]'`          |
+| `previous-changelog-filename`      | optional  | The name of the file to copy the contents of the changelog into for use in the `python-semantic-release` templates. This file will be created inside of the directory defined by the `[tool.semantic_release.changelog.template_dir]` key in the `pyproject.toml` file.                 | `'.previous_changelog_for_template.md'`     |
+| `previous-release-notes-filename`  | optional  | The name of the file to copy the contents of the `## Unreleased` section of the changelog into for use in the GitHub Release Notes. This file will be created inside of the directory defined by the `[tool.semantic_release.changelog.template_dir]` key in the `pyproject.toml` file. | `'.previous_release_notes_for_template.md'` |
 
 ## Secrets
 
@@ -61,7 +79,7 @@ name: Package Release
 on:
   workflow_dispatch:
     inputs:
-      release_level:
+      release-level:
         type: choice
         required: true
         description: |
@@ -80,8 +98,9 @@ jobs:
       repo-name: owner/my-package  # required
       commit-user-name: 'User Name'
       commit-user-email: 'user-email'
-      release_level: ${{ inputs.release_level }}  # required
-      python-versions-array: '["3.9", "3.10", "3.11", "3.12"]'  # required
+      release-level: ${{ inputs.release-level }}  # required
+      build-and-publish-python-package: true  # optional
+      python-versions-array: '["3.9", "3.10", "3.11", "3.12"]'  # optional
       operating-systems-array: '["ubuntu", "windows", "macos"]'  # optional
       previous-changelog-filename: '.previous_changelog_for_template.md'  # optional
       previous-release-notes-filename: '.previous_release_notes_for_template.md'  # optional

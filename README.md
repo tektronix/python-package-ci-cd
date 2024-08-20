@@ -32,6 +32,12 @@ Python Packaging CI/CD.
         [`hynek/build-and-inspect-python-package`](https://github.com/hynek/build-and-inspect-python-package)
         action, and then verify that the package can be installed on each combination of Python version
         and operating system specified.
+- [\`package-release.yml](./workflows/package-release.md)
+    - This workflow will create a new release of the package using the
+        [`python-semantic-release`](https://python-semantic-release.readthedocs.io/en/latest/) tool.
+        It will then build the package, upload the package to [TestPyPI](https://test.pypi.org) and [PyPI](https://pypi.org),
+        create a new GitHub Release for the project,
+        and then verify that the package can be installed from [TestPyPI](https://test.pypi.org) and [PyPI](https://pypi.org).
 - [`package-testpypi.yml`](./workflows/package-testpypi.md)
     - This workflow will build the package using the
         [`hynek/build-and-inspect-python-package`](https://github.com/hynek/build-and-inspect-python-package)

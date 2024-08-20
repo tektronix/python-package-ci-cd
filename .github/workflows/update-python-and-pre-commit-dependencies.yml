@@ -12,7 +12,7 @@ jobs:
       update-pre-commit: true
       run-pre-commit: true
       pre-commit-hook-skip-list: pyright,poetry-audit
-      export-dependency-groups: udd:actions/update-development-dependencies
+      export-dependency-groups: udd:actions/update-development-dependencies,cutv:actions/create-unique-testpypi-version,fci:actions/find-unreleased-changelog-items
     permissions:
       contents: write
     secrets:
