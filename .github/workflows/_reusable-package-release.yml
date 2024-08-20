@@ -12,7 +12,15 @@ on:
           format `owner/repo`.
         required: true
         type: string
-      release_level:
+      commit-user-name:
+        description: The name of the user to use when committing changes to the repository.
+        required: true
+        type: string
+      commit-user-email:
+        description: The email of the user to use when committing changes to the repository.
+        required: true
+        type: string
+      release-level:
         description: |
           Select the release level:
           patch for backward compatible minor changes and bug fixes,
@@ -21,14 +29,45 @@ on:
         required: true
         type: string
       python-versions-array:
-        description: A valid JSON array of Python versions to test against.
+        description: A valid JSON array of Python versions to validate the installation
+          with.
         required: true
         type: string
       operating-systems-array:
-        description: A valid JSON array of operating system names to run tests on.
+        description: A valid JSON array of operating system names to validate the
+          installation on.
         required: false
         default: '["ubuntu", "windows", "macos"]'
         type: string
+      previous-changelog-filename:
+        description: The name of the file to copy the contents of the changelog into
+          for use in the `python-semantic-release` templates. This file will be created
+          inside of the directory defined by the `[tool.semantic_release.changelog.template_dir]`
+          key in the `pyproject.toml` file.
+        required: false
+        type: string
+        default: .previous_changelog_for_template.md
+      previous-release-notes-filename:
+        description: The name of the file to copy the contents of the `## Unreleased`
+          section of the changelog into for use in the GitHub Release Notes. This
+          file will be created inside of the directory defined by the `[tool.semantic_release.changelog.template_dir]`
+          key in the `pyproject.toml` file.
+        required: false
+        type: string
+        default: .previous_release_notes_for_template.md
+    secrets:
+      checkout-token:
+        description: The token to use for checking out the repository, must have permissions
+          to write back to the repository.
+        required: true
+      ssh-signing-key-private:
+        description: A private SSH key associated with the account that owns the `checkout-token`
+          that will be used to sign the commit and tag created by `python-semantic-release`.
+        required: true
+      ssh-signing-key-public:
+        description: The public SSH key linked to the `secrets.ssh-signing-key-private`
+          key that will be used to sign the commit and tag created by `python-semantic-release`.
+        required: true
 concurrency:
   group: pypi (Reusable Workflows)
 env:
@@ -37,20 +76,25 @@ jobs:
   # Print the inputs to the summary page for easy User Review
   print-inputs:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
       ##############################################################################################
-      # TODO: Convert to action?
+      # TODO: Convert to action? Add template file names as inputs, grab template directory from pyproject.toml
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: x
       - name: Check for unreleased entries in the Changelog
         run: python scripts/check_unreleased_changelog_items.py
+      ##############################################################################################
+      ##############################################################################################
+      # TODO: Convert to action? Maybe combine with the above action? Make sure to remove the `## Unreleased` section when adding to the step summary
       - name: Create summary of workflow inputs and incoming changes
         run: |
           echo "## Workflow Inputs" >> $GITHUB_STEP_SUMMARY
-          echo "- release_level: ${{ inputs.release_level }}" >> $GITHUB_STEP_SUMMARY
+          echo "- release-level: ${{ inputs.release-level }}" >> $GITHUB_STEP_SUMMARY
           echo "## Incoming Changes" >> $GITHUB_STEP_SUMMARY
           cat python_semantic_release_templates/.previous_release_notes_for_template.md >> $GITHUB_STEP_SUMMARY
       ##############################################################################################
@@ -72,7 +116,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.TEK_OPENSOURCE_TOKEN }}
+          token: ${{ secrets.checkout-token }}
       ##############################################################################################
       # TODO: Convert to action?
       - name: Set up Python
@@ -81,21 +125,19 @@ jobs:
           python-version: x
           check-latest: true
       - name: Check for unreleased entries in the Changelog and copy files to templates
-        run: |
-          python scripts/check_unreleased_changelog_items.py
-          git config --global tag.gpgSign true
+        run: python scripts/check_unreleased_changelog_items.py
       ##############################################################################################
       - name: Python Semantic Release
         uses: python-semantic-release/python-semantic-release@v9.8.3
         id: release
         with:
-          force: ${{ inputs.release_level }}
+          force: ${{ inputs.release-level }}
           root_options: -v --strict
-          github_token: ${{ secrets.TEK_OPENSOURCE_TOKEN }}
-          git_committer_email: ${{ vars.TEK_OPENSOURCE_EMAIL }}
-          git_committer_name: ${{ vars.TEK_OPENSOURCE_NAME }}
-          ssh_public_signing_key: ${{ secrets.TEK_OPENSOURCE_SSH_SIGNING_KEY_PUBLIC }}
-          ssh_private_signing_key: ${{ secrets.TEK_OPENSOURCE_SSH_SIGNING_KEY_PRIVATE }}
+          github_token: ${{ secrets.checkout-token }}
+          git_committer_email: ${{ vars.commit-user-email }}
+          git_committer_name: ${{ vars.commit-user-name }}
+          ssh_public_signing_key: ${{ secrets.ssh-signing-key-public }}
+          ssh_private_signing_key: ${{ secrets.ssh-signing-key-private }}
     outputs:
       built-version: ${{ steps.release.outputs.version }}
   # Build the newly updated package
@@ -188,6 +230,7 @@ jobs:
       - upload-github
     if: github.repository == inputs.repo-name && github.ref == 'refs/heads/main'
     runs-on: ${{ matrix.os-name }}-latest
+    permissions: {}
     strategy:
       fail-fast: false
       matrix:

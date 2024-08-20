@@ -123,7 +123,7 @@ jobs:
     uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-test-code.yml@main  # it is recommended to use the latest release tag instead of `main`
     with:
       repo-name: owner/repo  # required
-      operating-systems-array: '["ubuntu", "windows", "macos"]'  # required
+      operating-systems-array: '["ubuntu", "windows", "macos"]'  # optional
       python-versions-array: '["3.9", "3.10", "3.11", "3.12"]'  # required
       upload-to-codecov: true  # optional
     secrets:
