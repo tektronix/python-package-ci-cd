@@ -11,6 +11,13 @@ Python Packaging CI/CD.
 
 ## Actions
 
+- [`create-unique-testpypi-version`](./actions/create-unique-testpypi-version/readme.md)
+    - This action creates a unique version number for the provided Python package to enable uploading
+        the package to [TestPyPI](https://test.pypi.org).
+- [`find-unreleased-changelog-items`](./actions/find-unreleased-changelog-items/readme.md)
+    - This action will parse the repository's `CHANGELOG.md` file to determine if
+        there are any unreleased items. It will fail if it cannot find any unreleased
+        items, as this means that the package is not ready for a new release.
 - [`update-development-dependencies`](./actions/update-development-dependencies/readme.md)
     - This action enables updating Python development dependencies using the
         [`Poetry`](https://python-poetry.org/) package manager in-sync with
@@ -32,7 +39,7 @@ Python Packaging CI/CD.
         [`hynek/build-and-inspect-python-package`](https://github.com/hynek/build-and-inspect-python-package)
         action, and then verify that the package can be installed on each combination of Python version
         and operating system specified.
-- [\`package-release.yml](./workflows/package-release.md)
+- [`package-release.yml`](./workflows/package-release.md)
     - This workflow will create a new release of the package using the
         [`python-semantic-release`](https://python-semantic-release.readthedocs.io/en/latest/) tool.
         It will then build the package, upload the package to [TestPyPI](https://test.pypi.org) and [PyPI](https://pypi.org),
