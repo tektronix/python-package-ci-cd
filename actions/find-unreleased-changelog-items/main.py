@@ -2,6 +2,9 @@
 
 It will exit with a non-zero exit code if there are no unreleased entries.
 
+This script needs to be run from a directory that contains a `pyproject.toml` file and a
+`CHANGELOG.md` file.
+
 This script will do a few things:
     - It will copy the necessary files into the defined template directory to properly update the
         CHANGELOG.md and render the GitHub Release Notes.
@@ -9,60 +12,18 @@ This script will do a few things:
         the GITHUB_STEP_SUMMARY for easy viewing on the Workflow build summary page.
 """
 
-import argparse
+from __future__ import annotations
+
 import os
 import pathlib
 import re
 import shutil
-import sys
 
 import tomli
 
 _ENV_VAR_TRUE_VALUES = {"1", "true", "yes"}
-RUNNING_IN_GITHUB_ACTIONS = bool(os.getenv("GITHUB_ACTION"))
 PYPROJECT_FILE = pathlib.Path("./pyproject.toml")
 CHANGELOG_FILEPATH = pathlib.Path("./CHANGELOG.md")
-
-
-def _parse_arguments() -> argparse.Namespace:
-    """Parse the command line arguments.
-
-    Returns:
-        The parsed Namespace.
-    """
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--previous-changelog",
-        required=True,
-        action="store",
-        dest="previous_changelog",
-        help=(
-            "The name of the file to copy the contents of the changelog into for use "
-            "in the `python-semantic-release` templates."
-        ),
-    )
-    parser.add_argument(
-        "--previous-release-notes",
-        required=True,
-        action="store",
-        dest="previous_release_notes",
-        help=(
-            "The name of the file to copy the contents of the `## Unreleased` "
-            "section of the changelog into for use in the GitHub Release Notes."
-        ),
-    )
-    parser.add_argument(
-        "--release-level",
-        required=False,
-        action="store",
-        dest="release_level",
-        help=(
-            "Provide the incoming version bump level. If this is provided, the script will "
-            "output the release level and the unreleased changes to the GITHUB_STEP_SUMMARY."
-        ),
-    )
-
-    return parser.parse_args()
 
 
 def _find_template_folder() -> pathlib.Path:
@@ -82,18 +43,28 @@ def _find_template_folder() -> pathlib.Path:
     return template_folder
 
 
-def main() -> None:
+def main(
+    filename_for_previous_changelog: str,
+    filename_for_previous_release_notes: str,
+    release_level: str | None,
+) -> None:
     """Check for entries in the Unreleased section of the CHANGELOG.md file.
+
+    Args:
+        filename_for_previous_changelog: The filename to use to create the previous changelog file.
+        filename_for_previous_release_notes: The filename to use to create the previous
+            release notes file.
+        release_level: The release level to output to the GitHub Workflow Summary.
 
     Raises:
         SystemExit: Indicates no new entries were found.
     """
-    args = _parse_arguments()
-
     # Set the filepaths for the template files
     template_folder = _find_template_folder()
-    template_changelog_filepath = template_folder / args.previous_changelog
-    template_release_notes_filepath = template_folder / args.previous_release_notes
+    template_changelog_filepath = template_folder / pathlib.Path(filename_for_previous_changelog)
+    template_release_notes_filepath = template_folder / pathlib.Path(
+        filename_for_previous_release_notes
+    )
 
     release_notes_content = ""
     found_entries = False
@@ -133,9 +104,9 @@ def main() -> None:
 
     # If running in GitHub Actions, and the release_level is set, send the release level and
     # incoming changes to the GitHub Summary
-    if RUNNING_IN_GITHUB_ACTIONS and args.release_level:
+    if release_level:
         summary_contents = (
-            f"## Workflow Inputs\n- release-level: {args.release_level}\n"
+            f"## Workflow Inputs\n- release-level: {release_level}\n"
             f"## Incoming Changes\n{release_notes_content.replace('## Unreleased', '').strip()}\n"
         )
         print(
@@ -146,18 +117,10 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    # Handle GitHub Actions environment variables
+    # Run the main function
     # See https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables
-    if RUNNING_IN_GITHUB_ACTIONS:
-        sys.argv.extend(
-            [
-                "--previous-changelog",
-                os.getenv("INPUT_PREVIOUS-CHANGELOG-FILENAME", ""),
-                "--previous-release-notes",
-                os.getenv("INPUT_PREVIOUS-RELEASE-NOTES-FILENAME", ""),
-            ]
-        )
-        if release_level := os.getenv("INPUT_RELEASE-LEVEL"):
-            sys.argv.extend(["--release-level", release_level])
-
-    main()
+    main(
+        filename_for_previous_changelog=os.environ["INPUT_PREVIOUS-CHANGELOG-FILENAME"],
+        filename_for_previous_release_notes=os.environ["INPUT_PREVIOUS-RELEASE-NOTES-FILENAME"],
+        release_level=os.getenv("INPUT_RELEASE-LEVEL"),
+    )

@@ -12,6 +12,10 @@ contents of the `## Unreleased` section of the `CHANGELOG.md` file that
 will be used to fill in the GitHub Release Notes.
 
 > [!IMPORTANT]
+> This action requires that the `pyproject.toml` and `CHANGELOG.md` files exist in the
+> current working directory.
+
+> [!IMPORTANT]
 > This action requires the `CHANGELOG.md` file to be in a format that is based on
 > [Keep a Changelog](https://keepachangelog.com)
 > (the primary difference is the `## [Unreleased]` section is replaced by an `## Unreleased` section),
@@ -31,7 +35,7 @@ will be used to fill in the GitHub Release Notes.
 
 | Input variable                    | Necessity | Description                                                                                                                                                                                                                                                                             | Default                                     |
 | --------------------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| `release-level`                   | required  | The level of the impending release. Must be one of `major`, `minor`, or `patch`. Setting this input will trigger the action to output the summary of the incoming release level and the unreleased changes to the Workflow Summary.                                                     |                                             |
+| `release-level`                   | optional  | The level of the impending release. Must be one of `major`, `minor`, or `patch`. Setting this input will trigger the action to output the summary of the incoming release level and the unreleased changes to the Workflow Summary.                                                     |                                             |
 | `previous-changelog-filename`     | optional  | The name of the file to copy the contents of the changelog into for use in the `python-semantic-release` templates. This file will be created inside of the directory defined by the `[tool.semantic_release.changelog.template_dir]` key in the `pyproject.toml` file.                 | `'.previous_changelog_for_template.md'`     |
 | `previous-release-notes-filename` | optional  | The name of the file to copy the contents of the `## Unreleased` section of the changelog into for use in the GitHub Release Notes. This file will be created inside of the directory defined by the `[tool.semantic_release.changelog.template_dir]` key in the `pyproject.toml` file. | `'.previous_release_notes_for_template.md'` |
 

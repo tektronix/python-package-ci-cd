@@ -197,7 +197,19 @@ def main(
     run_pre_commit: bool,
     update_pre_commit: bool,
 ) -> None:
-    """Run the script to update the development dependencies."""
+    """Run the script to update the development dependencies.
+
+    Args:
+        repo_root: The root directory of the repository.
+        dependency_dict: The dictionary of dependency groups to update, where each key is a group
+            and each value is a list of dependencies to update within that group.
+        export_dependency_groups: The list of dependency groups to export the requirements for,
+            along with optional folder paths.
+        pre_commit_hook_skip_list: The list of pre-commit hooks to skip.
+        install_dependencies: A boolean indicating if the dependencies should be installed.
+        run_pre_commit: A boolean indicating if the pre-commit hooks should be run.
+        update_pre_commit: A boolean indicating if the pre-commit hooks should be updated.
+    """
     python_executable = sys.executable
 
     repo_root_path = Path(repo_root).resolve()

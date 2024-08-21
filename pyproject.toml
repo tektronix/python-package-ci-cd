@@ -31,13 +31,12 @@ python-semantic-release = "^9.8.7"
 tomli = "^2.0.1"
 
 [tool.poetry.group.udd.dependencies]  # dependencies for actions/update-development-dependencies
-maison = "^1.4.3"  # yamlfix is broken with v2.0+
 poetry = "^1.8.0"
 poetry-plugin-export = "^1.7.1"
 pre-commit = "^3.7"
 pypi-simple = "^1.6.0"
 toml-sort = "^0.23.1"
-yamlfix = "^1.16.0"
+yamlfix = "^1.17.0"
 
 [tool.pyright]
 ignore = [
