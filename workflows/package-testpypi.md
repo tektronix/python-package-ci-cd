@@ -24,8 +24,21 @@ officially released version of the package, incrementing `N` each time the workf
 > to a single build. This concurrency is shared across the `'pypi (Reusable Workflows)'` concurrency
 > group within the repo that calls this workflow.
 
+> [!NOTE]
+> This workflow uses the following GitHub Actions:
+>
+> - [actions/checkout](https://github.com/actions/checkout)
+> - [tektronix/python-package-ci-cd/actions/create-unique-testpypi-version](https://github.com/tektronix/python-package-ci-cd)
+> - [hynek/build-and-inspect-python-package](https://github.com/hynek/build-and-inspect-python-package)
+> - [actions/download-artifact](https://github.com/actions/download-artifact)
+> - [pypa/gh-action-pypi-publish](https://github.com/pypa/gh-action-pypi-publish)
+> - [actions/setup-python](https://github.com/actions/setup-python)
+> - [nick-fields/retry](https://github.com/nick-fields/retry)
+>
+> See the [Workflow file][workflow-file] for the currently used versions of each GitHub Action.
+
 > [!TIP]
-> See the [Workflow file](../.github/workflows/_reusable-package-testpypi.yml) for implementation details.
+> See the [Workflow file][workflow-file] for implementation details.
 
 ## Inputs
 
@@ -54,3 +67,5 @@ jobs:
       id-token: write
       attestations: write
 ```
+
+[workflow-file]: ../.github/workflows/_reusable-package-testpypi.yml

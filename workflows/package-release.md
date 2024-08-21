@@ -46,8 +46,23 @@ will be used to fill in the GitHub Release Notes.
 > to a single build. This concurrency is shared across the `'pypi (Reusable Workflows)'` concurrency
 > group within the repo that calls this workflow.
 
+> [!NOTE]
+> This workflow uses the following GitHub Actions:
+>
+> - [actions/checkout](https://github.com/actions/checkout)
+> - [tektronix/python-package-ci-cd/actions/find-unreleased-changelog-items](https://github.com/tektronix/python-package-ci-cd)
+> - [python-semantic-release/python-semantic-release](https://github.com/python-semantic-release/python-semantic-release)
+> - [hynek/build-and-inspect-python-package](https://github.com/hynek/build-and-inspect-python-package)
+> - [actions/download-artifact](https://github.com/actions/download-artifact)
+> - [pypa/gh-action-pypi-publish](https://github.com/pypa/gh-action-pypi-publish)
+> - [python-semantic-release/upload-to-gh-release](https://github.com/python-semantic-release/upload-to-gh-release)
+> - [actions/setup-python](https://github.com/actions/setup-python)
+> - [nick-fields/retry](https://github.com/nick-fields/retry)
+>
+> See the [Workflow file][workflow-file] for the currently used versions of each GitHub Action.
+
 > [!TIP]
-> See the [Workflow file](../.github/workflows/_reusable-package-release.yml) for implementation details.
+> See the [Workflow file][workflow-file] for implementation details.
 
 ## Inputs
 
@@ -113,3 +128,5 @@ jobs:
       ssh-signing-key-private: ${{ secrets.SSH_SIGNING_KEY_PRIVATE }}
       ssh-signing-key-public: ${{ secrets.SSH_SIGNING_KEY_PUBLIC }}
 ```
+
+[workflow-file]: ../.github/workflows/_reusable-package-release.yml

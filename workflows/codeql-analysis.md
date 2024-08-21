@@ -15,8 +15,17 @@ for the complete list of supported languages.
 >   security-events: write
 > ```
 
+> [!NOTE]
+> This workflow uses the following GitHub Actions:
+>
+> - [actions/checkout](https://github.com/actions/checkout)
+> - [github/codeql-action/init](https://github.com/github/codeql-action)
+> - [github/codeql-action/analyze](https://github.com/github/codeql-action)
+>
+> See the [Workflow file][workflow-file] for the currently used versions of each GitHub Action.
+
 > [!TIP]
-> See the [Workflow file](../.github/workflows/_reusable-codeql-analysis.yml) for implementation details.
+> See the [Workflow file][workflow-file] for implementation details.
 
 ## Inputs
 
@@ -43,3 +52,5 @@ jobs:
       contents: read
       security-events: write
 ```
+
+[workflow-file]: ../.github/workflows/_reusable-codeql-analysis.yml

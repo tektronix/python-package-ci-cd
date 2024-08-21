@@ -14,8 +14,18 @@ updates for the Python dependencies.
 >   contents: write
 > ```
 
+> [!NOTE]
+> This workflow uses the following GitHub Actions:
+>
+> - [actions/checkout](https://github.com/actions/checkout)
+> - [crazy-max/ghaction-import-gpg](https://github.com/crazy-max/ghaction-import-gpg)
+> - [tektronix/python-package-ci-cd/actions/update-development-dependencies](https://github.com/tektronix/python-package-ci-cd)
+> - [stefanzweifel/git-auto-commit-action](https://github.com/stefanzweifel/git-auto-commit-action)
+>
+> See the [Workflow file][workflow-file] for the currently used versions of each GitHub Action.
+
 > [!TIP]
-> See the [Workflow file](../.github/workflows/_reusable-update-python-and-pre-commit-dependencies.yml) for implementation details.
+> See the [Workflow file][workflow-file] for implementation details.
 
 ## Inputs
 
@@ -62,3 +72,5 @@ jobs:
       gpg-signing-key-private: ${{ secrets.GPG_SIGNING_KEY_PRIVATE }}
       gpg-signing-key-passphrase: ${{ secrets.GPG_SIGNING_KEY_PASSPHRASE }}
 ```
+
+[workflow-file]: ../.github/workflows/_reusable-update-python-and-pre-commit-dependencies.yml

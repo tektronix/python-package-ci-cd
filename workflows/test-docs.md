@@ -51,8 +51,20 @@ commands =
 > For builds on other branches (or builds triggered by Pull Requests), the workflow will cancel
 > any currently running builds for the same branch (or Pull Request).
 
+> [!NOTE]
+> This workflow uses the following GitHub Actions:
+>
+> - [actions/checkout](https://github.com/actions/checkout)
+> - [actions/setup-node](https://github.com/actions/setup-node)
+> - [actions/setup-python](https://github.com/actions/setup-python)
+> - [thedoctor0/zip-release](https://github.com/thedoctor0/zip-release)
+> - [actions/upload-artifact](https://github.com/actions/upload-artifact)
+> - [re-actors/alls-green](https://github.com/re-actors/alls-green)
+>
+> See the [Workflow file][workflow-file] for the currently used versions of each GitHub Action.
+
 > [!TIP]
-> See the [Workflow file](../.github/workflows/_reusable-test-docs.yml) for implementation details.
+> See the [Workflow file][workflow-file] for implementation details.
 
 ## Inputs
 
@@ -83,3 +95,5 @@ jobs:
       python-version: '3.11'  # required
       tox-env-array: '["docs", "doctests"]'  # optional
 ```
+
+[workflow-file]: ../.github/workflows/_reusable-test-docs.yml

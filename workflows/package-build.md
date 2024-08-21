@@ -21,8 +21,19 @@ and operating system specified.
 > For builds on other branches (or builds triggered by Pull Requests), the workflow will cancel
 > any currently running builds for the same branch (or Pull Request).
 
+> [!NOTE]
+> This workflow uses the following GitHub Actions:
+>
+> - [actions/checkout](https://github.com/actions/checkout)
+> - [hynek/build-and-inspect-python-package](https://github.com/hynek/build-and-inspect-python-package)
+> - [actions/download-artifact](https://github.com/actions/download-artifact)
+> - [actions/setup-python](https://github.com/actions/setup-python)
+> - [re-actors/alls-green](https://github.com/re-actors/alls-green)
+>
+> See the [Workflow file][workflow-file] for the currently used versions of each GitHub Action.
+
 > [!TIP]
-> See the [Workflow file](../.github/workflows/_reusable-package-build.yml) for implementation details.
+> See the [Workflow file][workflow-file] for implementation details.
 
 ## Inputs
 
@@ -58,3 +69,5 @@ jobs:
       id-token: write
       attestations: write
 ```
+
+[workflow-file]: ../.github/workflows/_reusable-package-build.yml
