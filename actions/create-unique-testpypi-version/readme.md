@@ -11,6 +11,9 @@ custom version number in a subsequent workflow step. This action currently only 
 This action is used in the [package-testpypi.yml](../../workflows/package-testpypi.md)
 reusable workflow.
 
+> [!IMPORTANT]
+> This action requires that the `pyproject.toml` file exists in the current working directory.
+
 ## Inputs
 
 | Input variable | Necessity | Description                                             | Default |
