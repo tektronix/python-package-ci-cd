@@ -31,6 +31,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Overwrite CHANGELOG.md with dummy data
+        run: |
+          cat <<EOF > CHANGELOG.md
+          # Changelog
+          ---
+          ## Unreleased
+          Things to be included in the next release go here.
+          ### Added
+          - Something will be added
+          ---
+          ## v0.0.1
+          ### Added
+          - Something was done here in the past
+          EOF
       - uses: ./actions/find-unreleased-changelog-items
         with:
           release-level: patch
@@ -52,6 +66,7 @@ jobs:
           fail: true
       - name: Verify that the GITHUB_STEP_SUMMARY is not empty
         run: |
+          ls -l "$(dirname $GITHUB_STEP_SUMMARY)"
           if [ -s "$GITHUB_STEP_SUMMARY" ]; then
             echo "GITHUB_STEP_SUMMARY is not empty."
           else
@@ -66,10 +81,11 @@ jobs:
         with:
           update-pre-commit: true
           run-pre-commit: true
+          dependency-dict: '{"dev": ["pyright"]}'
           pre-commit-hook-skip-list: remove-tabs,forbid-tabs,check-readthedocs,check-dependabot,check-github-actions,check-github-workflows,commitizen,blacken-docs,yamlfix,hadolint,mdformat,markdown-link-check,check-poetry,toml-sort-fix,pyright,poetry-audit,ruff,ruff-format,docformatter
           export-dependency-groups: udd:actions/update-development-dependencies,cutv:actions/create-unique-testpypi-version,fci:actions/find-unreleased-changelog-items
   # Check that all jobs passed
-  check-tests-passed:
+  check-action-tests-passed:
     if: ${{ !cancelled() }}
     needs:
       - test-create-unique-testpypi-version
