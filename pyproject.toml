@@ -6,7 +6,9 @@ exclude_lines = [
   "pragma: no cover"
 ]
 fail_under = 100
+include_namespace_packages = true
 omit = [
+  "contributor_setup.py"
 ]
 show_missing = true
 skip_empty = true
@@ -14,6 +16,7 @@ skip_empty = true
 [tool.coverage.run]
 branch = true
 cover_pylib = false
+source = ["actions", "scripts"]
 
 [tool.docformatter]
 close-quotes-on-newline = true
@@ -29,7 +32,7 @@ version = "0.0.0"
 [tool.poetry.dependencies]
 python = "~3.12"
 
-[tool.poetry.group.cutv.dependencies]  # dependencies for actions/create-unique-testpypi-version
+[tool.poetry.group.cutv.dependencies]  # dependencies for actions/create_unique_testpypi_version
 poetry-core = "^1.9.0"
 pypi-simple = "^1.6.0"
 tomli = "^2.0.1"
@@ -39,8 +42,11 @@ tomli-w = "^1.0.0"
 pip = "^24.0"
 poetry-audit-plugin = "^0.4.0"
 poetry-pre-commit-plugin = "^0.1.2"
+pre-commit = "^3.8.0"
 pyright = "1.1.377"
 python-semantic-release = "^9.8.7"
+tox = "^4.18.0"
+tox-gh-actions = "^3.2.0"
 
 [tool.poetry.group.fci.dependencies]  # dependencies for actions/find-unreleased-changelog-items
 tomli = "^2.0.1"
@@ -94,6 +100,7 @@ markers = [
   'docs',
   'order'
 ]
+pythonpath = "."
 xfail_strict = true
 
 [tool.pytest_env]
@@ -160,3 +167,39 @@ all = true
 in_place = true
 spaces_before_inline_comment = 2
 overrides."tool.poetry.*".inline_arrays = false
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+requires = tox>4
+no_package = True
+envlist = py312,tests
+skip_missing_interpreters = False
+
+[gh-actions]
+python =
+    3.12: py312
+
+[testenv]
+install_command = python -I -m pip install --upgrade --upgrade-strategy=eager {opts} {packages}
+deps =
+    poetry
+commands_pre =
+    poetry install
+commands =
+    !tests: pre-commit run --all-files
+    pytest -vv --showlocals --cov --junitxml={tox_root}/.results_{envname}/results.xml --cov-report=term --cov-report=xml:{tox_root}/.coverage_{envname}.xml --cov-report=html:{tox_root}/.results_{envname}/html --self-contained-html --html={tox_root}/.results_{envname}/results.html
+
+[testenv:tests]
+basepython = python
+deps =
+    -rtests/requirements.txt
+passenv =
+    pytest_report_title
+setenv =
+    pytest_github_report = true
+    pytest_use_blanks = true
+    GITHUB_STEP_SUMMARY = {tox_root}/.results_{envname}/github_report.md
+commands_pre =
+
+"""

@@ -52,7 +52,7 @@ def update_github_actions_version(filepath: Path, incoming_version: str) -> None
         print(f'No GitHub Workflow/Action usage found in "{filepath}", skipping update.')
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     if not (new_version := os.getenv("NEW_VERSION")):
         msg = "NEW_VERSION environment variable is not set"
         raise SystemExit(msg)
