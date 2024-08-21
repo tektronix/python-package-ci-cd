@@ -72,8 +72,9 @@ jobs:
   check-tests-passed:
     if: ${{ !cancelled() }}
     needs:
-      - test-update-development-dependencies
       - test-create-unique-testpypi-version
+      - test-find-unreleased-changelog-items
+      - test-update-development-dependencies
     runs-on: ubuntu-latest
     steps:
       - name: Decide whether the needed jobs succeeded or failed
