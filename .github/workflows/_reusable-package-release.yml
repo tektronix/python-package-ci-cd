@@ -93,7 +93,14 @@ jobs:
         run: |
           echo "The `python-versions-array` input is required when `build-and-publish-python-package` is set to `true`."
           exit 1
-      - uses: ./actions/find-unreleased-changelog-items
+      - if: ${{ endsWith(github.repository, '/python-package-ci-cd') }}  # Run the local action when this is run in the python-package-ci-cd repository
+        uses: ./actions/find-unreleased-changelog-items
+        with:
+          release-level: ${{ inputs.release-level }}
+          previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
+          previous-release-notes-filename: ${{ inputs.previous-release-notes-filename }}
+      - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
+        uses: tektronix/python-package-ci-cd/actions/find-unreleased-changelog-items@main  # TODO: update branch to tag
         with:
           release-level: ${{ inputs.release-level }}
           previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
@@ -117,7 +124,13 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.checkout-token }}
-      - uses: ./actions/find-unreleased-changelog-items
+      - if: ${{ endsWith(github.repository, '/python-package-ci-cd') }}  # Run the local action when this is run in the python-package-ci-cd repository
+        uses: ./actions/find-unreleased-changelog-items
+        with:
+          previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
+          previous-release-notes-filename: ${{ inputs.previous-release-notes-filename }}
+      - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
+        uses: tektronix/python-package-ci-cd/actions/find-unreleased-changelog-items@main  # TODO: update branch to tag
         with:
           previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
           previous-release-notes-filename: ${{ inputs.previous-release-notes-filename }}

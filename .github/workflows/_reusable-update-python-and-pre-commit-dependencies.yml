@@ -12,9 +12,10 @@ on:
         required: true
         type: string
       dependency-dict:
-        description: 'Specify a valid dictionary of dependency groups to update, where
-          each key is a dependency group name, and each value is a tuple of dependencies
-          to update within that group, e.g. {"dev": ("pylint", "ruff"), "tests": ("ruff")}.'
+        description: 'Specify a valid JSON dictionary of dependency groups to update,
+          where each key is a dependency group name, and each value is a list of dependencies
+          to update within that group, e.g. {"dev": ["pylint", "ruff"], "tests": ["ruff"]}.
+          Use an empty string, e.g. "", for dependencies located in the default group'
         required: false
         type: string
         default: ''
@@ -76,7 +77,16 @@ jobs:
           passphrase: ${{ secrets.gpg-signing-key-passphrase }}
           git_user_signingkey: true
           git_commit_gpgsign: true
-      - uses: ./actions/update-development-dependencies
+      - if: ${{ endsWith(github.repository, '/python-package-ci-cd') }}  # Run the local action when this is run in the python-package-ci-cd repository
+        uses: ./actions/update-development-dependencies
+        with:
+          dependency-dict: ${{ inputs.dependency-dict }}
+          update-pre-commit: ${{ inputs.update-pre-commit }}
+          run-pre-commit: ${{ inputs.run-pre-commit }}
+          pre-commit-hook-skip-list: ${{ inputs.pre-commit-hook-skip-list }}
+          export-dependency-groups: ${{ inputs.export-dependency-groups }}
+      - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
+        uses: tektronix/python-package-ci-cd/actions/update-development-dependencies@main  # TODO: update branch to tag
         with:
           dependency-dict: ${{ inputs.dependency-dict }}
           update-pre-commit: ${{ inputs.update-pre-commit }}

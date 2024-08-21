@@ -20,15 +20,15 @@ This action enables updating Python development dependencies using the
 
 ## Inputs
 
-| Input variable              | Necessity | Description                                                                                                                                                                                                                         | Default |
-| --------------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `repo-root`                 | optional  | The root directory of the repository.                                                                                                                                                                                               | `.`     |
-| `install-dependencies`      | optional  | A boolean indicating if packages should be installed via poetry (this is not usually needed).                                                                                                                                       | `false` |
-| `dependency-dict`           | optional  | Specify a valid dictionary of dependency groups to update, where each key is a dependency group name, and each value is a tuple of dependencies to update within that group, e.g. `{"dev": ("pylint", "ruff"), "tests": ("ruff")}`. | `{}`    |
-| `update-pre-commit`         | optional  | A boolean indicating if the pre-commit hooks should be updated.                                                                                                                                                                     | `false` |
-| `run-pre-commit`            | optional  | A boolean indicating to run the pre-commit hooks to perform auto-fixing after updating the dependencies. Setting this input to `true` will also set the update-pre-commit input to `true`.                                          | `false` |
-| `pre-commit-hook-skip-list` | optional  | A comma-separated list of pre-commit hooks to skip (only applicable when `run-pre-commit=true`).                                                                                                                                    | `""`    |
-| `export-dependency-groups`  | optional  | A comma-separated list of dependency groups to export to a `requirements.txt` file. The format is `group1,group2:custom-path/to/test/folder`.                                                                                       | `""`    |
+| Input variable              | Necessity | Description                                                                                                                                                                                                                                                                                                              | Default |
+| --------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `repo-root`                 | optional  | The root directory of the repository.                                                                                                                                                                                                                                                                                    | `.`     |
+| `install-dependencies`      | optional  | A boolean indicating if packages should be installed via poetry (this is not usually needed).                                                                                                                                                                                                                            | `false` |
+| `dependency-dict`           | optional  | Specify a valid JSON dictionary of dependency groups to update, where each key is a dependency group name, and each value is a list of dependencies to update within that group, e.g. `'{"dev": ["pylint", "ruff"], "tests": ["ruff"]}'`. Use an empty string, e.g. `""`, for dependencies located in the default group' | `{}`    |
+| `update-pre-commit`         | optional  | A boolean indicating if the pre-commit hooks should be updated.                                                                                                                                                                                                                                                          | `false` |
+| `run-pre-commit`            | optional  | A boolean indicating to run the pre-commit hooks to perform auto-fixing after updating the dependencies. Setting this input to `true` will also set the update-pre-commit input to `true`.                                                                                                                               | `false` |
+| `pre-commit-hook-skip-list` | optional  | A comma-separated list of pre-commit hooks to skip (only applicable when `run-pre-commit=true`).                                                                                                                                                                                                                         | `""`    |
+| `export-dependency-groups`  | optional  | A comma-separated list of dependency groups to export to a `requirements.txt` file. The format is `group1,group2:custom-path/to/test/folder`.                                                                                                                                                                            | `""`    |
 
 ## Example
 
@@ -50,7 +50,7 @@ jobs:
         with:
           repo-root: .  # optional, defaults to the current working directory
           install-dependencies: false  # optional, this will almost never need to be set to true
-          dependency-dict: '{"dev": ("pylint", "ruff"), "tests": ("ruff")}'  # optional, but without it nothing will get updated by Poetry
+          dependency-dict: '{"dev": ["pylint", "ruff"], "tests": ["ruff"]}'  # optional, but without it nothing will get updated by Poetry
           update-pre-commit: true  # optional
           run-pre-commit: true  # optional
           pre-commit-hook-skip-list: 'pylint'  # optional, hooks that don't auto-fix things can (and probably should be) skipped
