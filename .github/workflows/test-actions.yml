@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Overwrite CHANGELOG.md with dummy data
         run: |
-          cat <<EOF > CHANGELOG.md
+          cat <<EOF > temp_changelog.md
           # Changelog
           ---
           ## Unreleased
@@ -45,32 +45,74 @@ jobs:
           ### Added
           - Something was done here in the past
           EOF
+          cp temp_changelog.md CHANGELOG.md
       - uses: ./actions/find-unreleased-changelog-items
         with:
           release-level: patch
           previous-changelog-filename: .testing_previous_changelog_for_template.md
           previous-release-notes-filename: .testing_previous_release_notes_for_template.md
-      - name: Verify .testing_previous_changelog_for_template.md exists
-        uses: andstor/file-existence-action@v3
+      - name: Get Job Summary
+        uses: austenstone/job-summary@v2.0
+        id: job-summary
         with:
-          files: ./python_semantic_release_templates/.testing_previous_changelog_for_template.md
-          ignore_case: false
-          follow_symbolic_links: false
-          fail: true
-      - name: Verify .testing_previous_release_notes_for_template.md exists
-        uses: andstor/file-existence-action@v3
-        with:
-          files: ./python_semantic_release_templates/.testing_previous_release_notes_for_template.md
-          ignore_case: false
-          follow_symbolic_links: false
-          fail: true
-      - name: Verify that the GITHUB_STEP_SUMMARY is not empty
+          name: temp_job_summary
+          create-pdf: false
+          create-pdf-artifact: false
+          create-md: true
+          create-md-artifact: false
+      - name: Compare CHANGELOG.md with the created copy
         run: |
-          ls -l "$(dirname $GITHUB_STEP_SUMMARY)"
-          if [ -s "$GITHUB_STEP_SUMMARY" ]; then
-            echo "GITHUB_STEP_SUMMARY is not empty."
+          FILE1="./temp_changelog.md"
+          FILE2="./python_semantic_release_templates/.testing_previous_changelog_for_template.md"
+          if diff "$FILE1" "$FILE2" > /dev/null; then
+            echo "The changelog files are identical."
           else
-            echo "GITHUB_STEP_SUMMARY is empty."
+            echo "The changelog files are different. Here is the diff:"
+            diff "$FILE1" "$FILE2"
+            exit 1
+          fi
+      - name: Verify created Release Notes
+        run: |
+          FILE_PATH="./python_semantic_release_templates/.testing_previous_release_notes_for_template.md"
+
+          # Define the multiline string using a heredoc
+          MULTILINE_STRING=$(cat <<'EOF'
+          ## Unreleased
+          Things to be included in the next release go here.
+          ### Added
+          - Something will be added
+          EOF
+          )
+
+          # Compare the file contents to the multiline string
+          if diff <(echo "$MULTILINE_STRING") "$FILE_PATH" > /dev/null; then
+            echo "The Release Notes contents are correct."
+          else
+            echo "The Release Notes contents are not correct. Here is the diff:"
+            diff <(echo "$MULTILINE_STRING") "$FILE_PATH"
+            exit 1
+          fi
+      - name: Verify the Job Summary
+        run: |
+          FILE_PATH="./temp_job_summary.md"
+
+          # Define the multiline string using a heredoc
+          MULTILINE_STRING=$(cat <<'EOF'
+          ## Workflow Inputs
+          - release-level: patch
+          ## Incoming Changes
+          Things to be included in the next release go here.
+          ### Added
+          - Something will be added
+          EOF
+          )
+
+          # Compare the file contents to the multiline string
+          if diff <(echo "$MULTILINE_STRING") "$FILE_PATH" > /dev/null; then
+            echo "The Job Summary contents are correct."
+          else
+            echo "The Job Summary contents are not correct. Here is the diff:"
+            diff <(echo "$MULTILINE_STRING") "$FILE_PATH"
             exit 1
           fi
   test-update-development-dependencies:
