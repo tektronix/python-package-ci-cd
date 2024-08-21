@@ -22,8 +22,21 @@ repository's Python package.
 >   attestations: write
 > ```
 
+> [!NOTE]
+> This workflow uses the following GitHub Actions:
+>
+> - [actions/checkout](https://github.com/actions/checkout)
+> - [actions/setup-python](https://github.com/actions/setup-python)
+> - [anchore/sbom-action](https://github.com/anchore/sbom-action)
+> - [actions/attest-build-provenance](https://github.com/actions/attest-build-provenance)
+> - [anchore/scan-action](https://github.com/anchore/scan-action)
+> - [actions/upload-artifact](https://github.com/actions/upload-artifact)
+> - [github/codeql-action/upload-sarif](https://github.com/github/codeql-action)
+>
+> See the [Workflow file][workflow-file] for the currently used versions of each GitHub Action.
+
 > [!TIP]
-> See the [Workflow file](../.github/workflows/_reusable-sbom-scan.yml) for implementation details.
+> See the [Workflow file][workflow-file] for implementation details.
 
 ## Example
 
@@ -45,3 +58,5 @@ jobs:
       id-token: write
       attestations: write
 ```
+
+[workflow-file]: ../.github/workflows/_reusable-sbom-scan.yml

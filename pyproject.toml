@@ -12,20 +12,31 @@ package-mode = false
 version = "0.0.0"
 
 [tool.poetry.dependencies]
+python = "~3.12"
+
+[tool.poetry.group.cutv.dependencies]  # dependencies for actions/create-unique-testpypi-version
+poetry-core = "^1.9.0"
+pypi-simple = "^1.6.0"
+tomli = "^2.0.1"
+tomli-w = "^1.0.0"
+
+[tool.poetry.group.dev.dependencies]
 pip = "^24.0"
 poetry-audit-plugin = "^0.4.0"
 poetry-pre-commit-plugin = "^0.1.2"
-pyright = "1.1.376"
-python = "~3.12"
+pyright = "1.1.377"
+python-semantic-release = "^9.8.7"
+
+[tool.poetry.group.fci.dependencies]  # dependencies for actions/find-unreleased-changelog-items
+tomli = "^2.0.1"
 
 [tool.poetry.group.udd.dependencies]  # dependencies for actions/update-development-dependencies
-maison = "^1.4.3"  # yamlfix is broken with v2.0+
 poetry = "^1.8.0"
 poetry-plugin-export = "^1.7.1"
 pre-commit = "^3.7"
 pypi-simple = "^1.6.0"
 toml-sort = "^0.23.1"
-yamlfix = "^1.16.0"
+yamlfix = "^1.17.0"
 
 [tool.pyright]
 ignore = [

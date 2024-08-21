@@ -1,5 +1,6 @@
 |                  |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Testing**      | [![Action testing status](https://github.com/tektronix/python-package-ci-cd/actions/workflows/test-actions.yml/badge.svg?branch=main)](https://github.com/tektronix/python-package-ci-cd/actions/workflows/test-actions.yml)                                                                                                                                                                                                                                                                                                                                                                               |
 | **Code Quality** | [![CodeQL status](https://github.com/tektronix/python-package-ci-cd/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/tektronix/python-package-ci-cd/actions/workflows/codeql-analysis.yml) [![CodeFactor grade](https://www.codefactor.io/repository/github/tektronix/python-package-ci-cd/badge)](https://www.codefactor.io/repository/github/tektronix/python-package-ci-cd) [![pre-commit status](https://results.pre-commit.ci/badge/github/tektronix/python-package-ci-cd/main.svg)](https://results.pre-commit.ci/latest/github/tektronix/python-package-ci-cd/main) |
 
 ---
@@ -11,7 +12,14 @@ Python Packaging CI/CD.
 
 ## Actions
 
-- [`update-development-dependencies`](./actions/update-development-dependencies.md)
+- [`create-unique-testpypi-version`](./actions/create-unique-testpypi-version/readme.md)
+    - This action creates a unique version number for the provided Python package to enable uploading
+        the package to [TestPyPI](https://test.pypi.org).
+- [`find-unreleased-changelog-items`](./actions/find-unreleased-changelog-items/readme.md)
+    - This action will parse the repository's `CHANGELOG.md` file to determine if
+        there are any unreleased items. It will fail if it cannot find any unreleased
+        items, as this means that the package is not ready for a new release.
+- [`update-development-dependencies`](./actions/update-development-dependencies/readme.md)
     - This action enables updating Python development dependencies using the
         [`Poetry`](https://python-poetry.org/) package manager in-sync with
         [`pre-commit`](https://pre-commit.com/) hooks.
@@ -32,6 +40,17 @@ Python Packaging CI/CD.
         [`hynek/build-and-inspect-python-package`](https://github.com/hynek/build-and-inspect-python-package)
         action, and then verify that the package can be installed on each combination of Python version
         and operating system specified.
+- [`package-release.yml`](./workflows/package-release.md)
+    - This workflow will create a new release of the package using the
+        [`python-semantic-release`](https://python-semantic-release.readthedocs.io/en/latest/) tool.
+        It will then build the package, upload the package to [TestPyPI](https://test.pypi.org) and [PyPI](https://pypi.org),
+        create a new GitHub Release for the project,
+        and then verify that the package can be installed from [TestPyPI](https://test.pypi.org) and [PyPI](https://pypi.org).
+- [`package-testpypi.yml`](./workflows/package-testpypi.md)
+    - This workflow will build the package using the
+        [`hynek/build-and-inspect-python-package`](https://github.com/hynek/build-and-inspect-python-package)
+        action, upload the package to [TestPyPI](https://test.pypi.org), and then verify that the package
+        can be installed from [TestPyPI](https://test.pypi.org).
 - [`publish-api-comparison.yml`](./workflows/publish-api-comparison.md)
     - This workflow will use the output from the
         [`check-api-for-breaking-changes.yml`](./workflows/check-api-for-breaking-changes.md) workflow to create a

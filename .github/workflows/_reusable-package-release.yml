@@ -1,0 +1,269 @@
+---
+name: Publish to GitHub & PyPI
+on:
+  workflow_call:
+    inputs:
+      package-name:
+        description: The name of the package to release.
+        required: true
+        type: string
+      repo-name:
+        description: The full name of the repository to use to gate uploads, in the
+          format `owner/repo`.
+        required: true
+        type: string
+      commit-user-name:
+        description: The name of the user to use when committing changes to the repository.
+        required: true
+        type: string
+      commit-user-email:
+        description: The email of the user to use when committing changes to the repository.
+        required: true
+        type: string
+      release-level:
+        description: |
+          Select the release level:
+          patch for backward compatible minor changes and bug fixes,
+          minor for backward compatible larger changes,
+          major for non-backward compatible changes.
+        required: true
+        type: string
+      build-and-publish-python-package:
+        description: A boolean value that determines whether to build and publish
+          the Python package. If set to `false`, the package binaries will not be
+          built or published to PyPI, TestPyPI, or GitHub Releases.
+        required: false
+        default: true
+        type: boolean
+      python-versions-array:
+        description: A valid JSON array of Python versions to validate the installation
+          with. If `build-and-publish-python-package` is set to `true`, this input
+          must be provided or the build will fail.
+        required: false
+        type: string
+      operating-systems-array:
+        description: A valid JSON array of operating system names to validate the
+          installation on.
+        required: false
+        default: '["ubuntu", "windows", "macos"]'
+        type: string
+      previous-changelog-filename:
+        description: The name of the file to copy the contents of the changelog into
+          for use in the `python-semantic-release` templates. This file will be created
+          inside of the directory defined by the `[tool.semantic_release.changelog.template_dir]`
+          key in the `pyproject.toml` file.
+        required: false
+        type: string
+        default: .previous_changelog_for_template.md
+      previous-release-notes-filename:
+        description: The name of the file to copy the contents of the `## Unreleased`
+          section of the changelog into for use in the GitHub Release Notes. This
+          file will be created inside of the directory defined by the `[tool.semantic_release.changelog.template_dir]`
+          key in the `pyproject.toml` file.
+        required: false
+        type: string
+        default: .previous_release_notes_for_template.md
+    secrets:
+      checkout-token:
+        description: The token to use for checking out the repository, must have permissions
+          to write back to the repository.
+        required: true
+      ssh-signing-key-private:
+        description: A private SSH key associated with the account that owns the `checkout-token`
+          that will be used to sign the commit and tag created by `python-semantic-release`.
+        required: true
+      ssh-signing-key-public:
+        description: The public SSH key linked to the `secrets.ssh-signing-key-private`
+          key that will be used to sign the commit and tag created by `python-semantic-release`.
+        required: true
+concurrency:
+  group: pypi (Reusable Workflows)
+env:
+  PACKAGE_NAME: ${{ inputs.package-name }}
+jobs:
+  # Print the inputs to the summary page for easy User Review
+  print-inputs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: python-versions-array input missing
+        if: ${{ inputs.build-and-publish-python-package == true && (inputs.python-versions-array == null || inputs.python-versions-array == '') }}
+        run: |
+          echo "The `python-versions-array` input is required when `build-and-publish-python-package` is set to `true`."
+          exit 1
+      - if: ${{ endsWith(github.repository, '/python-package-ci-cd') }}  # Run the local action when this is run in the python-package-ci-cd repository
+        uses: ./actions/find-unreleased-changelog-items
+        with:
+          release-level: ${{ inputs.release-level }}
+          previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
+          previous-release-notes-filename: ${{ inputs.previous-release-notes-filename }}
+      - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
+        uses: tektronix/python-package-ci-cd/actions/find-unreleased-changelog-items@main  # TODO: update branch to tag
+        with:
+          release-level: ${{ inputs.release-level }}
+          previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
+          previous-release-notes-filename: ${{ inputs.previous-release-notes-filename }}
+  # Update the package version using the python-semantic-release package (https://github.com/python-semantic-release/python-semantic-release)
+  # This job requires a Personal Access Token (Classic) with
+  # the public_repo permission. It also needs a private/public
+  # ssh key pair that can be used for signing. The public key must
+  # be attached to the account as an SSH signing key.
+  bump-version:
+    name: Update package version
+    needs: [print-inputs]
+    if: github.repository == inputs.repo-name && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: package-release-gate
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.checkout-token }}
+      - if: ${{ endsWith(github.repository, '/python-package-ci-cd') }}  # Run the local action when this is run in the python-package-ci-cd repository
+        uses: ./actions/find-unreleased-changelog-items
+        with:
+          previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
+          previous-release-notes-filename: ${{ inputs.previous-release-notes-filename }}
+      - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
+        uses: tektronix/python-package-ci-cd/actions/find-unreleased-changelog-items@main  # TODO: update branch to tag
+        with:
+          previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
+          previous-release-notes-filename: ${{ inputs.previous-release-notes-filename }}
+      - name: Python Semantic Release
+        uses: python-semantic-release/python-semantic-release@v9.8.3
+        id: release
+        with:
+          force: ${{ inputs.release-level }}
+          root_options: -v --strict
+          github_token: ${{ secrets.checkout-token }}
+          git_committer_email: ${{ vars.commit-user-email }}
+          git_committer_name: ${{ vars.commit-user-name }}
+          ssh_public_signing_key: ${{ secrets.ssh-signing-key-public }}
+          ssh_private_signing_key: ${{ secrets.ssh-signing-key-private }}
+    outputs:
+      built-version: ${{ steps.release.outputs.version }}
+  # Build the newly updated package
+  pypi-build:
+    name: Build package
+    needs: [print-inputs, bump-version]
+    if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
+      && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main  # Make sure to check out the latest commit on main, not the original commit that triggered the workflow
+          fetch-depth: 0
+      - name: Build package
+        uses: hynek/build-and-inspect-python-package@v2.8.0
+        with:
+          attest-build-provenance-github: 'true'
+  # Upload the official package version to TestPyPI
+  upload-testpypi:
+    name: Upload package to TestPyPI
+    needs: [print-inputs, pypi-build]
+    if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
+      && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: package-testpypi
+    permissions:
+      id-token: write
+    steps:
+      - name: Download built packages
+        uses: actions/download-artifact@v4
+        with:
+          name: Packages
+          path: dist
+      - name: Upload package to Test PyPI
+        uses: pypa/gh-action-pypi-publish@v1.9.0
+        with:
+          repository-url: https://test.pypi.org/legacy/
+  # Upload the official package version to PyPI
+  upload-pypi:
+    name: Upload package to PyPI
+    needs: [print-inputs, upload-testpypi]
+    if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
+      && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: package-release
+    permissions:
+      id-token: write
+    steps:
+      - name: Download built packages
+        uses: actions/download-artifact@v4
+        with:
+          name: Packages
+          path: dist
+      - name: Upload package to PyPI
+        uses: pypa/gh-action-pypi-publish@v1.9.0
+  # Upload the official package binaries to the GitHub Release
+  upload-github:
+    name: Upload package to GitHub Release
+    needs: [print-inputs, upload-pypi]
+    if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
+      && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main  # Make sure to check out the latest commit on main, not the original commit that triggered the workflow
+          fetch-depth: 0
+      - name: Download built packages
+        uses: actions/download-artifact@v4
+        with:
+          name: Packages
+          path: dist
+      - name: Publish package distributions to GitHub Releases
+        uses: python-semantic-release/upload-to-gh-release@main
+        with:
+          root_options: -v --strict
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+  # Verify the package can be installed on all necessary python versions and operating systems from both TestPyPI and PyPI
+  pypi-install:
+    name: Install package
+    needs:
+      - print-inputs
+      - bump-version
+      - pypi-build
+      - upload-testpypi
+      - upload-pypi
+      - upload-github
+    if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
+      && github.ref == 'refs/heads/main'
+    runs-on: ${{ matrix.os-name }}-latest
+    permissions: {}
+    strategy:
+      fail-fast: false
+      matrix:
+        os-name: ${{ fromJSON(inputs.operating-systems-array) }}
+        python-version: ${{ fromJSON(inputs.python-versions-array) }}
+        index_urls:
+          - ''
+          - ' --index-url=https://test.pypi.org/simple/ --extra-index-url=https://pypi.org/simple'
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          check-latest: true
+      - name: Test installing package
+        # A retry is used to allow for some downtime before the package is installable
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 10
+          max_attempts: 5
+          retry_wait_seconds: 30
+          warning_on_retry: false
+          command: pip install${{ matrix.index_urls }} "${{ env.PACKAGE_NAME }}==${{
+            needs.bump-version.outputs.built-version }}"

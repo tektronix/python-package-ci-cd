@@ -14,20 +14,30 @@ updates for the Python dependencies.
 >   contents: write
 > ```
 
+> [!NOTE]
+> This workflow uses the following GitHub Actions:
+>
+> - [actions/checkout](https://github.com/actions/checkout)
+> - [crazy-max/ghaction-import-gpg](https://github.com/crazy-max/ghaction-import-gpg)
+> - [tektronix/python-package-ci-cd/actions/update-development-dependencies](https://github.com/tektronix/python-package-ci-cd)
+> - [stefanzweifel/git-auto-commit-action](https://github.com/stefanzweifel/git-auto-commit-action)
+>
+> See the [Workflow file][workflow-file] for the currently used versions of each GitHub Action.
+
 > [!TIP]
-> See the [Workflow file](../.github/workflows/_reusable-update-python-and-pre-commit-dependencies.yml) for implementation details.
+> See the [Workflow file][workflow-file] for implementation details.
 
 ## Inputs
 
-| Input variable              | Necessity | Description                                                                                                                                                                                                                         | Default |
-| --------------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `commit-user-name`          | required  | The name of the user to use when committing changes to the repository.                                                                                                                                                              |         |
-| `commit-user-email`         | required  | The email of the user to use when committing changes to the repository.                                                                                                                                                             |         |
-| `dependency-dict`           | optional  | Specify a valid dictionary of dependency groups to update, where each key is a dependency group name, and each value is a tuple of dependencies to update within that group, e.g. `{"dev": ("pylint", "ruff"), "tests": ("ruff")}`. | `{}`    |
-| `update-pre-commit`         | optional  | A boolean indicating if the pre-commit hooks should be updated.                                                                                                                                                                     | `false` |
-| `run-pre-commit`            | optional  | A boolean indicating to run the pre-commit hooks to perform auto-fixing after updating the dependencies. Setting this input to `true` will also set the update-pre-commit input to `true`.                                          | `false` |
-| `pre-commit-hook-skip-list` | optional  | A comma-separated list of pre-commit hooks to skip (only applicable when `run-pre-commit=true`).                                                                                                                                    | `""`    |
-| `export-dependency-groups`  | optional  | A comma-separated list of dependency groups to export to a `requirements.txt` file. The format is `group1,group2:custom-path/to/test/folder`.                                                                                       | `""`    |
+| Input variable              | Necessity | Description                                                                                                                                                                                                                                                                                                              | Default |
+| --------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `commit-user-name`          | required  | The name of the user to use when committing changes to the repository.                                                                                                                                                                                                                                                   |         |
+| `commit-user-email`         | required  | The email of the user to use when committing changes to the repository.                                                                                                                                                                                                                                                  |         |
+| `dependency-dict`           | optional  | Specify a valid JSON dictionary of dependency groups to update, where each key is a dependency group name, and each value is a list of dependencies to update within that group, e.g. `'{"dev": ["pylint", "ruff"], "tests": ["ruff"]}'`. Use an empty string, e.g. `""`, for dependencies located in the default group' | `{}`    |
+| `update-pre-commit`         | optional  | A boolean indicating if the pre-commit hooks should be updated.                                                                                                                                                                                                                                                          | `false` |
+| `run-pre-commit`            | optional  | A boolean indicating to run the pre-commit hooks to perform auto-fixing after updating the dependencies. Setting this input to `true` will also set the update-pre-commit input to `true`.                                                                                                                               | `false` |
+| `pre-commit-hook-skip-list` | optional  | A comma-separated list of pre-commit hooks to skip (only applicable when `run-pre-commit=true`).                                                                                                                                                                                                                         | `""`    |
+| `export-dependency-groups`  | optional  | A comma-separated list of dependency groups to export to a `requirements.txt` file. The format is `group1,group2:custom-path/to/test/folder`.                                                                                                                                                                            | `""`    |
 
 ## Secrets
 
@@ -62,3 +72,5 @@ jobs:
       gpg-signing-key-private: ${{ secrets.GPG_SIGNING_KEY_PRIVATE }}
       gpg-signing-key-passphrase: ${{ secrets.GPG_SIGNING_KEY_PASSPHRASE }}
 ```
+
+[workflow-file]: ../.github/workflows/_reusable-update-python-and-pre-commit-dependencies.yml

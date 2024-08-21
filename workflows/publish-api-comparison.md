@@ -23,8 +23,17 @@ changes, usually a Workflow named `Check Public API for Breaking Changes`, see t
 >   pull-requests: write
 > ```
 
+> [!NOTE]
+> This workflow uses the following GitHub Actions:
+>
+> - [dawidd6/action-download-artifact](https://github.com/dawidd6/action-download-artifact)
+> - [8BitJonny/gh-get-current-pr](https://github.com/8BitJonny/gh-get-current-pr)
+> - [marocchino/sticky-pull-request-comment](https://github.com/marocchino/sticky-pull-request-comment)
+>
+> See the [Workflow file][workflow-file] for the currently used versions of each GitHub Action.
+
 > [!TIP]
-> See the [Workflow file](../.github/workflows/_reusable-publish-api-comparison.yml) for implementation details.
+> See the [Workflow file][workflow-file] for implementation details.
 
 ## Example
 
@@ -41,3 +50,5 @@ jobs:
       checks: write
       pull-requests: write
 ```
+
+[workflow-file]: ../.github/workflows/_reusable-publish-api-comparison.yml

@@ -1,0 +1,16 @@
+---
+name: Create unique .postN version number for test.pypi.org
+description: Create a unique .postN version number to enable the package to be uploaded
+  to test.pypi.org. The unique version number is written back to the `pyproject.toml`
+  file in order to enable building the package with the custom version number. This
+  action only supports the Poetry package manager.
+inputs:
+  package-name:
+    description: The name of the package on test.pypi.org
+    required: true
+outputs:
+  new-version:
+    description: The new version number with a .postN suffix
+runs:
+  using: docker
+  image: Dockerfile

@@ -1,0 +1,141 @@
+---
+name: Test repository Actions
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+# Cancel running jobs for the same workflow and branch.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+# IMPORTANT: Any new jobs need to be added to the check-tests-passed job to ensure they correctly gate code changes
+jobs:
+  test-create-unique-testpypi-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./actions/create-unique-testpypi-version
+        id: create-version
+        with:
+          package-name: example-package  # this is an example package that is never updated
+      - name: Verify the new version number
+        run: |
+          if [ "${{ steps.create-version.outputs.new-version }}" != "0.0.1.post1" ]; then
+            echo "The new version number doesn't match the expected version number."
+            echo "Expected: 0.0.1.post1"
+            echo "Actual: ${{ steps.create-version.outputs.new-version }}"
+            exit 1
+          fi
+  test-find-unreleased-changelog-items:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Overwrite CHANGELOG.md with dummy data
+        run: |
+          cat <<EOF > temp_changelog.md
+          # Changelog
+          ---
+          ## Unreleased
+          Things to be included in the next release go here.
+          ### Added
+          - Something will be added
+          ---
+          ## v0.0.1
+          ### Added
+          - Something was done here in the past
+          EOF
+          cp temp_changelog.md CHANGELOG.md
+      - uses: ./actions/find-unreleased-changelog-items
+        with:
+          release-level: patch
+          previous-changelog-filename: .testing_previous_changelog_for_template.md
+          previous-release-notes-filename: .testing_previous_release_notes_for_template.md
+      - name: Get Job Summary
+        uses: austenstone/job-summary@v2.0
+        id: job-summary
+        with:
+          name: temp_job_summary
+          create-pdf: false
+          create-pdf-artifact: false
+          create-md: true
+          create-md-artifact: false
+      - name: Compare CHANGELOG.md with the created copy
+        run: |
+          FILE1="./temp_changelog.md"
+          FILE2="./python_semantic_release_templates/.testing_previous_changelog_for_template.md"
+          if diff "$FILE1" "$FILE2" > /dev/null; then
+            echo "The changelog files are identical."
+          else
+            echo "The changelog files are different. Here is the diff:"
+            diff "$FILE1" "$FILE2"
+            exit 1
+          fi
+      - name: Verify created Release Notes
+        run: |
+          FILE_PATH="./python_semantic_release_templates/.testing_previous_release_notes_for_template.md"
+
+          # Define the multiline string using a heredoc
+          MULTILINE_STRING=$(cat <<'EOF'
+          ## Unreleased
+          Things to be included in the next release go here.
+          ### Added
+          - Something will be added
+          EOF
+          )
+
+          # Compare the file contents to the multiline string
+          if diff <(echo "$MULTILINE_STRING") "$FILE_PATH" > /dev/null; then
+            echo "The Release Notes contents are correct."
+          else
+            echo "The Release Notes contents are not correct. Here is the diff:"
+            diff <(echo "$MULTILINE_STRING") "$FILE_PATH"
+            exit 1
+          fi
+      - name: Verify the Job Summary
+        run: |
+          FILE_PATH="./temp_job_summary.md"
+
+          # Define the multiline string using a heredoc
+          MULTILINE_STRING=$(cat <<'EOF'
+          ## Workflow Inputs
+          - release-level: patch
+          ## Incoming Changes
+          Things to be included in the next release go here.
+          ### Added
+          - Something will be added
+          EOF
+          )
+
+          # Compare the file contents to the multiline string
+          if diff <(echo "$MULTILINE_STRING") "$FILE_PATH" > /dev/null; then
+            echo "The Job Summary contents are correct."
+          else
+            echo "The Job Summary contents are not correct. Here is the diff:"
+            diff <(echo "$MULTILINE_STRING") "$FILE_PATH"
+            exit 1
+          fi
+  test-update-development-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./actions/update-development-dependencies
+        with:
+          update-pre-commit: true
+          run-pre-commit: true
+          dependency-dict: '{"dev": ["pyright"]}'
+          pre-commit-hook-skip-list: remove-tabs,forbid-tabs,check-readthedocs,check-dependabot,check-github-actions,check-github-workflows,commitizen,blacken-docs,yamlfix,hadolint,mdformat,markdown-link-check,check-poetry,toml-sort-fix,pyright,poetry-audit,ruff,ruff-format,docformatter
+          export-dependency-groups: udd:actions/update-development-dependencies,cutv:actions/create-unique-testpypi-version,fci:actions/find-unreleased-changelog-items
+  # Check that all jobs passed
+  check-action-tests-passed:
+    if: ${{ !cancelled() }}
+    needs:
+      - test-create-unique-testpypi-version
+      - test-find-unreleased-changelog-items
+      - test-update-development-dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Decide whether the needed jobs succeeded or failed
+        uses: re-actors/alls-green@release/v1
+        with:
+          jobs: ${{ toJSON(needs) }}

@@ -1,0 +1,85 @@
+---
+name: Publish to TestPyPI
+on:
+  workflow_call:
+    inputs:
+      package-name:
+        description: The name of the package to build, upload, and install.
+        required: true
+        type: string
+      repo-name:
+        description: The full name of the repository to use to gate uploads, in the
+          format `owner/repo`.
+        required: true
+        type: string
+concurrency:
+  group: pypi (Reusable Workflows)
+env:
+  PACKAGE_NAME: ${{ inputs.package-name }}
+jobs:
+  test-pypi-build:
+    name: Build package with unique version for test.pypi.org
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - if: ${{ endsWith(github.repository, '/python-package-ci-cd') }}  # Run the local action when this is run in the python-package-ci-cd repository
+        uses: ./actions/create-unique-testpypi-version
+        id: create-version
+        with:
+          package-name: ${{ inputs.package-name }}
+      - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
+        uses: tektronix/python-package-ci-cd/actions/create-unique-testpypi-version@main  # TODO: update branch to tag
+        id: create-version
+        with:
+          package-name: ${{ inputs.package-name }}
+      - name: Build package
+        uses: hynek/build-and-inspect-python-package@v2.8.0
+        with:
+          attest-build-provenance-github: 'true'
+    outputs:
+      built-version: ${{ steps.create-version.outputs.new-version }}
+  test-pypi-upload:
+    name: Upload package to test.pypi.org
+    needs: [test-pypi-build]
+    if: github.repository == inputs.repo-name
+    runs-on: ubuntu-latest
+    environment: package-testpypi
+    permissions:
+      id-token: write
+    steps:
+      - name: Download built packages
+        uses: actions/download-artifact@v4
+        with:
+          name: Packages
+          path: dist
+      - name: Upload package to Test PyPI
+        uses: pypa/gh-action-pypi-publish@v1.9.0
+        with:
+          repository-url: https://test.pypi.org/legacy/
+  test-pypi-install:
+    name: Install package from test.pypi.org
+    needs: [test-pypi-build, test-pypi-upload]
+    if: github.repository == inputs.repo-name
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: pyproject.toml
+      - name: Test installing from test.pypi.org
+        # A retry is used to allow for some downtime before the package is installable
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 10
+          max_attempts: 5
+          retry_wait_seconds: 30
+          warning_on_retry: false
+          command: pip install --index-url=https://test.pypi.org/simple/ --extra-index-url=https://pypi.org/simple
+            "$PACKAGE_NAME==${{ needs.test-pypi-build.outputs.built-version }}"

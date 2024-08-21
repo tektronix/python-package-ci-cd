@@ -13,9 +13,10 @@ inputs:
     required: false
     default: 'false'
   dependency-dict:
-    description: 'Specify a valid dictionary of dependency groups to update, where
-      each key is a dependency group name, and each value is a tuple of dependencies
-      to update within that group, e.g. {"dev": ("pylint", "ruff"), "tests": ("ruff")}.'
+    description: 'Specify a valid JSON dictionary of dependency groups to update,
+      where each key is a dependency group name, and each value is a list of dependencies
+      to update within that group, e.g. {"dev": ["pylint", "ruff"], "tests": ["ruff"]}.
+      Use an empty string, e.g. "", for dependencies located in the default group'
     required: false
     default: ''
   update-pre-commit:

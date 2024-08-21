@@ -20,8 +20,17 @@ The full list of files that this workflow checks for is as follows:
 - `.github/dependabot.@(yml|yaml)`
 - `.github/workflows/codeql-analysis.@(yml|yaml)`
 
+> [!NOTE]
+> This workflow uses the following GitHub Actions:
+>
+> - [actions/checkout](https://github.com/actions/checkout)
+> - [andstor/file-existence-action](https://github.com/andstor/file-existence-action)
+> - [re-actors/alls-green](https://github.com/re-actors/alls-green)
+>
+> See the [Workflow file][workflow-file] for the currently used versions of each GitHub Action.
+
 > [!TIP]
-> See the [Workflow file](../.github/workflows/_reusable-enforce-community-standards.yml) for implementation details.
+> See the [Workflow file][workflow-file] for implementation details.
 
 ## Example
 
@@ -37,3 +46,5 @@ jobs:
   enforce-community-standards:
     uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-enforce-community-standards.yml@main  # it is recommended to use the latest release tag instead of `main`
 ```
+
+[workflow-file]: ../.github/workflows/_reusable-enforce-community-standards.yml

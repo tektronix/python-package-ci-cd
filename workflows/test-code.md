@@ -87,8 +87,22 @@ commands_pre =
 > For builds on other branches (or builds triggered by Pull Requests), the workflow will cancel
 > any currently running builds for the same branch (or Pull Request).
 
+> [!NOTE]
+> This workflow uses the following GitHub Actions:
+>
+> - [actions/checkout](https://github.com/actions/checkout)
+> - [actions/setup-node](https://github.com/actions/setup-node)
+> - [actions/setup-python](https://github.com/actions/setup-python)
+> - [actions/upload-artifact](https://github.com/actions/upload-artifact)
+> - [codecov/codecov-action](https://github.com/codecov/codecov-action)
+> - [actions/download-artifact](https://github.com/actions/download-artifact)
+> - [phoenix-actions/test-reporting](https://github.com/phoenix-actions/test-reporting)
+> - [re-actors/alls-green](https://github.com/re-actors/alls-green)
+>
+> See the [Workflow file][workflow-file] for the currently used versions of each GitHub Action.
+
 > [!TIP]
-> See the [Workflow file](../.github/workflows/_reusable-test-code.yml) for implementation details.
+> See the [Workflow file][workflow-file] for implementation details.
 
 ## Inputs
 
@@ -123,9 +137,11 @@ jobs:
     uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-test-code.yml@main  # it is recommended to use the latest release tag instead of `main`
     with:
       repo-name: owner/repo  # required
-      operating-systems-array: '["ubuntu", "windows", "macos"]'  # required
+      operating-systems-array: '["ubuntu", "windows", "macos"]'  # optional
       python-versions-array: '["3.9", "3.10", "3.11", "3.12"]'  # required
       upload-to-codecov: true  # optional
     secrets:
       codecov-token: ${{ secrets.CODECOV_TOKEN }}  # optional
 ```
+
+[workflow-file]: ../.github/workflows/_reusable-test-code.yml
