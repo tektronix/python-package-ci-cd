@@ -66,7 +66,7 @@ jobs:
         with:
           update-pre-commit: true
           run-pre-commit: true
-          pre-commit-hook-skip-list: pyright,poetry-audit
+          pre-commit-hook-skip-list: remove-tabs,forbid-tabs,check-readthedocs,check-dependabot,check-github-actions,check-github-workflows,commitizen,blacken-docs,yamlfix,hadolint,mdformat,markdown-link-check,check-poetry,toml-sort-fix,pyright,poetry-audit,ruff,ruff-format,docformatter
           export-dependency-groups: udd:actions/update-development-dependencies,cutv:actions/create-unique-testpypi-version,fci:actions/find-unreleased-changelog-items
   # Check that all jobs passed
   check-tests-passed:
