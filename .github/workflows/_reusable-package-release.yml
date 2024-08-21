@@ -100,7 +100,7 @@ jobs:
           previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
           previous-release-notes-filename: ${{ inputs.previous-release-notes-filename }}
       - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
-        uses: tektronix/python-package-ci-cd/actions/find-unreleased-changelog-items@main  # TODO: update branch to tag
+        uses: tektronix/python-package-ci-cd/actions/find-unreleased-changelog-items@v0.0.0
         with:
           release-level: ${{ inputs.release-level }}
           previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
@@ -130,7 +130,7 @@ jobs:
           previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
           previous-release-notes-filename: ${{ inputs.previous-release-notes-filename }}
       - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
-        uses: tektronix/python-package-ci-cd/actions/find-unreleased-changelog-items@main  # TODO: update branch to tag
+        uses: tektronix/python-package-ci-cd/actions/find-unreleased-changelog-items@v0.0.0
         with:
           previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
           previous-release-notes-filename: ${{ inputs.previous-release-notes-filename }}
@@ -225,7 +225,7 @@ jobs:
           name: Packages
           path: dist
       - name: Publish package distributions to GitHub Releases
-        uses: python-semantic-release/upload-to-gh-release@main
+        uses: python-semantic-release/upload-to-gh-release@v9.8.7
         with:
           root_options: -v --strict
           github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -94,6 +94,9 @@ order-by-type = false
 [tool.ruff.lint.per-file-ignores]
 
 [tool.semantic_release]
+build_command = """
+  python -m scripts.bump_version_in_files
+"""
 version_toml = [
   "pyproject.toml:tool.poetry.version"
 ]
