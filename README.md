@@ -12,7 +12,7 @@ Python Packaging CI/CD.
 
 ## Actions
 
-- [`create-unique-testpypi-version`](./actions/create-unique-testpypi-version/readme.md)
+- [`create_unique_testpypi_version`](actions/create_unique_testpypi_version/readme.md)
     - This action creates a unique version number for the provided Python package to enable uploading
         the package to [TestPyPI](https://test.pypi.org).
 - [`find-unreleased-changelog-items`](./actions/find-unreleased-changelog-items/readme.md)

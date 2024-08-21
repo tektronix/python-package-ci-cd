@@ -19,14 +19,14 @@ def temporary_directory(tmp_path: Path) -> Path:
     return test_dir
 
 
-def test_get_file_paths(temporary_directory: Path):
+def test_get_file_paths(temporary_directory: Path) -> None:
     """Test the get_file_paths function."""
     path_list = get_file_paths([temporary_directory.as_posix()])
     assert len(path_list) == 3
-    assert all([file_path.is_file() for file_path in path_list])
+    assert all(file_path.is_file() for file_path in path_list)
 
 
-def test_update_github_actions_version_no_match(temporary_directory: Path):
+def test_update_github_actions_version_no_match(temporary_directory: Path) -> None:
     """Update version when no match is found."""
     file_path = temporary_directory / "file1.txt"
     file_path.write_text("no match here")
@@ -34,7 +34,7 @@ def test_update_github_actions_version_no_match(temporary_directory: Path):
     assert file_path.read_text() == "no match here"
 
 
-def test_update_github_actions_version_with_match(temporary_directory: Path):
+def test_update_github_actions_version_with_match(temporary_directory: Path) -> None:
     """Update version when a match is found."""
     file_path = temporary_directory / "file2.txt"
     file_path.write_text("uses: tektronix/python-package-ci-cd/some-action@v1.0.0")
@@ -42,7 +42,7 @@ def test_update_github_actions_version_with_match(temporary_directory: Path):
     assert file_path.read_text() == "uses: tektronix/python-package-ci-cd/some-action@v1.2.3"
 
 
-def test_update_github_actions_version_multiple_matches(temporary_directory: Path):
+def test_update_github_actions_version_multiple_matches(temporary_directory: Path) -> None:
     """Update version when multiple matches are found."""
     file_path = temporary_directory / "file3.txt"
     file_path.write_text(

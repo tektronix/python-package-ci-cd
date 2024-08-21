@@ -11,11 +11,11 @@ concurrency:
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 # IMPORTANT: Any new jobs need to be added to the check-tests-passed job to ensure they correctly gate code changes
 jobs:
-  test-create-unique-testpypi-version:
+  test-create_unique_testpypi_version:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./actions/create-unique-testpypi-version
+      - uses: ./actions/create_unique_testpypi_version
         id: create-version
         with:
           package-name: example-package  # this is an example package that is never updated
@@ -125,12 +125,12 @@ jobs:
           run-pre-commit: true
           dependency-dict: '{"dev": ["pyright"]}'
           pre-commit-hook-skip-list: remove-tabs,forbid-tabs,check-readthedocs,check-dependabot,check-github-actions,check-github-workflows,commitizen,blacken-docs,yamlfix,hadolint,mdformat,markdown-link-check,check-poetry,toml-sort-fix,pyright,poetry-audit,ruff,ruff-format,docformatter
-          export-dependency-groups: udd:actions/update-development-dependencies,cutv:actions/create-unique-testpypi-version,fci:actions/find-unreleased-changelog-items
+          export-dependency-groups: udd:actions/update-development-dependencies,cutv:actions/create_unique_testpypi_version,fci:actions/find-unreleased-changelog-items
   # Check that all jobs passed
   check-action-tests-passed:
     if: ${{ !cancelled() }}
     needs:
-      - test-create-unique-testpypi-version
+      - test-create_unique_testpypi_version
       - test-find-unreleased-changelog-items
       - test-update-development-dependencies
     runs-on: ubuntu-latest
