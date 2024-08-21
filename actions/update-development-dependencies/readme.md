@@ -5,7 +5,8 @@ This action enables updating Python development dependencies using the
 [`pre-commit`](https://pre-commit.com/) hooks.
 
 > [!IMPORTANT]
-> Any job using this action must have at least the following permissions:
+> If the job that is using this action needs to commit the changes that this action makes, the job
+> must have at least the following permissions:
 >
 > ```yaml
 > permissions:
