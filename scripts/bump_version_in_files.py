@@ -14,7 +14,7 @@ from pathlib import Path
 DIRECTORIES_TO_SEARCH = [".github", "workflows", "actions"]
 FILES_TO_UPDATE = [Path("README.md")]
 GITHUB_WORKFLOW_AND_ACTION_REGEX = re.compile(
-    r"(uses: tektronix/python-package-ci-cd/.*?@v)\d+\.\d+\.\d+"
+    r"(uses: tektronix/python-package-ci-cd/.*?)@v\d+\.\d+\.\d+"
 )
 
 
@@ -47,7 +47,7 @@ def update_github_actions_version(filepath: Path, incoming_version: str) -> None
             rf"\1@v{incoming_version}", file_content
         )
         print(f'Bumping version in "{filepath}" to', incoming_version)
-        filepath.write_text(updated_content + "\n")
+        filepath.write_text(updated_content)
     else:
         print(f'No GitHub Workflow/Action usage found in "{filepath}", skipping update.')
 
