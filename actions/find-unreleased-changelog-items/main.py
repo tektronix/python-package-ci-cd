@@ -43,22 +43,17 @@ def _find_template_folder() -> pathlib.Path:
     return template_folder
 
 
-def main(
-    filename_for_previous_changelog: str,
-    filename_for_previous_release_notes: str,
-    release_level: str | None,
-) -> None:
+def main() -> None:
     """Check for entries in the Unreleased section of the CHANGELOG.md file.
-
-    Args:
-        filename_for_previous_changelog: The filename to use to create the previous changelog file.
-        filename_for_previous_release_notes: The filename to use to create the previous
-            release notes file.
-        release_level: The release level to output to the GitHub Workflow Summary.
 
     Raises:
         SystemExit: Indicates no new entries were found.
     """
+    # Load in the GitHub Action inputs
+    # See https://docs.github.com/en/actions/sharing-automations/creating-actions/metadata-syntax-for-github-actions#example-specifying-inputs
+    filename_for_previous_changelog = os.environ["INPUT_PREVIOUS-CHANGELOG-FILENAME"]
+    filename_for_previous_release_notes = os.environ["INPUT_PREVIOUS-RELEASE-NOTES-FILENAME"]
+    release_level = os.getenv("INPUT_RELEASE-LEVEL")
     # Set the filepaths for the template files
     template_folder = _find_template_folder()
     template_changelog_filepath = template_folder / pathlib.Path(filename_for_previous_changelog)
@@ -118,9 +113,4 @@ def main(
 
 if __name__ == "__main__":
     # Run the main function
-    # See https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables
-    main(
-        filename_for_previous_changelog=os.environ["INPUT_PREVIOUS-CHANGELOG-FILENAME"],
-        filename_for_previous_release_notes=os.environ["INPUT_PREVIOUS-RELEASE-NOTES-FILENAME"],
-        release_level=os.getenv("INPUT_RELEASE-LEVEL"),
-    )
+    main()

@@ -187,29 +187,19 @@ def _export_requirements_files(python_executable: str, dependency_groups: list[s
         _sort_requirements_file(Path(f"{output_folder}/requirements.txt"))
 
 
-def main(
-    repo_root: str,
-    dependency_dict: dict[str, list[str]],
-    export_dependency_groups: list[str],
-    pre_commit_hook_skip_list: str,
-    *,
-    install_dependencies: bool,
-    run_pre_commit: bool,
-    update_pre_commit: bool,
-) -> None:
-    """Run the script to update the development dependencies.
-
-    Args:
-        repo_root: The root directory of the repository.
-        dependency_dict: The dictionary of dependency groups to update, where each key is a group
-            and each value is a list of dependencies to update within that group.
-        export_dependency_groups: The list of dependency groups to export the requirements for,
-            along with optional folder paths.
-        pre_commit_hook_skip_list: The list of pre-commit hooks to skip.
-        install_dependencies: A boolean indicating if the dependencies should be installed.
-        run_pre_commit: A boolean indicating if the pre-commit hooks should be run.
-        update_pre_commit: A boolean indicating if the pre-commit hooks should be updated.
-    """
+def main() -> None:
+    """Run the script to update the development dependencies."""
+    # Load in the GitHub Action inputs
+    # See https://docs.github.com/en/actions/sharing-automations/creating-actions/metadata-syntax-for-github-actions#example-specifying-inputs
+    repo_root = os.environ["INPUT_REPO-ROOT"]
+    dependency_dict = _convert_dict_input(os.environ["INPUT_DEPENDENCY-DICT"])
+    export_dependency_groups = [
+        x for x in os.environ["INPUT_EXPORT-DEPENDENCY-GROUPS"].split(",") if x
+    ]
+    pre_commit_hook_skip_list = os.environ["INPUT_PRE-COMMIT-HOOK-SKIP-LIST"]
+    install_dependencies = os.environ["INPUT_INSTALL-DEPENDENCIES"].lower() in _ENV_VAR_TRUE_VALUES
+    run_pre_commit = os.environ["INPUT_RUN-PRE-COMMIT"].lower() in _ENV_VAR_TRUE_VALUES
+    update_pre_commit = os.environ["INPUT_UPDATE-PRE-COMMIT"].lower() in _ENV_VAR_TRUE_VALUES
     python_executable = sys.executable
 
     repo_root_path = Path(repo_root).resolve()
@@ -236,16 +226,4 @@ def main(
 
 if __name__ == "__main__":
     # Run the main function
-    # See https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables
-    main(
-        repo_root=os.environ["INPUT_REPO-ROOT"],
-        dependency_dict=_convert_dict_input(os.environ["INPUT_DEPENDENCY-DICT"]),
-        export_dependency_groups=[
-            x for x in os.environ["INPUT_EXPORT-DEPENDENCY-GROUPS"].split(",") if x
-        ],
-        pre_commit_hook_skip_list=os.environ["INPUT_PRE-COMMIT-HOOK-SKIP-LIST"],
-        install_dependencies=os.environ["INPUT_INSTALL-DEPENDENCIES"].lower()
-        in _ENV_VAR_TRUE_VALUES,
-        run_pre_commit=os.environ["INPUT_RUN-PRE-COMMIT"].lower() in _ENV_VAR_TRUE_VALUES,
-        update_pre_commit=os.environ["INPUT_UPDATE-PRE-COMMIT"].lower() in _ENV_VAR_TRUE_VALUES,
-    )
+    main()

@@ -24,12 +24,12 @@ _ENV_VAR_TRUE_VALUES = {"1", "true", "yes"}
 PYPROJECT_FILE = pathlib.Path("./pyproject.toml")
 
 
-def main(package_name: str) -> None:
-    """Run the script to create the new version number.
-
-    Args:
-        package_name: The name of the package create a unique version for.
-    """
+def main() -> None:
+    """Run the script to create the new version number."""
+    # Load in the GitHub Action inputs
+    # See https://docs.github.com/en/actions/sharing-automations/creating-actions/metadata-syntax-for-github-actions#example-specifying-inputs
+    package_name = os.environ["INPUT_PACKAGE-NAME"]
+    # Connect to the test.pypi.org server
     test_pypi_server = PyPISimple("https://test.pypi.org/simple/")
     print(f"Checking for the latest version of `{package_name}` on test.pypi.org...")
 
@@ -68,5 +68,4 @@ def main(package_name: str) -> None:
 
 if __name__ == "__main__":
     # Run the main function
-    # See https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables
-    main(package_name=os.environ["INPUT_PACKAGE-NAME"])
+    main()
