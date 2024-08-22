@@ -50,7 +50,7 @@ will be used to fill in the GitHub Release Notes.
 > This workflow uses the following GitHub Actions:
 >
 > - [actions/checkout](https://github.com/actions/checkout)
-> - [tektronix/python-package-ci-cd/actions/find-unreleased-changelog-items](https://github.com/tektronix/python-package-ci-cd)
+> - [tektronix/python-package-ci-cd/actions/find_unreleased_changelog_items](https://github.com/tektronix/python-package-ci-cd)
 > - [python-semantic-release/python-semantic-release](https://github.com/python-semantic-release/python-semantic-release)
 > - [hynek/build-and-inspect-python-package](https://github.com/hynek/build-and-inspect-python-package)
 > - [actions/download-artifact](https://github.com/actions/download-artifact)

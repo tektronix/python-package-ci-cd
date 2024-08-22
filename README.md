@@ -15,7 +15,7 @@ Python Packaging CI/CD.
 - [`create_unique_testpypi_version`](actions/create_unique_testpypi_version/readme.md)
     - This action creates a unique version number for the provided Python package to enable uploading
         the package to [TestPyPI](https://test.pypi.org).
-- [`find-unreleased-changelog-items`](./actions/find-unreleased-changelog-items/readme.md)
+- [`find_unreleased_changelog_items`](./actions/find_unreleased_changelog_items/readme.md)
     - This action will parse the repository's `CHANGELOG.md` file to determine if
         there are any unreleased items. It will fail if it cannot find any unreleased
         items, as this means that the package is not ready for a new release.

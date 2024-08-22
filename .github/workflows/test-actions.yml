@@ -27,7 +27,7 @@ jobs:
             echo "Actual: ${{ steps.create-version.outputs.new-version }}"
             exit 1
           fi
-  test-find-unreleased-changelog-items:
+  test-find_unreleased_changelog_items:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
           - Something was done here in the past
           EOF
           cp temp_changelog.md CHANGELOG.md
-      - uses: ./actions/find-unreleased-changelog-items
+      - uses: ./actions/find_unreleased_changelog_items
         with:
           release-level: patch
           previous-changelog-filename: .testing_previous_changelog_for_template.md
@@ -125,13 +125,13 @@ jobs:
           run-pre-commit: true
           dependency-dict: '{"dev": ["pyright"]}'
           pre-commit-hook-skip-list: remove-tabs,forbid-tabs,check-readthedocs,check-dependabot,check-github-actions,check-github-workflows,commitizen,blacken-docs,yamlfix,hadolint,mdformat,markdown-link-check,check-poetry,toml-sort-fix,pyright,poetry-audit,ruff,ruff-format,docformatter
-          export-dependency-groups: udd:actions/update-development-dependencies,cutv:actions/create_unique_testpypi_version,fci:actions/find-unreleased-changelog-items
+          export-dependency-groups: udd:actions/update-development-dependencies,cutv:actions/create_unique_testpypi_version,fci:actions/find_unreleased_changelog_items
   # Check that all jobs passed
   check-action-tests-passed:
     if: ${{ !cancelled() }}
     needs:
       - test-create_unique_testpypi_version
-      - test-find-unreleased-changelog-items
+      - test-find_unreleased_changelog_items
       - test-update-development-dependencies
     runs-on: ubuntu-latest
     steps:

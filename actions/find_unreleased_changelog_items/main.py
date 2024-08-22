@@ -23,10 +23,10 @@ import tomli
 
 _ENV_VAR_TRUE_VALUES = {"1", "true", "yes"}
 PYPROJECT_FILE = pathlib.Path("./pyproject.toml")
-CHANGELOG_FILEPATH = pathlib.Path("./CHANGELOG.md")
+CHANGELOG_FILE = pathlib.Path("./CHANGELOG.md")
 
 
-def _find_template_folder() -> pathlib.Path:
+def find_template_folder() -> pathlib.Path:
     """Find the template folder from the pyproject.toml file.
 
     Returns:
@@ -55,7 +55,7 @@ def main() -> None:
     filename_for_previous_release_notes = os.environ["INPUT_PREVIOUS-RELEASE-NOTES-FILENAME"]
     release_level = os.getenv("INPUT_RELEASE-LEVEL")
     # Set the filepaths for the template files
-    template_folder = _find_template_folder()
+    template_folder = find_template_folder()
     template_changelog_filepath = template_folder / pathlib.Path(filename_for_previous_changelog)
     template_release_notes_filepath = template_folder / pathlib.Path(
         filename_for_previous_release_notes
@@ -63,7 +63,7 @@ def main() -> None:
 
     release_notes_content = ""
     found_entries = False
-    with CHANGELOG_FILEPATH.open(mode="r", encoding="utf-8") as changelog_file:
+    with CHANGELOG_FILE.open(mode="r", encoding="utf-8") as changelog_file:
         tracking_unreleased = False
         tracking_entries = False
         for line in changelog_file:
@@ -89,11 +89,11 @@ def main() -> None:
                 found_entries = bool(re.match(r"^- \w+", line))
 
     if not found_entries:
-        msg = f"No unreleased entries were found in {CHANGELOG_FILEPATH}."
+        msg = f"No unreleased entries were found in {CHANGELOG_FILE}."
         raise SystemExit(msg)
 
     # Copy the files to the correct location
-    shutil.copy(CHANGELOG_FILEPATH, template_changelog_filepath)
+    shutil.copy(CHANGELOG_FILE, template_changelog_filepath)
     with template_release_notes_filepath.open("w", encoding="utf-8") as template_release_notes:
         template_release_notes.write(release_notes_content.strip() + "\n")
 
@@ -111,6 +111,6 @@ def main() -> None:
             summary_file.write(summary_contents)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     # Run the main function
     main()
