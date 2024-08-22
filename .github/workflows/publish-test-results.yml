@@ -6,7 +6,7 @@ on:
     types: [completed]
 jobs:
   publish-test-results:
-    uses: ./.github/workflows/check-api-for-breaking-changes.yml
+    uses: ./.github/workflows/_reusable-publish-test-results.yml
     with:
       operating-systems-array: '["ubuntu"]'  # this needs to match the operating-systems-array in the test-code.yml file
     permissions:
