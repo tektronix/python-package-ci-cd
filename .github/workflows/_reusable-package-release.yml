@@ -135,7 +135,7 @@ jobs:
           previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
           previous-release-notes-filename: ${{ inputs.previous-release-notes-filename }}
       - name: Python Semantic Release
-        uses: python-semantic-release/python-semantic-release@v9.8.3
+        uses: python-semantic-release/python-semantic-release@v9.8.7
         id: release
         with:
           force: ${{ inputs.release-level }}
