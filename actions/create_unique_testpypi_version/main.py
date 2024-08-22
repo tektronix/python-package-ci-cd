@@ -21,8 +21,6 @@ import tomli_w
 from poetry.core.constraints.version import Version
 from pypi_simple import PyPISimple
 
-_ENV_VAR_TRUE_VALUES = {"1", "true", "yes"}
-
 PYPROJECT_FILE = pathlib.Path("./pyproject.toml")
 
 

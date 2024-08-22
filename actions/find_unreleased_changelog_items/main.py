@@ -21,7 +21,6 @@ import shutil
 
 import tomli
 
-_ENV_VAR_TRUE_VALUES = {"1", "true", "yes"}
 PYPROJECT_FILE = pathlib.Path("./pyproject.toml")
 CHANGELOG_FILE = pathlib.Path("./CHANGELOG.md")
 

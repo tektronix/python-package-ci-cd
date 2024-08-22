@@ -200,6 +200,7 @@ deps =
     -r tests/requirements.txt
     -r actions/create_unique_testpypi_version/requirements.txt
     -r actions/find_unreleased_changelog_items/requirements.txt
+    -r actions/update_development_dependencies/requirements.txt
 passenv =
     pytest_report_title
 setenv =

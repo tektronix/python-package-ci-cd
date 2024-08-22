@@ -1,5 +1,5 @@
 ---
-name: Package Release
+name: Publish to GitHub
 on:
   workflow_dispatch:
     inputs:
