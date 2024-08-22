@@ -1,5 +1,5 @@
 ---
-name: Package Release
+name: Publish to GitHub
 on:
   workflow_dispatch:
     inputs:
@@ -16,7 +16,7 @@ concurrency:
   group: pypi
 jobs:
   package-release:
-    uses: tektronix/tm_devices/.github/workflows/package-release.yml@main
+    uses: ./.github/workflows/_reusable-package-release.yml
     with:
       package-name: python-package-ci-cd
       repo-name: tektronix/python-package-ci-cd

@@ -1,0 +1,21 @@
+---
+name: Test code
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+# Cancel running jobs for the same workflow and branch.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+jobs:
+  test-code:
+    uses: ./.github/workflows/_reusable-test-code.yml
+    with:
+      repo-name: tektronix/python-package-ci-cd
+      operating-systems-array: '["ubuntu"]'  # this needs to match the operating-systems-array in the publish-test-results.yml file
+      python-versions-array: '["3.12"]'  # this needs to match the [tool.poetry.dependencies.python] version in the pyproject.toml file
+      upload-to-codecov: true
+    secrets:
+      codecov-token: ${{ secrets.CODECOV_TOKEN }}

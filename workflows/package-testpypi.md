@@ -28,7 +28,7 @@ officially released version of the package, incrementing `N` each time the workf
 > This workflow uses the following GitHub Actions:
 >
 > - [actions/checkout](https://github.com/actions/checkout)
-> - [tektronix/python-package-ci-cd/actions/create-unique-testpypi-version](https://github.com/tektronix/python-package-ci-cd)
+> - [tektronix/python-package-ci-cd/actions/create_unique_testpypi_version](https://github.com/tektronix/python-package-ci-cd)
 > - [hynek/build-and-inspect-python-package](https://github.com/hynek/build-and-inspect-python-package)
 > - [actions/download-artifact](https://github.com/actions/download-artifact)
 > - [pypa/gh-action-pypi-publish](https://github.com/pypa/gh-action-pypi-publish)

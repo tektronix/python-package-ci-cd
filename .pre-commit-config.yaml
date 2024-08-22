@@ -51,10 +51,9 @@ repos:
         additional_dependencies: [black==24.4.2]  # This may need to be updated/removed in the future once ruff supports formatting Python code blocks in markdown
         args: [--line-length=100]
   - repo: https://github.com/lyz-code/yamlfix
-    rev: 47039c9bf8039e81f092c9777a1bc8be32fb7870  # frozen: 1.16.0
+    rev: 8072181c0f2eab9f2dd8db2eb3b9556d7cd0bd74  # frozen: 1.17.0
     hooks:
       - id: yamlfix
-        additional_dependencies: [maison<2.0.0]
   - repo: https://github.com/AleksaC/hadolint-py
     rev: e70baeefd566058716df2f29eae8fe8ffc213a9f  # frozen: v2.12.1b3
     hooks:

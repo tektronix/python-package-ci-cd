@@ -55,7 +55,7 @@ Ready to contribute? Here's how to set up `python-package-ci-cd` for local devel
 
     - Using the helper script (recommended):
         ```console
-        python contributor_setup.py
+        python scripts/contributor_setup.py
         ```
 
 4. Check to see if there are any [open issues](https://github.com/tektronix/python-package-ci-cd/issues) or [pull requests](https://github.com/tektronix/python-package-ci-cd/pulls) that are related to the change you wish to make.

@@ -1,4 +1,4 @@
-# create-unique-testpypi-version
+# create_unique_testpypi_version
 
 This action creates a unique version number for the provided Python package to enable uploading
 the package to [TestPyPI](https://test.pypi.org/).
@@ -37,7 +37,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: ./actions/create-unique-testpypi-version
+      - uses: ./actions/create_unique_testpypi_version
         id: create-version
         with:
           package-name: my-package  # required
