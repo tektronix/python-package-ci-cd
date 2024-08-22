@@ -115,24 +115,24 @@ jobs:
             diff <(echo "$MULTILINE_STRING") "$FILE_PATH"
             exit 1
           fi
-  test-update-development-dependencies:
+  test-update_development_dependencies:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./actions/update-development-dependencies
+      - uses: ./actions/update_development_dependencies
         with:
           update-pre-commit: true
           run-pre-commit: true
           dependency-dict: '{"dev": ["pyright"]}'
           pre-commit-hook-skip-list: remove-tabs,forbid-tabs,check-readthedocs,check-dependabot,check-github-actions,check-github-workflows,commitizen,blacken-docs,yamlfix,hadolint,mdformat,markdown-link-check,check-poetry,toml-sort-fix,pyright,poetry-audit,ruff,ruff-format,docformatter
-          export-dependency-groups: udd:actions/update-development-dependencies,cutv:actions/create_unique_testpypi_version,fci:actions/find_unreleased_changelog_items
+          export-dependency-groups: udd:actions/update_development_dependencies,cutv:actions/create_unique_testpypi_version,fci:actions/find_unreleased_changelog_items
   # Check that all jobs passed
   check-action-tests-passed:
     if: ${{ !cancelled() }}
     needs:
       - test-create_unique_testpypi_version
       - test-find_unreleased_changelog_items
-      - test-update-development-dependencies
+      - test-update_development_dependencies
     runs-on: ubuntu-latest
     steps:
       - name: Decide whether the needed jobs succeeded or failed

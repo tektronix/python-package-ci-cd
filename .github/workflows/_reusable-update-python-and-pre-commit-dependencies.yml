@@ -78,7 +78,7 @@ jobs:
           git_user_signingkey: true
           git_commit_gpgsign: true
       - if: ${{ endsWith(github.repository, '/python-package-ci-cd') }}  # Run the local action when this is run in the python-package-ci-cd repository
-        uses: ./actions/update-development-dependencies
+        uses: ./actions/update_development_dependencies
         with:
           dependency-dict: ${{ inputs.dependency-dict }}
           update-pre-commit: ${{ inputs.update-pre-commit }}
@@ -86,7 +86,7 @@ jobs:
           pre-commit-hook-skip-list: ${{ inputs.pre-commit-hook-skip-list }}
           export-dependency-groups: ${{ inputs.export-dependency-groups }}
       - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
-        uses: tektronix/python-package-ci-cd/actions/update-development-dependencies@v0.0.0
+        uses: tektronix/python-package-ci-cd/actions/update_development_dependencies@v0.0.0
         with:
           dependency-dict: ${{ inputs.dependency-dict }}
           update-pre-commit: ${{ inputs.update-pre-commit }}

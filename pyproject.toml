@@ -62,7 +62,7 @@ pytest-github-report = "^0.0.1"
 pytest-html = "^4.1.1"
 pytest-order = "^1.2.1"
 
-[tool.poetry.group.udd.dependencies]  # dependencies for actions/update-development-dependencies
+[tool.poetry.group.udd.dependencies]  # dependencies for actions/update_development_dependencies
 poetry = "^1.8.0"
 poetry-plugin-export = "^1.7.1"
 pre-commit = "^3.7"

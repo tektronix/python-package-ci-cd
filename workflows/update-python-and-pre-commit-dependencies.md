@@ -19,7 +19,7 @@ updates for the Python dependencies.
 >
 > - [actions/checkout](https://github.com/actions/checkout)
 > - [crazy-max/ghaction-import-gpg](https://github.com/crazy-max/ghaction-import-gpg)
-> - [tektronix/python-package-ci-cd/actions/update-development-dependencies](https://github.com/tektronix/python-package-ci-cd)
+> - [tektronix/python-package-ci-cd/actions/update_development_dependencies](https://github.com/tektronix/python-package-ci-cd)
 > - [stefanzweifel/git-auto-commit-action](https://github.com/stefanzweifel/git-auto-commit-action)
 >
 > See the [Workflow file][workflow-file] for the currently used versions of each GitHub Action.

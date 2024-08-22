@@ -19,7 +19,7 @@ Python Packaging CI/CD.
     - This action will parse the repository's `CHANGELOG.md` file to determine if
         there are any unreleased items. It will fail if it cannot find any unreleased
         items, as this means that the package is not ready for a new release.
-- [`update-development-dependencies`](./actions/update-development-dependencies/readme.md)
+- [`update_development_dependencies`](./actions/update_development_dependencies/readme.md)
     - This action enables updating Python development dependencies using the
         [`Poetry`](https://python-poetry.org/) package manager in-sync with
         [`pre-commit`](https://pre-commit.com/) hooks.
