@@ -19,27 +19,7 @@ import pathlib
 import re
 import shutil
 
-import tomli
-
-PYPROJECT_FILE = pathlib.Path("./pyproject.toml")
 CHANGELOG_FILE = pathlib.Path("./CHANGELOG.md")
-
-
-def find_template_folder() -> pathlib.Path:
-    """Find the template folder from the pyproject.toml file.
-
-    Returns:
-        The path to the template folder.
-    """
-    with PYPROJECT_FILE.open("rb") as file_handle:
-        pyproject_data = tomli.load(file_handle)
-    try:
-        template_folder = pathlib.Path(
-            pyproject_data["tool"]["semantic_release"]["changelog"]["template_dir"]
-        )
-    except KeyError:
-        template_folder = pathlib.Path("./templates")
-    return template_folder
 
 
 def main() -> None:
@@ -50,15 +30,12 @@ def main() -> None:
     """
     # Load in the GitHub Action inputs
     # See https://docs.github.com/en/actions/sharing-automations/creating-actions/metadata-syntax-for-github-actions#example-specifying-inputs
-    filename_for_previous_changelog = os.environ["INPUT_PREVIOUS-CHANGELOG-FILENAME"]
-    filename_for_previous_release_notes = os.environ["INPUT_PREVIOUS-RELEASE-NOTES-FILENAME"]
+    filepath_for_previous_changelog = os.environ["INPUT_PREVIOUS-CHANGELOG-FILEPATH"]
+    filepath_for_previous_release_notes = os.environ["INPUT_PREVIOUS-RELEASE-NOTES-FILEPATH"]
     release_level = os.getenv("INPUT_RELEASE-LEVEL")
     # Set the filepaths for the template files
-    template_folder = find_template_folder()
-    template_changelog_filepath = template_folder / pathlib.Path(filename_for_previous_changelog)
-    template_release_notes_filepath = template_folder / pathlib.Path(
-        filename_for_previous_release_notes
-    )
+    template_changelog_filepath = pathlib.Path(filepath_for_previous_changelog)
+    template_release_notes_filepath = pathlib.Path(filepath_for_previous_release_notes)
 
     release_notes_content = ""
     found_entries = False

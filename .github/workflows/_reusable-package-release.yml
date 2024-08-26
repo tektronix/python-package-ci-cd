@@ -47,19 +47,15 @@ on:
         required: false
         default: '["ubuntu", "windows", "macos"]'
         type: string
-      previous-changelog-filename:
-        description: The name of the file to copy the contents of the changelog into
-          for use in the `python-semantic-release` templates. This file will be created
-          inside of the directory defined by the `[tool.semantic_release.changelog.template_dir]`
-          key in the `pyproject.toml` file.
+      previous-changelog-filepath:
+        description: The full path of the file to copy the contents of the changelog
+          into for use in the `python-semantic-release` templates.
         required: false
         type: string
         default: .previous_changelog_for_template.md
-      previous-release-notes-filename:
-        description: The name of the file to copy the contents of the `## Unreleased`
-          section of the changelog into for use in the GitHub Release Notes. This
-          file will be created inside of the directory defined by the `[tool.semantic_release.changelog.template_dir]`
-          key in the `pyproject.toml` file.
+      previous-release-notes-filepath:
+        description: The full path of the file to copy the contents of the `## Unreleased`
+          section of the changelog into for use in the GitHub Release Notes.
         required: false
         type: string
         default: .previous_release_notes_for_template.md
@@ -97,14 +93,14 @@ jobs:
         uses: ./actions/find_unreleased_changelog_items
         with:
           release-level: ${{ inputs.release-level }}
-          previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
-          previous-release-notes-filename: ${{ inputs.previous-release-notes-filename }}
+          previous-changelog-filepath: ${{ inputs.previous-changelog-filepath }}
+          previous-release-notes-filepath: ${{ inputs.previous-release-notes-filepath }}
       - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
         uses: tektronix/python-package-ci-cd/actions/find_unreleased_changelog_items@v0.0.0
         with:
           release-level: ${{ inputs.release-level }}
-          previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
-          previous-release-notes-filename: ${{ inputs.previous-release-notes-filename }}
+          previous-changelog-filepath: ${{ inputs.previous-changelog-filepath }}
+          previous-release-notes-filepath: ${{ inputs.previous-release-notes-filepath }}
   # Update the package version using the python-semantic-release package (https://github.com/python-semantic-release/python-semantic-release)
   # This job requires a Personal Access Token (Classic) with
   # the public_repo permission. It also needs a private/public
@@ -127,13 +123,13 @@ jobs:
       - if: ${{ endsWith(github.repository, '/python-package-ci-cd') }}  # Run the local action when this is run in the python-package-ci-cd repository
         uses: ./actions/find_unreleased_changelog_items
         with:
-          previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
-          previous-release-notes-filename: ${{ inputs.previous-release-notes-filename }}
+          previous-changelog-filepath: ${{ inputs.previous-changelog-filepath }}
+          previous-release-notes-filepath: ${{ inputs.previous-release-notes-filepath }}
       - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
         uses: tektronix/python-package-ci-cd/actions/find_unreleased_changelog_items@v0.0.0
         with:
-          previous-changelog-filename: ${{ inputs.previous-changelog-filename }}
-          previous-release-notes-filename: ${{ inputs.previous-release-notes-filename }}
+          previous-changelog-filepath: ${{ inputs.previous-changelog-filepath }}
+          previous-release-notes-filepath: ${{ inputs.previous-release-notes-filepath }}
       - name: Python Semantic Release
         uses: python-semantic-release/python-semantic-release@v9.8.7
         id: release
