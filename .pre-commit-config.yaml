@@ -30,7 +30,7 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: e2dde74d0702d15f4f43e4f4fb93e301b4bc1e30  # frozen: 0.29.1
+    rev: 5c70e3d884fdbe99af42f2714a444e39f321498d  # frozen: 0.29.2
     hooks:
       - id: check-dependabot
       - id: check-github-actions

@@ -33,11 +33,11 @@ will be used to fill in the GitHub Release Notes.
 
 ## Inputs
 
-| Input variable                    | Necessity | Description                                                                                                                                                                                                                                                                             | Default                                     |
-| --------------------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| `release-level`                   | optional  | The level of the impending release. Must be one of `major`, `minor`, or `patch`. Setting this input will trigger the action to output the summary of the incoming release level and the unreleased changes to the Workflow Summary.                                                     |                                             |
-| `previous-changelog-filename`     | optional  | The name of the file to copy the contents of the changelog into for use in the `python-semantic-release` templates. This file will be created inside of the directory defined by the `[tool.semantic_release.changelog.template_dir]` key in the `pyproject.toml` file.                 | `'.previous_changelog_for_template.md'`     |
-| `previous-release-notes-filename` | optional  | The name of the file to copy the contents of the `## Unreleased` section of the changelog into for use in the GitHub Release Notes. This file will be created inside of the directory defined by the `[tool.semantic_release.changelog.template_dir]` key in the `pyproject.toml` file. | `'.previous_release_notes_for_template.md'` |
+| Input variable                    | Necessity | Description                                                                                                                                                                                                                         | Default                                     |
+| --------------------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `release-level`                   | optional  | The level of the impending release. Must be one of `major`, `minor`, or `patch`. Setting this input will trigger the action to output the summary of the incoming release level and the unreleased changes to the Workflow Summary. |                                             |
+| `previous-changelog-filepath`     | optional  | The full path of the file to copy the contents of the changelog into for use in the `python-semantic-release` templates.                                                                                                            | `'.previous_changelog_for_template.md'`     |
+| `previous-release-notes-filepath` | optional  | The full path of the file to copy the contents of the `## Unreleased` section of the changelog into for use in the GitHub Release Notes.                                                                                            | `'.previous_release_notes_for_template.md'` |
 
 ## Example
 
@@ -51,6 +51,6 @@ jobs:
       - uses: tektronix/python-package-ci-cd/actions/find_unreleased_changelog_items@main  # it is recommended to use the latest release tag instead of `main`
         with:
           release-level: ${{ inputs.release-level }}  # optional
-          previous-changelog-filename: .previous_changelog_for_template.md  # optional
-          previous-release-notes-filename: .previous_release_notes_for_template.md  # optional
+          previous-changelog-filepath: .previous_changelog_for_template.md  # optional
+          previous-release-notes-filepath: .previous_release_notes_for_template.md  # optional
 ```
