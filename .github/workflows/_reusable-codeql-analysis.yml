@@ -35,3 +35,13 @@ jobs:
         uses: github/codeql-action/analyze@v3
         with:
           category: /language:${{matrix.language}}
+  # Check that all jobs passed
+  check-codeql-passed:
+    if: ${{ !cancelled() }}
+    needs: [analyze]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Decide whether the needed jobs succeeded or failed
+        uses: re-actors/alls-green@v1.2.2
+        with:
+          jobs: ${{ toJSON(needs) }}
