@@ -18,6 +18,14 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+---
+
+## v1.0.2 (2024-08-27)
+
+### Merged Pull Requests
+
+- Update build script to properly add changed files to git during the release process ([#21](https://github.com/tektronix/python-package-ci-cd/pull/21))
+
 ### Fixed
 
 - Actually fixed the issue with the semantic-release configuration preventing updated files with each new release version from being properly updated in the repo as a part of the release.
