@@ -1,10 +1,19 @@
 """Test the bump_version_in_files module."""
 
 from pathlib import Path
+from typing import Generator
+from unittest.mock import MagicMock, patch
 
 import pytest
 
 from scripts.bump_version_in_files import get_file_paths, update_github_actions_version
+
+
+@pytest.fixture(autouse=True)
+def mock_subprocess_check_call() -> Generator[None, None, None]:
+    """Mock subprocess.check_call for all tests."""
+    with patch("subprocess.check_call", MagicMock(return_value=None)):
+        yield
 
 
 @pytest.fixture()
