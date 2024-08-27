@@ -89,7 +89,7 @@ concurrency:
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 jobs:
   test-docs:
-    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-test-docs.yml@main  # it is recommended to use the latest release tag instead of `main`
+    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-test-docs.yml@v0.0.1
     with:
       node-version: 20  # required
       python-version: '3.11'  # required

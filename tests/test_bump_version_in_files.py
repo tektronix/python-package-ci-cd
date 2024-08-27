@@ -54,3 +54,19 @@ def test_update_github_actions_version_multiple_matches(temporary_directory: Pat
         "uses: tektronix/python-package-ci-cd/action1@v1.2.3\n"
         "uses: tektronix/python-package-ci-cd/action2@v1.2.3"
     )
+
+
+def test_update_github_actions_version_unicode_error(
+    temporary_directory: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """Test handling of UnicodeDecodeError."""
+    file_path = temporary_directory / "file4.txt"
+    # Write binary content to the file to trigger a UnicodeDecodeError
+    file_path.write_bytes(b"\x80\x81\x82")
+
+    update_github_actions_version(file_path, "1.2.3")
+
+    # Capture the stdout output
+    captured = capsys.readouterr()
+
+    assert captured.out == f'Skipping "{file_path}" due to a UnicodeDecodeError.\n'
