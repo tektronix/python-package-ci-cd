@@ -60,7 +60,7 @@ jobs:
     with:
       commit-user-name: 'User Name'
       commit-user-email: 'user-email'
-      dependency-dict: '{"dev": ("pylint", "ruff"), "tests": ("ruff")}'  # optional, but without it nothing will get updated by Poetry
+      dependency-dict: '{"dev": ["pylint", "ruff"], "tests": ["ruff"]}'  # optional, but without it nothing will get updated by Poetry
       update-pre-commit: true  # optional
       run-pre-commit: true  # optional
       pre-commit-hook-skip-list: pylint,pyright,pyroma,poetry-audit  # optional, hooks that don't auto-fix things can (and probably should be) skipped

@@ -4,7 +4,7 @@ default_stages: [pre-commit]
 ci:
   autofix_prs: false
   autoupdate_schedule: quarterly
-  skip: [check-poetry, pyright, poetry-audit]
+  skip: [check-poetry, pyright, poetry-audit, markdown-link-check]
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: 2c9f875913ee60ca25ce70243dc24d5b6415598c  # frozen: v4.6.0
@@ -80,11 +80,11 @@ repos:
           - mdformat-toc
           - mdformat-web
           - mdformat-wikilink
-# TODO: enable after repo is made public
-#  - repo: https://github.com/tcort/markdown-link-check
-#    rev: 6f18a0fe55028917b06edbbd56554d9f975fd2f4  # frozen: v3.12.2
-#    hooks:
-#      - id: markdown-link-check
+  - repo: https://github.com/tcort/markdown-link-check
+    rev: 6f18a0fe55028917b06edbbd56554d9f975fd2f4  # frozen: v3.12.2
+    hooks:
+      - id: markdown-link-check
+        args: [--quiet]
   - repo: https://gitlab.com/smop/pre-commit-hooks
     rev: df034f88cf92b394e6f00a78fa97a2aa4e270e60  # frozen: v1.0.0
     hooks:
