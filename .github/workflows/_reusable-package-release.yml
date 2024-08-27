@@ -137,8 +137,8 @@ jobs:
           force: ${{ inputs.release-level }}
           root_options: -v --strict
           github_token: ${{ secrets.checkout-token }}
-          git_committer_email: ${{ vars.commit-user-email }}
-          git_committer_name: ${{ vars.commit-user-name }}
+          git_committer_email: ${{ inputs.commit-user-email }}
+          git_committer_name: ${{ inputs.commit-user-name }}
           ssh_public_signing_key: ${{ secrets.ssh-signing-key-public }}
           ssh_private_signing_key: ${{ secrets.ssh-signing-key-private }}
     outputs:
