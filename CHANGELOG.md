@@ -18,6 +18,15 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+---
+
+## v1.0.1 (2024-08-27)
+
+### Merged Pull Requests
+
+- docs: Update changelog with incoming change notes on python-semantic-release config updates ([#20](https://github.com/tektronix/python-package-ci-cd/pull/20))
+- chore: Update all pinned versions of python-package-ci-cd to v1.0.0 ([#19](https://github.com/tektronix/python-package-ci-cd/pull/19))
+
 ### Fixed
 
 - Fixed an issue with the semantic-release configuration preventing updated files with each new release version from being properly updated in the repo as a part of the release.
