@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import os
 import re
+import subprocess
 
 from pathlib import Path
 
@@ -52,6 +53,7 @@ def update_github_actions_version(filepath: Path, incoming_version: str) -> None
         )
         print(f'Bumping version in "{filepath}" to', incoming_version)
         filepath.write_text(updated_content)
+        subprocess.check_call(["git", "add", filepath.as_posix()])  # noqa: S603,S607
     else:
         print(f'No GitHub Workflow/Action usage found in "{filepath}", skipping update.')
 
