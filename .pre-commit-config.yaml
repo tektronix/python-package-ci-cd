@@ -4,7 +4,7 @@ default_stages: [pre-commit]
 ci:
   autofix_prs: false
   autoupdate_schedule: quarterly
-  skip: [check-poetry, pyright, poetry-audit]
+  skip: [check-poetry, pyright, poetry-audit, markdown-link-check]
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: 2c9f875913ee60ca25ce70243dc24d5b6415598c  # frozen: v4.6.0
