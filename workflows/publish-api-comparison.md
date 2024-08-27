@@ -45,7 +45,7 @@ on:
     types: [completed]
 jobs:
   publish-api-comparison:
-    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-publish-api-comparison.yml@main  # it is recommended to use the latest release tag instead of `main`
+    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-publish-api-comparison.yml@v0.0.1
     permissions:
       checks: write
       pull-requests: write

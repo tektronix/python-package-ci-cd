@@ -33,7 +33,7 @@ jobs:
         with:
           package-name: ${{ inputs.package-name }}
       - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
-        uses: tektronix/python-package-ci-cd/actions/create_unique_testpypi_version@v0.0.0
+        uses: tektronix/python-package-ci-cd/actions/create_unique_testpypi_version@v0.0.1
         id: create-version
         with:
           package-name: ${{ inputs.package-name }}

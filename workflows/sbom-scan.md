@@ -51,7 +51,7 @@ on:
     types: [published]
 jobs:
   sbom-scan:
-    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-sbom-scan.yml@main  # it is recommended to use the latest release tag instead of `main`
+    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-sbom-scan.yml@v0.0.1
     permissions:
       security-events: write
       contents: write

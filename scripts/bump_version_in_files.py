@@ -39,7 +39,11 @@ def update_github_actions_version(filepath: Path, incoming_version: str) -> None
         filepath: The path to the file to update.
         incoming_version: The version to update the file to
     """
-    file_content = filepath.read_text()
+    try:
+        file_content = filepath.read_text()
+    except UnicodeDecodeError:
+        print(f'Skipping "{filepath}" due to a UnicodeDecodeError.')
+        return
     # Check if there's a match before replacing
     if GITHUB_WORKFLOW_AND_ACTION_REGEX.search(file_content):
         # Replace the version numbers with the new version

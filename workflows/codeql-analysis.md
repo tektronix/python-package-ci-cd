@@ -43,7 +43,7 @@ on:
     branches: [main]
 jobs:
   analyze:
-    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-codeql-analysis.yml@main  # it is recommended to use the latest release tag instead of `main`
+    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-codeql-analysis.yml@v0.0.1
     with:
       languages-array: '["python", "javascript"]'
       codeql-queries: security-extended,security-and-quality

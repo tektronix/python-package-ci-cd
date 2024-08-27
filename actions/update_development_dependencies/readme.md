@@ -46,7 +46,7 @@ jobs:
           ref: ${{ github.head_ref }}
           token: ${{ secrets.checkout-token }}
 
-      - uses: tektronix/python-package-ci-cd/actions/update_development_dependencies@main  # it is recommended to use the latest release tag instead of `main`
+      - uses: tektronix/python-package-ci-cd/actions/update_development_dependencies@v0.0.1
         with:
           repo-root: .  # optional, defaults to the current working directory
           install-dependencies: false  # optional, this will almost never need to be set to true
