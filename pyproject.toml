@@ -145,6 +145,12 @@ order-by-type = false
 ]
 
 [tool.semantic_release]
+assets = [
+  ".github",
+  "README.md",
+  "actions",
+  "workflows"
+]
 build_command = """
   python -m scripts.bump_version_in_files
 """

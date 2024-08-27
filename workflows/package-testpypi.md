@@ -58,7 +58,7 @@ concurrency:  # This concurrency is not required, but can be added if extra cont
   group: pypi
 jobs:
   package-testpypi:
-    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-package-testpypi.yml@v0.0.1
+    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-package-testpypi.yml@v1.0.0
     with:
       package-name: my-package  # required
       repo-name: owner/my-package  # required
