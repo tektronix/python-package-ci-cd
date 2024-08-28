@@ -4,7 +4,12 @@ default_stages: [pre-commit]
 ci:
   autofix_prs: false
   autoupdate_schedule: quarterly
-  skip: [check-poetry, pyright, poetry-audit, markdown-link-check]
+  skip:
+    - check-poetry
+    - pyright
+    - poetry-audit
+    - markdown-link-check
+    - actionlint-docker
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: 2c9f875913ee60ca25ce70243dc24d5b6415598c  # frozen: v4.6.0
@@ -38,6 +43,10 @@ repos:
       - id: check-github-workflows
         args: [--verbose]
         files: ^(\.github/workflows/[^/]+|workflows/[^/]+)$
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.1
+    hooks:
+      - id: actionlint-docker
   - repo: https://github.com/commitizen-tools/commitizen
     rev: d7e01aa9b0cfe3c1b732e66d523bbd0656221127  # frozen: v3.29.0
     hooks:

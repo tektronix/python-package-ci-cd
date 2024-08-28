@@ -87,7 +87,7 @@ jobs:
       - name: python-versions-array input missing
         if: ${{ inputs.build-and-publish-python-package == true && (inputs.python-versions-array == null || inputs.python-versions-array == '') }}
         run: |
-          echo "The `python-versions-array` input is required when `build-and-publish-python-package` is set to `true`."
+          echo "The python-versions-array input is required when the build-and-publish-python-package input is set to true."
           exit 1
       - if: ${{ endsWith(github.repository, '/python-package-ci-cd') }}  # Run the local action when this is run in the python-package-ci-cd repository
         uses: ./actions/find_unreleased_changelog_items
