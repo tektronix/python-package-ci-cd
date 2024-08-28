@@ -27,13 +27,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - if: ${{ endsWith(github.repository, '/python-package-ci-cd') }}  # Run the local action when this is run in the python-package-ci-cd repository
-        uses: ./actions/create_unique_testpypi_version
-        id: create-version
-        with:
-          package-name: ${{ inputs.package-name }}
-      - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
-        uses: tektronix/python-package-ci-cd/actions/create_unique_testpypi_version@v1.0.2
+      - uses: tektronix/python-package-ci-cd/actions/create_unique_testpypi_version@v1.0.2
         id: create-version
         with:
           package-name: ${{ inputs.package-name }}

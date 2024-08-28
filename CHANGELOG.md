@@ -18,6 +18,10 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Fixed
+
+- Fixed the `_reusable-package-testpypi.yml` workflow by removing a duplicate step ID that caused the workflow to be unusable
+
 ---
 
 ## v1.0.2 (2024-08-27)
