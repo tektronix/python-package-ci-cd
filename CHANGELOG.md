@@ -18,6 +18,12 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Fixed
+
+- Fixed a bug in the `_reusable-package-testpypi.yml` workflow that prevented the package
+    installation job from running properly by first performing a checkout of the repository
+    before trying to read the `pyproject.toml` file in the repo to determine the correct Python version to use.
+
 ---
 
 ## v1.1.0 (2024-08-28)
