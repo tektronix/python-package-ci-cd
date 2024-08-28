@@ -74,18 +74,23 @@ will be used to fill in the GitHub Release Notes.
 | `commit-user-email`                | required  | The email of the user to use when committing changes to the repository.                                                                                                                        |                                             |
 | `release-level`                    | required  | The level of the release to create. Must be one of `major`, `minor`, or `patch`.                                                                                                               |                                             |
 | `build-and-publish-python-package` | optional  | A boolean value that determines whether to build and publish the Python package. If set to `false`, the package binaries will not be built or published to PyPI, TestPyPI, or GitHub Releases. | `true`                                      |
-| `python-versions-array`            | optional  | A valid JSON array of Python versions to test against.                                                                                                                                         |                                             |
+| `python-versions-array`            | optional  | A valid JSON array of Python versions to test against. If `inputs.build-and-publish-python-package` is set to `true`, this input must be provided or the build will fail.                      |                                             |
 | `operating-systems-array`          | optional  | A valid JSON array of operating system names to run tests on.                                                                                                                                  | `'["ubuntu", "windows", "macos"]'`          |
 | `previous-changelog-filepath`      | optional  | The full path of the file to copy the contents of the changelog into for use in the `python-semantic-release` templates.                                                                       | `'.previous_changelog_for_template.md'`     |
 | `previous-release-notes-filepath`  | optional  | The full path of the file to copy the contents of the `## Unreleased` section of the changelog into for use in the GitHub Release Notes.                                                       | `'.previous_release_notes_for_template.md'` |
 
 ## Secrets
 
-| Secret variable           | Necessity | Description                                                                                                                                                     |
-| ------------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `checkout-token`          | required  | The token to use for checking out the repository, must have permissions to write back to the repository.                                                        |
-| `ssh-signing-key-private` | required  | A private SSH key associated with the account that owns the `checkout-token` that will be used to sign the commit and tag created by `python-semantic-release`. |
-| `ssh-signing-key-public`  | required  | The public SSH key linked to the `secrets.ssh-signing-key-private` key that will be used to sign the commit and tag created by `python-semantic-release`.       |
+| Secret variable           | Necessity | Description                                                                                                                                                        |
+| ------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `checkout-token`          | required  | The token to use for checking out the repository, must have permissions to write back to the repository.                                                           |
+| `ssh-signing-key-private` | required  | A private SSH key associated with the account that owns the `checkout-token` that will be used to sign the commit and tag created by `python-semantic-release`.    |
+| `ssh-signing-key-public`  | required  | The public SSH key linked to the `secrets.ssh-signing-key-private` key that will be used to sign the commit and tag created by `python-semantic-release`.          |
+| `pypi-api-token`          | required  | The API token for the package on pypi.org. If `inputs.build-and-publish-python-package` is set to `true`, this input must be provided or the build will fail.      |
+| `test-pypi-api-token`     | required  | The API token for the package on test.pypi.org. If `inputs.build-and-publish-python-package` is set to `true`, this input must be provided or the build will fail. |
+
+> [!CAUTION]
+> If a Python package is intended to be built and published, **the `pypi-api-token` and `test-pypi-api-token` secrets must be provided**.
 
 ## Example
 
@@ -127,6 +132,8 @@ jobs:
       checkout-token: ${{ secrets.CHECKOUT_TOKEN }}
       ssh-signing-key-private: ${{ secrets.SSH_SIGNING_KEY_PRIVATE }}
       ssh-signing-key-public: ${{ secrets.SSH_SIGNING_KEY_PUBLIC }}
+      pypi-api-token: ${{ secrets.PYPI_API_TOKEN }}
+      test-pypi-api-token: ${{ secrets.TEST_PYPI_API_TOKEN }}
 ```
 
 [workflow-file]: ../.github/workflows/_reusable-package-release.yml
