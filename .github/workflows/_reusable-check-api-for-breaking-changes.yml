@@ -30,7 +30,7 @@ jobs:
         run: |
           echo "## Breaking API Changes" > breaking_changes.md
           echo "\`\`\`" >> breaking_changes.md
-          griffe check --format=verbose --against=$(git rev-parse origin/main) --search=src "$PACKAGE_NAME" 2>&1 | tee -a breaking_changes.md
+          griffe check --format=verbose --against="$(git rev-parse origin/main)" --search=src "$PACKAGE_NAME" 2>&1 | tee -a breaking_changes.md
       - name: Finish writing summary file
         run: echo "\`\`\`" >> breaking_changes.md
       - uses: actions/upload-artifact@v4

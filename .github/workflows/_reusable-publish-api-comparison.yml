@@ -18,10 +18,10 @@ jobs:
           path: artifacts
       - name: Check for breaking changes
         run: |
-          if grep -Pzl '\n```\n```' artifacts/breaking_changes.md; then
-            echo "BREAKING_CHANGES=false" >> $GITHUB_ENV
+          if grep -Pzl "\n\`\`\`\n\`\`\`" artifacts/breaking_changes.md; then
+            echo "BREAKING_CHANGES=false" >> "$GITHUB_ENV"
           else
-            echo "BREAKING_CHANGES=true" >> $GITHUB_ENV
+            echo "BREAKING_CHANGES=true" >> "$GITHUB_ENV"
           fi
       - name: Fetch PR number
         id: pr
