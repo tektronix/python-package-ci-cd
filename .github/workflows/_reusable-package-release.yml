@@ -72,6 +72,14 @@ on:
         description: The public SSH key linked to the `secrets.ssh-signing-key-private`
           key that will be used to sign the commit and tag created by `python-semantic-release`.
         required: true
+      pypi-api-token:
+        description: The API token for the package on pypi.org. If `build-and-publish-python-package`
+          is set to `true`, this input must be provided or the build will fail.
+        required: false
+      test-pypi-api-token:
+        description: The API token for the package on test.pypi.org. If `build-and-publish-python-package`
+          is set to `true`, this input must be provided or the build will fail.
+        required: false
 concurrency:
   group: pypi (Reusable Workflows)
 env:
@@ -181,6 +189,7 @@ jobs:
       - name: Upload package to Test PyPI
         uses: pypa/gh-action-pypi-publish@v1.9.0
         with:
+          password: ${{ secrets.test-pypi-api-token }}
           repository-url: https://test.pypi.org/legacy/
   # Upload the official package version to PyPI
   upload-pypi:
@@ -200,6 +209,8 @@ jobs:
           path: dist
       - name: Upload package to PyPI
         uses: pypa/gh-action-pypi-publish@v1.9.0
+        with:
+          password: ${{ secrets.pypi-api-token }}
   # Upload the official package binaries to the GitHub Release
   upload-github:
     name: Upload package to GitHub Release

@@ -47,6 +47,12 @@ officially released version of the package, incrementing `N` each time the workf
 | `package-name` | required  | The name of the package to build, upload, and install.                              |         |
 | `repo-name`    | required  | The full name of the repository to use to gate uploads, in the format `owner/repo`. |         |
 
+## Secrets
+
+| Secret variable       | Necessity | Description                                     |
+| --------------------- | --------- | ----------------------------------------------- |
+| `test-pypi-api-token` | required  | The API token for the package on test.pypi.org. |
+
 ## Example
 
 ```yaml
@@ -66,6 +72,8 @@ jobs:
       contents: read
       id-token: write
       attestations: write
+    secrets:
+      test-pypi-api-token: ${{ secrets.TEST_PYPI_API_TOKEN }}
 ```
 
 [workflow-file]: ../.github/workflows/_reusable-package-testpypi.yml
