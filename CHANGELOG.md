@@ -18,6 +18,15 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+---
+
+## v1.0.3 (2024-08-28)
+
+### Merged Pull Requests
+
+- fix: Removed duplicate step ID from _reusable-package-testpypi.yml ([#23](https://github.com/tektronix/python-package-ci-cd/pull/23))
+- docs: Fix URLs to point to the correct repository ([#22](https://github.com/tektronix/python-package-ci-cd/pull/22))
+
 ### Fixed
 
 - Fixed the `_reusable-package-testpypi.yml` workflow by removing a duplicate step ID that caused the workflow to be unusable
