@@ -18,6 +18,14 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+---
+
+## v1.1.1 (2024-08-28)
+
+### Merged Pull Requests
+
+- fix: Add a checkout step to make sure the python version can be determined from the pyproject.toml file ([#27](https://github.com/tektronix/python-package-ci-cd/pull/27))
+
 ### Fixed
 
 - Fixed a bug in the `_reusable-package-testpypi.yml` workflow that prevented the package
