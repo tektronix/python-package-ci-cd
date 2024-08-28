@@ -18,6 +18,10 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Changed
+
+- Updated the `_reusable-package-testpypi.yml` and `_reusable-package-release.yml` workflows to use a token for uploading Python packages to TestPyPI and PyPI.
+
 ---
 
 ## v1.0.3 (2024-08-28)
