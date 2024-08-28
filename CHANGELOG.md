@@ -18,6 +18,16 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+---
+
+## v1.1.0 (2024-08-28)
+
+### Merged Pull Requests
+
+- fix: Allow the PyPI publishing workflows to be used as reusable workflows by requiring a token for uploading the package ([#26](https://github.com/tektronix/python-package-ci-cd/pull/26))
+- ci: Update pre-commit hook to run properly without needing docker installed ([#25](https://github.com/tektronix/python-package-ci-cd/pull/25))
+- docs: Fix changelog formatting ([#24](https://github.com/tektronix/python-package-ci-cd/pull/24))
+
 ### Changed
 
 - Updated the `_reusable-package-testpypi.yml` and `_reusable-package-release.yml` workflows to use a token for uploading Python packages to TestPyPI and PyPI.
