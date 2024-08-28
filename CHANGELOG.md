@@ -24,7 +24,7 @@ Things to be included in the next release go here.
 
 ### Merged Pull Requests
 
-- fix: Removed duplicate step ID from _reusable-package-testpypi.yml ([#23](https://github.com/tektronix/python-package-ci-cd/pull/23))
+- fix: Removed duplicate step ID from reusable-package-testpypi.yml ([#23](https://github.com/tektronix/python-package-ci-cd/pull/23))
 - docs: Fix URLs to point to the correct repository ([#22](https://github.com/tektronix/python-package-ci-cd/pull/22))
 
 ### Fixed
