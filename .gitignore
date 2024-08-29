@@ -24,6 +24,7 @@ htmlcov/
 coverage.xml
 .pytest_cache/
 .results*/
+.site*/
 
 # ruff
 .ruff_cache/

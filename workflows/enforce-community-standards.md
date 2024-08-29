@@ -35,7 +35,6 @@ The full list of files that this workflow checks for is as follows:
 ## Example
 
 ```yaml
-# .github/workflows/enforce-community-standards.yml
 name: Enforce Open Source Community Standards
 on:
   push:

@@ -31,7 +31,6 @@ It uploads a file called `breaking_changes.md` as a workflow artifact that can b
 ## Example
 
 ```yaml
-# .github/workflows/check-api-for-breaking-changes.yml
 name: Check Public API for Breaking Changes
 on:
   pull_request:

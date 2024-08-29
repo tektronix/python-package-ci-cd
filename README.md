@@ -1,9 +1,13 @@
+<div markdown="1" class="custom-badge-table">
+
 |                  |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Testing**      | [![Code testing status](https://github.com/tektronix/python-package-ci-cd/actions/workflows/test-code.yml/badge.svg?branch=main)](https://github.com/tektronix/python-package-ci-cd/actions/workflows/test-code.yml) [![Action testing status](https://github.com/tektronix/python-package-ci-cd/actions/workflows/test-actions.yml/badge.svg?branch=main)](https://github.com/tektronix/python-package-ci-cd/actions/workflows/test-actions.yml) [![Coverage status](https://codecov.io/gh/tektronix/python-package-ci-cd/branch/main/graph/badge.svg)](https://codecov.io/gh/tektronix/python-package-ci-cd) |
 | **Code Quality** | [![CodeQL status](https://github.com/tektronix/python-package-ci-cd/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/tektronix/python-package-ci-cd/actions/workflows/codeql-analysis.yml) [![CodeFactor grade](https://www.codefactor.io/repository/github/tektronix/python-package-ci-cd/badge)](https://www.codefactor.io/repository/github/tektronix/python-package-ci-cd) [![pre-commit status](https://results.pre-commit.ci/badge/github/tektronix/python-package-ci-cd/main.svg)](https://results.pre-commit.ci/latest/github/tektronix/python-package-ci-cd/main)     |
 | **Repository**   | [![License: Apache 2.0](https://img.shields.io/github/license/tektronix/python-package-ci-cd)](https://github.com/tektronix/python-package-ci-cd/blob/main/LICENSE.md) [![GitHub Release status](https://github.com/tektronix/python-package-ci-cd/actions/workflows/package-release.yml/badge.svg?branch=main)](https://github.com/tektronix/python-package-ci-cd/actions/workflows/package-release.yml)                                                                                                                                                                                                      |
 | **Linting**      | [![pre-commit enabled](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+
+</div>
 
 ---
 
@@ -94,12 +98,12 @@ the maintainers will review and respond there.
 ## Contributing
 
 Interested in contributing? Check out
-the [contributing guidelines](https://github.com/tektronix/python-package-ci-cd/blob/main/CONTRIBUTING.md). Please
+the [contributing guidelines](./CONTRIBUTING.md). Please
 note that this project is released with
-a [Code of Conduct](https://github.com/tektronix/python-package-ci-cd/blob/main/CODE_OF_CONDUCT.md). By
+a [Code of Conduct](./CODE_OF_CONDUCT.md). By
 contributing to this project, you agree to abide by its terms.
 
 ## License
 
 `python-package-ci-cd` was created by Tektronix. It is licensed under the terms of
-the [Apache License 2.0](https://github.com/tektronix/python-package-ci-cd/blob/main/LICENSE.md).
+the [Apache License 2.0](./LICENSE.md).
