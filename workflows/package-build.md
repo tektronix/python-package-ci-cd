@@ -5,6 +5,10 @@ This workflow will build the package using the
 action, and then verify that the package can be installed on each combination of Python version
 and operating system specified.
 
+> [!NOTE]
+> When building the Python package, this workflow will run in the `package-build` GitHub Actions environment.
+> This environment will be created in the repository that calls this workflow. No additional setup is required.
+
 > [!IMPORTANT]
 > When calling this reusable workflow, the permissions must be set as follows:
 >
