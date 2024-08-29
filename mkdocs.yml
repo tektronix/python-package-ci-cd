@@ -12,11 +12,20 @@ use_directory_urls: true
 docs_dir: .
 exclude_docs: |
   *env*/
+  .tox/
+  .results*/
+  Dockerfile
+  action.yml
   *.py
   *.txt
-  _templates/
+  *.xml
+  *.json
+  *.lock
+  .idea/
+  .vscode/
+  *templates*/
   __*/
-  temp_*
+  temp*
   SECURITY.md
 validation:
   omitted_files: warn
