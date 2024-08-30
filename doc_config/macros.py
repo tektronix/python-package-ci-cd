@@ -8,7 +8,6 @@ import tomli
 
 from mkdocs_macros.plugin import MacrosPlugin  # pyright: ignore[reportMissingTypeStubs]
 
-NEWLINE_AND_TAB = "\n    "
 CONVERSION_PATTERN = re.compile(
     r"> \[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION|DANGER)]\s*>\s*(.*?)(?=\n[^>]|$)",
     re.IGNORECASE | re.DOTALL,
