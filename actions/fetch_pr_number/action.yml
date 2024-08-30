@@ -1,0 +1,52 @@
+---
+name: Find the PR number for a given SHA
+description: Find the PR number for the provided SHA. This action also works for PRs
+  that are from forks.
+inputs:
+  sha:
+    description: The SHA of the commit to find the PR number for.
+    required: true
+  github-repository:
+    description: The GitHub repository to search for the PR in.
+    required: true
+outputs:
+  number:
+    description: The PR number.
+    value: ${{ steps.fetch-pr.outputs.result }}
+runs:
+  using: composite
+  steps:
+    - name: Fetch PR number
+      id: fetch-pr
+      uses: actions/github-script@e69ef5462fd455e02edcaf4dd7708eda96b9eda0  # v7.0.0
+      with:
+        script: |-
+          const maxAttempts = 5;
+          let attempt = 0;
+          let pullRequestNumber;
+          while (attempt < maxAttempts) {
+            try {
+              const response = await github.rest.search.issuesAndPullRequests({
+                q: 'repo:${{ inputs.github-repository }} is:pr sha:${{ inputs.sha }}',
+                per_page: 1,
+              });
+              const items = response.data.items;
+              if (items.length < 1) {
+                throw new Error('No PRs found');
+              }
+              pullRequestNumber = items[0].number;
+              console.info("Pull request number is", pullRequestNumber);
+              break; // Exit loop on success
+            } catch (error) {
+              console.error(`Attempt ${attempt + 1} failed:`, error.message);
+              if (attempt < maxAttempts - 1) { // Check if not last attempt
+                console.log(`Waiting for 2 minutes before retrying...`);
+                await new Promise(resolve => setTimeout(resolve, 120000)); // Wait for 2 minutes
+              }
+            }
+            attempt++;
+          }
+          if (!pullRequestNumber) {
+            core.setFailed(`Failed to fetch PR number after ${maxAttempts} attempts`);
+          }
+          return pullRequestNumber;

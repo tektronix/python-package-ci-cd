@@ -18,6 +18,10 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Added
+
+- Added an action that can be used to fetch a PR number based on the `head_sha`.
+
 ### Changed
 
 - Converted all references to third-party Actions used in Reusable Workflows from tags to SHAs to ensure that the workflows are stable and do not change unexpectedly.
