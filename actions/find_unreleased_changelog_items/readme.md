@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
-      - uses: tektronix/python-package-ci-cd/actions/find_unreleased_changelog_items@v1.1.1
+      - uses: tektronix/python-package-ci-cd/actions/find_unreleased_changelog_items@v1.2.0
         with:
           release-level: ${{ inputs.release-level }}  # optional
           previous-changelog-filepath: .previous_changelog_for_template.md  # optional

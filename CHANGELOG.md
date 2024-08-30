@@ -18,6 +18,16 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+---
+
+## v1.2.0 (2024-08-30)
+
+### Merged Pull Requests
+
+- feat: Add an action that can be used to fetch a PR number ([#32](https://github.com/tektronix/python-package-ci-cd/pull/32))
+- gh-actions(deps): Bump github/codeql-action ([#30](https://github.com/tektronix/python-package-ci-cd/pull/30))
+- Build a documentation site with mkdocs to allow testing more reusable workflows ([#28](https://github.com/tektronix/python-package-ci-cd/pull/28))
+
 ### Added
 
 - Added an action that can be used to fetch a PR number based on the `head_sha`.
