@@ -62,6 +62,7 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           name: artifact_${{ matrix.os-name }}_${{ matrix.python-version }}_tests_and_linting
+          include-hidden-files: true
           path: |
             .results_*/**
             .coverage*
@@ -90,6 +91,7 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           name: artifact_${{ matrix.os-name }}_tests
+          include-hidden-files: true
           path: |
             .results_*/**
             .coverage*
