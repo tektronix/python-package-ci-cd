@@ -1,5 +1,5 @@
 ---
-name: Find the PR number for a given SHA
+name: Fetch PR Number
 description: Find the PR number for the provided SHA. This action also works for PRs
   that are from forks.
 inputs:
