@@ -135,4 +135,5 @@ nav:
       - actions/create_unique_testpypi_version/readme.md
       - actions/find_unreleased_changelog_items/readme.md
       - actions/update_development_dependencies/readme.md
+      - actions/fetch_pr_number/readme.md
   - Contributing: [CONTRIBUTING.md, CODE_OF_CONDUCT.md, LICENSE.md]

@@ -138,7 +138,7 @@ jobs:
           github-repository: ${{ github.repository }}
       - name: Verify the PR number
         run: |
-          if [ "${{ steps.fetch-pr-number-found.outputs.number }}" != "1" ]; then
+          if [ "${{ steps.fetch-pr-number-found.outputs.number }}" != "30" ]; then
             echo "The fetched PR number doesn't match the expected PR number."
             echo "Expected: 30"
             echo "Actual: ${{ steps.fetch-pr-number-found.outputs.number }}"
