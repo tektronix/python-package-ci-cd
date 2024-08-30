@@ -23,17 +23,24 @@ jobs:
           else
             echo "BREAKING_CHANGES=true" >> "$GITHUB_ENV"
           fi
-      - name: Fetch PR number
-        id: pr
-        uses: 8BitJonny/gh-get-current-pr@08e737c57a3a4eb24cec6487664b243b77eb5e36
+      - if: ${{ endsWith(github.repository, '/python-package-ci-cd') }}  # Run the local action when this is run in the python-package-ci-cd repository
+        id: fetch-pr-number-local
+        uses: ./actions/fetch_pr_number
         with:
           sha: ${{ github.event.workflow_run.head_sha }}
+          github-repository: ${{ github.repository }}
+      - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
+        id: fetch-pr-number
+        uses: tektronix/python-package-ci-cd/actions/fetch_pr_number@v1.1.1
+        with:
+          sha: ${{ github.event.workflow_run.head_sha }}
+          github-repository: ${{ github.repository }}
       - name: Publish API Breaking Changes Check Results
         uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31
         if: ${{ env.BREAKING_CHANGES == 'true' }}
         with:
           header: breaking-api-changes
-          number: ${{ steps.pr.outputs.number }}
+          number: ${{ steps.fetch-pr-number.outputs.number || steps.fetch-pr-number-local.outputs.number }}
           recreate: true
           path: artifacts/breaking_changes.md
       - name: Add workflow link to comment
@@ -41,7 +48,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31
         with:
           header: breaking-api-changes
-          number: ${{ steps.pr.outputs.number }}
+          number: ${{ steps.fetch-pr-number.outputs.number || steps.fetch-pr-number-local.outputs.number }}
           append: true
           message: |-
             <p><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}">Link to workflow run</a></p>
@@ -50,5 +57,5 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31
         with:
           header: breaking-api-changes
-          number: ${{ steps.pr.outputs.number }}
+          number: ${{ steps.fetch-pr-number.outputs.number || steps.fetch-pr-number-local.outputs.number }}
           delete: true

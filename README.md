@@ -21,11 +21,13 @@ Python Packaging CI/CD.
 1. [`create_unique_testpypi_version`](actions/create_unique_testpypi_version/readme.md)
     - This action creates a unique version number for the provided Python package to enable uploading
         the package to [TestPyPI](https://test.pypi.org).
-2. [`find_unreleased_changelog_items`](./actions/find_unreleased_changelog_items/readme.md)
+2. [`fetch_pr_number`](actions/fetch_pr_number/readme.md)
+    - This action fetches the Pull Request number for the provided SHA in the provided GitHub repository.
+3. [`find_unreleased_changelog_items`](./actions/find_unreleased_changelog_items/readme.md)
     - This action will parse the repository's `CHANGELOG.md` file to determine if
         there are any unreleased items. It will fail if it cannot find any unreleased
         items, as this means that the package is not ready for a new release.
-3. [`update_development_dependencies`](./actions/update_development_dependencies/readme.md)
+4. [`update_development_dependencies`](./actions/update_development_dependencies/readme.md)
     - This action enables updating Python development dependencies using the
         [`Poetry`](https://python-poetry.org/) package manager in-sync with
         [`pre-commit`](https://pre-commit.com/) hooks.
