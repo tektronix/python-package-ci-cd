@@ -56,7 +56,7 @@ on:
     branches: [main]
 jobs:
   update-python-and-pre-commit-dependencies:
-    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-update-python-and-pre-commit-dependencies.yml@v1.1.1
+    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-update-python-and-pre-commit-dependencies.yml@v1.2.0
     with:
       commit-user-name: 'User Name'
       commit-user-email: 'user-email'

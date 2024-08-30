@@ -27,7 +27,7 @@ wrap-summaries = 0
 
 [tool.poetry]
 package-mode = false
-version = "1.1.1"
+version = "1.2.0"
 
 [tool.poetry.dependencies]
 python = "~3.12"  # This needs to stay in sync with all CI workflows
