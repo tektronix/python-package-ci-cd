@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
-      - uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f
+      - uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3
         with:
           python-version-file: pyproject.toml
       - name: Create lockfile
@@ -43,6 +43,6 @@ jobs:
           if-no-files-found: error
       - name: Upload SBOM scan SARIF report to GitHub UI Security tab
         if: ${{ github.event_name != 'pull_request' }}
-        uses: github/codeql-action/upload-sarif@be8b74c09c1778bcdbea38e1a45efea2cb73e18c
+        uses: github/codeql-action/upload-sarif@4dd16135b69a43b6c8efb853346f8437d92d3c93
         with:
           sarif_file: ${{ steps.scan.outputs.sarif }}
