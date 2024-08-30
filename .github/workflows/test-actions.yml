@@ -144,12 +144,28 @@ jobs:
             echo "Actual: ${{ steps.fetch-pr-number-found.outputs.number }}"
             exit 1
           fi
+      - name: Fetch known PR number from a fork
+        uses: ./actions/fetch_pr_number
+        id: fetch-pr-number-found-fork
+        with:
+          sha: 9163270797352721c78d82054f6ead259f2f7366
+          github-repository: ${{ github.repository }}
+      - name: Verify the PR number from a fork
+        run: |
+          if [ "${{ steps.fetch-pr-number-found-fork.outputs.number }}" != "31" ]; then
+            echo "The fetched PR number doesn't match the expected PR number."
+            echo "Expected: 31"
+            echo "Actual: ${{ steps.fetch-pr-number-found.outputs.number }}"
+            exit 1
+          fi
       - name: Fetch unknown PR number
         uses: ./actions/fetch_pr_number
         id: fetch-pr-number-not-found
         with:
           sha: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
           github-repository: ${{ github.repository }}
+          max-attempts: 2
+          retry-delay: 2
         continue-on-error: true  # This step should fail
       - name: Verify no PR number was found and the previous step failed
         run: |
