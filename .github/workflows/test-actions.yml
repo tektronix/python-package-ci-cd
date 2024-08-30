@@ -126,6 +126,55 @@ jobs:
           dependency-dict: '{"dev": ["pyright"]}'
           pre-commit-hook-skip-list: remove-tabs,forbid-tabs,check-readthedocs,check-dependabot,check-github-actions,check-github-workflows,commitizen,blacken-docs,yamlfix,hadolint,mdformat,markdown-link-check,check-poetry,toml-sort-fix,pyright,poetry-audit,ruff,ruff-format,docformatter
           export-dependency-groups: udd:actions/update_development_dependencies,cutv:actions/create_unique_testpypi_version,fci:actions/find_unreleased_changelog_items,tests
+  test-fetch_pr_number:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332  # v4.1.7
+      - name: Fetch known PR number
+        uses: ./actions/fetch_pr_number
+        id: fetch-pr-number-found
+        with:
+          sha: 7a6fb39bda8ace8217530c3bc79407333462fc30
+          github-repository: ${{ github.repository }}
+      - name: Verify the PR number
+        run: |
+          if [ "${{ steps.fetch-pr-number-found.outputs.number }}" != "30" ]; then
+            echo "The fetched PR number doesn't match the expected PR number."
+            echo "Expected: 30"
+            echo "Actual: ${{ steps.fetch-pr-number-found.outputs.number }}"
+            exit 1
+          fi
+      - name: Fetch known PR number from a fork
+        uses: ./actions/fetch_pr_number
+        id: fetch-pr-number-found-fork
+        with:
+          sha: 9163270797352721c78d82054f6ead259f2f7366
+          github-repository: ${{ github.repository }}
+      - name: Verify the PR number from a fork
+        run: |
+          if [ "${{ steps.fetch-pr-number-found-fork.outputs.number }}" != "31" ]; then
+            echo "The fetched PR number doesn't match the expected PR number."
+            echo "Expected: 31"
+            echo "Actual: ${{ steps.fetch-pr-number-found.outputs.number }}"
+            exit 1
+          fi
+      - name: Fetch unknown PR number
+        uses: ./actions/fetch_pr_number
+        id: fetch-pr-number-not-found
+        with:
+          sha: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+          github-repository: ${{ github.repository }}
+          max-attempts: 2
+          retry-delay: 2
+        continue-on-error: true  # This step should fail
+      - name: Verify no PR number was found and the previous step failed
+        run: |
+          if [ "${{ steps.fetch-pr-number-not-found.outcome }}" != "failure" ]; then
+            echo "Step did not fail as expected."
+            exit 1
+          else
+            echo "Step failed as expected."
+          fi
   # Check that all jobs passed
   check-action-tests-passed:
     if: ${{ !cancelled() }}
@@ -133,6 +182,7 @@ jobs:
       - test-create_unique_testpypi_version
       - test-find_unreleased_changelog_items
       - test-update_development_dependencies
+      - test-fetch_pr_number
     runs-on: ubuntu-latest
     steps:
       - name: Decide whether the needed jobs succeeded or failed

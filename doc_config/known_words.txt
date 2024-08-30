@@ -12,6 +12,7 @@ codecov
 codeql
 create_unique_testpypi_version
 dependabot
+fetch_pr_number
 find_unreleased_changelog_items
 gh
 ghaction
