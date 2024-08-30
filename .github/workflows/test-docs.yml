@@ -1,0 +1,17 @@
+---
+name: Test docs
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+jobs:
+  test-docs:
+    uses: ./.github/workflows/_reusable-test-docs.yml
+    with:
+      node-version: 20  # The node version needs to stay in sync with .readthedocs.yml
+      python-version: '3.12'  # this needs to match the [tool.poetry.dependencies.python] version in the pyproject.toml file and stay in sync with .readthedocs.yml
+      tox-env-array: '["docs", "doctests"]'

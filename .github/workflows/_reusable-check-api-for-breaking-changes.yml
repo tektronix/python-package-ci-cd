@@ -14,11 +14,11 @@ jobs:
     env:
       PACKAGE_NAME: ${{ inputs.package-name }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
         with:
           fetch-depth: 0
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f
         with:
           python-version-file: pyproject.toml
       - name: Install package to check
@@ -33,7 +33,7 @@ jobs:
           griffe check --format=verbose --against="$(git rev-parse origin/main)" --search=src "$PACKAGE_NAME" 2>&1 | tee -a breaking_changes.md
       - name: Finish writing summary file
         run: echo "\`\`\`" >> breaking_changes.md
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@834a144ee995460fba8ed112a2fc961b36a5ec5a
         with:
           name: breaking_changes
           path: breaking_changes.md

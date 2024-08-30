@@ -11,8 +11,8 @@ jobs:
   create-and-scan-sbom:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      - uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f
         with:
           python-version-file: pyproject.toml
       - name: Create lockfile
@@ -20,29 +20,29 @@ jobs:
           pip install poetry
           poetry lock
       - name: Create SBOM
-        uses: anchore/sbom-action@v0
+        uses: anchore/sbom-action@61119d458adab75f756bc0b9e4bde25725f86a7a
         with:
           format: spdx-json
           output-file: ${{ github.event.repository.name }}-sbom.spdx.json
-      - uses: actions/attest-build-provenance@v1
+      - uses: actions/attest-build-provenance@6149ea5740be74af77f260b9db67e633f6b0a9a1
         if: ${{ !(github.event.pull_request.head.repo.fork || github.event.workflow_call.pull_request.head.repo.fork) && github.actor != 'dependabot[bot]' }}
         with:
           subject-path: ${{ github.event.repository.name }}-sbom.spdx.json
       - name: Scan SBOM
-        uses: anchore/scan-action@v4
+        uses: anchore/scan-action@64a33b277ea7a1215a3c142735a1091341939ff5
         id: scan
         with:
           sbom: ${{ github.event.repository.name }}-sbom.spdx.json
           fail-build: true
           severity-cutoff: low
       - name: Upload SBOM scan SARIF report as a workflow artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@834a144ee995460fba8ed112a2fc961b36a5ec5a
         with:
           name: sarif_artifact
           path: ${{ steps.scan.outputs.sarif }}
           if-no-files-found: error
       - name: Upload SBOM scan SARIF report to GitHub UI Security tab
         if: ${{ github.event_name != 'pull_request' }}
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@be8b74c09c1778bcdbea38e1a45efea2cb73e18c
         with:
           sarif_file: ${{ steps.scan.outputs.sarif }}

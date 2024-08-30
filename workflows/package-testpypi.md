@@ -10,6 +10,14 @@ workflow will first create a unique `.postN` version number for the package on t
 officially released version of the package, incrementing `N` each time the workflow runs.
 
 > [!IMPORTANT]
+> When uploading the Python package to [test.pypi.org](https://test.pypi.org), this workflow
+> will run in the `package-testpypi` GitHub Actions environment. It is recommended to
+> limit this environment to only the `main` branch. It is also recommended to store the token
+> for uploading to [test.pypi.org](https://test.pypi.org) as an environment secret so that it can only be
+> accessed by the `package-testpypi` environment. This secret will need to be passed in as a
+> secret when calling the reusable workflow, see the [example](#example) below.
+
+> [!IMPORTANT]
 > When calling this reusable workflow, the permissions must be set as follows:
 >
 > ```yaml

@@ -32,6 +32,29 @@ will be used to fill in the GitHub Release Notes.
 > - Security
 
 > [!IMPORTANT]
+> This workflow uses several GitHub Actions environments.
+>
+> The `bump-version` job runs in the
+> `package-release-gate` environment. It is recommended to limit this environment to only the
+> `main` branch as well as enable the `Required reviewers` setting to enforce approval
+> before creating a new release of the package. It is also recommended to store the token used
+> to check out the repo and the SSH public/private keys as environment secrets so that
+> they can only be used by the `package-release-gate` environment. These secrets will need to be
+> passed in as secrets when calling the reusable workflow, see the [example](#example) below.
+>
+> The `upload-testpypi` job (run when `inputs.build-and-publish-python-package == true`) runs in the `package-testpypi` environment. It is recommended to
+> limit this environment to only the `main` branch. It is also recommended to store the token
+> for uploading to [test.pypi.org](https://test.pypi.org) as an environment secret so that it can only be
+> accessed by the `package-testpypi` environment. This secret will need to be passed in as a
+> secret when calling the reusable workflow, see the [example](#example) below.
+>
+> The `upload-pypi` job (run when `inputs.build-and-publish-python-package == true`) runs in the `package-release` environment. It is recommended to
+> limit this environment to only the `main` branch. It is also recommended to store the token
+> for uploading to [pypi.org](https://pypi.org) as an environment secret so that it can only be
+> accessed by the `package-release` environment. This secret will need to be passed in as a
+> secret when calling the reusable workflow, see the [example](#example) below.
+
+> [!IMPORTANT]
 > When calling this reusable workflow, the permissions must be set as follows:
 >
 > ```yaml
@@ -129,11 +152,11 @@ jobs:
       id-token: write
       attestations: write
     secrets:
-      checkout-token: ${{ secrets.CHECKOUT_TOKEN }}
-      ssh-signing-key-private: ${{ secrets.SSH_SIGNING_KEY_PRIVATE }}
-      ssh-signing-key-public: ${{ secrets.SSH_SIGNING_KEY_PUBLIC }}
-      pypi-api-token: ${{ secrets.PYPI_API_TOKEN }}
-      test-pypi-api-token: ${{ secrets.TEST_PYPI_API_TOKEN }}
+      checkout-token: ${{ secrets.CHECKOUT_TOKEN }}  # required for the `bump-version` job, recommended to store this in the `package-release-gate` environment
+      ssh-signing-key-private: ${{ secrets.SSH_SIGNING_KEY_PRIVATE }}  # required for the `bump-version` job, recommended to store this in the `package-release-gate` environment
+      ssh-signing-key-public: ${{ secrets.SSH_SIGNING_KEY_PUBLIC }}  # required for the `bump-version` job, recommended to store this in the `package-release-gate` environment
+      pypi-api-token: ${{ secrets.PYPI_API_TOKEN }}  # required for the `upload-pypi` job (run when `inputs.build-and-publish-python-package == true`), recommended to store this in the `package-release` environment
+      test-pypi-api-token: ${{ secrets.TEST_PYPI_API_TOKEN }}  # required for the `upload-testpypi` job (run when `inputs.build-and-publish-python-package == true`), recommended to store this in the `package-testpypi` environment
 ```
 
 [workflow-file]: ../.github/workflows/_reusable-package-release.yml

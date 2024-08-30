@@ -30,7 +30,7 @@ package-mode = false
 version = "1.1.1"
 
 [tool.poetry.dependencies]
-python = "~3.12"
+python = "~3.12"  # This needs to stay in sync with all CI workflows
 
 [tool.poetry.group.cutv.dependencies]  # dependencies for actions/create_unique_testpypi_version
 poetry-core = "^1.9.0"
@@ -39,14 +39,29 @@ tomli = "^2.0.1"
 tomli-w = "^1.0.0"
 
 [tool.poetry.group.dev.dependencies]
+mkdocs-simple-plugin = "^3.2.0"
 pip = "^24.0"
 poetry-audit-plugin = "^0.4.0"
 poetry-pre-commit-plugin = "^0.1.2"
 pre-commit = "^3.8.0"
-pyright = "1.1.377"
+pyright = "1.1.378"
 python-semantic-release = "^9.8.7"
 tox = "^4.18.0"
 tox-gh-actions = "^3.2.0"
+
+[tool.poetry.group.docs.dependencies]
+codespell = "^2.2.6"
+mkdocs = "^1.6.0"
+mkdocs-ezglossary-plugin = "^1.6.10"
+mkdocs-macros-plugin = "^1.0.5"
+mkdocs-mermaid2-plugin = "^1.1.1"
+mkdocs-same-dir = "^0.1.3"
+mkdocs-spellcheck = "^1.1.0"
+nodeenv = "^1.9.1"
+pygments = "^2.17.2"
+pymdown-extensions = "^10.8.1"
+symspellpy = "^6.7.7"
+tomli = "^2.0.1"
 
 [tool.poetry.group.fci.dependencies]  # dependencies for actions/find_unreleased_changelog_items
 
@@ -176,7 +191,7 @@ legacy_tox_ini = """
 [tox]
 requires = tox>4
 no_package = True
-envlist = py312,tests
+envlist = py312,tests,docs,doctests
 skip_missing_interpreters = False
 
 [gh-actions]
@@ -187,11 +202,14 @@ python =
 install_command = python -I -m pip install --upgrade --upgrade-strategy=eager {opts} {packages}
 deps =
     poetry
+setenv =
+    # Skip pre-commit checks that are not needed
+    SKIP = file-contents-sorter
 commands_pre =
     poetry install
 commands =
     !tests: pre-commit run --all-files
-    pytest -vv --showlocals --cov --junitxml={tox_root}/.results_{envname}/results.xml --cov-report=term --cov-report=xml:{tox_root}/.coverage_{envname}.xml --cov-report=html:{tox_root}/.results_{envname}/html --self-contained-html --html={tox_root}/.results_{envname}/results.html
+    pytest -vv -k "not test_docs" --showlocals --cov --junitxml={tox_root}/.results_{envname}/results.xml --cov-report=term --cov-report=xml:{tox_root}/.coverage_{envname}.xml --cov-report=html:{tox_root}/.results_{envname}/html --self-contained-html --html={tox_root}/.results_{envname}/results.html
 
 [testenv:tests]
 basepython = python
@@ -208,4 +226,22 @@ setenv =
     GITHUB_STEP_SUMMARY = {tox_root}/.results_{envname}/github_report.md
 commands_pre =
 
+[testenv:docs]
+deps =
+    -r doc_config/requirements.txt
+commands_pre =
+commands =
+    python -c "import shutil; shutil.rmtree('.results_{envname}', ignore_errors=True)"
+    mkdocs --verbose build --site-dir .results_{envname}
+
+[testenv:doctests]
+deps =
+    -r doc_config/requirements.txt
+    -r tests/requirements.txt
+    -r actions/create_unique_testpypi_version/requirements.txt
+    -r actions/find_unreleased_changelog_items/requirements.txt
+    -r actions/update_development_dependencies/requirements.txt
+commands_pre =
+commands =
+    pytest -v -k "test_docs" --showlocals --junitxml={tox_root}/.results_{envname}/results.xml --self-contained-html --html={tox_root}/.results_{envname}/results.html
 """

@@ -18,6 +18,10 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Changed
+
+- Converted all references to third-party Actions used in Reusable Workflows from tags to SHAs to ensure that the workflows are stable and do not change unexpectedly.
+
 ---
 
 ## v1.1.1 (2024-08-28)
