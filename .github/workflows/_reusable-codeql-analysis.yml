@@ -27,12 +27,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@be8b74c09c1778bcdbea38e1a45efea2cb73e18c
+        uses: github/codeql-action/init@4dd16135b69a43b6c8efb853346f8437d92d3c93
         with:
           languages: ${{ matrix.language }}
           queries: ${{ inputs.codeql-queries }}
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@be8b74c09c1778bcdbea38e1a45efea2cb73e18c
+        uses: github/codeql-action/analyze@4dd16135b69a43b6c8efb853346f8437d92d3c93
         with:
           category: /language:${{matrix.language}}
   # Check that all jobs passed
