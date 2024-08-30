@@ -11,7 +11,7 @@ jobs:
     if: ${{ github.event.workflow_run.event == 'pull_request' && !contains(fromJSON('["skipped", "cancelled", "failed"]'), github.event.workflow_run.conclusion) }}
     steps:
       - name: Download and Extract Artifacts
-        uses: dawidd6/action-download-artifact@bf251b5aa9c2f7eeb574a96ee720e24f801b7c11
+        uses: dawidd6/action-download-artifact@bf251b5aa9c2f7eeb574a96ee720e24f801b7c11  # v6
         with:
           run_id: ${{ github.event.workflow_run.id }}
           name: breaking_changes
@@ -36,7 +36,7 @@ jobs:
           sha: ${{ github.event.workflow_run.head_sha }}
           github-repository: ${{ github.repository }}
       - name: Publish API Breaking Changes Check Results
-        uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31
+        uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31  # v2.9.0
         if: ${{ env.BREAKING_CHANGES == 'true' }}
         with:
           header: breaking-api-changes
@@ -45,7 +45,7 @@ jobs:
           path: artifacts/breaking_changes.md
       - name: Add workflow link to comment
         if: ${{ env.BREAKING_CHANGES == 'true' }}
-        uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31
+        uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31  # v2.9.0
         with:
           header: breaking-api-changes
           number: ${{ steps.fetch-pr-number.outputs.number || steps.fetch-pr-number-local.outputs.number }}
@@ -54,7 +54,7 @@ jobs:
             <p><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}">Link to workflow run</a></p>
       - name: Delete comment if no breaking changes are found
         if: ${{ env.BREAKING_CHANGES == 'false' }}
-        uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31
+        uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31  # v2.9.0
         with:
           header: breaking-api-changes
           number: ${{ steps.fetch-pr-number.outputs.number || steps.fetch-pr-number-local.outputs.number }}

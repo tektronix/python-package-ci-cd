@@ -22,7 +22,7 @@ jobs:
         os-name: ${{ fromJSON(inputs.operating-systems-array) }}
     steps:
       - name: Download and Extract Artifacts
-        uses: dawidd6/action-download-artifact@bf251b5aa9c2f7eeb574a96ee720e24f801b7c11
+        uses: dawidd6/action-download-artifact@bf251b5aa9c2f7eeb574a96ee720e24f801b7c11  # v6
         with:
           run_id: ${{ github.event.workflow_run.id }}
           name: artifact_${{ matrix.os-name }}_tests
@@ -40,14 +40,14 @@ jobs:
           sha: ${{ github.event.workflow_run.head_sha }}
           github-repository: ${{ github.repository }}
       - name: Publish Test Results
-        uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31
+        uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31  # v2.9.0
         with:
           header: test-results-${{ matrix.os-name }}
           number: ${{ steps.fetch-pr-number.outputs.number || steps.fetch-pr-number-local.outputs.number }}
           recreate: true
           path: artifacts/.results_tests/github_report.md
       - name: Add workflow link to comment
-        uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31
+        uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31  # v2.9.0
         with:
           header: test-results-${{ matrix.os-name }}
           number: ${{ steps.fetch-pr-number.outputs.number || steps.fetch-pr-number-local.outputs.number }}

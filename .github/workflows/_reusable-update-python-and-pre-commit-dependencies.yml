@@ -66,12 +66,12 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332  # v4.1.7
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
           token: ${{ secrets.checkout-token }}
-      - uses: crazy-max/ghaction-import-gpg@01dd5d3ca463c7f10f7f4f7b4f177225ac661ee4
+      - uses: crazy-max/ghaction-import-gpg@01dd5d3ca463c7f10f7f4f7b4f177225ac661ee4  # v6.1.0
         with:
           gpg_private_key: ${{ secrets.gpg-signing-key-private }}
           passphrase: ${{ secrets.gpg-signing-key-passphrase }}
@@ -79,7 +79,7 @@ jobs:
           git_commit_gpgsign: true
       - name: Set up pre-commit cache
         if: ${{ inputs.update-pre-commit || inputs.run-pre-commit }}
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9
+        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9  # v4.0.2
         with:
           path: ~/.cache/pre-commit
           key: pre-commit|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml')
@@ -100,7 +100,7 @@ jobs:
           run-pre-commit: ${{ inputs.run-pre-commit }}
           pre-commit-hook-skip-list: ${{ inputs.pre-commit-hook-skip-list }}
           export-dependency-groups: ${{ inputs.export-dependency-groups }}
-      - uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842
+      - uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842  # v5.0.1
         with:
           commit_message: 'chore: Update python linters and pre-commit dependencies.'
           commit_user_name: ${{ inputs.commit-user-name }}

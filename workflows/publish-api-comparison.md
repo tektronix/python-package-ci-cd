@@ -27,7 +27,8 @@ changes, usually a Workflow named `Check Public API for Breaking Changes`, see t
 > This workflow uses the following GitHub Actions:
 >
 > - [dawidd6/action-download-artifact](https://github.com/dawidd6/action-download-artifact)
-> - [8BitJonny/gh-get-current-pr](https://github.com/8BitJonny/gh-get-current-pr)
+> - [tektronix/python-package-ci-cd/actions/fetch_pr_number](https://github.com/tektronix/python-package-ci-cd)
+>   - [actions/github-script](https://github.com/actions/github-script)
 > - [marocchino/sticky-pull-request-comment](https://github.com/marocchino/sticky-pull-request-comment)
 >
 > See the [Workflow file][workflow-file] for the currently used versions of each GitHub Action.
