@@ -14,7 +14,7 @@ jobs:
   test-create_unique_testpypi_version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
       - uses: ./actions/create_unique_testpypi_version
         id: create-version
         with:
@@ -30,7 +30,7 @@ jobs:
   test-find_unreleased_changelog_items:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
       - name: Overwrite CHANGELOG.md with dummy data
         run: |
           cat <<EOF > temp_changelog.md
@@ -52,7 +52,7 @@ jobs:
           previous-changelog-filepath: python_semantic_release_templates/.testing_previous_changelog_for_template.md
           previous-release-notes-filepath: python_semantic_release_templates/.testing_previous_release_notes_for_template.md
       - name: Get Job Summary
-        uses: austenstone/job-summary@v2.0
+        uses: austenstone/job-summary@67b7e1f68ee55e44d073ab7354e7b580cd09567c
         id: job-summary
         with:
           name: temp_job_summary
@@ -118,7 +118,7 @@ jobs:
   test-update_development_dependencies:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
       - uses: ./actions/update_development_dependencies
         with:
           update-pre-commit: true
@@ -136,6 +136,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Decide whether the needed jobs succeeded or failed
-        uses: re-actors/alls-green@v1.2.2
+        uses: re-actors/alls-green@05ac9388f0aebcb5727afa17fcccfecd6f8ec5fe
         with:
           jobs: ${{ toJSON(needs) }}

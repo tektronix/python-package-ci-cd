@@ -27,8 +27,8 @@ jobs:
       matrix:
         tox-env: ${{ fromJSON(inputs.tox-env-array) }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b
         with:
           node-version: ${{ inputs.node-version }}
       - name: Install non-python documentation dependencies
@@ -36,7 +36,7 @@ jobs:
           npm install --global @mermaid-js/mermaid-cli
           sudo apt install --no-install-recommends --assume-yes graphviz
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f
         with:
           python-version: ${{ inputs.python-version }}
           check-latest: true
@@ -44,13 +44,13 @@ jobs:
         run: python -m pip install tox
       - name: Test
         run: tox -ve ${{ matrix.tox-env }}
-      - uses: thedoctor0/zip-release@0.7.6
+      - uses: thedoctor0/zip-release@b57d897cb5d60cb78b51a507f63fa184cfe35554
         if: ${{ !cancelled() }}
         with:
           type: zip
           filename: ${{ matrix.tox-env }}_results.zip
           path: .results_${{ matrix.tox-env }}/
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@834a144ee995460fba8ed112a2fc961b36a5ec5a
         if: ${{ !cancelled() }}
         with:
           name: artifact_${{ matrix.tox-env }}
@@ -62,6 +62,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Decide whether the needed jobs succeeded or failed
-        uses: re-actors/alls-green@v1.2.2
+        uses: re-actors/alls-green@05ac9388f0aebcb5727afa17fcccfecd6f8ec5fe
         with:
           jobs: ${{ toJSON(needs) }}

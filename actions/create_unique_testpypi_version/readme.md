@@ -34,7 +34,7 @@ jobs:
     name: Build package with unique version for test.pypi.org
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
         with:
           fetch-depth: 0
       - uses: tektronix/python-package-ci-cd/actions/create_unique_testpypi_version@v1.1.1
@@ -42,5 +42,5 @@ jobs:
         with:
           package-name: my-package  # required
       - name: Build package
-        uses: hynek/build-and-inspect-python-package@v2.8.0
+        uses: hynek/build-and-inspect-python-package@2dbbf2b252d3a3c7cec7a810e3ed5983bd17b13a
 ```

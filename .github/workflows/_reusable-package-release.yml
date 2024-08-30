@@ -91,7 +91,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
       - name: python-versions-array input missing
         if: ${{ inputs.build-and-publish-python-package == true && (inputs.python-versions-array == null || inputs.python-versions-array == '') }}
         run: |
@@ -124,7 +124,7 @@ jobs:
       id-token: write
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
         with:
           fetch-depth: 0
           token: ${{ secrets.checkout-token }}
@@ -139,7 +139,7 @@ jobs:
           previous-changelog-filepath: ${{ inputs.previous-changelog-filepath }}
           previous-release-notes-filepath: ${{ inputs.previous-release-notes-filepath }}
       - name: Python Semantic Release
-        uses: python-semantic-release/python-semantic-release@v9.8.7
+        uses: python-semantic-release/python-semantic-release@708671d0eb33bcbea78c5a3d81ae04c60deeddf3
         id: release
         with:
           force: ${{ inputs.release-level }}
@@ -162,12 +162,12 @@ jobs:
       id-token: write
       attestations: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
         with:
           ref: main  # Make sure to check out the latest commit on main, not the original commit that triggered the workflow
           fetch-depth: 0
       - name: Build package
-        uses: hynek/build-and-inspect-python-package@v2.8.0
+        uses: hynek/build-and-inspect-python-package@2dbbf2b252d3a3c7cec7a810e3ed5983bd17b13a
         with:
           attest-build-provenance-github: 'true'
   # Upload the official package version to TestPyPI
@@ -182,12 +182,12 @@ jobs:
       id-token: write
     steps:
       - name: Download built packages
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16
         with:
           name: Packages
           path: dist
       - name: Upload package to Test PyPI
-        uses: pypa/gh-action-pypi-publish@v1.9.0
+        uses: pypa/gh-action-pypi-publish@ec4db0b4ddc65acdf4bff5fa45ac92d78b56bdf0
         with:
           password: ${{ secrets.test-pypi-api-token }}
           repository-url: https://test.pypi.org/legacy/
@@ -203,12 +203,12 @@ jobs:
       id-token: write
     steps:
       - name: Download built packages
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16
         with:
           name: Packages
           path: dist
       - name: Upload package to PyPI
-        uses: pypa/gh-action-pypi-publish@v1.9.0
+        uses: pypa/gh-action-pypi-publish@ec4db0b4ddc65acdf4bff5fa45ac92d78b56bdf0
         with:
           password: ${{ secrets.pypi-api-token }}
   # Upload the official package binaries to the GitHub Release
@@ -222,17 +222,17 @@ jobs:
       id-token: write
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
         with:
           ref: main  # Make sure to check out the latest commit on main, not the original commit that triggered the workflow
           fetch-depth: 0
       - name: Download built packages
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16
         with:
           name: Packages
           path: dist
       - name: Publish package distributions to GitHub Releases
-        uses: python-semantic-release/upload-to-gh-release@v9.8.7
+        uses: python-semantic-release/upload-to-gh-release@17c75b706f81263690a0a0dc88d83415f783fc04
         with:
           root_options: -v --strict
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -260,13 +260,13 @@ jobs:
           - ' --index-url=https://test.pypi.org/simple/ --extra-index-url=https://pypi.org/simple'
     steps:
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f
         with:
           python-version: ${{ matrix.python-version }}
           check-latest: true
       - name: Test installing package
         # A retry is used to allow for some downtime before the package is installable
-        uses: nick-fields/retry@v3
+        uses: nick-fields/retry@7152eba30c6575329ac0576536151aca5a72780e
         with:
           timeout_minutes: 10
           max_attempts: 5
