@@ -139,7 +139,7 @@ jobs:
           previous-changelog-filepath: ${{ inputs.previous-changelog-filepath }}
           previous-release-notes-filepath: ${{ inputs.previous-release-notes-filepath }}
       - name: Python Semantic Release
-        uses: python-semantic-release/python-semantic-release@708671d0eb33bcbea78c5a3d81ae04c60deeddf3  # v9.8.7
+        uses: python-semantic-release/python-semantic-release@fe6b271e942115b528c85e42bc19611b01dcea59  # v9.8.8
         id: release
         with:
           force: ${{ inputs.release-level }}
@@ -187,7 +187,7 @@ jobs:
           name: Packages
           path: dist
       - name: Upload package to Test PyPI
-        uses: pypa/gh-action-pypi-publish@ec4db0b4ddc65acdf4bff5fa45ac92d78b56bdf0  # v1.9.0
+        uses: pypa/gh-action-pypi-publish@8a08d616893759ef8e1aa1f2785787c0b97e20d6  # v1.10.0
         with:
           password: ${{ secrets.test-pypi-api-token }}
           repository-url: https://test.pypi.org/legacy/
@@ -208,7 +208,7 @@ jobs:
           name: Packages
           path: dist
       - name: Upload package to PyPI
-        uses: pypa/gh-action-pypi-publish@ec4db0b4ddc65acdf4bff5fa45ac92d78b56bdf0  # v1.9.0
+        uses: pypa/gh-action-pypi-publish@8a08d616893759ef8e1aa1f2785787c0b97e20d6  # v1.10.0
         with:
           password: ${{ secrets.pypi-api-token }}
   # Upload the official package binaries to the GitHub Release
