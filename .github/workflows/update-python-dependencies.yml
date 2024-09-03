@@ -1,0 +1,54 @@
+---
+name: Update python dependencies
+on:
+  merge_group:
+  pull_request:
+    branches: [main]
+jobs:
+  determine-dependency-groups:
+    if: ${{ github.actor == 'renovate[bot]' && contains(github.head_ref, '/python-deps/') }}
+    runs-on: ubuntu-latest
+    outputs:
+      export-groups: ${{ steps.set-output.outputs.export-groups }}
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332  # v4.1.7
+      - name: Get commit message
+        id: get-commit-message
+        run: |
+          commit_message="$(git log -1 --pretty=%B)"
+          echo "commit-message=$commit_message" >> "$GITHUB_OUTPUT"
+      - name: Determine the groups that will need to be exported
+        id: set-output
+        run: |
+          commit_message="${{ steps.get-commit-message.outputs.commit-message }}"
+          export_groups=""
+          if [[ "$commit_message" == *"update_development_dependencies"* ]]; then
+            export_groups+="update_development_dependencies:actions/update_development_dependencies,"
+          fi
+          if [[ "$commit_message" == *"create_unique_testpypi_version"* ]]; then
+            export_groups+="create_unique_testpypi_version:actions/create_unique_testpypi_version,"
+          fi
+          if [[ "$commit_message" == *"find_unreleased_changelog_items"* ]]; then
+            export_groups+="find_unreleased_changelog_items:actions/find_unreleased_changelog_items,"
+          fi
+          if [[ "$commit_message" == *"tests"* ]]; then
+            export_groups+="tests,"
+          fi
+          if [[ "$commit_message" == *"docs"* ]]; then
+            export_groups+="docs:doc_config,"
+          fi
+          echo "export-groups=$export_groups" >> "$GITHUB_OUTPUT"
+  update-python-and-pre-commit-deps:
+    if: ${{ github.actor == 'renovate[bot]' && contains(github.head_ref, '/python-deps/') }}
+    needs: determine-dependency-groups
+    uses: ./.github/workflows/_reusable-update-python-and-pre-commit-dependencies.yml
+    with:
+      commit-user-name: ${{ vars.TEK_OPENSOURCE_NAME }}
+      commit-user-email: ${{ vars.TEK_OPENSOURCE_EMAIL }}
+      export-dependency-groups: ${{ needs.determine-dependency-groups.outputs.export-groups }}
+    permissions:
+      contents: write
+    secrets:
+      checkout-token: ${{ secrets.TEK_OPENSOURCE_TOKEN }}
+      gpg-signing-key-private: ${{ secrets.TEK_OPENSOURCE_GPG_SIGNING_KEY_PRIVATE }}
+      gpg-signing-key-passphrase: ${{ secrets.TEK_OPENSOURCE_GPG_SIGNING_KEY_PASSPHRASE }}

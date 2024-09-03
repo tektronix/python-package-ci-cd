@@ -17,7 +17,7 @@ The full list of files that this workflow checks for is as follows:
 - `.github/ISSUE_TEMPLATE/bug_report.@(yml|yaml)`
 - `.github/ISSUE_TEMPLATE/feature_request.@(yml|yaml)`
 - `.github/PULL_REQUEST_TEMPLATE.md`
-- `.github/dependabot.@(yml|yaml)`
+- `.github/@(dependabot.@(yml|yaml)|renovate.json)`
 - `.github/workflows/codeql-analysis.@(yml|yaml)`
 
 > [!NOTE]

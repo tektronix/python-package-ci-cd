@@ -192,7 +192,7 @@ def main() -> None:
     repo_root = os.environ["INPUT_REPO-ROOT"]
     dependency_dict = convert_dict_input(os.environ["INPUT_DEPENDENCY-DICT"])
     export_dependency_groups = [
-        x for x in os.environ["INPUT_EXPORT-DEPENDENCY-GROUPS"].split(",") if x
+        x.strip() for x in os.environ["INPUT_EXPORT-DEPENDENCY-GROUPS"].split(",") if x
     ]
     pre_commit_hook_skip_list = os.environ["INPUT_PRE-COMMIT-HOOK-SKIP-LIST"]
     install_dependencies = os.environ["INPUT_INSTALL-DEPENDENCIES"].lower() in _ENV_VAR_TRUE_VALUES
