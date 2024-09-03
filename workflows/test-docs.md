@@ -57,7 +57,7 @@ commands =
 > - [actions/checkout](https://github.com/actions/checkout)
 > - [actions/setup-node](https://github.com/actions/setup-node)
 > - [actions/setup-python](https://github.com/actions/setup-python)
-> - [thedoctor0/zip-release](https://github.com/thedoctor0/zip-release)
+> - [vimtor/action-zip](https://github.com/vimtor/action-zip)
 > - [actions/upload-artifact](https://github.com/actions/upload-artifact)
 > - [re-actors/alls-green](https://github.com/re-actors/alls-green)
 >

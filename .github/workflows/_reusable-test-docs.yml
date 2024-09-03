@@ -44,12 +44,11 @@ jobs:
         run: python -m pip install tox
       - name: Test
         run: tox -ve ${{ matrix.tox-env }}
-      - uses: TheDoctor0/zip-release@b57d897cb5d60cb78b51a507f63fa184cfe35554  # v0.7.6
+      - uses: vimtor/action-zip@1379ea20d4c5705669ba81fd626dd01b1c738f26  # v1.2
         if: ${{ !cancelled() }}
         with:
-          type: zip
-          filename: ${{ matrix.tox-env }}_results.zip
-          path: .results_${{ matrix.tox-env }}/
+          dest: ${{ matrix.tox-env }}_results.zip
+          files: .results_${{ matrix.tox-env }}/
       - uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874  # v4.4.0
         if: ${{ !cancelled() }}
         with:

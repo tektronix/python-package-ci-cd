@@ -33,10 +33,10 @@ version = "1.2.0"
 python = "~3.12"  # This needs to stay in sync with all CI workflows
 
 [tool.poetry.group.cutv.dependencies]  # dependencies for actions/create_unique_testpypi_version
-poetry-core = "^1.9.0"
-pypi-simple = "^1.5.0"
-tomli = "^2.0.0"
-tomli-w = "^1.0.0"
+poetry-core = "1.9.0"
+pypi-simple = "1.5.0"
+tomli = "2.0.0"
+tomli-w = "1.0.0"
 
 [tool.poetry.group.dev.dependencies]
 mkdocs-simple-plugin = "^3.2.0"
@@ -52,14 +52,14 @@ tox-gh-actions = "^3.2.0"
 codespell = "^2.2.6"
 mkdocs = "^1.6.0"
 mkdocs-ezglossary-plugin = "^1.6.10"
-mkdocs-macros-plugin = "^0.7.0"
+mkdocs-macros-plugin = "^1.0.5"
 mkdocs-mermaid2-plugin = "^1.1.1"
 mkdocs-same-dir = "^0.1.3"
 mkdocs-spellcheck = "^1.1.0"
 pygments = "^2.17.2"
 pymdown-extensions = "^10.8.1"
 symspellpy = "^6.7.7"
-tomli = "^2.0.1"
+tomli = "^2.0.0"
 
 [tool.poetry.group.fci.dependencies]  # dependencies for actions/find_unreleased_changelog_items
 
@@ -75,12 +75,12 @@ pytest-html = "^4.1.1"
 pytest-order = "^1.2.1"
 
 [tool.poetry.group.udd.dependencies]  # dependencies for actions/update_development_dependencies
-poetry = "^1.8.0"
-poetry-plugin-export = "^1.7.1"
-pre-commit = "^3.7"
-pypi-simple = "^1.6.0"
-toml-sort = "^0.23.1"
-yamlfix = "^1.17.0"
+poetry = "1.8.0"
+poetry-plugin-export = "1.7.1"
+pre-commit = "3.8.0"
+pypi-simple = "1.5.0"
+toml-sort = "0.23.1"
+yamlfix = "1.17.0"
 
 [tool.pyright]
 ignore = [
