@@ -16,6 +16,7 @@
                 "gh-actions",
                 "dependencies"
             ],
+            "additionalBranchPrefix": "gh-actions-deps/",
             "description": "Add gh-actions and dependencies labels to GitHub Action dependency updates",
             "matchManagers": [
                 "github-actions"
@@ -26,6 +27,7 @@
                 "python",
                 "dependencies"
             ],
+            "additionalBranchPrefix": "python-deps/",
             "description": "Add python and dependencies labels to Python dependency updates",
             "matchManagers": [
                 "poetry",
