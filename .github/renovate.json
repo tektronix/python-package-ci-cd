@@ -30,36 +30,32 @@
             ]
         },
         {
-            "description": "Group all dependencies for the 'docs' group in pyproject.toml and doc_config/requirements.txt",
+            "description": "Group all dependencies for the 'docs' group in pyproject.toml",
             "groupName": "docs-dependencies",
             "matchDepTypes": [
                 "docs"
             ],
             "matchFileNames": [
-                "pyproject.toml",
-                "doc_config/requirements.txt"
+                "pyproject.toml"
             ],
             "matchManagers": [
-                "poetry",
-                "pip_requirements"
+                "poetry"
             ],
             "matchPackageNames": [
                 "*"
             ]
         },
         {
-            "description": "Group all dependencies for the 'tests' group in pyproject.toml and tests/requirements.txt",
+            "description": "Group all dependencies for the 'tests' group in pyproject.toml",
             "groupName": "tests-dependencies",
             "matchDepTypes": [
                 "tests"
             ],
             "matchFileNames": [
-                "pyproject.toml",
-                "tests/requirements.txt"
+                "pyproject.toml"
             ],
             "matchManagers": [
-                "poetry",
-                "pip_requirements"
+                "poetry"
             ],
             "matchPackageNames": [
                 "*"
