@@ -49,7 +49,7 @@
             "semanticCommitScope": "python-deps"
         },
         {
-            "additionalBranchPrefix": "{{{depTypes}}}/",
+            "additionalBranchPrefix": "\\{{depTypes}}/",
             "commitMessageSuffix": " for the {{depTypes}} group(s)",
             "description": "Add commit suffix for the dependency group in pyproject.toml",
             "matchDepTypes": [
