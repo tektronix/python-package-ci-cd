@@ -13,12 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332  # v4.1.7
         with:
-          fetch-depth: 3
+          fetch-depth: 0
       - name: Get commit message
         id: get-commit-message
         run: |
-          git log -5 --pretty=%B
-          commit_message="$(git log -2 --pretty=%B | sed -n '2p')"
+          commit_message="$(git log --grep='chore(python-deps):' -1 --pretty=%B)"
           echo "commit-message=$commit_message" >> "$GITHUB_OUTPUT"
       - name: Determine the groups that will need to be exported
         id: set-output
