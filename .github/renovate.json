@@ -13,6 +13,18 @@
     "packageRules": [
         {
             "addLabels": [
+                "docker",
+                "dependencies"
+            ],
+            "additionalBranchPrefix": "docker-deps/",
+            "description": "Add docker and dependencies labels to Docker dependency updates",
+            "matchManagers": [
+                "dockerfile"
+            ],
+            "semanticCommitScope": "docker-deps"
+        },
+        {
+            "addLabels": [
                 "gh-actions",
                 "dependencies"
             ],
