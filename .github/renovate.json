@@ -31,32 +31,6 @@
                 "poetry",
                 "pip_requirements"
             ]
-        },
-        {
-            "description": "Group dependencies by their dependency type in pyproject.toml",
-            "groupName": "{{depType}}-dependencies",
-            "matchDepTypes": [
-                "*"
-            ],
-            "matchFileNames": [
-                "pyproject.toml"
-            ],
-            "matchManagers": [
-                "poetry"
-            ]
-        },
-        {
-            "description": "Update pypi-simple dependency across all groups",
-            "groupName": "pypi-simple",
-            "matchFileNames": [
-                "pyproject.toml"
-            ],
-            "matchManagers": [
-                "poetry"
-            ],
-            "matchPackageNames": [
-                "pypi-simple"
-            ]
         }
     ],
     "platformCommit": "enabled",
