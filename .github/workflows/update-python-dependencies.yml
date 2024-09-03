@@ -12,10 +12,12 @@ jobs:
       export-groups: ${{ steps.set-output.outputs.export-groups }}
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332  # v4.1.7
+        with:
+          fetch-depth: 0
       - name: Get commit message
         id: get-commit-message
         run: |
-          commit_message="$(git log -2 --pretty=%B | sed -n '2p')"
+          commit_message="$(git log --grep='chore(python-deps):' -1 --pretty=%B)"
           echo "commit-message=$commit_message" >> "$GITHUB_OUTPUT"
       - name: Determine the groups that will need to be exported
         id: set-output
@@ -30,9 +32,6 @@ jobs:
           fi
           if [[ "$commit_message" == *"find_unreleased_changelog_items"* ]]; then
             export_groups+="find_unreleased_changelog_items:actions/find_unreleased_changelog_items,"
-          fi
-          if [[ "$commit_message" == *"tests"* ]]; then
-            export_groups+="tests,"
           fi
           if [[ "$commit_message" == *"docs"* ]]; then
             export_groups+="docs:doc_config,"
