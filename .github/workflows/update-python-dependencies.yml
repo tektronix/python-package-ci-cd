@@ -15,7 +15,7 @@ jobs:
       - name: Get commit message
         id: get-commit-message
         run: |
-          git log -2 --pretty=%B
+          git log -5 --pretty=%B
           commit_message="$(git log -2 --pretty=%B | sed -n '2p')"
           echo "commit-message=$commit_message" >> "$GITHUB_OUTPUT"
       - name: Determine the groups that will need to be exported
