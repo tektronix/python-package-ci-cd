@@ -40,7 +40,7 @@ ptyprocess==0.7.0 ; python_version >= "3.12" and python_version < "3.13"
 pycparser==2.22 ; python_version >= "3.12" and python_version < "3.13" and (sys_platform == "darwin" or sys_platform == "linux") and (sys_platform == "darwin" or platform_python_implementation != "PyPy")
 pydantic==2.8.2 ; python_version >= "3.12" and python_version < "3.13"
 pydantic-core==2.20.1 ; python_version >= "3.12" and python_version < "3.13"
-pypi-simple==1.6.0 ; python_version >= "3.12" and python_version < "3.13"
+pypi-simple==1.5.0 ; python_version >= "3.12" and python_version < "3.13"
 pyproject-hooks==1.1.0 ; python_version >= "3.12" and python_version < "3.13"
 pywin32-ctypes==0.2.3 ; python_version >= "3.12" and python_version < "3.13" and sys_platform == "win32"
 pyyaml==6.0.2 ; python_version >= "3.12" and python_version < "3.13"
