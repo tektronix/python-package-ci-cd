@@ -7,58 +7,21 @@
     "ignoreDeps": [
         "tektronix/python-package-ci-cd"
     ],
+    "ignorePaths": [
+        "**/requirements.txt"
+    ],
     "packageRules": [
         {
-            "description": "Group actions/create_unique_testpypi_version/requirements.txt updates together",
-            "groupName": "create_unique_testpypi_version requirements.txt updates",
-            "matchFileNames": [
-                "actions/create_unique_testpypi_version/requirements.txt"
-            ]
-        },
-        {
-            "description": "Group actions/find_unreleased_changelog_items/requirements.txt updates together",
-            "groupName": "find_unreleased_changelog_items requirements.txt updates",
-            "matchFileNames": [
-                "actions/find_unreleased_changelog_items/requirements.txt"
-            ]
-        },
-        {
-            "description": "Group actions/update_development_dependencies/requirements.txt updates together",
-            "groupName": "update_development_dependencies requirements.txt updates",
-            "matchFileNames": [
-                "actions/update_development_dependencies/requirements.txt"
-            ]
-        },
-        {
-            "description": "Group all dependencies for the 'docs' group in pyproject.toml",
-            "groupName": "docs-dependencies",
+            "description": "Group dependencies by their dependency type in pyproject.toml",
+            "groupName": "{{depType}}-dependencies",
             "matchDepTypes": [
-                "docs"
-            ],
-            "matchFileNames": [
-                "pyproject.toml"
+                "*"
             ],
             "matchManagers": [
                 "poetry"
             ],
-            "matchPackageNames": [
-                "*"
-            ]
-        },
-        {
-            "description": "Group all dependencies for the 'tests' group in pyproject.toml",
-            "groupName": "tests-dependencies",
-            "matchDepTypes": [
-                "tests"
-            ],
-            "matchFileNames": [
+            "matchPaths": [
                 "pyproject.toml"
-            ],
-            "matchManagers": [
-                "poetry"
-            ],
-            "matchPackageNames": [
-                "*"
             ]
         }
     ],
