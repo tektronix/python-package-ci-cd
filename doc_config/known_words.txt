@@ -40,6 +40,7 @@ sublicense
 tektronix
 testpypi
 update_development_dependencies
+vimtor
 white_check_mark
 www
 yaml
