@@ -33,9 +33,6 @@ jobs:
           if [[ "$commit_message" == *"find_unreleased_changelog_items"* ]]; then
             export_groups+="find_unreleased_changelog_items:actions/find_unreleased_changelog_items,"
           fi
-          if [[ "$commit_message" == *"tests"* ]]; then
-            export_groups+="tests,"
-          fi
           if [[ "$commit_message" == *"docs"* ]]; then
             export_groups+="docs:doc_config,"
           fi

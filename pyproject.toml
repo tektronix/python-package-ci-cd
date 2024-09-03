@@ -209,18 +209,12 @@ commands =
 
 [testenv:tests]
 basepython = python
-deps =
-    -r tests/requirements.txt
-    -r actions/create_unique_testpypi_version/requirements.txt
-    -r actions/find_unreleased_changelog_items/requirements.txt
-    -r actions/update_development_dependencies/requirements.txt
 passenv =
     pytest_report_title
 setenv =
     pytest_github_report = true
     pytest_use_blanks = true
     GITHUB_STEP_SUMMARY = {tox_root}/.results_{envname}/github_report.md
-commands_pre =
 
 [testenv:docs]
 deps =
@@ -231,13 +225,6 @@ commands =
     mkdocs --verbose build --site-dir .results_{envname}
 
 [testenv:doctests]
-deps =
-    -r doc_config/requirements.txt
-    -r tests/requirements.txt
-    -r actions/create_unique_testpypi_version/requirements.txt
-    -r actions/find_unreleased_changelog_items/requirements.txt
-    -r actions/update_development_dependencies/requirements.txt
-commands_pre =
 commands =
     pytest -v -k "test_docs" --showlocals --junitxml={tox_root}/.results_{envname}/results.xml --self-contained-html --html={tox_root}/.results_{envname}/results.html
 """
