@@ -47,6 +47,19 @@
             "semanticCommitScope": "python-deps"
         },
         {
+            "description": "Group requirements.txt files by directory",
+            "groupName": "{{packageFileDir}} requirements",
+            "matchFileNames": [
+                "**/requirements.txt"
+            ],
+            "matchManagers": [
+                "pip_requirements"
+            ],
+            "matchPackageNames": [
+                "*"
+            ]
+        },
+        {
             "commitMessageSuffix": " for the {{depTypes}} group(s)",
             "description": "Add commit suffix for the dependency group in pyproject.toml",
             "matchDepTypes": [
@@ -57,6 +70,9 @@
             ],
             "matchManagers": [
                 "poetry"
+            ],
+            "matchPackageNames": [
+                "*"
             ]
         }
     ],
