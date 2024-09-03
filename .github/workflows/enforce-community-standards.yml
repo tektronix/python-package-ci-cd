@@ -3,6 +3,7 @@ name: Enforce Open Source Community Standards
 on:
   push:
     branches: [main]
+  merge_group:
   pull_request:
     branches: [main]
 jobs:

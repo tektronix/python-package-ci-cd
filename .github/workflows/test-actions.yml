@@ -3,6 +3,7 @@ name: Test repository Actions
 on:
   push:
     branches: [main]
+  merge_group:
   pull_request:
     branches: [main]
 # Cancel running jobs for the same workflow and branch.
