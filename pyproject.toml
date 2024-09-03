@@ -32,7 +32,7 @@ version = "1.2.0"
 [tool.poetry.dependencies]
 python = "~3.12"  # This needs to stay in sync with all CI workflows
 
-[tool.poetry.group.cutv.dependencies]  # dependencies for actions/create_unique_testpypi_version
+[tool.poetry.group.create_unique_testpypi_version.dependencies]
 poetry-core = "1.9.0"
 pypi-simple = "1.5.0"
 tomli = "2.0.0"
@@ -60,7 +60,7 @@ pymdown-extensions = "^10.8.1"
 symspellpy = "^6.7.7"
 tomli = "^2.0.0"
 
-[tool.poetry.group.fci.dependencies]  # dependencies for actions/find_unreleased_changelog_items
+[tool.poetry.group.find_unreleased_changelog_items.dependencies]
 
 [tool.poetry.group.tests.dependencies]
 coverage = "^7.5.0"
@@ -73,8 +73,7 @@ pytest-github-report = "^0.0.1"
 pytest-html = "^4.1.1"
 pytest-order = "^1.2.1"
 
-[tool.poetry.group.udd.dependencies]  # dependencies for actions/update_development_dependencies
-poetry = "1.8.0"
+[tool.poetry.group.update_development_dependencies.dependencies]
 poetry-plugin-export = "1.7.1"
 pre-commit = "3.8.0"
 pypi-simple = "1.5.0"
