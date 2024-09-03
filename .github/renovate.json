@@ -35,16 +35,16 @@
             "matchDepTypes": [
                 "docs"
             ],
+            "matchFileNames": [
+                "pyproject.toml",
+                "doc_config/requirements.txt"
+            ],
             "matchManagers": [
                 "poetry",
                 "pip_requirements"
             ],
-            "matchPackagePatterns": [
+            "matchPackageNames": [
                 "*"
-            ],
-            "matchPaths": [
-                "pyproject.toml",
-                "doc_config/requirements.txt"
             ]
         },
         {
@@ -53,16 +53,16 @@
             "matchDepTypes": [
                 "tests"
             ],
+            "matchFileNames": [
+                "pyproject.toml",
+                "tests/requirements.txt"
+            ],
             "matchManagers": [
                 "poetry",
                 "pip_requirements"
             ],
-            "matchPackagePatterns": [
+            "matchPackageNames": [
                 "*"
-            ],
-            "matchPaths": [
-                "pyproject.toml",
-                "tests/requirements.txt"
             ]
         }
     ],
