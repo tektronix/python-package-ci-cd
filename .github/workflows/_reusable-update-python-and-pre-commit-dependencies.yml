@@ -62,7 +62,6 @@ jobs:
   update-python-and-pre-commit-deps:
     name: Update python linters and pre-commit dependencies
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' && contains(github.head_ref, '/pip/') }}
     permissions:
       contents: write
     steps:
@@ -102,7 +101,7 @@ jobs:
           export-dependency-groups: ${{ inputs.export-dependency-groups }}
       - uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842  # v5.0.1
         with:
-          commit_message: 'chore: Update python linters and pre-commit dependencies.'
+          commit_message: 'chore: Update dependencies.'
           commit_user_name: ${{ inputs.commit-user-name }}
           commit_user_email: ${{ inputs.commit-user-email }}
           commit_author: ${{ inputs.commit-user-name }} <${{ inputs.commit-user-email }}>

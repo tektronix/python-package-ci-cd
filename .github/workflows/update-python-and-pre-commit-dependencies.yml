@@ -5,6 +5,7 @@ on:
     branches: [main]
 jobs:
   update-python-and-pre-commit-deps:
+    if: ${{ github.actor == 'dependabot[bot]' && contains(github.head_ref, '/pip/') }}
     uses: ./.github/workflows/_reusable-update-python-and-pre-commit-dependencies.yml
     with:
       commit-user-name: ${{ vars.TEK_OPENSOURCE_NAME }}
