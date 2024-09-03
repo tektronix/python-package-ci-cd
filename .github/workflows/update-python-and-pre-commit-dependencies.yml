@@ -8,32 +8,34 @@ jobs:
   determine-dependency-groups:
     if: ${{ github.actor == 'renovate[bot]' && contains(github.head_ref, '/python-deps/') }}
     runs-on: ubuntu-latest
-    env:
-      GITHUB_HEAD_REF: ${{ github.head_ref }}
     outputs:
       export-groups: ${{ steps.set-output.outputs.export-groups }}
     steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332  # v4.1.7
+      - name: Get commit message
+        id: get-commit-message
+        run: |
+          commit_message="$(git log -1 --pretty=%B)"
+          echo "commit-message=$commit_message" >> "$GITHUB_OUTPUT"
       - name: Determine the groups that will need to be exported
         id: set-output
         run: |
-          branch_name="$GITHUB_HEAD_REF"
+          commit_message="${{ steps.get-commit-message.outputs.commit-message }}"
           export_groups=""
-          if [[ "$branch_name" == "renovate/*" ]]; then
-            if [[ "$branch_name" == "*update_development_dependencies*" ]]; then
-              export_groups+="update_development_dependencies:actions/update_development_dependencies,"
-            fi
-            if [[ "$branch_name" == "*create_unique_testpypi_version*" ]]; then
-              export_groups+="create_unique_testpypi_version:actions/create_unique_testpypi_version,"
-            fi
-            if [[ "$branch_name" == "*find_unreleased_changelog_items*" ]]; then
-              export_groups+="find_unreleased_changelog_items:actions/find_unreleased_changelog_items,"
-            fi
-            if [[ "$branch_name" == "*tests*" ]]; then
-              export_groups+="tests,"
-            fi
-            if [[ "$branch_name" == "*docs*" ]]; then
-              export_groups+="docs:doc_config,"
-            fi
+          if [[ "$commit_message" == *"update_development_dependencies"* ]]; then
+            export_groups+="update_development_dependencies:actions/update_development_dependencies,"
+          fi
+          if [[ "$commit_message" == *"create_unique_testpypi_version"* ]]; then
+            export_groups+="create_unique_testpypi_version:actions/create_unique_testpypi_version,"
+          fi
+          if [[ "$commit_message" == *"find_unreleased_changelog_items"* ]]; then
+            export_groups+="find_unreleased_changelog_items:actions/find_unreleased_changelog_items,"
+          fi
+          if [[ "$commit_message" == *"tests"* ]]; then
+            export_groups+="tests,"
+          fi
+          if [[ "$commit_message" == *"docs"* ]]; then
+            export_groups+="docs:doc_config,"
           fi
           echo "export-groups=$export_groups" >> "$GITHUB_OUTPUT"
   update-python-and-pre-commit-deps:
