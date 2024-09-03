@@ -49,6 +49,12 @@
             "semanticCommitScope": "python-deps"
         },
         {
+            "groupName": "python-semantic-release dependencies",
+            "matchPackagePatterns": [
+                "^python-semantic-release*"
+            ]
+        },
+        {
             "commitMessageSuffix": " for the {{depTypes}} group(s)",
             "description": "Add commit suffix for the dependency group in pyproject.toml",
             "matchDepTypes": [
