@@ -3,5 +3,32 @@
     "dependencyDashboard": true,
     "extends": [
         "config:best-practices"
-    ]
+    ],
+    "ignoreDeps": [
+        "tektronix/python-package-ci-cd"
+    ],
+    "packageRules": [
+        {
+            "description": "Group create_unique_testpypi_version/requirements.txt updates together",
+            "groupName": "create_unique_testpypi_version requirements.txt updates",
+            "matchFileNames": [
+                "create_unique_testpypi_version/requirements.txt"
+            ]
+        },
+        {
+            "description": "Group find_unreleased_changelog_items/requirements.txt updates together",
+            "groupName": "find_unreleased_changelog_items requirements.txt updates",
+            "matchFileNames": [
+                "find_unreleased_changelog_items/requirements.txt"
+            ]
+        },
+        {
+            "description": "Group update_development_dependencies/requirements.txt updates together",
+            "groupName": "update_development_dependencies requirements.txt updates",
+            "matchFileNames": [
+                "update_development_dependencies/requirements.txt"
+            ]
+        }
+    ],
+    "platformCommit": "enabled"
 }
