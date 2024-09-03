@@ -9,26 +9,27 @@
     ],
     "packageRules": [
         {
-            "description": "Group create_unique_testpypi_version/requirements.txt updates together",
+            "description": "Group actions/create_unique_testpypi_version/requirements.txt updates together",
             "groupName": "create_unique_testpypi_version requirements.txt updates",
             "matchFileNames": [
-                "create_unique_testpypi_version/requirements.txt"
+                "actions/create_unique_testpypi_version/requirements.txt"
             ]
         },
         {
-            "description": "Group find_unreleased_changelog_items/requirements.txt updates together",
+            "description": "Group actions/find_unreleased_changelog_items/requirements.txt updates together",
             "groupName": "find_unreleased_changelog_items requirements.txt updates",
             "matchFileNames": [
-                "find_unreleased_changelog_items/requirements.txt"
+                "actions/find_unreleased_changelog_items/requirements.txt"
             ]
         },
         {
-            "description": "Group update_development_dependencies/requirements.txt updates together",
+            "description": "Group actions/update_development_dependencies/requirements.txt updates together",
             "groupName": "update_development_dependencies requirements.txt updates",
             "matchFileNames": [
-                "update_development_dependencies/requirements.txt"
+                "actions/update_development_dependencies/requirements.txt"
             ]
         }
     ],
-    "platformCommit": "enabled"
+    "platformCommit": "enabled",
+    "prHourlyLimit": 5
 }
