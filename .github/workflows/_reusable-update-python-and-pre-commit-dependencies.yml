@@ -18,7 +18,7 @@ on:
           Use an empty string, e.g. "", for dependencies located in the default group'
         required: false
         type: string
-        default: ''
+        default: '{}'
       update-pre-commit:
         description: A boolean indicating if the pre-commit hooks should be updated.
         required: false

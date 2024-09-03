@@ -18,7 +18,7 @@ inputs:
       to update within that group, e.g. {"dev": ["pylint", "ruff"], "tests": ["ruff"]}.
       Use an empty string, e.g. "", for dependencies located in the default group'
     required: false
-    default: ''
+    default: '{}'
   update-pre-commit:
     description: A boolean indicating if the pre-commit hooks should be updated.
     required: false

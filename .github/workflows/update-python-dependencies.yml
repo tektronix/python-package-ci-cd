@@ -6,7 +6,7 @@ on:
     branches: [main]
 jobs:
   determine-dependency-groups:
-    if: ${{ github.actor == 'renovate[bot]' && contains(github.head_ref, '/python-deps/') }}
+#    if: ${{ github.actor == 'renovate[bot]' && contains(github.head_ref, '/python-deps/') }}  # TODO: revert
     runs-on: ubuntu-latest
     outputs:
       export-groups: ${{ steps.set-output.outputs.export-groups }}
@@ -15,6 +15,7 @@ jobs:
       - name: Get commit message
         id: get-commit-message
         run: |
+          git log -2 --pretty=%B
           commit_message="$(git log -2 --pretty=%B | sed -n '2p')"
           echo "commit-message=$commit_message" >> "$GITHUB_OUTPUT"
       - name: Determine the groups that will need to be exported
@@ -39,7 +40,7 @@ jobs:
           fi
           echo "export-groups=$export_groups" >> "$GITHUB_OUTPUT"
   update-python-and-pre-commit-deps:
-    if: ${{ github.actor == 'renovate[bot]' && contains(github.head_ref, '/python-deps/') }}
+#    if: ${{ github.actor == 'renovate[bot]' && contains(github.head_ref, '/python-deps/') }}  # TODO: revert
     needs: determine-dependency-groups
     uses: ./.github/workflows/_reusable-update-python-and-pre-commit-dependencies.yml
     with:
