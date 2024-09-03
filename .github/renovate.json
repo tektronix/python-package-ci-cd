@@ -7,9 +7,6 @@
     "ignoreDeps": [
         "tektronix/python-package-ci-cd"
     ],
-    "ignorePaths": [
-        "**/requirements.txt"
-    ],
     "packageRules": [
         {
             "addLabels": [
