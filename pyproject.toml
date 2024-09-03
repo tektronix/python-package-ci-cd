@@ -35,7 +35,7 @@ python = "~3.12"  # This needs to stay in sync with all CI workflows
 [tool.poetry.group.create_unique_testpypi_version.dependencies]
 poetry-core = "1.9.0"
 pypi-simple = "1.5.0"
-tomli = "2.0.0"
+tomli = "2.0.1"
 tomli-w = "1.0.0"
 
 [tool.poetry.group.dev.dependencies]
