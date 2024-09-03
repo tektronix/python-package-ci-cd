@@ -28,6 +28,38 @@
             "matchFileNames": [
                 "actions/update_development_dependencies/requirements.txt"
             ]
+        },
+        {
+            "description": "Group all dependencies for the 'docs' group in pyproject.toml",
+            "groupName": "poetry-docs-dependencies",
+            "matchDepTypes": [
+                "docs"
+            ],
+            "matchManagers": [
+                "poetry"
+            ],
+            "matchPackagePatterns": [
+                "*"
+            ],
+            "matchPaths": [
+                "pyproject.toml"
+            ]
+        },
+        {
+            "description": "Group all dependencies for the 'tests' group in pyproject.toml",
+            "groupName": "poetry-tests-dependencies",
+            "matchDepTypes": [
+                "tests"
+            ],
+            "matchManagers": [
+                "poetry"
+            ],
+            "matchPackagePatterns": [
+                "*"
+            ],
+            "matchPaths": [
+                "pyproject.toml"
+            ]
         }
     ],
     "platformCommit": "enabled",
