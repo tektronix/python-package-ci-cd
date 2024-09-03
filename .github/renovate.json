@@ -48,7 +48,7 @@
         },
         {
             "description": "Group requirements.txt files by directory",
-            "groupName": "{{packageFileDir}} requirements",
+            "groupName": "{{{replace '/' '_' packageFileDir}}} requirements",
             "matchFileNames": [
                 "**/requirements.txt"
             ],
