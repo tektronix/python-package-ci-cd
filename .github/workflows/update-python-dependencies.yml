@@ -12,6 +12,8 @@ jobs:
       export-groups: ${{ steps.set-output.outputs.export-groups }}
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332  # v4.1.7
+        with:
+          fetch-depth: 3
       - name: Get commit message
         id: get-commit-message
         run: |
