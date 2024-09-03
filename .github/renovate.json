@@ -12,6 +12,27 @@
     ],
     "packageRules": [
         {
+            "addLabels": [
+                "gh-actions",
+                "dependencies"
+            ],
+            "description": "Add gh-actions and dependencies labels to GitHub Action dependency updates",
+            "matchManagers": [
+                "github-actions"
+            ]
+        },
+        {
+            "addLabels": [
+                "python",
+                "dependencies"
+            ],
+            "description": "Add python and dependencies labels to Python dependency updates",
+            "matchManagers": [
+                "poetry",
+                "pip_requirements"
+            ]
+        },
+        {
             "description": "Group dependencies by their dependency type in pyproject.toml",
             "groupName": "{{depType}}-dependencies",
             "matchDepTypes": [
