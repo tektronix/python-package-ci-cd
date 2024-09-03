@@ -7,7 +7,9 @@
     "ignoreDeps": [
         "tektronix/python-package-ci-cd"
     ],
-    "ignorePaths": [],
+    "ignorePaths": [
+        "**/requirements.txt"
+    ],
     "packageRules": [
         {
             "addLabels": [
@@ -47,19 +49,7 @@
             "semanticCommitScope": "python-deps"
         },
         {
-            "description": "Group requirements.txt files by directory",
-            "groupName": "{{{replace '/' '_' packageFileDir}}} requirements",
-            "matchFileNames": [
-                "**/requirements.txt"
-            ],
-            "matchManagers": [
-                "pip_requirements"
-            ],
-            "matchPackageNames": [
-                "*"
-            ]
-        },
-        {
+            "additionalBranchPrefix": "{{{replace ',' '-' depTypes}}}/",
             "commitMessageSuffix": " for the {{depTypes}} group(s)",
             "description": "Add commit suffix for the dependency group in pyproject.toml",
             "matchDepTypes": [
