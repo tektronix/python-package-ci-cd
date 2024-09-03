@@ -6,7 +6,7 @@ on:
     branches: [main]
 jobs:
   determine-dependency-groups:
-#    if: ${{ github.actor == 'renovate[bot]' && contains(github.head_ref, '/python-deps/') }}  # TODO: revert
+    if: ${{ github.actor == 'renovate[bot]' && contains(github.head_ref, '/python-deps/') }}
     runs-on: ubuntu-latest
     outputs:
       export-groups: ${{ steps.set-output.outputs.export-groups }}
@@ -38,7 +38,7 @@ jobs:
           fi
           echo "export-groups=$export_groups" >> "$GITHUB_OUTPUT"
   update-python-and-pre-commit-deps:
-#    if: ${{ github.actor == 'renovate[bot]' && contains(github.head_ref, '/python-deps/') }}  # TODO: revert
+    if: ${{ github.actor == 'renovate[bot]' && contains(github.head_ref, '/python-deps/') }}
     needs: determine-dependency-groups
     uses: ./.github/workflows/_reusable-update-python-and-pre-commit-dependencies.yml
     with:
