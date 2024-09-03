@@ -52,7 +52,7 @@
             "description": "Group together all python-semantic-release dependencies",
             "groupName": "python-semantic-release dependencies",
             "matchPackageNames": [
-                "/^python-semantic-release*/"
+                "^python-semantic-release"
             ]
         },
         {
