@@ -8,7 +8,7 @@ jobs:
   publish-test-results:
     uses: ./.github/workflows/_reusable-publish-test-results.yml
     with:
-      operating-systems-array: '["ubuntu", "windows"]'  # this needs to match the operating-systems-array in the test-code.yml file
+      operating-systems-array: '["ubuntu", "windows", "macos"]'  # this needs to match the operating-systems-array in the test-code.yml file
     permissions:
       checks: write
       pull-requests: write
