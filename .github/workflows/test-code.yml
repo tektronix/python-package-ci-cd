@@ -15,7 +15,7 @@ jobs:
     uses: ./.github/workflows/_reusable-test-code.yml
     with:
       repo-name: tektronix/python-package-ci-cd
-      operating-systems-array: '["ubuntu", "windows"]'  # this needs to match the operating-systems-array in the publish-test-results.yml file
+      operating-systems-array: '["ubuntu", "windows", "macos"]'  # this needs to match the operating-systems-array in the publish-test-results.yml file
       python-versions-array: '["3.12"]'  # this needs to match the [tool.poetry.dependencies.python] version in the pyproject.toml file
       upload-to-codecov: true
     secrets:
