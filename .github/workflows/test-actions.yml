@@ -127,7 +127,7 @@ jobs:
           dependency-dict: '{"dev": ["pyright"]}'
           pre-commit-hook-skip-list: remove-tabs,forbid-tabs,check-readthedocs,check-dependabot,check-github-actions,check-github-workflows,commitizen,blacken-docs,yamlfix,hadolint,mdformat,markdown-link-check,check-poetry,toml-sort-fix,pyright,poetry-audit,ruff,ruff-format,docformatter,renovate-config-validator
           export-dependency-groups: |
-            update_development_dependencies:actions/update_development_dependencies,
+            actions-update_development_dependencies:actions/update_development_dependencies,
             tests
   test-fetch_pr_number:
     runs-on: ubuntu-latest
@@ -189,6 +189,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Decide whether the needed jobs succeeded or failed
-        uses: re-actors/alls-green@05ac9388f0aebcb5727afa17fcccfecd6f8ec5fe  # v1.2.2
+        uses: re-actors/alls-green@13b4244b312e8a314951e03958a2f91519a6a3c9  # v1.2.1
         with:
           jobs: ${{ toJSON(needs) }}
