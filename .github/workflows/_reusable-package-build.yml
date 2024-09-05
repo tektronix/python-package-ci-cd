@@ -39,7 +39,7 @@ jobs:
       - uses: hynek/build-and-inspect-python-package@2dbbf2b252d3a3c7cec7a810e3ed5983bd17b13a  # v2.8.0
         id: build-pkg
         with:
-          attest-build-provenance-github: ${{ !github.event.pull_request.head.repo.fork && github.actor != 'dependabot[bot]' }}
+          attest-build-provenance-github: ${{ !github.event.pull_request.head.repo.fork && !contains(fromJSON('["dependabot[bot]", "renovate[bot]"]'), github.actor) }}
   # Verify the package can be installed
   install-package:
     name: Install package
