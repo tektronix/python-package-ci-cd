@@ -18,8 +18,37 @@ import os
 import pathlib
 import re
 import shutil
+import subprocess
 
 CHANGELOG_FILE = pathlib.Path("./CHANGELOG.md")
+
+
+def get_latest_tag() -> str | None:
+    """Retrieve the latest tag in the Git repository.
+
+    Returns:
+        The latest tag as a string if it exists, otherwise None.
+    """
+    try:
+        result = subprocess.check_output(["git", "describe", "--tags", "--abbrev=0"])  # noqa: S603,S607
+        return result.decode().strip()
+    except subprocess.CalledProcessError:
+        return None
+
+
+def get_commit_messages(since_tag: str | None = None) -> list[str]:
+    """Retrieve commit messages from the Git repository.
+
+    Args:
+        since_tag: The tag from which to start listing commits. If None, lists all commits.
+
+    Returns:
+        A list of commit messages as strings.
+    """
+    range_spec = f"{since_tag}..HEAD" if since_tag else "HEAD"
+
+    result = subprocess.check_output(["git", "log", range_spec, "--pretty=format:%s"])  # noqa: S603,S607
+    return result.decode().splitlines()
 
 
 def main() -> None:
@@ -76,8 +105,13 @@ def main() -> None:
     # If running in GitHub Actions, and the release_level is set, send the release level and
     # incoming changes to the GitHub Summary
     if release_level:
+        commit_messages = get_commit_messages(since_tag=get_latest_tag())
+
+        pr_regex = re.compile(r"\(#\d+\)$")
+        pr_descriptions = "\n".join([f"- {msg}" for msg in commit_messages if pr_regex.search(msg)])
         summary_contents = (
             f"## Workflow Inputs\n- release-level: {release_level}\n"
+            f"## PRs Merged Since Last Release\n{pr_descriptions}\n"
             f"## Incoming Changes\n{release_notes_content.replace('## Unreleased', '').strip()}\n"
         )
         print(
