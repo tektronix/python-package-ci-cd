@@ -24,6 +24,7 @@ Things to be included in the next release go here.
 
 ### Changed
 
+- Bumped dependency versions.
 - Changed the `_reusable-update-python-and-pre-commit-dependencies.yml` workflow to no longer only work on PRs from Dependabot, users will now need to apply any conditional login in the calling workflow.
 - Updated the `_reusable-update-python-and-pre-commit-dependencies.yml` workflow to allow using [`renovate`](https://docs.renovatebot.com/) instead of Dependabot to update dependencies.
 
