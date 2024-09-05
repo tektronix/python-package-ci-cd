@@ -3,7 +3,8 @@
     "dependencyDashboard": true,
     "extends": [
         "config:best-practices",
-        "group:githubArtifactActions"
+        "group:githubArtifactActions",
+        ":separatePatchReleases"
     ],
     "ignoreDeps": [
         "tektronix/python-package-ci-cd"
@@ -73,6 +74,19 @@
             "description": "Automatically merge all patch updates",
             "matchUpdateTypes": [
                 "patch"
+            ]
+        },
+        {
+            "description": "Allow automerge for minor updates of certain packages",
+            "matchPackageNames": [
+                "certifi"
+            ]
+        },
+        {
+            "description": "Group together all pydantic dependencies",
+            "groupName": "pydantic dependencies",
+            "matchPackageNames": [
+                "/^pydantic/"
             ]
         },
         {

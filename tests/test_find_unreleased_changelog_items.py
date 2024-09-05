@@ -2,14 +2,20 @@
 
 from __future__ import annotations
 
+import shlex
+import subprocess
+
 from typing import TYPE_CHECKING
+from unittest import mock
 
 import pytest
 
-from actions.find_unreleased_changelog_items.main import main
+from actions.find_unreleased_changelog_items.main import get_commit_messages, get_latest_tag, main
 
 if TYPE_CHECKING:
     from pathlib import Path
+
+    from pytest_subprocess import FakeProcess
 
 PREVIOUS_CHANGELOG_FILEPATH = "previous_changelog.md"
 PREVIOUS_RELEASE_NOTES_FILEPATH = "previous_release_notes.md"
@@ -76,15 +82,28 @@ def mock_env_vars(
     monkeypatch: pytest.MonkeyPatch,
     summary_file: Path,
     mock_previous_files: tuple[Path, Path],
+    fake_process: FakeProcess,
 ) -> None:
     """Mock the environment variables to simulate GitHub Actions inputs.
+
+    This fixture also mocks subprocess.check_output to enable testing to function without running
+    git commands.
 
     Args:
         tmp_path: The temporary path fixture.
         monkeypatch: The monkeypatch fixture.
         summary_file: The path to the job summary file.
         mock_previous_files: Paths to the previous changelog file and previous release notes file.
+        fake_process: The fake_process fixture, used to register commands that will be mocked.
     """
+    fake_process.register(  # pyright: ignore[reportUnknownMemberType]
+        shlex.split(f"git config --global --add safe.directory {tmp_path.resolve().as_posix()}")
+    )
+    fake_process.register(shlex.split("git describe --tags --abbrev=0"), stdout=b"v1.0.0\n")  # pyright: ignore[reportUnknownMemberType]
+    fake_process.register(  # pyright: ignore[reportUnknownMemberType]
+        shlex.split("git log v1.0.0..HEAD --pretty=format:%s"),
+        stdout=b"Initial commit\nAdd new feature (#123)\n",
+    )
     # Change the working directory
     monkeypatch.chdir(tmp_path)
     monkeypatch.setenv("INPUT_PREVIOUS-CHANGELOG-FILEPATH", mock_previous_files[0].as_posix())
@@ -139,8 +158,17 @@ def test_main_with_unreleased_entries(
 
     with summary_file.open("r") as summary_file_handle:
         summary_contents = summary_file_handle.read()
-    assert "## Workflow Inputs\n- release-level: minor\n" in summary_contents
-    assert "## Incoming Changes\n### Added\n- New feature" in summary_contents
+    assert (
+        summary_contents
+        == """## Workflow Inputs
+- release-level: minor
+## PRs Merged Since Last Release
+- Add new feature (#123)
+## Incoming Changes
+### Added
+- New feature
+"""
+    )
 
 
 def test_main_with_no_release_level(
@@ -166,3 +194,20 @@ def test_main_with_no_release_level(
     assert mock_previous_files[0].read_text() == mock_changelog_file.read_text()
     assert mock_previous_files[1].read_text().strip() == "## Unreleased\n### Added\n- New feature"
     assert not summary_file.exists()
+
+
+def test_get_latest_tag() -> None:
+    """Test the get_latest_tag function."""
+    with mock.patch("subprocess.check_output") as mock_check_output:
+        mock_check_output.return_value = b"v1.0.0\n"
+        assert get_latest_tag() == "v1.0.0"
+
+        mock_check_output.side_effect = subprocess.CalledProcessError(1, "git")
+        assert get_latest_tag() is None
+
+
+def test_get_commit_messages() -> None:
+    """Test the get_commit_messages function."""
+    with mock.patch("subprocess.check_output") as mock_check_output:
+        mock_check_output.return_value = b"Initial commit\nAdd new feature\n"
+        assert get_commit_messages() == ["Initial commit", "Add new feature"]

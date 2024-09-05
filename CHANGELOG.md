@@ -21,9 +21,11 @@ Things to be included in the next release go here.
 ### Added
 
 - Added the ability for the `update_development_dependencies` action to accept a comma-separated, multiline string
+- Added all PRs merged since the last release to the job summary for the release workflow
 
 ### Changed
 
+- Bumped dependency versions.
 - Changed the `_reusable-update-python-and-pre-commit-dependencies.yml` workflow to no longer only work on PRs from Dependabot, users will now need to apply any conditional login in the calling workflow.
 - Updated the `_reusable-update-python-and-pre-commit-dependencies.yml` workflow to allow using [`renovate`](https://docs.renovatebot.com/) instead of Dependabot to update dependencies.
 

@@ -17,9 +17,50 @@ from __future__ import annotations
 import os
 import pathlib
 import re
+import shlex
 import shutil
+import subprocess
 
 CHANGELOG_FILE = pathlib.Path("./CHANGELOG.md")
+
+
+def run_cmd_in_subprocess(command: str) -> str:
+    """Run the given command in a subprocess and return the result.
+
+    Args:
+        command: The command string to send.
+
+    Returns:
+        The output from the command.
+    """
+    command = command.replace("\\", "/")
+    print(f"\nExecuting command: {command}")
+    return subprocess.check_output(shlex.split(command)).decode()  # noqa: S603
+
+
+def get_latest_tag() -> str | None:
+    """Retrieve the latest tag in the Git repository.
+
+    Returns:
+        The latest tag as a string if it exists, otherwise None.
+    """
+    try:
+        return run_cmd_in_subprocess("git describe --tags --abbrev=0").strip()
+    except subprocess.CalledProcessError:
+        return None
+
+
+def get_commit_messages(since_tag: str | None = None) -> list[str]:
+    """Retrieve commit messages from the Git repository.
+
+    Args:
+        since_tag: The tag from which to start listing commits. If None, lists all commits.
+
+    Returns:
+        A list of commit messages as strings.
+    """
+    range_spec = f"{since_tag}..HEAD" if since_tag else "HEAD"
+    return run_cmd_in_subprocess(f"git log {range_spec} --pretty=format:%s").splitlines()
 
 
 def main() -> None:
@@ -76,12 +117,21 @@ def main() -> None:
     # If running in GitHub Actions, and the release_level is set, send the release level and
     # incoming changes to the GitHub Summary
     if release_level:
+        root_dir = pathlib.Path.cwd()
+        run_cmd_in_subprocess(
+            f'git config --global --add safe.directory "{root_dir.resolve().as_posix()}"'
+        )
+        commit_messages = get_commit_messages(since_tag=get_latest_tag())
+
+        pr_regex = re.compile(r"\(#\d+\)$")
+        pr_descriptions = "\n".join([f"- {msg}" for msg in commit_messages if pr_regex.search(msg)])
         summary_contents = (
             f"## Workflow Inputs\n- release-level: {release_level}\n"
+            f"## PRs Merged Since Last Release\n{pr_descriptions}\n"
             f"## Incoming Changes\n{release_notes_content.replace('## Unreleased', '').strip()}\n"
         )
         print(
-            f"Adding the following contents to the GitHub Workflow Summary:\n\n{summary_contents}"
+            f"\nAdding the following contents to the GitHub Workflow Summary:\n\n{summary_contents}"
         )
         with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary_file:  # noqa: PTH123
             summary_file.write(summary_contents)
