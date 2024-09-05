@@ -83,6 +83,13 @@
             ]
         },
         {
+            "description": "Group together all pydantic dependencies",
+            "groupName": "pydantic dependencies",
+            "matchPackageNames": [
+                "/^pydantic/"
+            ]
+        },
+        {
             "automerge": false,
             "description": "Group together all python-semantic-release dependencies",
             "groupName": "python-semantic-release dependencies",
