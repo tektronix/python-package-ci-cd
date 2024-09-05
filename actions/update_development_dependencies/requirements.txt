@@ -38,7 +38,7 @@ poetry-plugin-export==1.8.0 ; python_version >= "3.12" and python_version < "3.1
 pre-commit==3.8.0 ; python_version >= "3.12" and python_version < "3.13"
 ptyprocess==0.7.0 ; python_version >= "3.12" and python_version < "3.13"
 pycparser==2.22 ; python_version >= "3.12" and python_version < "3.13" and (sys_platform == "darwin" or sys_platform == "linux") and (sys_platform == "darwin" or platform_python_implementation != "PyPy")
-pydantic==2.8.2 ; python_version >= "3.12" and python_version < "3.13"
+pydantic==2.9.0 ; python_version >= "3.12" and python_version < "3.13"
 pydantic-core==2.20.1 ; python_version >= "3.12" and python_version < "3.13"
 pypi-simple==1.6.0 ; python_version >= "3.12" and python_version < "3.13"
 pyproject-hooks==1.1.0 ; python_version >= "3.12" and python_version < "3.13"
