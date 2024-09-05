@@ -101,6 +101,8 @@ jobs:
           MULTILINE_STRING=$(cat <<'EOF'
           ## Workflow Inputs
           - release-level: patch
+          ## PRs Merged Since Last Release
+
           ## Incoming Changes
           Things to be included in the next release go here.
           ### Added
