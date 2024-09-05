@@ -41,7 +41,7 @@ tomli-w = "1.0.0"
 [tool.poetry.group.actions-find_unreleased_changelog_items.dependencies]
 
 [tool.poetry.group.actions-update_development_dependencies.dependencies]
-poetry-plugin-export = "1.7.1"
+poetry-plugin-export = "1.8.0"
 pre-commit = "3.8.0"
 pypi-simple = "1.5.0"
 toml-sort = "0.23.1"
@@ -50,7 +50,7 @@ yamlfix = "1.17.0"
 [tool.poetry.group.dev.dependencies]
 pip = "^24.0"
 poetry-audit-plugin = "^0.4.0"
-poetry-plugin-export = "1.7.1"
+poetry-plugin-export = "1.8.0"
 poetry-pre-commit-plugin = "^0.1.2"
 pre-commit = "3.8.0"
 pyright = "1.1.379"
