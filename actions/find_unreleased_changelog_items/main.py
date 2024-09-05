@@ -105,6 +105,7 @@ def main() -> None:
     # If running in GitHub Actions, and the release_level is set, send the release level and
     # incoming changes to the GitHub Summary
     if release_level:
+        subprocess.check_call(["git", "config", "--global", "--add", "safe.directory", "."])  # noqa: S603,S607
         commit_messages = get_commit_messages(since_tag=get_latest_tag())
 
         pr_regex = re.compile(r"\(#\d+\)$")
