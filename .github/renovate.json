@@ -77,6 +77,12 @@
             ]
         },
         {
+            "description": "Allow automerge for minor updates of certain packages",
+            "matchPackageNames": [
+                "certifi"
+            ]
+        },
+        {
             "automerge": false,
             "description": "Group together all python-semantic-release dependencies",
             "groupName": "python-semantic-release dependencies",
