@@ -12,10 +12,11 @@
     "packageRules": [
         {
             "additionalBranchPrefix": "{{#if (equals manager 'github-actions')}}gh-actions{{else}}{{categories}}{{/if}}-deps/",
-            "description": "Set the branch prefix for all updates",
+            "description": "Set the branch prefix and minimum release age for all updates",
             "matchPackageNames": [
                 "*"
-            ]
+            ],
+            "minimumReleaseAge": "5 days"
         },
         {
             "addLabels": [

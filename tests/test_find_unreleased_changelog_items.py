@@ -137,6 +137,31 @@ def test_main_no_unreleased_entries(
         main()
 
 
+def test_main_with_no_merged_prs(
+    mock_env_vars: None,  # noqa: ARG001
+    mock_changelog_file: Path,  # noqa: ARG001
+    fake_process: FakeProcess,
+) -> None:
+    """Test the main function when unreleased entries are found.
+
+    Args:
+        mock_env_vars: Mock the environment variables.
+        mock_changelog_file: Mock the changelog file.
+        fake_process: The fake_process fixture, used to register commands that will be mocked.
+    """
+    fake_process.register(  # pyright: ignore[reportUnknownMemberType]
+        shlex.split("git log v1.0.0..HEAD --pretty=format:%s"),
+        stdout=b"Initial commit\n",
+    )
+    with fake_process.context() as nested_process:
+        nested_process.register(  # pyright: ignore[reportUnknownMemberType]
+            shlex.split("git log v1.0.0..HEAD --pretty=format:%s"),
+            stdout=b"Initial commit\n",
+        )
+        with pytest.raises(SystemExit, match="No PRs have been merged since the last release\\."):
+            main()
+
+
 def test_main_with_unreleased_entries(
     mock_env_vars: None,  # noqa: ARG001
     mock_changelog_file: Path,
