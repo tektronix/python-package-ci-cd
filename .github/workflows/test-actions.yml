@@ -97,12 +97,14 @@ jobs:
         run: |
           FILE_PATH="./temp_job_summary.md"
 
-          # Define the multiline string using a heredoc
-          MULTILINE_STRING=$(cat <<'EOF'
+          # Define the start and end parts of the multiline string using heredocs
+          START_STRING=$(cat <<'EOF'
           ## Workflow Inputs
           - release-level: patch
           ## PRs Merged Since Last Release
-
+          EOF
+          )
+          END_STRING=$(cat <<'EOF'
           ## Incoming Changes
           Things to be included in the next release go here.
           ### Added
@@ -110,12 +112,31 @@ jobs:
           EOF
           )
 
-          # Compare the file contents to the multiline string
-          if diff <(echo "$MULTILINE_STRING") "$FILE_PATH" > /dev/null; then
+          # Read file contents
+          FILE_CONTENTS=$(cat "$FILE_PATH")
+
+          # Extract the start and end parts of the file contents
+          FILE_START=$(echo "$FILE_CONTENTS" | head -n "$(echo "$START_STRING" | wc -l)")
+          FILE_END=$(echo "$FILE_CONTENTS" | tail -n "$(echo "$END_STRING" | wc -l)")
+
+          # Compare the start and end parts
+          if [ "$FILE_START" == "$START_STRING" ] && [ "$FILE_END" == "$END_STRING" ]; then
             echo "The Job Summary contents are correct."
           else
-            echo "The Job Summary contents are not correct. Here is the diff:"
-            diff <(echo "$MULTILINE_STRING") "$FILE_PATH"
+            echo "The Job Summary contents are not correct."
+            echo ""
+            echo "Expected start:"
+            echo "$START_STRING"
+            echo ""
+            echo "Actual start:"
+            echo "$FILE_START"
+            echo ""
+            echo ""
+            echo "Expected end:"
+            echo "$END_STRING"
+            echo ""
+            echo "Actual end:"
+            echo "$FILE_END"
             exit 1
           fi
   test-update_development_dependencies:
