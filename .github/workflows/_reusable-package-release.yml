@@ -154,14 +154,20 @@ jobs:
           git_committer_name: ${{ inputs.commit-user-name }}
           ssh_public_signing_key: ${{ secrets.ssh-signing-key-public }}
           ssh_private_signing_key: ${{ secrets.ssh-signing-key-private }}
+      - name: Mark the release as approved
+        id: set-approved
+        if: ${{ steps.release.conclusion == 'success' }}
+        run: echo "approved=true" >> "$GITHUB_OUTPUT"
     outputs:
       built-version: ${{ steps.release.outputs.version }}
+      approved: ${{ steps.set-approved.outputs.approved }}
   # Build the newly updated package
   pypi-build:
     name: Build package
     needs: [print-inputs, bump-version]
     if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
-      && github.ref == 'refs/heads/main' && needs.bump-version.outputs.built-version
+      && github.ref == 'refs/heads/main' && needs.bump-version.outputs.approved ==
+      'true'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -180,7 +186,8 @@ jobs:
     name: Upload package to TestPyPI
     needs: [print-inputs, bump-version, pypi-build]
     if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
-      && github.ref == 'refs/heads/main' && needs.bump-version.outputs.built-version
+      && github.ref == 'refs/heads/main' && needs.bump-version.outputs.approved ==
+      'true'
     runs-on: ubuntu-latest
     environment: package-testpypi
     permissions:
@@ -201,7 +208,8 @@ jobs:
     name: Upload package to PyPI
     needs: [print-inputs, bump-version, upload-testpypi]
     if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
-      && github.ref == 'refs/heads/main' && needs.bump-version.outputs.built-version
+      && github.ref == 'refs/heads/main' && needs.bump-version.outputs.approved ==
+      'true'
     runs-on: ubuntu-latest
     environment: package-release
     permissions:
@@ -221,7 +229,8 @@ jobs:
     name: Upload package to GitHub Release
     needs: [print-inputs, bump-version, upload-pypi]
     if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
-      && github.ref == 'refs/heads/main' && needs.bump-version.outputs.built-version
+      && github.ref == 'refs/heads/main' && needs.bump-version.outputs.approved ==
+      'true'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -252,7 +261,8 @@ jobs:
       - upload-pypi
       - upload-github
     if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
-      && github.ref == 'refs/heads/main' && needs.bump-version.outputs.built-version
+      && github.ref == 'refs/heads/main' && needs.bump-version.outputs.approved ==
+      'true'
     runs-on: ${{ matrix.os-name }}-latest
     permissions: {}
     strategy:
