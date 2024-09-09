@@ -123,6 +123,7 @@ jobs:
     if: github.repository == inputs.repo-name && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: package-release-gate
+    continue-on-error: true
     permissions:
       id-token: write
       contents: write
@@ -160,7 +161,7 @@ jobs:
     name: Build package
     needs: [print-inputs, bump-version]
     if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
-      && github.ref == 'refs/heads/main'
+      && github.ref == 'refs/heads/main' && needs.bump-version.outputs.built-version
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -177,9 +178,9 @@ jobs:
   # Upload the official package version to TestPyPI
   upload-testpypi:
     name: Upload package to TestPyPI
-    needs: [print-inputs, pypi-build]
+    needs: [print-inputs, bump-version, pypi-build]
     if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
-      && github.ref == 'refs/heads/main'
+      && github.ref == 'refs/heads/main' && needs.bump-version.outputs.built-version
     runs-on: ubuntu-latest
     environment: package-testpypi
     permissions:
@@ -198,9 +199,9 @@ jobs:
   # Upload the official package version to PyPI
   upload-pypi:
     name: Upload package to PyPI
-    needs: [print-inputs, upload-testpypi]
+    needs: [print-inputs, bump-version, upload-testpypi]
     if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
-      && github.ref == 'refs/heads/main'
+      && github.ref == 'refs/heads/main' && needs.bump-version.outputs.built-version
     runs-on: ubuntu-latest
     environment: package-release
     permissions:
@@ -218,9 +219,9 @@ jobs:
   # Upload the official package binaries to the GitHub Release
   upload-github:
     name: Upload package to GitHub Release
-    needs: [print-inputs, upload-pypi]
+    needs: [print-inputs, bump-version, upload-pypi]
     if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
-      && github.ref == 'refs/heads/main'
+      && github.ref == 'refs/heads/main' && needs.bump-version.outputs.built-version
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -251,7 +252,7 @@ jobs:
       - upload-pypi
       - upload-github
     if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
-      && github.ref == 'refs/heads/main'
+      && github.ref == 'refs/heads/main' && needs.bump-version.outputs.built-version
     runs-on: ${{ matrix.os-name }}-latest
     permissions: {}
     strategy:
