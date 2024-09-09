@@ -2,7 +2,9 @@
 
 This action will parse the repository's `CHANGELOG.md` file to determine if
 there are any unreleased items. It will fail if it cannot find any unreleased
-items, as this means that the package is not ready for a new release.
+items, as this means that the package is not ready for a new release. This action will also
+fail if it cannot find any merged PRs since the last release, as this also means that the
+package is not ready for a new release.
 
 This action will populate two files in the
 [`python-semantic-release` templates directory](https://python-semantic-release.readthedocs.io/en/latest/configuration.html#config-changelog-template-dir).
@@ -13,7 +15,7 @@ will be used to fill in the GitHub Release Notes.
 
 > [!IMPORTANT]
 > This action requires that the `pyproject.toml` and `CHANGELOG.md` files exist in the
-> current working directory.
+> current working directory and that all tags are fetched from the remote repository.
 
 > [!IMPORTANT]
 > This action requires the `CHANGELOG.md` file to be in a format that is based on
@@ -48,6 +50,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        with:
+          fetch-depth: 0
+          fetch-tags: true
       - uses: tektronix/python-package-ci-cd/actions/find_unreleased_changelog_items@v1.2.0
         with:
           release-level: ${{ inputs.release-level }}  # optional

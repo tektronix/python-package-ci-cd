@@ -26,6 +26,7 @@ wrap-descriptions = 100
 wrap-summaries = 0
 
 [tool.poetry]
+license = "Apache-2.0"
 package-mode = false
 version = "1.2.0"
 

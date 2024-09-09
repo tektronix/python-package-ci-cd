@@ -29,6 +29,7 @@ Things to be included in the next release go here.
 - Changed the `_reusable-update-python-and-pre-commit-dependencies.yml` workflow to no longer only work on PRs from Dependabot, users will now need to apply any conditional login in the calling workflow.
 - Updated the `_reusable-update-python-and-pre-commit-dependencies.yml` workflow to allow using [`renovate`](https://docs.renovatebot.com/) instead of Dependabot to update dependencies.
 - Updated the `_reusable-package-release.yml` workflow to not show as failed if the `bump-release` deployment is rejected by a reviewer.
+- Updated the `find_unreleased_changelog_items` action to check for merged PRs since the last release and fail if none are found.
 
 ---
 

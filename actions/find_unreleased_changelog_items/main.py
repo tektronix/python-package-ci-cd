@@ -77,6 +77,7 @@ def main() -> None:
     # Set the filepaths for the template files
     template_changelog_filepath = pathlib.Path(filepath_for_previous_changelog)
     template_release_notes_filepath = pathlib.Path(filepath_for_previous_release_notes)
+    root_dir = pathlib.Path.cwd()
 
     release_notes_content = ""
     found_entries = False
@@ -109,6 +110,17 @@ def main() -> None:
         msg = f"No unreleased entries were found in {CHANGELOG_FILE}."
         raise SystemExit(msg)
 
+    # Check for merged PRs since the last release
+    run_cmd_in_subprocess(
+        f'git config --global --add safe.directory "{root_dir.resolve().as_posix()}"'
+    )
+    commit_messages = get_commit_messages(since_tag=get_latest_tag())
+    pr_regex = re.compile(r"\(#\d+\)$")
+    pr_descriptions = "\n".join([f"- {msg}" for msg in commit_messages if pr_regex.search(msg)])
+    if not pr_descriptions and not os.getenv("UNIT_TESTING_FIND_UNRELEASED_CHANGELOG_ITEMS_ACTION"):
+        msg = "No PRs have been merged since the last release."
+        raise SystemExit(msg)
+
     # Copy the files to the correct location
     shutil.copy(CHANGELOG_FILE, template_changelog_filepath)
     with template_release_notes_filepath.open("w", encoding="utf-8") as template_release_notes:
@@ -117,14 +129,6 @@ def main() -> None:
     # If running in GitHub Actions, and the release_level is set, send the release level and
     # incoming changes to the GitHub Summary
     if release_level:
-        root_dir = pathlib.Path.cwd()
-        run_cmd_in_subprocess(
-            f'git config --global --add safe.directory "{root_dir.resolve().as_posix()}"'
-        )
-        commit_messages = get_commit_messages(since_tag=get_latest_tag())
-
-        pr_regex = re.compile(r"\(#\d+\)$")
-        pr_descriptions = "\n".join([f"- {msg}" for msg in commit_messages if pr_regex.search(msg)])
         summary_contents = (
             f"## Workflow Inputs\n- release-level: {release_level}\n"
             f"## PRs Merged Since Last Release\n{pr_descriptions}\n"
