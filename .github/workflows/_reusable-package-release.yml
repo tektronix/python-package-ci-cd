@@ -120,7 +120,7 @@ jobs:
   bump-version:
     name: Update package version
     needs: [print-inputs]
-    if: github.repository == inputs.repo-name && github.ref == 'refs/heads/main'
+#    if: github.repository == inputs.repo-name && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: package-release-gate
     continue-on-error: true
