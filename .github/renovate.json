@@ -77,8 +77,9 @@
         {
             "additionalBranchPrefix": "automerge/",
             "automerge": true,
-            "description": "Automatically merge all patch updates",
+            "description": "Automatically merge all patch and digest updates",
             "matchUpdateTypes": [
+                "digest",
                 "patch"
             ]
         },
