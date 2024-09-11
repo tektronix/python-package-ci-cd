@@ -73,6 +73,8 @@ jobs:
         shell: bash
         run: |
           pip freeze
+          pip uninstall -y ${{ env.PACKAGE_NAME }}
+          pip freeze
           pip freeze | xargs pip uninstall -y
       - name: Test installing tarball
         shell: bash
@@ -81,7 +83,9 @@ jobs:
         run: python -c "import ${{ env.PACKAGE_NAME }}"
       - name: Uninstall tarball
         shell: bash
-        run: pip freeze | xargs pip uninstall -y
+        run: |
+          pip uninstall -y ${{ env.PACKAGE_NAME }}
+          pip freeze | xargs pip uninstall -y
   # Check that all jobs passed
   check-build-and-install-passed:
     if: ${{ !cancelled() }}
