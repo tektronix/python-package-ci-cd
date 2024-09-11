@@ -71,7 +71,9 @@ jobs:
         run: python -c "import ${{ env.PACKAGE_NAME }}"
       - name: Uninstall wheel
         shell: bash
-        run: pip freeze | xargs pip uninstall -y
+        run: |
+          pip freeze
+          pip freeze | xargs pip uninstall -y
       - name: Test installing tarball
         shell: bash
         run: pip install dist/*.tar.gz
