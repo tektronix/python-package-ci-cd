@@ -53,7 +53,7 @@ jobs:
         with:
           fetch-depth: 0
           fetch-tags: true
-      - uses: tektronix/python-package-ci-cd/actions/find_unreleased_changelog_items@v1.3.0
+      - uses: tektronix/python-package-ci-cd/actions/find_unreleased_changelog_items@v1.4.0
         with:
           release-level: ${{ inputs.release-level }}  # optional
           previous-changelog-filepath: .previous_changelog_for_template.md  # optional

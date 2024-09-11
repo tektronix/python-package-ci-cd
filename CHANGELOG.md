@@ -18,6 +18,22 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Changed
+
+- Bumped dependency versions.
+
+---
+
+## v1.4.0 (2024-09-11)
+
+### Merged Pull Requests
+
+- feat: Enable importing the built package during the `package-build` workflow ([#93](https://github.com/tektronix/python-package-ci-cd/pull/93))
+- ci: Update the automated release schedule to trigger a patch release on the 4th of every month ([#90](https://github.com/tektronix/python-package-ci-cd/pull/90))
+- chore(docker-deps): update python:3.12-alpine docker digest to e0e4d3d in all dependant actions ([#89](https://github.com/tektronix/python-package-ci-cd/pull/89))
+- ci: Allow automatic merging of digest updates ([#88](https://github.com/tektronix/python-package-ci-cd/pull/88))
+- ci: Automatically approve pre-commit-ci autoupdate PRs ([#86](https://github.com/tektronix/python-package-ci-cd/pull/86))
+
 ### Added
 
 - Updated the `_reusable-package-build.yml` file to include a step that will test importing the built package to check for any missing dependencies.
