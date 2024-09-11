@@ -4,7 +4,8 @@ on:
   workflow_call:
     inputs:
       package-name:
-        description: The name of the package to build and install.
+        description: The name of the package to build, install, and import (this must
+          be the package's importable name).
         required: true
         type: string
       python-versions-array:
@@ -66,13 +67,19 @@ jobs:
       - name: Test installing wheel
         shell: bash
         run: pip install dist/*.whl
+      - name: Test importing ${{ env.PACKAGE_NAME }}
+        run: python -c "import ${{ env.PACKAGE_NAME }}"
       - name: Uninstall wheel
-        run: pip uninstall --yes "${{ env.PACKAGE_NAME }}"
+        shell: bash
+        run: pip freeze | xargs pip uninstall -y
       - name: Test installing tarball
         shell: bash
         run: pip install dist/*.tar.gz
+      - name: Test importing ${{ env.PACKAGE_NAME }}
+        run: python -c "import ${{ env.PACKAGE_NAME }}"
       - name: Uninstall tarball
-        run: pip uninstall --yes "${{ env.PACKAGE_NAME }}"
+        shell: bash
+        run: pip freeze | xargs pip uninstall -y
   # Check that all jobs passed
   check-build-and-install-passed:
     if: ${{ !cancelled() }}

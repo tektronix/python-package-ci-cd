@@ -41,11 +41,11 @@ and operating system specified.
 
 ## Inputs
 
-| Input variable            | Necessity | Description                                                                               | Default                            |
-| ------------------------- | --------- | ----------------------------------------------------------------------------------------- | ---------------------------------- |
-| `package-name`            | required  | The name of the package to build and install.                                             |                                    |
-| `python-versions-array`   | required  | A valid JSON array of Python versions to validate the package can be installed with.      |                                    |
-| `operating-systems-array` | optional  | A valid JSON array of operating system names to validate the package can be installed on. | `'["ubuntu", "windows", "macos"]'` |
+| Input variable            | Necessity | Description                                                                                         | Default                            |
+| ------------------------- | --------- | --------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| `package-name`            | required  | The name of the package to build, install, and import (this must be the package's importable name). |                                    |
+| `python-versions-array`   | required  | A valid JSON array of Python versions to validate the package can be installed with.                |                                    |
+| `operating-systems-array` | optional  | A valid JSON array of operating system names to validate the package can be installed on.           | `'["ubuntu", "windows", "macos"]'` |
 
 ## Example
 

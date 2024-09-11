@@ -18,6 +18,10 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Added
+
+- Updated the `_reusable-package-build.yml` file to include a step that will test importing the built package to check for any missing dependencies.
+
 ### Changed
 
 - Bumped dependency versions.
