@@ -72,9 +72,7 @@ jobs:
       - name: Uninstall wheel
         shell: bash
         run: |
-          pip freeze
           pip uninstall -y ${{ env.PACKAGE_NAME }}
-          pip freeze
           pip freeze | xargs pip uninstall -y
       - name: Test installing tarball
         shell: bash
