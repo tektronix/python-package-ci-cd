@@ -6,7 +6,7 @@ import re
 
 import tomli
 
-from mkdocs_macros.plugin import MacrosPlugin  # pyright: ignore[reportMissingTypeStubs]
+from mkdocs_macros.plugin import MacrosPlugin
 
 CONVERSION_PATTERN = re.compile(
     r"> \[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION|DANGER)]\s*>\s*(.*?)(?=\n[^>]|$)",
@@ -95,7 +95,7 @@ def on_pre_page_macros(env: MacrosPlugin) -> None:
     """Post-process pages."""
     # Check if there are any repo links to replace on the page
     env.markdown = convert_local_repo_links_to_urls(
-        env.markdown,  # pyright: ignore[reportUnknownMemberType,reportUnknownArgumentType]
+        env.markdown,
         f"{env.conf.repo_url}/blob/{env.variables['git_ref']}/",
     )
 
@@ -103,4 +103,4 @@ def on_pre_page_macros(env: MacrosPlugin) -> None:
 def on_post_page_macros(env: MacrosPlugin) -> None:
     """Post-process pages."""
     # Check if there are any admonitions to replace on the page
-    env.markdown = convert_gfm_alerts_to_admonitions(env.markdown)  # pyright: ignore[reportUnknownMemberType,reportUnknownArgumentType]
+    env.markdown = convert_gfm_alerts_to_admonitions(env.markdown)
