@@ -88,7 +88,8 @@
             "automerge": true,
             "description": "Allow automatically merging minor updates of certain packages",
             "matchPackageNames": [
-                "certifi"
+                "certifi",
+                "trove-classifiers"
             ],
             "matchUpdateTypes": [
                 "minor"
