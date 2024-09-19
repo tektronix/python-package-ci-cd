@@ -89,7 +89,8 @@
             "description": "Allow automatically merging minor updates of certain packages",
             "matchPackageNames": [
                 "certifi",
-                "trove-classifiers"
+                "trove-classifiers",
+                "idna"
             ],
             "matchUpdateTypes": [
                 "minor"
