@@ -33,7 +33,7 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 263856d8d61fb5e880a91fbb94d6016bad50352f  # frozen: 38.94.1
+    rev: 49a2f741f3e9483fd88588933be182fde2b69384  # frozen: 38.94.3
     hooks:
       - id: renovate-config-validator
   - repo: https://github.com/python-jsonschema/check-jsonschema
@@ -46,7 +46,7 @@ repos:
         args: [--verbose]
         files: ^(\.github/workflows/[^/]+|workflows/[^/]+)$
   - repo: https://github.com/Mateusz-Grzelinski/actionlint-py
-    rev: c01fb5723b54075325cd9b5e5665a9ae84baf950  # frozen: v1.7.1.15
+    rev: aa007237bad606b330a90f69bb5ef5dca129957e  # frozen: v1.7.2.16
     hooks:
       - id: actionlint
         additional_dependencies: [pyflakes, shellcheck-py]
