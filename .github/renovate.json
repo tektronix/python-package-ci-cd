@@ -4,8 +4,7 @@
     "extends": [
         "config:best-practices",
         "group:githubArtifactActions",
-        ":separatePatchReleases",
-        ":enablePreCommit"
+        ":separatePatchReleases"
     ],
     "ignoreDeps": [
         "tektronix/python-package-ci-cd"
@@ -53,19 +52,6 @@
                 "pip_requirements"
             ],
             "semanticCommitScope": "python-deps"
-        },
-        {
-            "addLabels": [
-                "pre-commit",
-                "dependencies"
-            ],
-            "additionalBranchPrefix": "automerge/",
-            "automerge": true,
-            "description": "Add pre-commit and dependencies labels to pre-commit dependency updates",
-            "matchManagers": [
-                "pre-commit"
-            ],
-            "semanticCommitScope": "pre-commit-deps"
         },
         {
             "commitMessageSuffix": " in all dependant reusable workflows",
