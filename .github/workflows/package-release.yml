@@ -13,7 +13,7 @@ on:
           major for non-backward compatible changes.
         options: [patch, minor, major]
   schedule:
-    - cron: 0 16 * * 2
+    - cron: 0 16 4 * *  # Run at 16:00 UTC on the 4th day of each month
 concurrency:
   group: pypi
 jobs:

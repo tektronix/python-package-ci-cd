@@ -26,8 +26,9 @@ wrap-descriptions = 100
 wrap-summaries = 0
 
 [tool.poetry]
+license = "Apache-2.0"
 package-mode = false
-version = "1.2.0"
+version = "1.4.0"
 
 [tool.poetry.dependencies]
 python = "~3.12"  # This needs to stay in sync with all CI workflows
@@ -53,7 +54,7 @@ poetry-audit-plugin = "^0.4.0"
 poetry-plugin-export = "1.8.0"
 poetry-pre-commit-plugin = "^0.1.2"
 pre-commit = "3.8.0"
-pyright = "1.1.379"
+pyright = "1.1.381"
 tox = "^4.18.0"
 tox-gh-actions = "^3.2.0"
 

@@ -4,7 +4,8 @@
     "extends": [
         "config:best-practices",
         "group:githubArtifactActions",
-        ":separatePatchReleases"
+        ":separatePatchReleases",
+        ":enablePreCommit"
     ],
     "ignoreDeps": [
         "tektronix/python-package-ci-cd"
@@ -12,10 +13,11 @@
     "packageRules": [
         {
             "additionalBranchPrefix": "{{#if (equals manager 'github-actions')}}gh-actions{{else}}{{categories}}{{/if}}-deps/",
-            "description": "Set the branch prefix for all updates",
+            "description": "Set the branch prefix and minimum release age for all updates",
             "matchPackageNames": [
                 "*"
-            ]
+            ],
+            "minimumReleaseAge": "5 days"
         },
         {
             "addLabels": [
@@ -53,6 +55,19 @@
             "semanticCommitScope": "python-deps"
         },
         {
+            "addLabels": [
+                "pre-commit",
+                "dependencies"
+            ],
+            "additionalBranchPrefix": "automerge/",
+            "automerge": true,
+            "description": "Add pre-commit and dependencies labels to pre-commit dependency updates",
+            "matchManagers": [
+                "pre-commit"
+            ],
+            "semanticCommitScope": "pre-commit-deps"
+        },
+        {
             "commitMessageSuffix": " in all dependant reusable workflows",
             "description": "Add commit suffix for reusable workflows",
             "matchFileNames": [
@@ -76,8 +91,9 @@
         {
             "additionalBranchPrefix": "automerge/",
             "automerge": true,
-            "description": "Automatically merge all patch updates",
+            "description": "Automatically merge all patch and digest updates",
             "matchUpdateTypes": [
+                "digest",
                 "patch"
             ]
         },
@@ -86,7 +102,9 @@
             "automerge": true,
             "description": "Allow automatically merging minor updates of certain packages",
             "matchPackageNames": [
-                "certifi"
+                "certifi",
+                "trove-classifiers",
+                "idna"
             ],
             "matchUpdateTypes": [
                 "minor"

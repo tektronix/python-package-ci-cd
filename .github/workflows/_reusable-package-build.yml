@@ -4,7 +4,8 @@ on:
   workflow_call:
     inputs:
       package-name:
-        description: The name of the package to build and install.
+        description: The name of the package to build, install, and import (this must
+          be the package's importable name).
         required: true
         type: string
       python-versions-array:
@@ -36,7 +37,7 @@ jobs:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332  # v4.1.7
         with:
           fetch-depth: 0
-      - uses: hynek/build-and-inspect-python-package@2dbbf2b252d3a3c7cec7a810e3ed5983bd17b13a  # v2.8.0
+      - uses: hynek/build-and-inspect-python-package@73aea398b9c8de9ea9e4464c6b13cb8b1f3d6294 # v2.9.0
         id: build-pkg
         with:
           attest-build-provenance-github: ${{ !github.event.pull_request.head.repo.fork && !contains(fromJSON('["dependabot[bot]", "renovate[bot]"]'), github.actor) }}
@@ -66,13 +67,23 @@ jobs:
       - name: Test installing wheel
         shell: bash
         run: pip install dist/*.whl
+      - name: Test importing ${{ env.PACKAGE_NAME }}
+        run: python -c "import ${{ env.PACKAGE_NAME }}"
       - name: Uninstall wheel
-        run: pip uninstall --yes "${{ env.PACKAGE_NAME }}"
+        shell: bash
+        run: |
+          pip uninstall -y ${{ env.PACKAGE_NAME }}
+          pip freeze | xargs pip uninstall -y
       - name: Test installing tarball
         shell: bash
         run: pip install dist/*.tar.gz
+      - name: Test importing ${{ env.PACKAGE_NAME }}
+        run: python -c "import ${{ env.PACKAGE_NAME }}"
       - name: Uninstall tarball
-        run: pip uninstall --yes "${{ env.PACKAGE_NAME }}"
+        shell: bash
+        run: |
+          pip uninstall -y ${{ env.PACKAGE_NAME }}
+          pip freeze | xargs pip uninstall -y
   # Check that all jobs passed
   check-build-and-install-passed:
     if: ${{ !cancelled() }}
