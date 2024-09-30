@@ -33,11 +33,11 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 49a2f741f3e9483fd88588933be182fde2b69384  # frozen: 38.94.3
+    rev: f0595c62cd36f25d15c78a7103c27aa6e242cd86  # frozen: 38.105.0
     hooks:
       - id: renovate-config-validator
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 5c70e3d884fdbe99af42f2714a444e39f321498d  # frozen: 0.29.2
+    rev: aa1acdb72677dfbc5f507d2dfd45d8380bbcc2e0  # frozen: 0.29.3
     hooks:
       - id: check-dependabot
       - id: check-github-actions
@@ -51,7 +51,7 @@ repos:
       - id: actionlint
         additional_dependencies: [pyflakes, shellcheck-py]
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: d7e01aa9b0cfe3c1b732e66d523bbd0656221127  # frozen: v3.29.0
+    rev: a3498aba5e94c9f7c4acb529b5e7eb6df65fd053  # frozen: v3.29.1
     hooks:
       - id: commitizen
         stages: [commit-msg]
@@ -122,7 +122,7 @@ repos:
         always_run: true
         args: [audit, --json, --ignore-code=CVE-2019-8341]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 9f089bd3b7591566aef707c4e144ea2ceedf7de2  # frozen: v0.6.7
+    rev: cc915bbf189077041f55bc59c4c0cf7f30cc921f  # frozen: v0.6.8
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
