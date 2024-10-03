@@ -144,7 +144,7 @@ jobs:
           previous-changelog-filepath: ${{ inputs.previous-changelog-filepath }}
           previous-release-notes-filepath: ${{ inputs.previous-release-notes-filepath }}
       - name: Python Semantic Release
-        uses: python-semantic-release/python-semantic-release@fe6b271e942115b528c85e42bc19611b01dcea59 # v9.8.8
+        uses: python-semantic-release/python-semantic-release@cbe8eaaa7a06ef218fce69bd1bc01dd16483dc6d # v9.8.9
         id: release
         with:
           force: ${{ inputs.release-level }}
@@ -246,7 +246,7 @@ jobs:
           name: Packages
           path: dist
       - name: Publish package distributions to GitHub Releases
-        uses: python-semantic-release/upload-to-gh-release@fa2bbbf8e61069551abd513fdc5627e14c8637c7 # v9.8.8
+        uses: python-semantic-release/upload-to-gh-release@0a92b5d7ebfc15a84f9801ebd1bf706343d43711 # v9.8.9
         with:
           root_options: -v --strict
           github_token: ${{ secrets.GITHUB_TOKEN }}
