@@ -1,7 +1,7 @@
 """Test the bump_version_in_files module."""
 
+from collections.abc import Generator
 from pathlib import Path
-from typing import Generator
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -10,14 +10,14 @@ from scripts.bump_version_in_files import get_file_paths, update_github_actions_
 
 
 @pytest.fixture(autouse=True)
-def mock_subprocess_check_call() -> Generator[None, None, None]:
+def mock_subprocess_check_call() -> Generator[None]:
     """Mock subprocess.check_call for all tests."""
     with patch("subprocess.check_call", MagicMock(return_value=None)):
         yield
 
 
-@pytest.fixture()
-def temporary_directory(tmp_path: Path) -> Path:
+@pytest.fixture(name="temporary_directory")
+def fixture_temporary_directory(tmp_path: Path) -> Path:
     """Create a temporary directory."""
     # Create a temporary directory with some files
     test_dir = tmp_path / "test_dir"

@@ -2,8 +2,8 @@
 
 import sys
 
+from collections.abc import Generator
 from pathlib import Path
-from typing import Generator
 from unittest.mock import call, MagicMock, patch
 
 import pytest
@@ -21,7 +21,7 @@ PYTHON_EXECUTABLE = Path(sys.executable).as_posix()
 
 
 @pytest.fixture(autouse=True)
-def mock_pypi_server() -> Generator[MagicMock, None, None]:
+def mock_pypi_server() -> Generator[MagicMock]:
     """Mock the PyPISimple class and its methods."""
     with patch("actions.update_development_dependencies.main.PyPISimple") as mock_pypi_simple:
         mock_server = mock_pypi_simple.return_value
@@ -31,8 +31,8 @@ def mock_pypi_server() -> Generator[MagicMock, None, None]:
         yield mock_server
 
 
-@pytest.fixture()
-def repo_root_dir(
+@pytest.fixture(name="repo_root_dir")
+def fixture_repo_root_dir(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> Path:

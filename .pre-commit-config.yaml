@@ -4,6 +4,7 @@ default_stages: [pre-commit]
 ci:
   autofix_prs: false
   autoupdate_schedule: weekly
+  autoupdate_commit_msg: 'chore(pre-commit-deps): pre-commit autoupdate'
   skip: [check-poetry, pyright, poetry-audit, markdown-link-check]
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -60,7 +61,7 @@ repos:
     hooks:
       - id: blacken-docs
         files: \.(rst|md|markdown|tex)$
-        additional_dependencies: [black==24.4.2]  # This may need to be updated/removed in the future once ruff supports formatting Python code blocks in markdown
+        additional_dependencies: [black==24.8.0]  # This may need to be updated/removed in the future once ruff supports formatting Python code blocks in markdown
         args: [--line-length=100]
   - repo: https://github.com/lyz-code/yamlfix
     rev: 8072181c0f2eab9f2dd8db2eb3b9556d7cd0bd74  # frozen: 1.17.0
@@ -107,6 +108,13 @@ repos:
       - id: toml-sort-fix
   - repo: local
     hooks:
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+        pass_filenames: true
+        args: [-sn]
       - id: pyright
         name: pyright
         entry: pyright
