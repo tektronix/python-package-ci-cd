@@ -6,9 +6,9 @@ import subprocess
 import sys
 import time
 
+from collections.abc import Generator
 from importlib.util import find_spec
 from pathlib import Path
-from typing import Generator
 
 import pytest
 
@@ -16,7 +16,7 @@ REPO_ROOT_DIR = Path(__file__).resolve().parent.parent
 
 
 @pytest.fixture(name="docs_server")
-def fixture_docs_server(site_dir: str) -> Generator[str, None, None]:
+def fixture_docs_server(site_dir: str) -> Generator[str]:
     """Serve the documentation site."""
     port = f"8{sys.version_info.major}{sys.version_info.minor}"
     cmd = [sys.executable, "-m", "http.server", port, "--directory", site_dir]
@@ -49,7 +49,7 @@ def fixture_site_dir(pytestconfig: pytest.Config) -> str:
 
 
 @pytest.fixture(scope="module", autouse=True)
-def _docs_tests_setup() -> Generator[None, None, None]:  # pyright: ignore [reportUnusedFunction]
+def _docs_tests_setup() -> Generator[None]:  # pyright: ignore [reportUnusedFunction]
     """Setup for docs tests.."""
     starting_directory = Path.cwd()
     try:

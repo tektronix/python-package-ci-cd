@@ -87,7 +87,7 @@ def main() -> None:
         tomli_w.dump(pyproject_data, file_handle)
 
     # Set the output variable for GitHub Actions
-    with open(os.environ["GITHUB_OUTPUT"], "a") as github_output_file_handle:  # noqa: PTH123
+    with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as github_output_file_handle:  # noqa: PTH123
         github_output_file_handle.write(f"new-version={updated_version}\n")
 
 

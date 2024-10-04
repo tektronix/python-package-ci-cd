@@ -54,6 +54,7 @@ poetry-audit-plugin = "^0.4.0"
 poetry-plugin-export = "1.8.0"
 poetry-pre-commit-plugin = "^0.1.2"
 pre-commit = "3.8.0"
+pylint = "3.3.1"
 pyright = "1.1.383"
 tox = "^4.18.0"
 tox-gh-actions = "^3.2.0"
@@ -82,6 +83,78 @@ pytest-github-report = "^0.0.1"
 pytest-html = "^4.1.1"
 pytest-order = "^1.2.1"
 pytest-subprocess = "^1.5.2"
+
+[tool.pylint.main]
+fail-under = 10.0
+ignore-patterns = [
+  "^\\.#",
+  "^\\..*_cache",
+  "^\\.docs.*",
+  "^\\.env.*",
+  "^\\.idea",
+  "^\\.results.*",
+  "^\\.tox",
+  "^\\.venv.*",
+  "^\\.vscode",
+  "^temp_.*\\..*"
+]
+init-hook = 'import sys; sys.path.append(".")'
+jobs = 0
+load-plugins = """
+pylint.extensions.check_elif,
+pylint.extensions.code_style,
+pylint.extensions.comparison_placement,
+pylint.extensions.consider_refactoring_into_while_condition,
+pylint.extensions.dict_init_mutate,
+pylint.extensions.docparams,
+pylint.extensions.docstyle,
+pylint.extensions.dunder,
+pylint.extensions.eq_without_hash,
+pylint.extensions.for_any_all,
+pylint.extensions.no_self_use,
+pylint.extensions.overlapping_exceptions,
+pylint.extensions.private_import,
+pylint.extensions.set_membership,
+pylint.extensions.typing,
+pylint.extensions.while_used
+"""
+recursive = true
+
+[tool.pylint."messages control"]
+disable = [
+  "broad-exception-caught",  # caught by ruff
+  "fixme",  # caught by ruff
+  "global-statement",  # caught by ruff
+  "invalid-name",  # caught by ruff
+  "line-too-long",  # caught by ruff
+  "locally-disabled",  # allowed
+  "missing-class-docstring",  # caught by ruff
+  "missing-module-docstring",  # caught by ruff
+  "no-member",  # caught by pyright
+  "protected-access",  # caught by ruff
+  "raise-missing-from",  # caught by ruff
+  "redefined-builtin",  # caught by ruff
+  "suppressed-message",  # allowed
+  "too-many-arguments",  # caught by ruff
+  "too-many-branches",  # caught by ruff
+  "too-many-statements",  # caught by ruff
+  "too-many-statements",  # caught by ruff
+  "unused-argument",  # caught by ruff
+  "unused-import",  # caught by ruff
+  "use-implicit-booleaness-not-comparison-to-string",  # caught by ruff
+  "wrong-import-order"  # caught by ruff
+]
+enable = ["all"]
+
+[tool.pylint.reports]
+# Python expression which should return a score less than or equal to 10. You
+# have access to the variables 'fatal', 'error', 'warning', 'refactor',
+# 'convention', and 'info' which contain the number of messages in each category,
+# as well as 'statement' which is the total number of statements analyzed. This
+# score is used by the global evaluation report (RP0004).
+evaluation = "max(0, 0 if fatal else 10.0 - ((float(5 * error + warning + refactor + convention + info) / statement) * 10))"
+output-format = "text"  # colorized could be another option
+score = true
 
 [tool.pyright]
 ignore = [

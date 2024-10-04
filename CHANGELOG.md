@@ -38,7 +38,7 @@ Things to be included in the next release go here.
 - chore(python-deps): update dependency pyright to v1.1.382.post1 for dev ([#132](https://github.com/tektronix/python-package-ci-cd/pull/132))
 - chore(docker-deps): update python:3.12-alpine docker digest to e75de17 in all dependant actions ([#130](https://github.com/tektronix/python-package-ci-cd/pull/130))
 - chore(docker-deps): update python:3.12-alpine docker digest to 6666ea3 in all dependant actions ([#129](https://github.com/tektronix/python-package-ci-cd/pull/129))
-- [pre-commit.ci] pre-commit autoupdate ([#117](https://github.com/tektronix/python-package-ci-cd/pull/117))
+- chore(pre-commit-deps): pre-commit autoupdate ([#117](https://github.com/tektronix/python-package-ci-cd/pull/117))
 - chore(python-deps): update dependency pyright to v1.1.382.post0 for dev ([#125](https://github.com/tektronix/python-package-ci-cd/pull/125))
 - chore(python-deps): update dependency pyright to v1.1.382 for dev ([#124](https://github.com/tektronix/python-package-ci-cd/pull/124))
 - chore(gh-actions-deps): update github/codeql-action action to v3.26.9 in all dependant reusable workflows ([#123](https://github.com/tektronix/python-package-ci-cd/pull/123))

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Generator, TYPE_CHECKING
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -12,6 +12,7 @@ import actions.create_unique_testpypi_version.main
 from actions.create_unique_testpypi_version.main import create_new_post_version, main
 
 if TYPE_CHECKING:
+    from collections.abc import Generator
     from pathlib import Path
 
 # Sample data for mocking
@@ -32,8 +33,8 @@ def _mock_environment(monkeypatch: pytest.MonkeyPatch) -> None:  # pyright: igno
     monkeypatch.setenv("INPUT_PACKAGE-NAME", PACKAGE_NAME)
 
 
-@pytest.fixture()
-def mock_testpypi_server() -> Generator[MagicMock, None, None]:
+@pytest.fixture(name="mock_testpypi_server")
+def fixture_mock_testpypi_server() -> Generator[MagicMock]:
     """Mock the PyPISimple class and its methods."""
     with patch("actions.create_unique_testpypi_version.main.PyPISimple") as mock_pypi_simple:
         mock_server = mock_pypi_simple.return_value
@@ -43,8 +44,8 @@ def mock_testpypi_server() -> Generator[MagicMock, None, None]:
         yield mock_server
 
 
-@pytest.fixture()
-def mock_pyproject_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+@pytest.fixture(name="mock_pyproject_file")
+def fixture_mock_pyproject_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     """Mock the pyproject.toml file.
 
     Args:
@@ -63,8 +64,8 @@ def mock_pyproject_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path
     return pyproject_file
 
 
-@pytest.fixture()
-def mock_github_output_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+@pytest.fixture(name="mock_github_output_file")
+def fixture_mock_github_output_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     """Mock the GitHub output file.
 
     Args:

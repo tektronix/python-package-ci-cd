@@ -63,7 +63,7 @@ def get_commit_messages(since_tag: str | None = None) -> list[str]:
     return run_cmd_in_subprocess(f"git log {range_spec} --pretty=format:%s").splitlines()
 
 
-def main() -> None:
+def main() -> None:  # pylint: disable=too-many-locals
     """Check for entries in the Unreleased section of the CHANGELOG.md file.
 
     Raises:
@@ -137,7 +137,7 @@ def main() -> None:
         print(
             f"\nAdding the following contents to the GitHub Workflow Summary:\n\n{summary_contents}"
         )
-        with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary_file:  # noqa: PTH123
+        with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary_file:  # noqa: PTH123
             summary_file.write(summary_contents)
 
 

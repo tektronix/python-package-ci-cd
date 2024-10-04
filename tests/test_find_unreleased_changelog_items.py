@@ -22,8 +22,8 @@ PREVIOUS_RELEASE_NOTES_FILEPATH = "previous_release_notes.md"
 MOCK_TEMPLATES_FOLDER = "mock_templates"
 
 
-@pytest.fixture()
-def mock_previous_files(tmp_path: Path) -> tuple[Path, Path]:
+@pytest.fixture(name="mock_previous_files")
+def fixture_mock_previous_files(tmp_path: Path) -> tuple[Path, Path]:
     """Create filepaths in the temporary directory for the template files.
 
     Args:
@@ -40,8 +40,8 @@ def mock_previous_files(tmp_path: Path) -> tuple[Path, Path]:
     )
 
 
-@pytest.fixture()
-def mock_changelog_file(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
+@pytest.fixture(name="mock_changelog_file")
+def fixture_mock_changelog_file(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
     """Mock the pyproject.toml file.
 
     Args:
@@ -63,8 +63,8 @@ def mock_changelog_file(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path
     return mock_path
 
 
-@pytest.fixture()
-def summary_file(tmp_path: Path) -> Path:
+@pytest.fixture(name="summary_file")
+def fixture_summary_file(tmp_path: Path) -> Path:
     """Create a summary file for the GitHub Actions step.
 
     Args:
@@ -76,8 +76,8 @@ def summary_file(tmp_path: Path) -> Path:
     return tmp_path / "github_summary.txt"
 
 
-@pytest.fixture()
-def mock_env_vars(
+@pytest.fixture(name="mock_env_vars")
+def fixture_mock_env_vars(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
     summary_file: Path,
