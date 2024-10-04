@@ -24,6 +24,53 @@ Things to be included in the next release go here.
 
 ---
 
+## v1.4.1 (2024-10-04)
+
+### Merged Pull Requests
+
+- chore(python-deps): update dependency pyproject-hooks to v1.2.0 in all dependant actions ([#136](https://github.com/tektronix/python-package-ci-cd/pull/136))
+- chore(python-deps): update dependency pyright to v1.1.383 for dev ([#135](https://github.com/tektronix/python-package-ci-cd/pull/135))
+- chore(gh-actions-deps): update python-semantic-release/python-semantic-release action to v9.9.0 in all dependant reusable workflows ([#134](https://github.com/tektronix/python-package-ci-cd/pull/134))
+- chore(gh-actions-deps): update python-semantic-release/python-semantic-release action to v9.8.9 in all dependant reusable workflows ([#131](https://github.com/tektronix/python-package-ci-cd/pull/131))
+- chore(gh-actions-deps): update actions/checkout action to v4.2.0 in all dependant reusable workflows ([#126](https://github.com/tektronix/python-package-ci-cd/pull/126))
+- chore(python-deps): update dependency virtualenv to v20.26.6 in all dependant actions ([#133](https://github.com/tektronix/python-package-ci-cd/pull/133))
+- chore(gh-actions-deps): update actions/checkout action to v4.2.0 in dev workflows ([#127](https://github.com/tektronix/python-package-ci-cd/pull/127))
+- chore(python-deps): update dependency pyright to v1.1.382.post1 for dev ([#132](https://github.com/tektronix/python-package-ci-cd/pull/132))
+- chore(docker-deps): update python:3.12-alpine docker digest to e75de17 in all dependant actions ([#130](https://github.com/tektronix/python-package-ci-cd/pull/130))
+- chore(docker-deps): update python:3.12-alpine docker digest to 6666ea3 in all dependant actions ([#129](https://github.com/tektronix/python-package-ci-cd/pull/129))
+- [pre-commit.ci] pre-commit autoupdate ([#117](https://github.com/tektronix/python-package-ci-cd/pull/117))
+- chore(python-deps): update dependency pyright to v1.1.382.post0 for dev ([#125](https://github.com/tektronix/python-package-ci-cd/pull/125))
+- chore(python-deps): update dependency pyright to v1.1.382 for dev ([#124](https://github.com/tektronix/python-package-ci-cd/pull/124))
+- chore(gh-actions-deps): update github/codeql-action action to v3.26.9 in all dependant reusable workflows ([#123](https://github.com/tektronix/python-package-ci-cd/pull/123))
+- chore(python-deps): update dependency rapidfuzz to v3.10.0 in all dependant actions ([#122](https://github.com/tektronix/python-package-ci-cd/pull/122))
+- Update automerge of pre-commit to use the squash strategy ([#121](https://github.com/tektronix/python-package-ci-cd/pull/121))
+- chore(gh-actions-deps): update actions/setup-node action to v4.0.4 in all dependant reusable workflows ([#119](https://github.com/tektronix/python-package-ci-cd/pull/119))
+- chore(gh-actions-deps): update github/codeql-action action to v3.26.8 in all dependant reusable workflows ([#118](https://github.com/tektronix/python-package-ci-cd/pull/118))
+- chore(python-deps): update dependency pyright to v1.1.381 for dev ([#116](https://github.com/tektronix/python-package-ci-cd/pull/116))
+- chore(python-deps): update dependency virtualenv to v20.26.5 in all dependant actions ([#115](https://github.com/tektronix/python-package-ci-cd/pull/115))
+- chore(python-deps): update dependency platformdirs to v4.3.6 in all dependant actions ([#113](https://github.com/tektronix/python-package-ci-cd/pull/113))
+- chore(python-deps): update dependency filelock to v3.16.1 in all dependant actions ([#114](https://github.com/tektronix/python-package-ci-cd/pull/114))
+- chore(python-deps): update pydantic dependencies in all dependant actions ([#112](https://github.com/tektronix/python-package-ci-cd/pull/112))
+- chore(python-deps): update dependency setuptools to v75 in all dependant actions ([#111](https://github.com/tektronix/python-package-ci-cd/pull/111))
+- chore(python-deps): update dependency idna to v3.10 in all dependant actions ([#110](https://github.com/tektronix/python-package-ci-cd/pull/110))
+- chore(python-deps): update dependency setuptools to v74.1.3 in all dependant actions ([#108](https://github.com/tektronix/python-package-ci-cd/pull/108))
+- chore(python-deps): update dependency identify to v2.6.1 in all dependant actions ([#106](https://github.com/tektronix/python-package-ci-cd/pull/106))
+- chore(python-deps): update dependency idna to v3.9 in all dependant actions ([#104](https://github.com/tektronix/python-package-ci-cd/pull/104))
+- chore(python-deps): update dependency trove-classifiers to v2024.9.12 in all dependant actions ([#105](https://github.com/tektronix/python-package-ci-cd/pull/105))
+- Enable automerge for pre commit hook updates ([#102](https://github.com/tektronix/python-package-ci-cd/pull/102))
+- chore(python-deps): update dependency platformdirs to v4.3.3 in all dependant actions ([#103](https://github.com/tektronix/python-package-ci-cd/pull/103))
+- chore(gh-actions-deps): update github/codeql-action action to v3.26.7 in all dependant reusable workflows ([#101](https://github.com/tektronix/python-package-ci-cd/pull/101))
+- chore(python-deps): update dependency urllib3 to v2.2.3 in all dependant actions ([#98](https://github.com/tektronix/python-package-ci-cd/pull/98))
+- chore(python-deps): update dependency pyright to v1.1.380 for dev ([#96](https://github.com/tektronix/python-package-ci-cd/pull/96))
+- chore(python-deps): update dependency msgpack to v1.1.0 in all dependant actions ([#95](https://github.com/tektronix/python-package-ci-cd/pull/95))
+- chore(docker-deps): update python:3.12-alpine docker digest to 7130f75 in all dependant actions ([#94](https://github.com/tektronix/python-package-ci-cd/pull/94))
+
+### Changed
+
+- Bumped dependency versions.
+
+---
+
 ## v1.4.0 (2024-09-11)
 
 ### Merged Pull Requests
