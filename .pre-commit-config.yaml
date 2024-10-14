@@ -39,11 +39,11 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: bd345f6e0f1a132a6c4c148c56c64c6b07a716ee  # frozen: 38.110.3
+    rev: 0796b19c9f153269534ecfafbee5731c70f0f65a  # frozen: 38.122.0
     hooks:
       - id: renovate-config-validator
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: aa1acdb72677dfbc5f507d2dfd45d8380bbcc2e0  # frozen: 0.29.3
+    rev: 37cd56d9d154dfb0648eaee8efc1040512700c47  # frozen: 0.29.4
     hooks:
       - id: check-dependabot
       - id: check-github-actions
@@ -78,7 +78,7 @@ repos:
       - id: hadolint
         args: [--ignore=DL3008, --ignore=DL3018]
   - repo: https://github.com/executablebooks/mdformat
-    rev: 08fba30538869a440b5059de90af03e3502e35fb  # frozen: 0.7.17
+    rev: 86542e37a3a40974eb812b16b076220fe9bb4278  # frozen: 0.7.18
     hooks:
       - id: mdformat
         args: [--number, --end-of-line, keep]
