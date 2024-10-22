@@ -104,6 +104,7 @@ jobs:
           dependency-dict: ${{ inputs.dependency-dict }}
           update-pre-commit: ${{ inputs.update-pre-commit }}
           run-pre-commit: ${{ inputs.run-pre-commit }}
+          pre-commit-repo-update-skip-list: ${{ inputs.pre-commit-repo-update-skip-list }}
           pre-commit-hook-run-skip-list: ${{ inputs.pre-commit-hook-run-skip-list }}
           export-dependency-groups: ${{ inputs.export-dependency-groups }}
       - uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842  # v5.0.1
