@@ -11,6 +11,7 @@ ci:
     - pyright
     - poetry-audit
     - markdown-link-check
+    - renovate-config-validator  # TODO: remove this line once https://github.com/renovatebot/pre-commit-hooks/issues/2460 is resolved
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: cef0300fd0fc4d2a87a85fa2093c6b283ea36f4b  # frozen: v5.0.0
@@ -42,7 +43,7 @@ repos:
     rev: 95f517843e74d0556552029591a77b01bd40cd4d  # frozen: 38.129.2
     hooks:
       - id: renovate-config-validator
-        language_version: 20.18.0    # TODO: remove this line once https://github.com/renovatebot/pre-commit-hooks/issues/2460 is resolved
+        language_version: 20.18.0  # TODO: remove this line once https://github.com/renovatebot/pre-commit-hooks/issues/2460 is resolved
   - repo: https://github.com/python-jsonschema/check-jsonschema
     rev: 37cd56d9d154dfb0648eaee8efc1040512700c47  # frozen: 0.29.4
     hooks:
