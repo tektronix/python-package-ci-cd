@@ -144,7 +144,7 @@ repos:
     monkeypatch.setenv(
         "INPUT_PRE-COMMIT-REPO-UPDATE-SKIP-LIST", ",".join(PRE_COMMIT_REPO_UPDATE_SKIP_LIST)
     )
-    monkeypatch.setenv("INPUT_PRE-COMMIT-HOOK-RUN-SKIP-LIST", "")
+    monkeypatch.setenv("INPUT_PRE-COMMIT-HOOK-SKIP-LIST", "")
     monkeypatch.setenv("INPUT_INSTALL-DEPENDENCIES", "true")
     monkeypatch.setenv("INPUT_RUN-PRE-COMMIT", "true")
     monkeypatch.setenv("INPUT_UPDATE-PRE-COMMIT", "true")

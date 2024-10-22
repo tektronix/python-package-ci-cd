@@ -37,7 +37,7 @@ updates for the Python dependencies.
 | `update-pre-commit`                | optional  | A boolean indicating if the pre-commit hooks should be updated.                                                                                                                                                                                                                                                          | `false` |
 | `run-pre-commit`                   | optional  | A boolean indicating to run the pre-commit hooks to perform auto-fixing after updating the dependencies. Setting this input to `true` will also set the update-pre-commit input to `true`.                                                                                                                               | `false` |
 | `pre-commit-repo-update-skip-list` | optional  | A comma-separated list of pre-commit repo urls to skip updates for (only applicable when `update-pre-commit=true`).                                                                                                                                                                                                      | `""`    |
-| `pre-commit-hook-run-skip-list`    | optional  | A comma-separated list of pre-commit hooks to skip (only applicable when `run-pre-commit=true`).                                                                                                                                                                                                                         | `""`    |
+| `pre-commit-hook-skip-list`        | optional  | A comma-separated list of pre-commit hooks to skip (only applicable when `run-pre-commit=true`).                                                                                                                                                                                                                         | `""`    |
 | `export-dependency-groups`         | optional  | A comma-separated list of dependency groups to export to a `requirements.txt` file. The format is `group1,group2:custom-path/to/test/folder`.                                                                                                                                                                            | `""`    |
 
 ## Secrets
@@ -66,7 +66,7 @@ jobs:
       update-pre-commit: true  # optional
       run-pre-commit: true  # optional
       pre-commit-repo-update-skip-list: 'https://github.com/pre-commit/pre-commit-hooks'  # optional
-      pre-commit-hook-run-skip-list: pylint,pyright,pyroma,poetry-audit  # optional, hooks that don't auto-fix things can (and probably should be) skipped
+      pre-commit-hook-skip-list: pylint,pyright,pyroma,poetry-audit  # optional, hooks that don't auto-fix things can (and probably should be) skipped
       export-dependency-groups: 'docs,tests:custom-path/to/test/folder'  # optional
     permissions:
       contents: write

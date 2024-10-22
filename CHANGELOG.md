@@ -25,7 +25,6 @@ Things to be included in the next release go here.
 ### Changed
 
 - Bumped dependency versions.
-- _**<span style="color:red">BREAKING CHANGE</span>**_: Renamed the `pre-commit-hook-skip-list` input parameter to `pre-commit-hook-run-skip-list` in the `_reusable-update-python-and-pre-commit-dependencies.yml` workflow and `update_development_dependencies` action.
 
 ---
 

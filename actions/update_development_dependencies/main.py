@@ -226,7 +226,7 @@ def main() -> None:
     export_dependency_groups = [
         x.strip() for x in os.environ["INPUT_EXPORT-DEPENDENCY-GROUPS"].split(",") if x
     ]
-    pre_commit_hook_run_skip_list = os.environ["INPUT_PRE-COMMIT-HOOK-RUN-SKIP-LIST"]
+    pre_commit_hook_run_skip_list = os.environ["INPUT_PRE-COMMIT-HOOK-SKIP-LIST"]
     pre_commit_repo_update_skip_list = [
         x.strip() for x in os.environ["INPUT_PRE-COMMIT-REPO-UPDATE-SKIP-LIST"].split(",") if x
     ]

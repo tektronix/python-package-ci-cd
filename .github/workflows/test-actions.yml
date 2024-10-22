@@ -151,7 +151,7 @@ jobs:
           run-pre-commit: true
           dependency-dict: '{"dev": ["pyright"]}'
           pre-commit-repo-update-skip-list: https://github.com/pre-commit/pre-commit-hooks,https://github.com/executablebooks/mdformat
-          pre-commit-hook-run-skip-list: remove-tabs,forbid-tabs,check-readthedocs,check-dependabot,check-github-actions,check-github-workflows,commitizen,blacken-docs,yamlfix,hadolint,mdformat,markdown-link-check,check-poetry,toml-sort-fix,pyright,poetry-audit,ruff,ruff-format,docformatter,renovate-config-validator,actionlint
+          pre-commit-hook-skip-list: remove-tabs,forbid-tabs,check-readthedocs,check-dependabot,check-github-actions,check-github-workflows,commitizen,blacken-docs,yamlfix,hadolint,mdformat,markdown-link-check,check-poetry,toml-sort-fix,pyright,poetry-audit,ruff,ruff-format,docformatter,renovate-config-validator,actionlint
           export-dependency-groups: |
             actions-update_development_dependencies:actions/update_development_dependencies,
             tests

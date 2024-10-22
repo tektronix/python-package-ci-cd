@@ -34,7 +34,7 @@ inputs:
       (only applicable when `update-pre-commit=true`).
     required: false
     default: ''
-  pre-commit-hook-run-skip-list:
+  pre-commit-hook-skip-list:
     description: A comma-separated list of pre-commit hooks to skip (only applicable
       when `run-pre-commit=true`).
     required: false
