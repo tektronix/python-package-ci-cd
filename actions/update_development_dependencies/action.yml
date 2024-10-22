@@ -29,6 +29,11 @@ inputs:
       the update-pre-commit input to `true`.
     required: false
     default: 'false'
+  pre-commit-repo-update-skip-list:
+    description: A comma-separated list of pre-commit repo urls to skip updates for
+      (only applicable when `update-pre-commit=true`).
+    required: false
+    default: ''
   pre-commit-hook-skip-list:
     description: A comma-separated list of pre-commit hooks to skip (only applicable
       when `run-pre-commit=true`).

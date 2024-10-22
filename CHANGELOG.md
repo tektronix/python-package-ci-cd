@@ -18,6 +18,10 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Added
+
+- Added a new `pre-commit-repo-update-skip-list` input parameter to the `update_development_dependencies` action and the `_reusable-update-python-and-pre-commit-dependencies.yml` workflow to allow users to skip updating specific `pre-commit` hooks.
+
 ### Changed
 
 - Bumped dependency versions.

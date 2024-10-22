@@ -20,6 +20,8 @@ import warnings
 
 from pathlib import Path
 
+import yaml
+
 from pypi_simple import PyPISimple
 from yamlfix import fix_files  # pyright: ignore[reportUnknownVariableType]
 
@@ -126,7 +128,31 @@ def update_poetry_dependencies(
     )
 
 
-def update_pre_commit_dependencies(python_executable: str, repository_root_directory: Path) -> None:
+def get_pre_commit_repos(repository_root_directory: Path) -> list[str]:
+    """Get the list of repo urls from the .pre-commit-config.yaml file.
+
+    Args:
+        repository_root_directory: The root directory of the repository.
+
+    Returns:
+        The list of repo urls.
+    """
+    pre_commit_file_data = yaml.safe_load(
+        (repository_root_directory / ".pre-commit-config.yaml").read_text()
+    )
+    repo_list: list[str] = []
+    for repo in pre_commit_file_data.get("repos", []):
+        if (repo_url := str(repo["repo"])) == "local":
+            continue  # skip local repos, they don't need to be updated
+        repo_list.append(repo_url)
+    return repo_list
+
+
+def update_pre_commit_dependencies(
+    python_executable: str,
+    repository_root_directory: Path,
+    pre_commit_repo_update_skip_list: list[str],
+) -> None:
     """Update the pre-commit dependencies in the .pre-commit-config.yaml file.
 
     This function will also fix the formatting of the yaml file using the `yamlfix` package.
@@ -134,13 +160,19 @@ def update_pre_commit_dependencies(python_executable: str, repository_root_direc
     Args:
         python_executable: The path to the python executable to use.
         repository_root_directory: The root directory of the repository.
+        pre_commit_repo_update_skip_list: A list of pre-commit repo urls to skip updating.
     """
     run_cmd_in_subprocess(
         f"git config --global --add safe.directory "
         f'"{repository_root_directory.resolve().as_posix()}"'
     )
-    # Update pre-commit config file
-    run_cmd_in_subprocess(f'"{python_executable}" -m pre_commit autoupdate --freeze')
+    # Update every hook in the pre-commit config file, skipping any hooks in the skip list
+    for repo in get_pre_commit_repos(repository_root_directory):
+        if repo in pre_commit_repo_update_skip_list:
+            continue
+        run_cmd_in_subprocess(
+            f'"{python_executable}" -m pre_commit autoupdate --freeze --repo {repo}'
+        )
 
     # Fix the formatting of the pre-commit config file
     with warnings.catch_warnings():
@@ -194,7 +226,10 @@ def main() -> None:
     export_dependency_groups = [
         x.strip() for x in os.environ["INPUT_EXPORT-DEPENDENCY-GROUPS"].split(",") if x
     ]
-    pre_commit_hook_skip_list = os.environ["INPUT_PRE-COMMIT-HOOK-SKIP-LIST"]
+    pre_commit_hook_run_skip_list = os.environ["INPUT_PRE-COMMIT-HOOK-SKIP-LIST"]
+    pre_commit_repo_update_skip_list = [
+        x.strip() for x in os.environ["INPUT_PRE-COMMIT-REPO-UPDATE-SKIP-LIST"].split(",") if x
+    ]
     install_dependencies = os.environ["INPUT_INSTALL-DEPENDENCIES"].lower() in _ENV_VAR_TRUE_VALUES
     run_pre_commit = os.environ["INPUT_RUN-PRE-COMMIT"].lower() in _ENV_VAR_TRUE_VALUES
     update_pre_commit = os.environ["INPUT_UPDATE-PRE-COMMIT"].lower() in _ENV_VAR_TRUE_VALUES
@@ -208,14 +243,16 @@ def main() -> None:
         python_executable, repo_root_path, dependency_dict, lock_only=not install_dependencies
     )
     if update_pre_commit or run_pre_commit:
-        update_pre_commit_dependencies(python_executable, repo_root_path)
+        update_pre_commit_dependencies(
+            python_executable, repo_root_path, pre_commit_repo_update_skip_list
+        )
     if export_dependency_groups:
         export_requirements_files(python_executable, export_dependency_groups)
     if run_pre_commit:
         # Run the pre-commit hooks, ignore any errors since they are
         # just being run to auto-fix files.
         with contextlib.suppress(subprocess.CalledProcessError):
-            os.environ["SKIP"] = pre_commit_hook_skip_list
+            os.environ["SKIP"] = pre_commit_hook_run_skip_list
             run_cmd_in_subprocess(f'"{python_executable}" -m pre_commit run --all-files')
 
 
