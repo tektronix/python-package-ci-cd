@@ -97,6 +97,13 @@
             ]
         },
         {
+            "description": "Group together all poetry dependencies",
+            "groupName": "poetry dependencies",
+            "matchPackageNames": [
+                "/^poetry/"
+            ]
+        },
+        {
             "description": "Group together all pydantic dependencies",
             "groupName": "pydantic dependencies",
             "matchPackageNames": [
