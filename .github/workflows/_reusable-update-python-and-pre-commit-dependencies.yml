@@ -31,7 +31,13 @@ on:
         required: false
         type: boolean
         default: false
-      pre-commit-hook-skip-list:
+      pre-commit-repo-update-skip-list:
+        description: A comma-separated list of pre-commit repo urls to skip updates
+          for (only applicable when `update-pre-commit=true`).
+        required: false
+        type: string
+        default: ''
+      pre-commit-hook-run-skip-list:
         description: A comma-separated list of pre-commit hooks to skip (only applicable
           when `run-pre-commit=true`).
         required: false
@@ -89,7 +95,8 @@ jobs:
           dependency-dict: ${{ inputs.dependency-dict }}
           update-pre-commit: ${{ inputs.update-pre-commit }}
           run-pre-commit: ${{ inputs.run-pre-commit }}
-          pre-commit-hook-skip-list: ${{ inputs.pre-commit-hook-skip-list }}
+          pre-commit-repo-update-skip-list: ${{ inputs.pre-commit-repo-update-skip-list }}
+          pre-commit-hook-run-skip-list: ${{ inputs.pre-commit-hook-run-skip-list }}
           export-dependency-groups: ${{ inputs.export-dependency-groups }}
       - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
         uses: tektronix/python-package-ci-cd/actions/update_development_dependencies@v1.4.1
@@ -97,7 +104,7 @@ jobs:
           dependency-dict: ${{ inputs.dependency-dict }}
           update-pre-commit: ${{ inputs.update-pre-commit }}
           run-pre-commit: ${{ inputs.run-pre-commit }}
-          pre-commit-hook-skip-list: ${{ inputs.pre-commit-hook-skip-list }}
+          pre-commit-hook-run-skip-list: ${{ inputs.pre-commit-hook-run-skip-list }}
           export-dependency-groups: ${{ inputs.export-dependency-groups }}
       - uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842  # v5.0.1
         with:

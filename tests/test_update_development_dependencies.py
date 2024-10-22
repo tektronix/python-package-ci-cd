@@ -18,6 +18,11 @@ from actions.update_development_dependencies.main import (
 )
 
 PYTHON_EXECUTABLE = Path(sys.executable).as_posix()
+PRE_COMMIT_REPO_UPDATE_SKIP_LIST = [
+    "https://github.com/executablebooks/mdformat",
+    "https://github.com/Lucas-C/pre-commit-hooks",
+    "https://github.com/PyCQA/docformatter",
+]
 
 
 @pytest.fixture(autouse=True)
@@ -41,14 +46,105 @@ def fixture_repo_root_dir(
     repo_root_directory = tmp_path / "repo"
     repo_root_directory.mkdir()
     monkeypatch.chdir(repo_root_directory)
-    (repo_root_directory / ".pre-commit-config.yaml").touch()
+    (repo_root_directory / ".pre-commit-config.yaml").write_text(
+        """---
+default_install_hook_types: [pre-commit, commit-msg]
+default_stages: [pre-commit]
+ci:
+  autofix_prs: false
+  autoupdate_schedule: weekly
+  autoupdate_commit_msg: 'chore(pre-commit-deps): pre-commit autoupdate'
+  skip:
+    - check-poetry
+    - pylint
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: cef0300fd0fc4d2a87a85fa2093c6b283ea36f4b  # frozen: v5.0.0
+    hooks:
+      - id: check-yaml
+        args: [--unsafe]
+      - id: check-toml
+      - id: check-json
+      - id: check-xml
+      - id: file-contents-sorter
+        files: ^(doc_config/known_words.txt)$
+        args: [--unique, --ignore-case]
+      - id: requirements-txt-fixer
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: [--maxkb=3000, --enforce-all]
+      - id: forbid-submodules
+      - id: pretty-format-json
+        args: [--autofix, --indent=4]
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: a30f0d816e5062a67d87c8de753cfe499672b959  # frozen: v1.5.5
+    hooks:
+      - id: remove-tabs
+      - id: forbid-tabs
+  - repo: https://github.com/Mateusz-Grzelinski/actionlint-py
+    rev: 27445053da613c660ed5895d9616662059a53ca7  # frozen: v1.7.3.17
+    hooks:
+      - id: actionlint
+        additional_dependencies: [pyflakes, shellcheck-py]
+  - repo: https://github.com/lyz-code/yamlfix
+    rev: 8072181c0f2eab9f2dd8db2eb3b9556d7cd0bd74  # frozen: 1.17.0
+    hooks:
+      - id: yamlfix
+  - repo: https://github.com/AleksaC/hadolint-py
+    rev: e70baeefd566058716df2f29eae8fe8ffc213a9f  # frozen: v2.12.1b3
+    hooks:
+      - id: hadolint
+        args: [--ignore=DL3008, --ignore=DL3018]
+  - repo: https://github.com/executablebooks/mdformat
+    rev: 86542e37a3a40974eb812b16b076220fe9bb4278  # frozen: 0.7.18
+    hooks:
+      - id: mdformat
+        args: [--number, --end-of-line, keep]
+        additional_dependencies:
+          - mdformat-admon
+          - mdformat-beautysh
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+        pass_filenames: true
+        args: [-sn]
+      - id: pyright
+        name: pyright
+        entry: pyright
+        language: system
+        types: [python]
+        pass_filenames: false
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: 8983acb92ee4b01924893632cf90af926fa608f0  # frozen: v0.7.0
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+  # TODO: Re-enable this once https://github.com/PyCQA/docformatter/issues/293 is resolved
+  #  - repo: https://github.com/PyCQA/docformatter
+  #    rev: dfefe062799848234b4cd60b04aa633c0608025e  # frozen: v1.7.5
+  #    hooks:
+  #      - id: docformatter
+  #        additional_dependencies: [tomli]
+"""
+    )
     (repo_root_directory / "dev").mkdir()
     (repo_root_directory / "dev" / "requirements.txt").touch()
 
     monkeypatch.setenv("INPUT_REPO-ROOT", str(repo_root_directory))
     monkeypatch.setenv("INPUT_DEPENDENCY-DICT", '{"dev": ["pytest"]}')
     monkeypatch.setenv("INPUT_EXPORT-DEPENDENCY-GROUPS", "dev")
-    monkeypatch.setenv("INPUT_PRE-COMMIT-HOOK-SKIP-LIST", "")
+    monkeypatch.setenv(
+        "INPUT_PRE-COMMIT-REPO-UPDATE-SKIP-LIST", ",".join(PRE_COMMIT_REPO_UPDATE_SKIP_LIST)
+    )
+    monkeypatch.setenv("INPUT_PRE-COMMIT-HOOK-RUN-SKIP-LIST", "")
     monkeypatch.setenv("INPUT_INSTALL-DEPENDENCIES", "true")
     monkeypatch.setenv("INPUT_RUN-PRE-COMMIT", "true")
     monkeypatch.setenv("INPUT_UPDATE-PRE-COMMIT", "true")
@@ -101,7 +197,9 @@ def test_update_pre_commit_dependencies(
 ) -> None:
     """Test the update_pre_commit_dependencies function."""
     with patch("subprocess.check_call") as mock_subproc_call:
-        update_pre_commit_dependencies(sys.executable, repo_root_dir)
+        update_pre_commit_dependencies(
+            sys.executable, repo_root_dir, PRE_COMMIT_REPO_UPDATE_SKIP_LIST
+        )
 
         # Check the calls to subprocess.check_call
         expected_calls = [
@@ -115,9 +213,63 @@ def test_update_pre_commit_dependencies(
                     f"{repo_root_dir.resolve().as_posix()}",
                 ]
             ),
-            call([PYTHON_EXECUTABLE, "-m", "pre_commit", "autoupdate", "--freeze"]),
+            call(
+                [
+                    PYTHON_EXECUTABLE,
+                    "-m",
+                    "pre_commit",
+                    "autoupdate",
+                    "--freeze",
+                    "--repo",
+                    "https://github.com/pre-commit/pre-commit-hooks",
+                ]
+            ),
+            call(
+                [
+                    PYTHON_EXECUTABLE,
+                    "-m",
+                    "pre_commit",
+                    "autoupdate",
+                    "--freeze",
+                    "--repo",
+                    "https://github.com/Mateusz-Grzelinski/actionlint-py",
+                ]
+            ),
+            call(
+                [
+                    PYTHON_EXECUTABLE,
+                    "-m",
+                    "pre_commit",
+                    "autoupdate",
+                    "--freeze",
+                    "--repo",
+                    "https://github.com/lyz-code/yamlfix",
+                ]
+            ),
+            call(
+                [
+                    PYTHON_EXECUTABLE,
+                    "-m",
+                    "pre_commit",
+                    "autoupdate",
+                    "--freeze",
+                    "--repo",
+                    "https://github.com/AleksaC/hadolint-py",
+                ]
+            ),
+            call(
+                [
+                    PYTHON_EXECUTABLE,
+                    "-m",
+                    "pre_commit",
+                    "autoupdate",
+                    "--freeze",
+                    "--repo",
+                    "https://github.com/astral-sh/ruff-pre-commit",
+                ]
+            ),
         ]
-        assert mock_subproc_call.call_count == 2
+        assert mock_subproc_call.call_count == 6
         mock_subproc_call.assert_has_calls(expected_calls, any_order=True)
 
 
@@ -163,7 +315,7 @@ def test_main(
         # Call the main function
         main()
         assert mock_subproc_call.called
-        assert mock_subproc_call.call_count == 9
+        assert mock_subproc_call.call_count == 13
 
 
 def test_main_no_install_dependencies(

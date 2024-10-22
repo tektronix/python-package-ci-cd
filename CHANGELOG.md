@@ -18,9 +18,14 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Added
+
+- Added a new `pre-commit-repo-update-skip-list` input parameter to the `update_development_dependencies` action and the `_reusable-update-python-and-pre-commit-dependencies.yml` workflow to allow users to skip updating specific `pre-commit` hooks.
+
 ### Changed
 
 - Bumped dependency versions.
+- _**<span style="color:red">BREAKING CHANGE</span>**_: Renamed the `pre-commit-hook-skip-list` input parameter to `pre-commit-hook-run-skip-list` in the `_reusable-update-python-and-pre-commit-dependencies.yml` workflow and `update_development_dependencies` action.
 
 ---
 
