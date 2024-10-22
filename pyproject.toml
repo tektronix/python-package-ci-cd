@@ -279,7 +279,7 @@ setenv =
     # Skip pre-commit checks that are not needed
     SKIP = file-contents-sorter
 commands_pre =
-    poetry install
+    python -m poetry install
 commands =
     !tests: pre-commit run --all-files
     pytest -vv -k "not test_docs" --showlocals --cov --junitxml={tox_root}/.results_{envname}/results.xml --cov-report=term --cov-report=xml:{tox_root}/.coverage_{envname}.xml --cov-report=html:{tox_root}/.results_{envname}/html --self-contained-html --html={tox_root}/.results_{envname}/results.html
@@ -295,7 +295,7 @@ setenv =
 
 [testenv:docs]
 commands_pre =
-    poetry install --only docs
+    python -m poetry install --only docs
 commands =
     python -c "import shutil; shutil.rmtree('.results_{envname}', ignore_errors=True)"
     mkdocs --verbose build --site-dir .results_{envname}
