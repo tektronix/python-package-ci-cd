@@ -42,6 +42,7 @@ repos:
     rev: 95f517843e74d0556552029591a77b01bd40cd4d  # frozen: 38.129.2
     hooks:
       - id: renovate-config-validator
+        language_version: lts
   - repo: https://github.com/python-jsonschema/check-jsonschema
     rev: 37cd56d9d154dfb0648eaee8efc1040512700c47  # frozen: 0.29.4
     hooks:
