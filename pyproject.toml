@@ -35,7 +35,7 @@ python = "~3.12"  # This needs to stay in sync with all CI workflows
 
 [tool.poetry.group.actions-create_unique_testpypi_version.dependencies]
 poetry-core = "1.9.1"
-pypi-simple = "1.6.0"
+pypi-simple = "1.6.1"
 tomli = "2.0.2"
 tomli-w = "1.1.0"
 
@@ -44,7 +44,7 @@ tomli-w = "1.1.0"
 [tool.poetry.group.actions-update_development_dependencies.dependencies]
 poetry-plugin-export = "1.8.0"
 pre-commit = "4.0.1"
-pypi-simple = "1.6.0"
+pypi-simple = "1.6.1"
 toml-sort = "0.23.1"
 yamlfix = "1.17.0"
 
