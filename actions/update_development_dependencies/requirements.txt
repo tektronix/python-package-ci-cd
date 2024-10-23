@@ -11,7 +11,7 @@ cleo==2.1.0 ; python_version >= "3.12" and python_version < "3.13"
 click==8.1.7 ; python_version >= "3.12" and python_version < "3.13"
 colorama==0.4.6 ; python_version >= "3.12" and python_version < "3.13" and (os_name == "nt" or platform_system == "Windows")
 crashtest==0.4.1 ; python_version >= "3.12" and python_version < "3.13"
-cryptography==43.0.1 ; python_version >= "3.12" and python_version < "3.13" and sys_platform == "linux"
+cryptography==43.0.3 ; python_version >= "3.12" and python_version < "3.13" and sys_platform == "linux"
 distlib==0.3.9 ; python_version >= "3.12" and python_version < "3.13"
 distro==1.9.0 ; python_version >= "3.12" and python_version < "3.13"
 dulwich==0.21.7 ; python_version >= "3.12" and python_version < "3.13"
