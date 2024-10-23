@@ -21,7 +21,7 @@ jobs:
           - .github/@(dependabot.@(yml|yaml)|renovate.json)
           - .github/workflows/codeql-analysis.@(yml|yaml)
     steps:
-      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Ensure ${{ matrix.filename }} exists
         uses: andstor/file-existence-action@076e0072799f4942c8bc574a82233e1e4d13e9d6  # v3.0.0
         with:
