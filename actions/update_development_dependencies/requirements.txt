@@ -35,7 +35,7 @@ platformdirs==4.3.6 ; python_version >= "3.12" and python_version < "3.13"
 poetry==1.8.4 ; python_version >= "3.12" and python_version < "3.13"
 poetry-core==1.9.1 ; python_version >= "3.12" and python_version < "3.13"
 poetry-plugin-export==1.8.0 ; python_version >= "3.12" and python_version < "3.13"
-pre-commit==3.8.0 ; python_version >= "3.12" and python_version < "3.13"
+pre-commit==4.0.1 ; python_version >= "3.12" and python_version < "3.13"
 ptyprocess==0.7.0 ; python_version >= "3.12" and python_version < "3.13"
 pycparser==2.22 ; python_version >= "3.12" and python_version < "3.13" and (sys_platform == "darwin" or sys_platform == "linux") and (sys_platform == "darwin" or platform_python_implementation != "PyPy")
 pydantic==2.9.2 ; python_version >= "3.12" and python_version < "3.13"
