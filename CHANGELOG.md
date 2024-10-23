@@ -18,6 +18,46 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Changed
+
+- Bumped dependency versions.
+
+---
+
+## v1.5.0 (2024-10-23)
+
+### Merged Pull Requests
+
+- chore(python-deps): update dependency pre-commit to v4 for actions/update_development_dependencies and dev ([#145](https://github.com/tektronix/python-package-ci-cd/pull/145))
+- chore(gh-actions-deps): update anchore/scan-action action to v5 in all dependant reusable workflows ([#169](https://github.com/tektronix/python-package-ci-cd/pull/169))
+- chore(python-deps): update dependency virtualenv to v20.27.0 in all dependant actions ([#172](https://github.com/tektronix/python-package-ci-cd/pull/172))
+- chore(python-deps): update dependency setuptools to v75.2.0 in all dependant actions ([#165](https://github.com/tektronix/python-package-ci-cd/pull/165))
+- chore(python-deps): update dependency tomli-w to v1.1.0 for actions/create_unique_testpypi_version ([#166](https://github.com/tektronix/python-package-ci-cd/pull/166))
+- chore(python-deps): update poetry dependencies in all dependant actions ([#171](https://github.com/tektronix/python-package-ci-cd/pull/171))
+- chore(python-deps): update dependency charset-normalizer to v3.4.0 in all dependant actions ([#164](https://github.com/tektronix/python-package-ci-cd/pull/164))
+- chore(python-deps): update dependency trove-classifiers to v2024.10.16 in all dependant actions ([#167](https://github.com/tektronix/python-package-ci-cd/pull/167))
+- chore: Group all poetry dependencies together when updating dependencies ([#170](https://github.com/tektronix/python-package-ci-cd/pull/170))
+- chore(python-deps): update dependency pyright to v1.1.385 for dev ([#162](https://github.com/tektronix/python-package-ci-cd/pull/162))
+- chore(python-deps): update dependency build to v1.2.2.post1 in all dependant actions ([#146](https://github.com/tektronix/python-package-ci-cd/pull/146))
+- chore(gh-actions-deps): update anchore/sbom-action action to v0.17.4 in all dependant reusable workflows ([#155](https://github.com/tektronix/python-package-ci-cd/pull/155))
+- Enable skipping pre-commit hook repos during development dependency update workflow and action ([#158](https://github.com/tektronix/python-package-ci-cd/pull/158))
+- chore(python-deps): update dependency distlib to v0.3.9 in all dependant actions ([#157](https://github.com/tektronix/python-package-ci-cd/pull/157))
+- chore(gh-actions-deps): update actions/upload-artifact action to v4.4.3 in all dependant reusable workflows ([#149](https://github.com/tektronix/python-package-ci-cd/pull/149))
+- chore(python-deps): update dependency pkginfo to v1.11.2 in all dependant actions ([#159](https://github.com/tektronix/python-package-ci-cd/pull/159))
+- chore(gh-actions-deps): update actions/checkout action to v4.2.1 in dev workflows ([#148](https://github.com/tektronix/python-package-ci-cd/pull/148))
+- chore(docker-deps): update python:3.12-alpine docker digest to 38e179a in all dependant actions ([#153](https://github.com/tektronix/python-package-ci-cd/pull/153))
+- chore(gh-actions-deps): update actions/cache action to v4.1.1 in all dependant reusable workflows ([#154](https://github.com/tektronix/python-package-ci-cd/pull/154))
+- chore(gh-actions-deps): update actions/checkout action to v4.2.1 in all dependant reusable workflows ([#147](https://github.com/tektronix/python-package-ci-cd/pull/147))
+- chore(gh-actions-deps): update github/codeql-action action to v3.26.13 in all dependant reusable workflows ([#150](https://github.com/tektronix/python-package-ci-cd/pull/150))
+- Install LTS node during reusable testing workflow ([#152](https://github.com/tektronix/python-package-ci-cd/pull/152))
+- chore(gh-actions-deps): update actions/cache action to v4.1.0 in all dependant reusable workflows ([#144](https://github.com/tektronix/python-package-ci-cd/pull/144))
+- chore(gh-actions-deps): update github/codeql-action action to v3.26.11 in all dependant reusable workflows ([#143](https://github.com/tektronix/python-package-ci-cd/pull/143))
+- chore(pre-commit-deps): pre-commit autoupdate ([#142](https://github.com/tektronix/python-package-ci-cd/pull/142))
+- chore(python-deps): update dependency tomli to v2.0.2 for actions/create_unique_testpypi_version and docs ([#140](https://github.com/tektronix/python-package-ci-cd/pull/140))
+- chore(gh-actions-deps): update codecov/codecov-action action to v4.6.0 in all dependant reusable workflows ([#139](https://github.com/tektronix/python-package-ci-cd/pull/139))
+- chore(gh-actions-deps): update github/codeql-action action to v3.26.10 in all dependant reusable workflows ([#138](https://github.com/tektronix/python-package-ci-cd/pull/138))
+- docs: Update changelog to address mdformat issues ([#137](https://github.com/tektronix/python-package-ci-cd/pull/137))
+
 ### Added
 
 - Added a new `pre-commit-repo-update-skip-list` input parameter to the `update_development_dependencies` action and the `_reusable-update-python-and-pre-commit-dependencies.yml` workflow to allow users to skip updating specific `pre-commit` hooks.
