@@ -55,7 +55,7 @@ poetry-plugin-export = "1.8.0"
 poetry-pre-commit-plugin = "^0.1.2"
 pre-commit = "4.0.1"
 pylint = "3.3.1"
-pyright = "1.1.385"
+pyright = {extras = ["nodejs"], version = "^1.1.387"}
 tox = "^4.18.0"
 tox-gh-actions = "^3.2.0"
 
@@ -303,6 +303,14 @@ commands =
 [testenv:doctests]
 commands =
     pytest -v -k "test_docs" --showlocals --junitxml={tox_root}/.results_{envname}/results.xml --self-contained-html --html={tox_root}/.results_{envname}/results.html
+
+[testenv:export-reqs]
+commands =
+    poetry export --without-hashes --without-urls --all-extras --only=actions-create_unique_testpypi_version --output=actions/create_unique_testpypi_version/requirements.txt
+    poetry export --without-hashes --without-urls --all-extras --only=actions-find_unreleased_changelog_items --output=actions/find_unreleased_changelog_items/requirements.txt
+    poetry export --without-hashes --without-urls --all-extras --only=actions-update_development_dependencies --output=actions/update_development_dependencies/requirements.txt
+    - pre-commit run -a requirements-txt-fixer
+    - pre-commit run -a end-of-file-fixer
 """
 
 [tool.yamlfix]

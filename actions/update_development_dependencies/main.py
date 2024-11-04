@@ -23,7 +23,7 @@ from pathlib import Path
 import yaml
 
 from pypi_simple import PyPISimple
-from yamlfix import fix_files  # pyright: ignore[reportUnknownVariableType]
+from yamlfix import fix_files
 
 _ENV_VAR_TRUE_VALUES = {"1", "true", "yes"}
 
