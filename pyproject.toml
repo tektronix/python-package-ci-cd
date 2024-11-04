@@ -55,7 +55,7 @@ poetry-plugin-export = "1.8.0"
 poetry-pre-commit-plugin = "^0.1.2"
 pre-commit = "4.0.1"
 pylint = "3.3.1"
-pyright = "1.1.385"
+pyright = "1.1.387"
 tox = "^4.18.0"
 tox-gh-actions = "^3.2.0"
 
