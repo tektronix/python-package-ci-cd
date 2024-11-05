@@ -36,7 +36,7 @@ jobs:
         with:
           package-name: ${{ inputs.package-name }}
       - name: Build package
-        uses: hynek/build-and-inspect-python-package@73aea398b9c8de9ea9e4464c6b13cb8b1f3d6294 # v2.9.0
+        uses: hynek/build-and-inspect-python-package@f01e4d047aadcc0c054c95ec9900da3ec3fc7a0f # v2.10.0
         with:
           attest-build-provenance-github: 'true'
     outputs:
