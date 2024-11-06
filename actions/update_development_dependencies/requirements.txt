@@ -2,7 +2,7 @@ annotated-types==0.7.0 ; python_version >= "3.12" and python_version < "3.13"
 attrs==24.2.0 ; python_version >= "3.12" and python_version < "3.13"
 beautifulsoup4==4.12.3 ; python_version >= "3.12" and python_version < "3.13"
 build==1.2.2.post1 ; python_version >= "3.12" and python_version < "3.13"
-cachecontrol[filecache]==0.14.0 ; python_version >= "3.12" and python_version < "3.13"
+cachecontrol[filecache]==0.14.1 ; python_version >= "3.12" and python_version < "3.13"
 certifi==2024.8.30 ; python_version >= "3.12" and python_version < "3.13"
 cffi==1.17.1 ; python_version >= "3.12" and python_version < "3.13" and (sys_platform == "darwin" or sys_platform == "linux") and (sys_platform == "darwin" or platform_python_implementation != "PyPy")
 cfgv==3.4.0 ; python_version >= "3.12" and python_version < "3.13"
