@@ -56,7 +56,7 @@ jobs:
           name: Packages
           path: dist
       - name: Upload package to Test PyPI
-        uses: pypa/gh-action-pypi-publish@ec4db0b4ddc65acdf4bff5fa45ac92d78b56bdf0  # v1.9.0
+        uses: pypa/gh-action-pypi-publish@61da13deb5f5124fb1536194f82ed3d9bbc7e8f3 # v1.12.0
         with:
           password: ${{ secrets.test-pypi-api-token }}
           repository-url: https://test.pypi.org/legacy/
