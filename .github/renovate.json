@@ -137,7 +137,7 @@
         },
         {
             "additionalBranchPrefix": "",
-            "commitMessageSuffix": " in all dependant actions",
+            "commitMessageSuffix": " to v{{newMajor}}.{{newMinor}} in all dependant actions",
             "description": "Group together all Python (official) version updates",
             "groupName": "python version",
             "matchDepNames": [
