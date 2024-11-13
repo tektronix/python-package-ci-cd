@@ -1,18 +1,18 @@
-annotated-types==0.7.0 ; python_version >= "3.12" and python_version < "3.13"
-attrs==24.2.0 ; python_version >= "3.12" and python_version < "3.13"
-beautifulsoup4==4.12.3 ; python_version >= "3.12" and python_version < "3.13"
-certifi==2024.8.30 ; python_version >= "3.12" and python_version < "3.13"
-charset-normalizer==3.4.0 ; python_version >= "3.12" and python_version < "3.13"
-idna==3.10 ; python_version >= "3.12" and python_version < "3.13"
-mailbits==0.2.1 ; python_version >= "3.12" and python_version < "3.13"
-packaging==24.1 ; python_version >= "3.12" and python_version < "3.13"
-poetry-core==1.9.1 ; python_version >= "3.12" and python_version < "3.13"
-pydantic==2.9.2 ; python_version >= "3.12" and python_version < "3.13"
-pydantic-core==2.23.4 ; python_version >= "3.12" and python_version < "3.13"
-pypi-simple==1.6.1 ; python_version >= "3.12" and python_version < "3.13"
-requests==2.32.3 ; python_version >= "3.12" and python_version < "3.13"
-soupsieve==2.6 ; python_version >= "3.12" and python_version < "3.13"
-tomli==2.0.2 ; python_version >= "3.12" and python_version < "3.13"
-tomli-w==1.1.0 ; python_version >= "3.12" and python_version < "3.13"
-typing-extensions==4.12.2 ; python_version >= "3.12" and python_version < "3.13"
-urllib3==2.2.3 ; python_version >= "3.12" and python_version < "3.13"
+annotated-types==0.7.0
+attrs==24.2.0
+beautifulsoup4==4.12.3
+certifi==2024.8.30
+charset-normalizer==3.4.0
+idna==3.10
+mailbits==0.2.1
+packaging==24.1
+poetry-core==1.9.1
+pydantic==2.9.2
+pydantic-core==2.23.4
+pypi-simple==1.6.1
+requests==2.32.3
+soupsieve==2.6
+tomli==2.0.2
+tomli-w==1.1.0
+typing-extensions==4.12.2
+urllib3==2.2.3

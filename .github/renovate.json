@@ -12,9 +12,10 @@
     "packageRules": [
         {
             "additionalBranchPrefix": "{{#if (equals manager 'github-actions')}}gh-actions{{else}}{{categories}}{{/if}}-deps/",
-            "description": "Set the branch prefix and minimum release age for all updates",
-            "matchPackageNames": [
-                "*"
+            "description": "Set the branch prefix and minimum release age for all updates except the main Python version",
+            "matchDepNames": [
+                "*",
+                "!python"
             ],
             "minimumReleaseAge": "5 days"
         },
@@ -133,6 +134,21 @@
             "matchPackageNames": [
                 "*"
             ]
+        },
+        {
+            "additionalBranchPrefix": "",
+            "commitMessageSuffix": " in all dependant actions",
+            "description": "Group together all Python (official) version updates",
+            "groupName": "python version",
+            "matchDepNames": [
+                "python"
+            ],
+            "matchManagers": [
+                "dockerfile",
+                "poetry"
+            ],
+            "semanticCommitScope": "python-version",
+            "semanticCommitType": "chore"
         }
     ],
     "platformCommit": "enabled",
