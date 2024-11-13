@@ -18,6 +18,35 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Changed
+
+- Bumped dependency versions.
+
+---
+
+## v1.5.2 (2024-11-13)
+
+### Merged Pull Requests
+
+- chore: Update renovate config to include the new version of Python in the commit and Pull Request title ([#217](https://github.com/tektronix/python-package-ci-cd/pull/217))
+- chore(python-deps): update dependency packaging to v24.2 in all dependant actions ([#211](https://github.com/tektronix/python-package-ci-cd/pull/211))
+- Allow caller workflows to use pyproject.toml files as the source of the Python version ([#216](https://github.com/tektronix/python-package-ci-cd/pull/216))
+- chore(python-deps): update dependency pyright to v1.1.388 for dev ([#214](https://github.com/tektronix/python-package-ci-cd/pull/214))
+- Group Python version updates for Dockerfiles and pyproject.toml together ([#213](https://github.com/tektronix/python-package-ci-cd/pull/213))
+- chore(gh-actions-deps): update github/codeql-action action to v3.27.1 in all dependant reusable workflows ([#212](https://github.com/tektronix/python-package-ci-cd/pull/212))
+- chore(docker-deps): update python:3.12-alpine docker digest to 5049c05 in all dependant actions ([#210](https://github.com/tektronix/python-package-ci-cd/pull/210))
+- chore(docker-deps): update python:3.12-alpine docker digest to 72d7e22 in all dependant actions ([#209](https://github.com/tektronix/python-package-ci-cd/pull/209))
+- chore(docker-deps): update python:3.12-alpine docker digest to 45447e9 in all dependant actions ([#208](https://github.com/tektronix/python-package-ci-cd/pull/208))
+- chore(docker-deps): update python:3.12-alpine docker digest to 18e32de in all dependant actions ([#207](https://github.com/tektronix/python-package-ci-cd/pull/207))
+- chore(docker-deps): update python:3.12-alpine docker digest to edd1d85 in all dependant actions ([#206](https://github.com/tektronix/python-package-ci-cd/pull/206))
+- chore(pre-commit-deps): pre-commit autoupdate ([#195](https://github.com/tektronix/python-package-ci-cd/pull/195))
+- chore(gh-actions-deps): update actions/attest-build-provenance action to v1.4.4 in all dependant reusable workflows ([#200](https://github.com/tektronix/python-package-ci-cd/pull/200))
+- chore(python-deps): update dependency cachecontrol to v0.14.1 in all dependant actions ([#199](https://github.com/tektronix/python-package-ci-cd/pull/199))
+- chore(gh-actions-deps): update anchore/sbom-action action to v0.17.7 in all dependant reusable workflows ([#197](https://github.com/tektronix/python-package-ci-cd/pull/197))
+- chore(gh-actions-deps): update anchore/scan-action action to v5.2.1 in all dependant reusable workflows ([#198](https://github.com/tektronix/python-package-ci-cd/pull/198))
+- chore(gh-actions-deps): update hynek/build-and-inspect-python-package action to v2.10.0 in all dependant reusable workflows ([#196](https://github.com/tektronix/python-package-ci-cd/pull/196))
+- chore(python-deps): update dependency pyright to v1.1.387 for dev ([#183](https://github.com/tektronix/python-package-ci-cd/pull/183))
+
 ### Added
 
 - Added the ability for caller workflows for the `_reusable-test-docs.yml` and `_reusable-test-code.yml` workflows to specify to use the `pyproject.toml` file as the source of the Python version instead of always requiring a hard-coded Python version.
