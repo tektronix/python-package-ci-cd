@@ -30,6 +30,7 @@ pr
 pre
 pypa
 pypi
+pyproject
 repo
 sarif
 sbom
@@ -39,6 +40,7 @@ stefanzweifel
 sublicense
 tektronix
 testpypi
+toml
 update_development_dependencies
 vimtor
 white_check_mark
