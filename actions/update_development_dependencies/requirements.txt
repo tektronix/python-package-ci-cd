@@ -1,63 +1,63 @@
-annotated-types==0.7.0 ; python_version >= "3.12" and python_version < "3.13"
-attrs==24.2.0 ; python_version >= "3.12" and python_version < "3.13"
-beautifulsoup4==4.12.3 ; python_version >= "3.12" and python_version < "3.13"
-build==1.2.2.post1 ; python_version >= "3.12" and python_version < "3.13"
-cachecontrol[filecache]==0.14.1 ; python_version >= "3.12" and python_version < "3.13"
-certifi==2024.8.30 ; python_version >= "3.12" and python_version < "3.13"
-cffi==1.17.1 ; python_version >= "3.12" and python_version < "3.13" and (sys_platform == "darwin" or sys_platform == "linux") and (sys_platform == "darwin" or platform_python_implementation != "PyPy")
-cfgv==3.4.0 ; python_version >= "3.12" and python_version < "3.13"
-charset-normalizer==3.4.0 ; python_version >= "3.12" and python_version < "3.13"
-cleo==2.1.0 ; python_version >= "3.12" and python_version < "3.13"
-click==8.1.7 ; python_version >= "3.12" and python_version < "3.13"
-colorama==0.4.6 ; python_version >= "3.12" and python_version < "3.13" and (os_name == "nt" or platform_system == "Windows")
-crashtest==0.4.1 ; python_version >= "3.12" and python_version < "3.13"
-cryptography==43.0.3 ; python_version >= "3.12" and python_version < "3.13" and sys_platform == "linux"
-distlib==0.3.9 ; python_version >= "3.12" and python_version < "3.13"
-distro==1.9.0 ; python_version >= "3.12" and python_version < "3.13"
-dulwich==0.21.7 ; python_version >= "3.12" and python_version < "3.13"
-fastjsonschema==2.20.0 ; python_version >= "3.12" and python_version < "3.13"
-filelock==3.16.1 ; python_version >= "3.12" and python_version < "3.13"
-identify==2.6.1 ; python_version >= "3.12" and python_version < "3.13"
-idna==3.10 ; python_version >= "3.12" and python_version < "3.13"
-installer==0.7.0 ; python_version >= "3.12" and python_version < "3.13"
-jaraco-classes==3.4.0 ; python_version >= "3.12" and python_version < "3.13"
-jeepney==0.8.0 ; python_version >= "3.12" and python_version < "3.13" and sys_platform == "linux"
-keyring==24.3.1 ; python_version >= "3.12" and python_version < "3.13"
-mailbits==0.2.1 ; python_version >= "3.12" and python_version < "3.13"
-maison==2.0.0 ; python_version >= "3.12" and python_version < "3.13"
-more-itertools==10.5.0 ; python_version >= "3.12" and python_version < "3.13"
-msgpack==1.1.0 ; python_version >= "3.12" and python_version < "3.13"
-nodeenv==1.9.1 ; python_version >= "3.12" and python_version < "3.13"
-packaging==24.1 ; python_version >= "3.12" and python_version < "3.13"
-pexpect==4.9.0 ; python_version >= "3.12" and python_version < "3.13"
-pkginfo==1.11.2 ; python_version >= "3.12" and python_version < "3.13"
-platformdirs==4.3.6 ; python_version >= "3.12" and python_version < "3.13"
-poetry==1.8.4 ; python_version >= "3.12" and python_version < "3.13"
-poetry-core==1.9.1 ; python_version >= "3.12" and python_version < "3.13"
-poetry-plugin-export==1.8.0 ; python_version >= "3.12" and python_version < "3.13"
-pre-commit==4.0.1 ; python_version >= "3.12" and python_version < "3.13"
-ptyprocess==0.7.0 ; python_version >= "3.12" and python_version < "3.13"
-pycparser==2.22 ; python_version >= "3.12" and python_version < "3.13" and (sys_platform == "darwin" or sys_platform == "linux") and (sys_platform == "darwin" or platform_python_implementation != "PyPy")
-pydantic==2.9.2 ; python_version >= "3.12" and python_version < "3.13"
-pydantic-core==2.23.4 ; python_version >= "3.12" and python_version < "3.13"
-pypi-simple==1.6.1 ; python_version >= "3.12" and python_version < "3.13"
-pyproject-hooks==1.2.0 ; python_version >= "3.12" and python_version < "3.13"
-pywin32-ctypes==0.2.3 ; python_version >= "3.12" and python_version < "3.13" and sys_platform == "win32"
-pyyaml==6.0.2 ; python_version >= "3.12" and python_version < "3.13"
-rapidfuzz==3.10.1 ; python_version >= "3.12" and python_version < "3.13"
-requests==2.32.3 ; python_version >= "3.12" and python_version < "3.13"
-requests-toolbelt==1.0.0 ; python_version >= "3.12" and python_version < "3.13"
-ruyaml==0.91.0 ; python_version >= "3.12" and python_version < "3.13"
-secretstorage==3.3.3 ; python_version >= "3.12" and python_version < "3.13" and sys_platform == "linux"
-setuptools==75.3.0 ; python_version >= "3.12" and python_version < "3.13"
-shellingham==1.5.4 ; python_version >= "3.12" and python_version < "3.13"
-soupsieve==2.6 ; python_version >= "3.12" and python_version < "3.13"
-toml==0.10.2 ; python_version >= "3.12" and python_version < "3.13"
-toml-sort==0.23.1 ; python_version >= "3.12" and python_version < "3.13"
-tomlkit==0.13.2 ; python_version >= "3.12" and python_version < "3.13"
-trove-classifiers==2024.10.21.16 ; python_version >= "3.12" and python_version < "3.13"
-typing-extensions==4.12.2 ; python_version >= "3.12" and python_version < "3.13"
-urllib3==2.2.3 ; python_version >= "3.12" and python_version < "3.13"
-virtualenv==20.27.1 ; python_version >= "3.12" and python_version < "3.13"
-xattr==1.1.0 ; python_version >= "3.12" and python_version < "3.13" and sys_platform == "darwin"
-yamlfix==1.17.0 ; python_version >= "3.12" and python_version < "3.13"
+annotated-types==0.7.0
+attrs==24.2.0
+beautifulsoup4==4.12.3
+build==1.2.2.post1
+cachecontrol[filecache]==0.14.1
+certifi==2024.8.30
+cffi==1.17.1 ; (sys_platform == "darwin" or sys_platform == "linux") and (sys_platform == "darwin" or platform_python_implementation != "PyPy")
+cfgv==3.4.0
+charset-normalizer==3.4.0
+cleo==2.1.0
+click==8.1.7
+colorama==0.4.6 ; (os_name == "nt" or platform_system == "Windows")
+crashtest==0.4.1
+cryptography==43.0.3 ; sys_platform == "linux"
+distlib==0.3.9
+distro==1.9.0
+dulwich==0.21.7
+fastjsonschema==2.20.0
+filelock==3.16.1
+identify==2.6.1
+idna==3.10
+installer==0.7.0
+jaraco-classes==3.4.0
+jeepney==0.8.0 ; sys_platform == "linux"
+keyring==24.3.1
+mailbits==0.2.1
+maison==2.0.0
+more-itertools==10.5.0
+msgpack==1.1.0
+nodeenv==1.9.1
+packaging==24.1
+pexpect==4.9.0
+pkginfo==1.11.2
+platformdirs==4.3.6
+poetry==1.8.4
+poetry-core==1.9.1
+poetry-plugin-export==1.8.0
+pre-commit==4.0.1
+ptyprocess==0.7.0
+pycparser==2.22 ; (sys_platform == "darwin" or sys_platform == "linux") and (sys_platform == "darwin" or platform_python_implementation != "PyPy")
+pydantic==2.9.2
+pydantic-core==2.23.4
+pypi-simple==1.6.1
+pyproject-hooks==1.2.0
+pywin32-ctypes==0.2.3 ; sys_platform == "win32"
+pyyaml==6.0.2
+rapidfuzz==3.10.1
+requests==2.32.3
+requests-toolbelt==1.0.0
+ruyaml==0.91.0
+secretstorage==3.3.3 ; sys_platform == "linux"
+setuptools==75.3.0
+shellingham==1.5.4
+soupsieve==2.6
+toml==0.10.2
+toml-sort==0.23.1
+tomlkit==0.13.2
+trove-classifiers==2024.10.21.16
+typing-extensions==4.12.2
+urllib3==2.2.3
+virtualenv==20.27.1
+xattr==1.1.0 ; sys_platform == "darwin"
+yamlfix==1.17.0

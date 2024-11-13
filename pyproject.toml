@@ -8,7 +8,8 @@ exclude_lines = [
 fail_under = 100
 include_namespace_packages = true
 omit = [
-  "contributor_setup.py"
+  "contributor_setup.py",
+  "remove_python_version_condition_from_req_file.py"
 ]
 show_missing = true
 skip_empty = true
@@ -55,7 +56,7 @@ poetry-plugin-export = "1.8.0"
 poetry-pre-commit-plugin = "^0.1.2"
 pre-commit = "4.0.1"
 pylint = "3.3.1"
-pyright = {extras = ["nodejs"], version = "^1.1.387"}
+pyright = {extras = ["nodejs"], version = "1.1.387"}
 tox = "^4.18.0"
 tox-gh-actions = "^3.2.0"
 
@@ -279,7 +280,7 @@ setenv =
     # Skip pre-commit checks that are not needed
     SKIP = file-contents-sorter
 commands_pre =
-    python -m poetry install
+    python -m poetry install --sync
 commands =
     !tests: pre-commit run --all-files
     pytest -vv -k "not test_docs" --showlocals --cov --junitxml={tox_root}/.results_{envname}/results.xml --cov-report=term --cov-report=xml:{tox_root}/.coverage_{envname}.xml --cov-report=html:{tox_root}/.results_{envname}/html --self-contained-html --html={tox_root}/.results_{envname}/results.html
@@ -307,9 +308,13 @@ commands =
 [testenv:export-reqs]
 commands =
     poetry export --without-hashes --without-urls --all-extras --only=actions-create_unique_testpypi_version --output=actions/create_unique_testpypi_version/requirements.txt
+    python scripts/remove_python_version_condition_from_req_file.py actions/create_unique_testpypi_version/requirements.txt
     poetry export --without-hashes --without-urls --all-extras --only=actions-find_unreleased_changelog_items --output=actions/find_unreleased_changelog_items/requirements.txt
+    python scripts/remove_python_version_condition_from_req_file.py actions/find_unreleased_changelog_items/requirements.txt
     poetry export --without-hashes --without-urls --all-extras --only=actions-update_development_dependencies --output=actions/update_development_dependencies/requirements.txt
+    python scripts/remove_python_version_condition_from_req_file.py actions/update_development_dependencies/requirements.txt
     - pre-commit run -a requirements-txt-fixer
+    - pre-commit run -a trailing-whitespace
     - pre-commit run -a end-of-file-fixer
 """
 
