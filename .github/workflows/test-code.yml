@@ -16,7 +16,7 @@ jobs:
     with:
       repo-name: tektronix/python-package-ci-cd
       operating-systems-array: '["ubuntu", "windows", "macos"]'  # this needs to match the operating-systems-array in the publish-test-results.yml file
-      python-versions-array: '["3.12"]'  # this needs to match the [tool.poetry.dependencies.python] version in the pyproject.toml file
+      python-versions-array: '["pyproject.toml"]'
       upload-to-codecov: true
     secrets:
       codecov-token: ${{ secrets.CODECOV_TOKEN }}
