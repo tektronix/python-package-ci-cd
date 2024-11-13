@@ -106,12 +106,12 @@ commands_pre =
 
 ## Inputs
 
-| Input variable            | Necessity | Description                                                                                 | Default                            |
-| ------------------------- | --------- | ------------------------------------------------------------------------------------------- | ---------------------------------- |
-| `repo-name`               | required  | The full name of the repository to use to gate Codecov uploads, in the format `owner/repo`. |                                    |
-| `python-versions-array`   | required  | A valid JSON array of Python versions to test against.                                      |                                    |
-| `operating-systems-array` | optional  | A valid JSON array of operating system names to run tests on.                               | `'["ubuntu", "windows", "macos"]'` |
-| `upload-to-codecov`       | optional  | A boolean indicating if coverage results should be uploaded to Codecov.                     | `false`                            |
+| Input variable            | Necessity | Description                                                                                                                                                                           | Default                            |
+| ------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| `repo-name`               | required  | The full name of the repository to use to gate Codecov uploads, in the format `owner/repo`.                                                                                           |                                    |
+| `python-versions-array`   | required  | A valid JSON array of Python versions to test against. A valid option is also the string 'pyproject.toml', indicating to use the defined Python version from the pyproject.toml file. |                                    |
+| `operating-systems-array` | optional  | A valid JSON array of operating system names to run tests on.                                                                                                                         | `'["ubuntu", "windows", "macos"]'` |
+| `upload-to-codecov`       | optional  | A boolean indicating if coverage results should be uploaded to Codecov.                                                                                                               | `false`                            |
 
 ## Secrets
 

@@ -18,6 +18,10 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Added
+
+- Added the ability for caller workflows for the `_reusable-test-docs.yml` and `_reusable-test-code.yml` workflows to specify to use the `pyproject.toml` file as the source of the Python version instead of always requiring a hard-coded Python version.
+
 ### Changed
 
 - Bumped dependency versions.

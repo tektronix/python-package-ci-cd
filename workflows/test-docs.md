@@ -68,11 +68,11 @@ commands =
 
 ## Inputs
 
-| Input variable   | Necessity | Description                                    | Default                  |
-| ---------------- | --------- | ---------------------------------------------- | ------------------------ |
-| `node-version`   | required  | The version of Node.js to install.             |                          |
-| `python-version` | required  | The version of Python to install.              |                          |
-| `tox-env-array`  | optional  | A valid JSON array of tox environments to run. | `'["docs", "doctests"]'` |
+| Input variable   | Necessity | Description                                                                                                                                              | Default                  |
+| ---------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| `node-version`   | required  | The version of Node.js to install.                                                                                                                       |                          |
+| `python-version` | required  | The version of Python to install. It can also be the string 'pyproject.toml', indicating to use the defined Python version from the pyproject.toml file. |                          |
+| `tox-env-array`  | optional  | A valid JSON array of tox environments to run.                                                                                                           | `'["docs", "doctests"]'` |
 
 ## Example
 
