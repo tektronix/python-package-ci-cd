@@ -32,7 +32,7 @@ package-mode = false
 version = "1.5.2"
 
 [tool.poetry.dependencies]
-python = "~3.12"  # This needs to stay in sync with all CI workflows
+python = "~3.13.0"  # This needs to stay in sync with all CI workflows
 
 [tool.poetry.group.actions-create_unique_testpypi_version.dependencies]
 poetry-core = "1.9.1"
