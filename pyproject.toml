@@ -46,7 +46,7 @@ tomli-w = "1.1.0"
 poetry-plugin-export = "1.8.0"
 pre-commit = "4.0.1"
 pypi-simple = "1.6.1"
-toml-sort = "0.24.1"
+toml-sort = "0.24.2"
 yamlfix = "1.17.0"
 
 [tool.poetry.group.dev.dependencies]
