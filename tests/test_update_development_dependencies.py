@@ -323,9 +323,10 @@ def test_main_no_install_dependencies(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Test the main function."""
-    with patch(
-        "subprocess.check_call"
-    ) as mock_subproc_call, monkeypatch.context() as mocked_context:
+    with (
+        patch("subprocess.check_call") as mock_subproc_call,
+        monkeypatch.context() as mocked_context,
+    ):
         mocked_context.setenv("INPUT_EXPORT-DEPENDENCY-GROUPS", "")
         mocked_context.setenv("INPUT_PRE-COMMIT-HOOK-SKIP-LIST", "")
         mocked_context.setenv("INPUT_INSTALL-DEPENDENCIES", "false")
