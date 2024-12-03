@@ -11,7 +11,7 @@ cleo==2.1.0
 click==8.1.7
 colorama==0.4.6 ; (os_name == "nt" or platform_system == "Windows")
 crashtest==0.4.1
-cryptography==43.0.3 ; sys_platform == "linux"
+cryptography==44.0.0 ; sys_platform == "linux"
 distlib==0.3.9
 distro==1.9.0
 dulwich==0.21.7
