@@ -107,7 +107,7 @@ jobs:
           previous-changelog-filepath: ${{ inputs.previous-changelog-filepath }}
           previous-release-notes-filepath: ${{ inputs.previous-release-notes-filepath }}
       - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
-        uses: tektronix/python-package-ci-cd/actions/find_unreleased_changelog_items@v1.5.2
+        uses: tektronix/python-package-ci-cd/actions/find_unreleased_changelog_items@v1.5.3
         with:
           release-level: ${{ inputs.release-level }}
           previous-changelog-filepath: ${{ inputs.previous-changelog-filepath }}
@@ -139,7 +139,7 @@ jobs:
           previous-changelog-filepath: ${{ inputs.previous-changelog-filepath }}
           previous-release-notes-filepath: ${{ inputs.previous-release-notes-filepath }}
       - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
-        uses: tektronix/python-package-ci-cd/actions/find_unreleased_changelog_items@v1.5.2
+        uses: tektronix/python-package-ci-cd/actions/find_unreleased_changelog_items@v1.5.3
         with:
           previous-changelog-filepath: ${{ inputs.previous-changelog-filepath }}
           previous-release-notes-filepath: ${{ inputs.previous-release-notes-filepath }}
