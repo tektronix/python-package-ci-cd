@@ -1,4 +1,4 @@
-FROM python:3.12-alpine@sha256:5049c050bdc68575a10bcb1885baa0689b6c15152d8a56a7e399fb49f783bf98
+FROM python:3.13-alpine@sha256:40241d5dec48a0bc7a070e2244309fb409cd25509c56fef871494a9bbc57d51e
 
 # Copy over necessary files
 COPY requirements.txt /requirements.txt
