@@ -24,7 +24,7 @@ jobs:
         with:
           format: spdx-json
           output-file: ${{ github.event.repository.name }}-sbom.spdx.json
-      - uses: actions/attest-build-provenance@619dbb2e03e0189af0c55118e7d3c5e129e99726 # v2.0.0
+      - uses: actions/attest-build-provenance@c4fbc648846ca6f503a13a2281a5e7b98aa57202 # v2.0.1
         if: ${{ !(github.event.pull_request.head.repo.fork || github.event.workflow_call.pull_request.head.repo.fork) && !contains(fromJSON('["dependabot[bot]", "renovate[bot]"]'), github.actor) }}
         with:
           subject-path: ${{ github.event.repository.name }}-sbom.spdx.json
