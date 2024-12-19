@@ -38,7 +38,7 @@ If you are proposing a feature:
 
 Ready to contribute? Here's how to set up `python-package-ci-cd` for local development.
 
-> [!NOTE]
+> [!IMPORTANT]
 > All commits going into the main repository are required to be signed, so make sure
 > to set up commit signing before starting to make changes.
 
