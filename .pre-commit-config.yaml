@@ -79,7 +79,7 @@ repos:
     hooks:
       - id: hadolint
         args: [--ignore=DL3008, --ignore=DL3018]
-  - repo: https://github.com/executablebooks/mdformat
+  - repo: https://github.com/hukkin/mdformat
     rev: e20b1ac5acb8aba0b49d3a9109c6e6b58684ee83  # frozen: 0.7.21
     hooks:
       - id: mdformat
