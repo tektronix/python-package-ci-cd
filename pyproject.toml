@@ -50,6 +50,19 @@ toml-sort = "0.24.2"
 yamlfix = "1.17.0"
 
 [tool.poetry.group.dev.dependencies]
+mdformat-admon = "*"
+mdformat-beautysh = "*"
+mdformat-footnote = "*"
+mdformat-frontmatter = "*"
+mdformat-gfm = "*"
+mdformat-gfm-alerts = "*"
+mdformat-mkdocs = "*"
+mdformat-shfmt = "*"
+mdformat-simple-breaks = "*"
+mdformat-tables = "*"
+mdformat-toc = "*"
+mdformat-web = "*"
+mdformat-wikilink = "*"
 pip = "^24.0"
 poetry-audit-plugin = "^0.4.0"
 poetry-plugin-export = "1.8.0"
@@ -276,20 +289,6 @@ python =
 install_command = python -I -m pip install --upgrade --upgrade-strategy=eager {opts} {packages}
 deps =
     poetry
-    setuptools
-    mdformat-admon
-    mdformat-beautysh
-    mdformat-footnote
-    mdformat-frontmatter
-    mdformat-gfm
-    mdformat-gfm-alerts
-    mdformat-mkdocs
-    mdformat-shfmt
-    mdformat-simple-breaks
-    mdformat-tables
-    mdformat-toc
-    mdformat-web
-    mdformat-wikilink
 setenv =
     # Skip pre-commit checks that are not needed
     SKIP = file-contents-sorter
