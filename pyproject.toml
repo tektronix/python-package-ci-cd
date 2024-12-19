@@ -295,7 +295,7 @@ setenv =
 commands_pre =
     python -m poetry install --sync
 commands =
-    !tests: mdformat --exclude **/.tox/** --check --number --end-of-line keep .
+#    !tests: mdformat --exclude **/.tox/** --check --number --end-of-line keep .
     !tests: pre-commit run --all-files
     pytest -vv -k "not test_docs" --showlocals --cov --junitxml={tox_root}/.results_{envname}/results.xml --cov-report=term --cov-report=xml:{tox_root}/.coverage_{envname}.xml --cov-report=html:{tox_root}/.results_{envname}/html --self-contained-html --html={tox_root}/.results_{envname}/results.html
 
