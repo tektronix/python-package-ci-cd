@@ -40,7 +40,7 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 22ca1b965b7ec0d21bd316d8de38c735f2e035b3  # frozen: 39.59.0
+    rev: 5f5318567fe9cd1f1265dde94b8d9d72a25cda52  # frozen: 39.75.1
     hooks:
       - id: renovate-config-validator
         language_version: 20.18.0  # TODO: remove this line once https://github.com/renovatebot/pre-commit-hooks/issues/2460 is resolved
@@ -79,8 +79,8 @@ repos:
     hooks:
       - id: hadolint
         args: [--ignore=DL3008, --ignore=DL3018]
-  - repo: https://github.com/executablebooks/mdformat
-    rev: 00812cd1850e41aae5c0916645b4b7404f538e8c  # frozen: 0.7.19
+  - repo: https://github.com/hukkin/mdformat
+    rev: e20b1ac5acb8aba0b49d3a9109c6e6b58684ee83  # frozen: 0.7.21
     hooks:
       - id: mdformat
         args: [--number, --end-of-line, keep]
@@ -137,7 +137,7 @@ repos:
         always_run: true
         args: [audit, --json, --ignore-code=CVE-2019-8341]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 8b76f04e7e5a9cd259e9d1db7799599355f97cdf  # frozen: v0.8.2
+    rev: f0b5944bef86f50d875305821a0ab0d8c601e465  # frozen: v0.8.4
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
