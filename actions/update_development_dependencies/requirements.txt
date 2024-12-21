@@ -1,5 +1,5 @@
 annotated-types==0.7.0
-attrs==24.2.0
+attrs==24.3.0
 beautifulsoup4==4.12.3
 build==1.2.2.post1
 cachecontrol[filecache]==0.14.1
