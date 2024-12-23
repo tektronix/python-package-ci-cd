@@ -40,7 +40,7 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 5f5318567fe9cd1f1265dde94b8d9d72a25cda52  # frozen: 39.75.1
+    rev: de6949cf680ef700d700706d26cd306a57ca4217  # frozen: 39.82.3
     hooks:
       - id: renovate-config-validator
         language_version: 20.18.0  # TODO: remove this line once https://github.com/renovatebot/pre-commit-hooks/issues/2460 is resolved
