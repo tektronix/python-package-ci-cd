@@ -40,7 +40,7 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: de6949cf680ef700d700706d26cd306a57ca4217  # frozen: 39.82.3
+    rev: a3a9ecfd0d0a86d7f501ddfadf075227d84bca79  # frozen: 39.86.1
     hooks:
       - id: renovate-config-validator
         language_version: 20.18.0  # TODO: remove this line once https://github.com/renovatebot/pre-commit-hooks/issues/2460 is resolved
@@ -54,7 +54,7 @@ repos:
         args: [--verbose]
         files: ^(\.github/workflows/[^/]+|workflows/[^/]+)$
   - repo: https://github.com/Mateusz-Grzelinski/actionlint-py
-    rev: 060504a904804d5314d4db5dd12aa8751717ffc7  # frozen: v1.7.4.20
+    rev: 2d5ccf5135f92e8fbf9dc3b8b8f17ddc4f1e0a62  # frozen: v1.7.5.21
     hooks:
       - id: actionlint
         additional_dependencies: [pyflakes, shellcheck-py]
