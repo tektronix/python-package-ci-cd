@@ -25,6 +25,10 @@ jobs:
         run: |
           pip install --upgrade .
           pip install griffe
+      - name: Post breaking changes as GitHub annotations
+        continue-on-error: true
+        run: |
+          griffe check --format=github --against="$(git rev-parse origin/main)" --search=src "$PACKAGE_NAME"
       - name: Check API for breaking changes
         continue-on-error: true
         run: |

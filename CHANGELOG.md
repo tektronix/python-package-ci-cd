@@ -22,6 +22,10 @@ Things to be included in the next release go here.
 
 - Bumped dependency versions.
 
+### Added
+
+- Added GitHub annotations to the `check-api-for-breaking-changes` workflow to enable better visibility into any breaking changes detected.
+
 ---
 
 ## v1.5.3 (2024-12-04)
