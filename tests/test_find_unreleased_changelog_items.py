@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import shlex
 import subprocess
 
@@ -76,6 +77,19 @@ def fixture_summary_file(tmp_path: Path) -> Path:
     return tmp_path / "github_summary.txt"
 
 
+@pytest.fixture(name="mock_github_output_file")
+def fixture_mock_github_output_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+    """Mock the GitHub output file.
+
+    Args:
+        tmp_path (fixture): The temporary path fixture.
+        monkeypatch (fixture): The monkeypatch fixture.
+    """
+    github_output_file = tmp_path / "github_output"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(github_output_file))
+    return github_output_file
+
+
 @pytest.fixture(name="mock_env_vars")
 def fixture_mock_env_vars(
     tmp_path: Path,
@@ -116,6 +130,7 @@ def test_main_no_unreleased_entries(
     mock_env_vars: None,  # noqa: ARG001
     mock_changelog_file: Path,
     summary_file: Path,  # noqa: ARG001
+    mock_github_output_file: Path,  # noqa: ARG001
 ) -> None:
     """Test the main function when no unreleased entries are found.
 
@@ -123,6 +138,7 @@ def test_main_no_unreleased_entries(
         mock_env_vars: Mock the environment variables.
         mock_changelog_file: Mock the changelog file.
         summary_file: Mock the environment variables.
+        mock_github_output_file (fixture): Mock the GitHub output file.
     """
     # Modify the changelog content to have no unreleased entries
     changelog_content = """# Changelog
@@ -141,6 +157,7 @@ def test_main_with_no_merged_prs(
     mock_env_vars: None,  # noqa: ARG001
     mock_changelog_file: Path,  # noqa: ARG001
     fake_process: FakeProcess,
+    mock_github_output_file: Path,
 ) -> None:
     """Test the main function when unreleased entries are found.
 
@@ -148,6 +165,7 @@ def test_main_with_no_merged_prs(
         mock_env_vars: Mock the environment variables.
         mock_changelog_file: Mock the changelog file.
         fake_process: The fake_process fixture, used to register commands that will be mocked.
+        mock_github_output_file (fixture): Mock the GitHub output file.
     """
     fake_process.register(  # pyright: ignore[reportUnknownMemberType]
         shlex.split("git log v1.0.0..HEAD --pretty=format:%s"),
@@ -158,8 +176,15 @@ def test_main_with_no_merged_prs(
             shlex.split("git log v1.0.0..HEAD --pretty=format:%s"),
             stdout=b"Initial commit\n",
         )
-        with pytest.raises(SystemExit, match="No PRs have been merged since the last release\\."):
+        with pytest.raises(
+            SystemExit,
+            match=re.escape("Issues found: ['No PRs have been merged since the last release']"),
+        ):
             main()
+
+    with mock_github_output_file.open("r") as f:
+        data = f.read()
+        assert "found-changes=false\n" in data
 
 
 def test_main_with_unreleased_entries(
@@ -167,6 +192,7 @@ def test_main_with_unreleased_entries(
     mock_changelog_file: Path,
     summary_file: Path,
     mock_previous_files: tuple[Path, Path],
+    mock_github_output_file: Path,
 ) -> None:
     """Test the main function when unreleased entries are found.
 
@@ -175,6 +201,7 @@ def test_main_with_unreleased_entries(
         mock_changelog_file: Mock the changelog file.
         summary_file: Mock the environment variables.
         mock_previous_files: Paths to the previous changelog file and previous release notes file.
+        mock_github_output_file (fixture): Mock the GitHub output file.
     """
     main()
 
@@ -195,13 +222,18 @@ def test_main_with_unreleased_entries(
 """
     )
 
+    with mock_github_output_file.open("r") as f:
+        data = f.read()
+        assert "found-changes=true\n" in data
 
-def test_main_with_no_release_level(
+
+def test_main_with_no_release_level(  # pylint: disable=too-many-positional-arguments
     mock_env_vars: None,  # noqa: ARG001
     mock_changelog_file: Path,
     summary_file: Path,
     mock_previous_files: tuple[Path, Path],
     monkeypatch: pytest.MonkeyPatch,
+    mock_github_output_file: Path,  # noqa: ARG001
 ) -> None:
     """Test the main function when unreleased entries are found but no release_level is provided.
 
@@ -211,6 +243,7 @@ def test_main_with_no_release_level(
         summary_file: Mock the environment variables.
         mock_previous_files: Paths to the previous changelog file and previous release notes file.
         monkeypatch: The monkeypatch fixture.
+        mock_github_output_file (fixture): Mock the GitHub output file.
     """
     # Unset the INPUT_RELEASE-LEVEL environment variable
     monkeypatch.delenv("INPUT_RELEASE-LEVEL", raising=False)
