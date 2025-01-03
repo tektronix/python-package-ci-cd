@@ -117,7 +117,7 @@ jobs:
           previous-changelog-filepath: ${{ inputs.previous-changelog-filepath }}
           previous-release-notes-filepath: ${{ inputs.previous-release-notes-filepath }}
     outputs:
-      found-changes: ${{ fromJSON(steps.find-changes-local.outputs.found-changes) || fromJSON(steps.find-changes-public.outputs.found-changes) }}
+      found-changes: ${{ (steps.find-changes-local.outputs.found-changes && fromJSON(steps.find-changes-local.outputs.found-changes)) || (steps.find-changes-public.outputs.found-changes && fromJSON(steps.find-changes-public.outputs.found-changes)) }}
   # Update the package version using the python-semantic-release package (https://github.com/python-semantic-release/python-semantic-release)
   # This job requires a Personal Access Token (Classic) with
   # the public_repo permission. It also needs a private/public
