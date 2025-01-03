@@ -50,6 +50,7 @@ jobs:
           EOF
           cp temp_changelog.md CHANGELOG.md
       - uses: ./actions/find_unreleased_changelog_items
+        id: find-unreleased-changelog-items
         with:
           release-level: patch
           previous-changelog-filepath: python_semantic_release_templates/.testing_previous_changelog_for_template.md
@@ -139,6 +140,14 @@ jobs:
             echo ""
             echo "Actual end:"
             echo "$FILE_END"
+            exit 1
+          fi
+      - name: Verify the action output
+        run: |
+          if [ "${{ steps.find-unreleased-changelog-items.outputs.found-changes }}" != "true" ]; then
+            echo "The action output indicates no changes were found."
+            echo "Expected: true"
+            echo "Actual: ${{ steps.find-unreleased-changelog-items.outputs.found-changes }}"
             exit 1
           fi
   test-update_development_dependencies:

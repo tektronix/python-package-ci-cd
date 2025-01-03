@@ -96,7 +96,7 @@ def test_main(
         data = f.read()
         assert f'version = "{NEW_VERSION}"' in data
 
-        # Check the GitHub output file for the new version variable
+    # Check the GitHub output file for the new version variable
     with mock_github_output_file.open("r") as f:
         data = f.read()
         assert f"new-version={NEW_VERSION}\n" in data

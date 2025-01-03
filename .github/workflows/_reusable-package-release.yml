@@ -102,16 +102,22 @@ jobs:
           exit 1
       - if: ${{ endsWith(github.repository, '/python-package-ci-cd') }}  # Run the local action when this is run in the python-package-ci-cd repository
         uses: ./actions/find_unreleased_changelog_items
+        id: find-changes-local
+        continue-on-error: true
         with:
           release-level: ${{ inputs.release-level }}
           previous-changelog-filepath: ${{ inputs.previous-changelog-filepath }}
           previous-release-notes-filepath: ${{ inputs.previous-release-notes-filepath }}
       - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
         uses: tektronix/python-package-ci-cd/actions/find_unreleased_changelog_items@v1.5.3
+        id: find-changes-public
+        continue-on-error: true
         with:
           release-level: ${{ inputs.release-level }}
           previous-changelog-filepath: ${{ inputs.previous-changelog-filepath }}
           previous-release-notes-filepath: ${{ inputs.previous-release-notes-filepath }}
+    outputs:
+      found-changes: ${{ fromJSON(steps.find-changes-local.outputs.found-changes) || fromJSON(steps.find-changes-public.outputs.found-changes) }}
   # Update the package version using the python-semantic-release package (https://github.com/python-semantic-release/python-semantic-release)
   # This job requires a Personal Access Token (Classic) with
   # the public_repo permission. It also needs a private/public
@@ -120,7 +126,8 @@ jobs:
   bump-version:
     name: Update package version
     needs: [print-inputs]
-    if: github.repository == inputs.repo-name && github.ref == 'refs/heads/main'
+    if: github.repository == inputs.repo-name && github.ref == 'refs/heads/main' &&
+      needs.print-inputs.outputs.found-changes == 'true'
     runs-on: ubuntu-latest
     environment: package-release-gate
     continue-on-error: true
@@ -167,7 +174,7 @@ jobs:
     needs: [print-inputs, bump-version]
     if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
       && github.ref == 'refs/heads/main' && needs.bump-version.outputs.approved ==
-      'true'
+      'true' && needs.print-inputs.outputs.found-changes == 'true'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -187,7 +194,7 @@ jobs:
     needs: [print-inputs, bump-version, pypi-build]
     if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
       && github.ref == 'refs/heads/main' && needs.bump-version.outputs.approved ==
-      'true'
+      'true' && needs.print-inputs.outputs.found-changes == 'true'
     runs-on: ubuntu-latest
     environment: package-testpypi
     permissions:
@@ -209,7 +216,7 @@ jobs:
     needs: [print-inputs, bump-version, upload-testpypi]
     if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
       && github.ref == 'refs/heads/main' && needs.bump-version.outputs.approved ==
-      'true'
+      'true' && needs.print-inputs.outputs.found-changes == 'true'
     runs-on: ubuntu-latest
     environment: package-release
     permissions:
@@ -230,7 +237,7 @@ jobs:
     needs: [print-inputs, bump-version, upload-pypi]
     if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
       && github.ref == 'refs/heads/main' && needs.bump-version.outputs.approved ==
-      'true'
+      'true' && needs.print-inputs.outputs.found-changes == 'true'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -262,7 +269,7 @@ jobs:
       - upload-github
     if: inputs.build-and-publish-python-package && github.repository == inputs.repo-name
       && github.ref == 'refs/heads/main' && needs.bump-version.outputs.approved ==
-      'true'
+      'true' && needs.print-inputs.outputs.found-changes == 'true'
     runs-on: ${{ matrix.os-name }}-latest
     permissions: {}
     strategy:

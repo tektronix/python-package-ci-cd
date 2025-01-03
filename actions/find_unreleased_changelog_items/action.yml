@@ -23,6 +23,10 @@ inputs:
       section of the changelog into for use in the GitHub Release Notes.
     required: false
     default: .previous_release_notes_for_template.md
+outputs:
+  found-changes:
+    description: A string that can be converted to a boolean indicating if any changes
+      were found
 runs:
   using: docker
   image: Dockerfile

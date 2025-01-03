@@ -41,6 +41,12 @@ will be used to fill in the GitHub Release Notes.
 | `previous-changelog-filepath`     | optional  | The full path of the file to copy the contents of the changelog into for use in the `python-semantic-release` templates.                                                                                                            | `'.previous_changelog_for_template.md'`     |
 | `previous-release-notes-filepath` | optional  | The full path of the file to copy the contents of the `## Unreleased` section of the changelog into for use in the GitHub Release Notes.                                                                                            | `'.previous_release_notes_for_template.md'` |
 
+## Outputs
+
+| Output variable | Description                                                                       |
+| --------------- | --------------------------------------------------------------------------------- |
+| `found-changes` | A string that can be converted to a boolean indicating if any changes were found. |
+
 ## Example
 
 ```yaml
