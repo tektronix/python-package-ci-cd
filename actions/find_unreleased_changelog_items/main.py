@@ -146,10 +146,9 @@ def main() -> None:
         issue_messages.append("No PRs have been merged since the last release")
 
     # Copy the files to the correct location
-    if not issue_messages:
-        shutil.copy(CHANGELOG_FILE, template_changelog_filepath)
-        with template_release_notes_filepath.open("w", encoding="utf-8") as template_release_notes:
-            template_release_notes.write(release_notes_content.strip() + "\n")
+    shutil.copy(CHANGELOG_FILE, template_changelog_filepath)
+    with template_release_notes_filepath.open("w", encoding="utf-8") as template_release_notes:
+        template_release_notes.write(release_notes_content.strip() + "\n")
 
     if issue_messages:
         add_contents_to_github_summary(
