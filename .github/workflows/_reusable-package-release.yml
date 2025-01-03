@@ -124,7 +124,7 @@ jobs:
       - name: Add note to summary
         run: |
           echo "## Python Semantic Release Preview (noop)" >> "$GITHUB_STEP_SUMMARY"
-          echo "See the stdout from the 'Python Semantic Release (noop for preview)' step in the 'print-inputs' job for more details." >> "$GITHUB_STEP_SUMMARY"
+          echo "See the stdout from the \`Python Semantic Release (noop for preview)\` step in the \`print-inputs\` job for more details." >> "$GITHUB_STEP_SUMMARY"
     outputs:
       found-changes: ${{ (steps.find-changes-local.outputs.found-changes && fromJSON(steps.find-changes-local.outputs.found-changes)) || (steps.find-changes-public.outputs.found-changes && fromJSON(steps.find-changes-public.outputs.found-changes)) }}
   # Update the package version using the python-semantic-release package (https://github.com/python-semantic-release/python-semantic-release)
