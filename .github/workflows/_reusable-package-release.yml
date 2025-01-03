@@ -116,6 +116,11 @@ jobs:
           release-level: ${{ inputs.release-level }}
           previous-changelog-filepath: ${{ inputs.previous-changelog-filepath }}
           previous-release-notes-filepath: ${{ inputs.previous-release-notes-filepath }}
+      - name: Python Semantic Release (noop for preview)
+        uses: python-semantic-release/python-semantic-release@fd8c509df1f16daf3f71a9a6fac49247017017b2 # v9.9.0
+        with:
+          force: ${{ inputs.release-level }}
+          root_options: --verbose --strict --noop
     outputs:
       found-changes: ${{ (steps.find-changes-local.outputs.found-changes && fromJSON(steps.find-changes-local.outputs.found-changes)) || (steps.find-changes-public.outputs.found-changes && fromJSON(steps.find-changes-public.outputs.found-changes)) }}
   # Update the package version using the python-semantic-release package (https://github.com/python-semantic-release/python-semantic-release)
@@ -155,7 +160,7 @@ jobs:
         id: release
         with:
           force: ${{ inputs.release-level }}
-          root_options: -v --strict
+          root_options: --verbose --strict
           github_token: ${{ secrets.checkout-token }}
           git_committer_email: ${{ inputs.commit-user-email }}
           git_committer_name: ${{ inputs.commit-user-name }}
