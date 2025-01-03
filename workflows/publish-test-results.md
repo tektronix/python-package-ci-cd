@@ -56,7 +56,7 @@ on:
     types: [completed]
 jobs:
   publish-test-results:
-    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-publish-test-results.yml@v1.5.3
+    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-publish-test-results.yml@v1.6.0
     with:
         operating-systems-array: '["ubuntu", "windows", "macos"]'  # required
     permissions:

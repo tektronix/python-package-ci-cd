@@ -22,6 +22,52 @@ Things to be included in the next release go here.
 
 - Bumped dependency versions.
 
+---
+
+## v1.6.0 (2025-01-03)
+
+### Merged Pull Requests
+
+- Update `_reusable-package-release.yml` to perform a `semantic-release --noop` ([#301](https://github.com/tektronix/python-package-ci-cd/pull/301))
+- chore(python-deps): update dependency identify to v2.6.4 in all dependant actions ([#300](https://github.com/tektronix/python-package-ci-cd/pull/300))
+- feat: Update the `package-release` reusable workflow to not fail if there are no unreleased items in the changelog, but to skip the rest of the workflow instead. ([#299](https://github.com/tektronix/python-package-ci-cd/pull/299))
+- feat: Add GitHub annotations for breaking changes to a package's API ([#298](https://github.com/tektronix/python-package-ci-cd/pull/298))
+- chore(pre-commit-deps): pre-commit autoupdate ([#271](https://github.com/tektronix/python-package-ci-cd/pull/271))
+- chore(python-deps): update dependency charset-normalizer to v3.4.1 in all dependant actions ([#296](https://github.com/tektronix/python-package-ci-cd/pull/296))
+- chore(python-deps): update dependency urllib3 to v2.3.0 in all dependant actions ([#295](https://github.com/tektronix/python-package-ci-cd/pull/295))
+- chore(gh-actions-deps): update github/codeql-action action to v3.28.0 in all dependant reusable workflows ([#294](https://github.com/tektronix/python-package-ci-cd/pull/294))
+- chore(python-deps): update dependency pylint to v3.3.3 for dev ([#293](https://github.com/tektronix/python-package-ci-cd/pull/293))
+- chore(python-deps): update dependency click to v8.1.8 in all dependant actions ([#290](https://github.com/tektronix/python-package-ci-cd/pull/290))
+- chore(python-deps): update dependency attrs to v24.3.0 in all dependant actions ([#287](https://github.com/tektronix/python-package-ci-cd/pull/287))
+- chore(gh-actions-deps): update actions/upload-artifact action to v4.5.0 in all dependant reusable workflows ([#289](https://github.com/tektronix/python-package-ci-cd/pull/289))
+- chore(python-deps): update dependency rapidfuzz to v3.11.0 in all dependant actions ([#288](https://github.com/tektronix/python-package-ci-cd/pull/288))
+- chore(python-deps): update pydantic dependencies in all dependant actions ([#285](https://github.com/tektronix/python-package-ci-cd/pull/285))
+- chore(gh-actions-deps): update hynek/build-and-inspect-python-package action to v2.11.0 in all dependant reusable workflows ([#284](https://github.com/tektronix/python-package-ci-cd/pull/284))
+- chore(gh-actions-deps): update codecov/codecov-action action to v5.1.2 in all dependant reusable workflows ([#283](https://github.com/tektronix/python-package-ci-cd/pull/283))
+- chore(python-deps): update dependency pyright to v1.1.391 for dev ([#282](https://github.com/tektronix/python-package-ci-cd/pull/282))
+- chore(gh-actions-deps): update anchore/scan-action action to v6 in all dependant reusable workflows ([#280](https://github.com/tektronix/python-package-ci-cd/pull/280))
+- chore(python-deps): update dependency certifi to v2024.12.14 in all dependant actions ([#281](https://github.com/tektronix/python-package-ci-cd/pull/281))
+- chore(gh-actions-deps): update anchore/sbom-action action to v0.17.9 in all dependant reusable workflows ([#279](https://github.com/tektronix/python-package-ci-cd/pull/279))
+- chore(gh-actions-deps): update github/codeql-action action to v3.27.9 in all dependant reusable workflows ([#278](https://github.com/tektronix/python-package-ci-cd/pull/278))
+- chore(gh-actions-deps): update github/codeql-action action to v3.27.8 in all dependant reusable workflows ([#277](https://github.com/tektronix/python-package-ci-cd/pull/277))
+- chore(gh-actions-deps): update actions/attest-build-provenance action to v2.1.0 in all dependant reusable workflows ([#275](https://github.com/tektronix/python-package-ci-cd/pull/275))
+- chore(gh-actions-deps): update github/codeql-action action to v3.27.7 in all dependant reusable workflows ([#273](https://github.com/tektronix/python-package-ci-cd/pull/273))
+- chore(gh-actions-deps): update actions/attest-build-provenance action to v2.0.1 in all dependant reusable workflows ([#272](https://github.com/tektronix/python-package-ci-cd/pull/272))
+- chore(gh-actions-deps): update actions/attest-build-provenance action to v2 in all dependant reusable workflows ([#270](https://github.com/tektronix/python-package-ci-cd/pull/270))
+- chore(gh-actions-deps): update actions/cache action to v4.2.0 in all dependant reusable workflows ([#269](https://github.com/tektronix/python-package-ci-cd/pull/269))
+- chore(python-deps): update dependency pydantic to v2.10.3 in all dependant actions ([#267](https://github.com/tektronix/python-package-ci-cd/pull/267))
+- chore(python-deps): update dependency poetry to v1.8.5 in all dependant actions ([#268](https://github.com/tektronix/python-package-ci-cd/pull/268))
+- chore(python-deps): update dependency pkginfo to v1.12.0 in all dependant actions ([#266](https://github.com/tektronix/python-package-ci-cd/pull/266))
+- chore(gh-actions-deps): update codecov/codecov-action action to v5.1.1 in all dependant reusable workflows ([#264](https://github.com/tektronix/python-package-ci-cd/pull/264))
+- chore(gh-actions-deps): update github/codeql-action action to v3.27.6 in all dependant reusable workflows ([#263](https://github.com/tektronix/python-package-ci-cd/pull/263))
+- chore(python-deps): update dependency pkginfo to v1.11.3 in all dependant actions ([#262](https://github.com/tektronix/python-package-ci-cd/pull/262))
+- chore(python-deps): update dependency pylint to v3.3.2 for dev ([#261](https://github.com/tektronix/python-package-ci-cd/pull/261))
+- chore(python-deps): update dependency pyright to v1.1.390 for dev ([#260](https://github.com/tektronix/python-package-ci-cd/pull/260))
+
+### Changed
+
+- Bumped dependency versions.
+
 ### Added
 
 - Added GitHub annotations to the `check-api-for-breaking-changes` workflow to enable better visibility into any breaking changes detected. (see [#223](https://github.com/tektronix/python-package-ci-cd/issues/223))
