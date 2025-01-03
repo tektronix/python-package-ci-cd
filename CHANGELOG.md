@@ -26,6 +26,7 @@ Things to be included in the next release go here.
 
 - Added GitHub annotations to the `check-api-for-breaking-changes` workflow to enable better visibility into any breaking changes detected. (see [#223](https://github.com/tektronix/python-package-ci-cd/issues/223))
 - Updated the `package-release` workflow to not fail if there are no unreleased items, but instead to skip the release process. (see [#107](https://github.com/tektronix/python-package-ci-cd/issues/107))
+- Updated the `package-release` workflow to perform a `semantic-release --noop` operation to check and see what would happen if the release process continued. (see [#91](https://github.com/tektronix/python-package-ci-cd/issues/91))
 
 ---
 
