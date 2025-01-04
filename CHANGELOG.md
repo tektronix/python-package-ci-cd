@@ -22,6 +22,10 @@ Things to be included in the next release go here.
 
 - Bumped dependency versions.
 
+### Fixed
+
+- Fixed the `package-release` workflow to no longer have issues with the `semantic-release --noop` command.
+
 ---
 
 ## v1.6.0 (2025-01-03)
