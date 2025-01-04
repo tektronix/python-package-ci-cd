@@ -18,6 +18,19 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Changed
+
+- Bumped dependency versions.
+
+---
+
+## v1.6.1 (2025-01-04)
+
+### Merged Pull Requests
+
+- docs: Removed a section from the changelog that shouldn't be there for this release ([#303](https://github.com/tektronix/python-package-ci-cd/pull/303))
+- fix: Update the action that checks for unreleased changelog items to always create the template files necessary for semantic-release ([#302](https://github.com/tektronix/python-package-ci-cd/pull/302))
+
 ### Fixed
 
 - Fixed the `package-release` workflow to no longer have issues with the `semantic-release --noop` command.
