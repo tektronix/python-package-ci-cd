@@ -18,10 +18,6 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
-### Changed
-
-- Bumped dependency versions.
-
 ### Fixed
 
 - Fixed the `package-release` workflow to no longer have issues with the `semantic-release --noop` command.
