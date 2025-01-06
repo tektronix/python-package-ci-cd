@@ -29,7 +29,7 @@ jobs:
             exit 1
           fi
   test-find_unreleased_changelog_items:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04  # TODO: Change to "ubuntu-latest" once https://github.com/austenstone/job-summary/issues/46 is resolved
     env:
       UNIT_TESTING_FIND_UNRELEASED_CHANGELOG_ITEMS_ACTION: true
     steps:
