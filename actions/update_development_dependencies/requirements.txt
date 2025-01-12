@@ -2,7 +2,7 @@ annotated-types==0.7.0
 attrs==24.3.0
 beautifulsoup4==4.12.3
 build==1.2.2.post1
-cachecontrol[filecache]==0.14.1
+cachecontrol[filecache]==0.14.2
 certifi==2024.12.14
 cffi==1.17.1 ; (sys_platform == "darwin" or sys_platform == "linux") and (sys_platform == "darwin" or platform_python_implementation != "PyPy")
 cfgv==3.4.0
