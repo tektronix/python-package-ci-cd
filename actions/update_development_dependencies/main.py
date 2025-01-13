@@ -52,7 +52,7 @@ def convert_dict_input(input_str: str) -> dict[str, list[str]]:
             return result_dict  # pyright: ignore[reportUnknownVariableType]
         raise ValueError  # noqa: TRY301
     except (SyntaxError, ValueError) as e:
-        msg = f'Input "{input_str}" does not match the required ' f"type of `dict[str, list[str]]`."
+        msg = f'Input "{input_str}" does not match the required type of `dict[str, list[str]]`.'
         raise ValueError(msg) from e
 
 
