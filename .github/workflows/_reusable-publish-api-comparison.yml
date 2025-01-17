@@ -37,7 +37,7 @@ jobs:
           sha: ${{ github.event.workflow_run.head_sha }}
           github-repository: ${{ github.repository }}
       - name: Publish API Breaking Changes Check Results
-        uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31  # v2.9.0
+        uses: marocchino/sticky-pull-request-comment@52423e01640425a022ef5fd42c6fb5f633a02728  # v2.9.1
         if: ${{ env.BREAKING_CHANGES == 'true' }}
         with:
           header: breaking-api-changes
@@ -46,7 +46,7 @@ jobs:
           path: artifacts/breaking_changes.md
       - name: Add workflow link to comment
         if: ${{ env.BREAKING_CHANGES == 'true' }}
-        uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31  # v2.9.0
+        uses: marocchino/sticky-pull-request-comment@52423e01640425a022ef5fd42c6fb5f633a02728  # v2.9.1
         with:
           header: breaking-api-changes
           number: ${{ steps.fetch-pr-number.outputs.number || steps.fetch-pr-number-local.outputs.number }}
@@ -55,7 +55,7 @@ jobs:
             <p><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}">Link to workflow run</a></p>
       - name: Delete comment if no breaking changes are found
         if: ${{ env.BREAKING_CHANGES == 'false' }}
-        uses: marocchino/sticky-pull-request-comment@331f8f5b4215f0445d3c07b4967662a32a2d3e31  # v2.9.0
+        uses: marocchino/sticky-pull-request-comment@52423e01640425a022ef5fd42c6fb5f633a02728  # v2.9.1
         with:
           header: breaking-api-changes
           number: ${{ steps.fetch-pr-number.outputs.number || steps.fetch-pr-number-local.outputs.number }}
