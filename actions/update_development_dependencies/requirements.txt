@@ -25,7 +25,7 @@ jeepney==0.8.0 ; sys_platform == "linux"
 keyring==24.3.1
 mailbits==0.2.2
 maison==2.0.0
-more-itertools==10.5.0
+more-itertools==10.6.0
 msgpack==1.1.0
 nodeenv==1.9.1
 packaging==24.2
