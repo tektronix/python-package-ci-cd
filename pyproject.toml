@@ -38,7 +38,7 @@ python = "~3.12"  # This needs to stay in sync with all CI workflows
 poetry-core = "1.9.1"
 pypi-simple = "1.6.1"
 tomli = "2.2.1"
-tomli-w = "1.1.0"
+tomli-w = "1.2.0"
 
 [tool.poetry.group.actions-find_unreleased_changelog_items.dependencies]
 
