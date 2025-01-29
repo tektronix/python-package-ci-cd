@@ -49,8 +49,8 @@ def main() -> None:
     try:
         if RUNNING_IN_VIRTUALENV:
             raise IndexError  # noqa: TRY301
-        if sys.version_info[0:2] != (3, 12):
-            msg = "Unable to set up the environment. Please use Python 3.12."
+        if sys.version_info[0:2] != (3, 13):
+            msg = "Unable to set up the environment. Please use Python 3.13."
             raise SystemExit(msg)
         # Windows systems require the 64 bit python
         if platform.system().lower() == "windows" and sys.maxsize <= 2**32:
