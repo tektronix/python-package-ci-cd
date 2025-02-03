@@ -40,12 +40,12 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: f22e20d4f97552cc31dcbf2c2550f44197b59be0  # frozen: 39.137.1
+    rev: 7d5338af7eeca3073e2c20e1853445cae3db836e  # frozen: 39.158.1
     hooks:
       - id: renovate-config-validator
         language_version: 20.18.0  # TODO: remove this line once https://github.com/renovatebot/pre-commit-hooks/issues/2460 is resolved
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 62833a79b57fcd1bc372b136911a0edca60c3dcb  # frozen: 0.31.0
+    rev: a20fe80ebdd4aec6791598c9ff559985580f91ea  # frozen: 0.31.1
     hooks:
       - id: check-dependabot
       - id: check-github-actions
@@ -80,7 +80,7 @@ repos:
       - id: hadolint
         args: [--ignore=DL3008, --ignore=DL3018]
   - repo: https://github.com/hukkin/mdformat
-    rev: e20b1ac5acb8aba0b49d3a9109c6e6b58684ee83  # frozen: 0.7.21
+    rev: ff29be1a1ba8029d9375882aa2c812b62112a593  # frozen: 0.7.22
     hooks:
       - id: mdformat
         args: [--number, --end-of-line, keep]
@@ -137,7 +137,7 @@ repos:
         always_run: true
         args: [audit, --json, --ignore-code=CVE-2019-8341]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 36b36942c52d8ce8ae6314461f2d86b1fda158e3  # frozen: v0.9.3
+    rev: 871f3bcae4fe473cd7109c3a068db975dc035e3b  # frozen: v0.9.4
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
