@@ -1,6 +1,6 @@
 annotated-types==0.7.0
 attrs==25.1.0
-beautifulsoup4==4.13.1
+beautifulsoup4==4.13.3
 build==1.2.2.post1
 cachecontrol[filecache]==0.14.2
 certifi==2024.12.14
