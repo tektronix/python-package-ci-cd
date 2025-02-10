@@ -32,7 +32,7 @@ package-mode = false
 version = "1.6.2"
 
 [tool.poetry.dependencies]
-python = "~3.12"  # This needs to stay in sync with all CI workflows
+python = "~3.13"  # This needs to stay in sync with all CI workflows
 
 [tool.poetry.group.actions-create_unique_testpypi_version.dependencies]
 poetry-core = "1.9.1"
@@ -265,12 +265,12 @@ legacy_tox_ini = """
 [tox]
 requires = tox>4
 no_package = True
-envlist = py312,tests,docs,doctests
+envlist = py313,tests,docs,doctests
 skip_missing_interpreters = False
 
 [gh-actions]
 python =
-    3.12: py312
+    3.13: py313
 
 [testenv]
 install_command = python -I -m pip install --upgrade --upgrade-strategy=eager {opts} {packages}
