@@ -4,7 +4,8 @@
     "extends": [
         "config:best-practices",
         "group:githubArtifactActions",
-        ":separatePatchReleases"
+        ":separatePatchReleases",
+        ":preserveSemverRanges"
     ],
     "ignoreDeps": [
         "tektronix/python-package-ci-cd"
