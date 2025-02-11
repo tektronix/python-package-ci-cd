@@ -58,6 +58,6 @@ tomlkit==0.13.2
 trove-classifiers==2025.1.15.22
 typing-extensions==4.12.2
 urllib3==2.3.0
-virtualenv==20.29.1
+virtualenv==20.29.2
 xattr==1.1.4 ; sys_platform == "darwin"
 yamlfix==1.17.0
