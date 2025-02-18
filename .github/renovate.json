@@ -137,7 +137,7 @@
             ]
         },
         {
-            "additionalBranchPrefix": "",
+            "additionalBranchPrefix": "{{#if (equals depType 'final')}}automerge/{{else}}{{/if}}",
             "commitMessageSuffix": "{{#unless (equals depType 'final')}} to v{{newMajor}}.{{newMinor}}{{/unless}} in all dependant actions",
             "description": "Group together all Python (official) version updates",
             "groupName": "python version",
