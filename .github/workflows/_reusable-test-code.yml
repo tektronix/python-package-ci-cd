@@ -70,7 +70,7 @@ jobs:
             }}
       - name: Run tox
         run: tox -v
-      - uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
         if: ${{ !cancelled() }}
         with:
           name: artifact_${{ matrix.os-name }}_${{ matrix.python-version }}_tests_and_linting
@@ -103,7 +103,7 @@ jobs:
       - name: Run tox
         id: run-tox
         run: tox -ve tests
-      - uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
         if: ${{ !cancelled() }}
         with:
           name: artifact_${{ matrix.os-name }}_tests
