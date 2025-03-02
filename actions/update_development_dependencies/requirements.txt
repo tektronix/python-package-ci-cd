@@ -49,7 +49,7 @@ requests==2.32.3
 requests-toolbelt==1.0.0
 ruyaml==0.91.0
 secretstorage==3.3.3 ; sys_platform == "linux"
-setuptools==75.8.0
+setuptools==75.8.1
 shellingham==1.5.4
 soupsieve==2.6
 toml==0.10.2
