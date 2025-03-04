@@ -106,12 +106,13 @@ commands_pre =
 
 ## Inputs
 
-| Input variable            | Necessity | Description                                                                                                                                                                           | Default                            |
-| ------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
-| `repo-name`               | required  | The full name of the repository to use to gate Codecov uploads, in the format `owner/repo`.                                                                                           |                                    |
-| `python-versions-array`   | required  | A valid JSON array of Python versions to test against. A valid option is also the string 'pyproject.toml', indicating to use the defined Python version from the pyproject.toml file. |                                    |
-| `operating-systems-array` | optional  | A valid JSON array of operating system names to run tests on.                                                                                                                         | `'["ubuntu", "windows", "macos"]'` |
-| `upload-to-codecov`       | optional  | A boolean indicating if coverage results should be uploaded to Codecov.                                                                                                               | `false`                            |
+| Input variable            | Necessity | Description                                                                                                                                                                                                                                    | Default                            |
+| ------------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| `repo-name`               | required  | The full name of the repository to use to gate Codecov uploads, in the format `owner/repo`.                                                                                                                                                    |                                    |
+| `python-versions-array`   | required  | A valid JSON array of Python versions to test against. A valid option is also the string 'pyproject.toml', indicating to use the defined Python version from the pyproject.toml file.                                                          |                                    |
+| `operating-systems-array` | optional  | A valid JSON array of operating system names to run tests on.                                                                                                                                                                                  | `'["ubuntu", "windows", "macos"]'` |
+| `upload-to-codecov`       | optional  | A boolean indicating if coverage results should be uploaded to Codecov.                                                                                                                                                                        | `false`                            |
+| `enable-retry-os-array`   | optional  | A valid JSON array of operating system names where retries should be allowed. This only applies to the 'test-general' job matrix and if an OS is provided that OS will receive 3 total attempts to successfully execute the 'tox run' command. | `'[]'`                             |
 
 ## Secrets
 
@@ -140,6 +141,7 @@ jobs:
       operating-systems-array: '["ubuntu", "windows", "macos"]'  # optional
       python-versions-array: '["3.9", "3.10", "3.11", "3.12"]'  # required
       upload-to-codecov: true  # optional
+      enable-retry-os-array: '["macos"]'  # optional
     secrets:
       codecov-token: ${{ secrets.CODECOV_TOKEN }}  # optional
 ```

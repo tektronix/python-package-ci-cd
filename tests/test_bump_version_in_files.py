@@ -30,6 +30,9 @@ def fixture_temporary_directory(tmp_path: Path) -> Path:
 
 def test_get_file_paths(temporary_directory: Path) -> None:
     """Test the get_file_paths function."""
+    pytest.fail(
+        "failing so that the workflows can be verified"
+    )  # Testing failure retries  # TODO: revert
     path_list = get_file_paths([temporary_directory.as_posix()])
     assert len(path_list) == 3
     assert all(file_path.is_file() for file_path in path_list)
