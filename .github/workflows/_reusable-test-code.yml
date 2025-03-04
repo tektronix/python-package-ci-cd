@@ -25,6 +25,14 @@ on:
         required: false
         default: false
         type: boolean
+      enable-retry-os-array:
+        description: A valid JSON array of operating system names where retries should
+          be allowed. This only applies to the 'test-general' job matrix and if an
+          OS is provided that OS will receive 3 total attempts to successfully execute
+          the 'tox run' command.
+        required: false
+        default: '[]'
+        type: string
     secrets:
       codecov-token:
         description: The token to use to upload coverage results to Codecov. Only
@@ -69,7 +77,13 @@ jobs:
           key: pre-commit|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml')
             }}
       - name: Run tox
-        run: tox -v
+        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08  # v3.0.2
+        with:
+          timeout_minutes: 60
+          max_attempts: ${{ contains(fromJSON(inputs.enable-retry-os-array), matrix.os-name) && 3 || 1 }}
+          retry_wait_seconds: 30
+          warning_on_retry: false
+          command: tox -v
       - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
         if: ${{ !cancelled() }}
         with:
