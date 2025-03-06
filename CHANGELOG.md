@@ -18,6 +18,10 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Added
+
+- Added a new feature to the `_reusable-test-code.yml` workflow that allows certain OS's to use retries to work around false failures if desired. See [#407](https://github.com/tektronix/python-package-ci-cd/pull/407).
+
 ### Changed
 
 - Bumped dependency versions.
