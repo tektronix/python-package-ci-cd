@@ -18,6 +18,28 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Changed
+
+- Bumped dependency versions.
+
+---
+
+## v1.7.0 (2025-03-06)
+
+### Merged Pull Requests
+
+- docs: Update changelog and documentation for new feature ([#414](https://github.com/tektronix/python-package-ci-cd/pull/414))
+- chore(python-deps): update dependency pyright to v1.1.396 for dev ([#413](https://github.com/tektronix/python-package-ci-cd/pull/413))
+- chore(python-deps): update dependency trove-classifiers to v2025.3.3.18 in all dependant actions ([#412](https://github.com/tektronix/python-package-ci-cd/pull/412))
+- chore(python-deps): update dependency rapidfuzz to v3.12.2 in all dependant actions ([#411](https://github.com/tektronix/python-package-ci-cd/pull/411))
+- chore(gh-actions-deps): update actions/attest-build-provenance action to v2.2.3 in all dependant reusable workflows ([#410](https://github.com/tektronix/python-package-ci-cd/pull/410))
+- chore(python-deps): update dependency cryptography to v44.0.2 in all dependant actions ([#409](https://github.com/tektronix/python-package-ci-cd/pull/409))
+- chore(python-deps): update dependency mkdocs-ezglossary-plugin to v2 for docs ([#379](https://github.com/tektronix/python-package-ci-cd/pull/379))
+- chore(python-deps): update dependency jeepney to v0.9.0 in all dependant actions ([#408](https://github.com/tektronix/python-package-ci-cd/pull/408))
+- feat: Add the ability to allow retries to work around flaky OS's ([#407](https://github.com/tektronix/python-package-ci-cd/pull/407))
+- chore(gh-actions-deps): update actions/attest-build-provenance action to v2.2.2 in all dependant reusable workflows ([#405](https://github.com/tektronix/python-package-ci-cd/pull/405))
+- chore(gh-actions-deps): update actions/cache action to v4.2.2 in all dependant reusable workflows ([#406](https://github.com/tektronix/python-package-ci-cd/pull/406))
+
 ### Added
 
 - Added a new feature to the `_reusable-test-code.yml` workflow that allows certain OS's to use retries to work around false failures if desired. See [#407](https://github.com/tektronix/python-package-ci-cd/pull/407).

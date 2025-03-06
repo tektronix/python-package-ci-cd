@@ -89,7 +89,7 @@ concurrency:
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 jobs:
   test-docs:
-    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-test-docs.yml@v1.6.3
+    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-test-docs.yml@v1.7.0
     with:
       node-version: 20  # required
       python-version: '3.11'  # required
