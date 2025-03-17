@@ -6,7 +6,11 @@ COPY main.py /main.py
 
 # Install dependencies
 RUN apk update && \
-    apk add --no-cache git && \
+    apk add --no-cache \
+        cargo \
+        git \
+        rust \
+    && \
     rm -rf /var/cache/apk/* && \
     python -m pip install --no-cache-dir --requirement /requirements.txt
 

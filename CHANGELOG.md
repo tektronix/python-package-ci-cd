@@ -18,6 +18,10 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Fixed
+
+- Added rust and cargo to the Docker image used for the update dependencies action.
+
 ### Changed
 
 - Bumped dependency versions.
