@@ -25,6 +25,7 @@ Things to be included in the next release go here.
 ### Changed
 
 - Bumped dependency versions.
+- Increased the retry wait time during the `_reusable-test-code.yml` reusable workflow from 30 seconds to two minutes
 
 ---
 
