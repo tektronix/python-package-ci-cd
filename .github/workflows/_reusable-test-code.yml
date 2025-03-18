@@ -81,7 +81,7 @@ jobs:
         with:
           timeout_minutes: 60
           max_attempts: ${{ contains(fromJSON(inputs.enable-retry-os-array), matrix.os-name) && 3 || 1 }}
-          retry_wait_seconds: 30
+          retry_wait_seconds: 120  # 2 minutes
           warning_on_retry: false
           command: tox -v
       - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
