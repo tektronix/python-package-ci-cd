@@ -29,7 +29,7 @@ wrap-summaries = 0
 [tool.poetry]
 license = "Apache-2.0"
 package-mode = false
-version = "1.7.0"
+version = "1.7.1"
 
 [tool.poetry.dependencies]
 python = "~3.13"  # This needs to stay in sync with all CI workflows

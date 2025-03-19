@@ -18,6 +18,30 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Changed
+
+- Bumped dependency versions.
+
+---
+
+## v1.7.1 (2025-03-19)
+
+### Merged Pull Requests
+
+- chore(python-deps): update dependency filelock to v3.18.0 in all dependant actions ([#429](https://github.com/tektronix/python-package-ci-cd/pull/429))
+- refactor: Increase retry wait time during the `test-code` reusable workflow from 30 seconds to two minutes ([#428](https://github.com/tektronix/python-package-ci-cd/pull/428))
+- chore(gh-actions-deps): update actions/setup-node action to v4.3.0 in all dependant reusable workflows ([#427](https://github.com/tektronix/python-package-ci-cd/pull/427))
+- fix: Add missing packages to the dependency updater action ([#425](https://github.com/tektronix/python-package-ci-cd/pull/425))
+- chore(pre-commit-deps): pre-commit autoupdate ([#416](https://github.com/tektronix/python-package-ci-cd/pull/416))
+- chore(python-deps): update dependency setuptools to v76 in all dependant actions ([#424](https://github.com/tektronix/python-package-ci-cd/pull/424))
+- chore(python-deps): update dependency trove-classifiers to v2025.3.13.13 in all dependant actions ([#423](https://github.com/tektronix/python-package-ci-cd/pull/423))
+- chore(python-deps): update dependency attrs to v25.3.0 in all dependant actions ([#422](https://github.com/tektronix/python-package-ci-cd/pull/422))
+- chore(python-deps): update dependency identify to v2.6.9 in all dependant actions ([#421](https://github.com/tektronix/python-package-ci-cd/pull/421))
+- chore(python-deps): update dependency setuptools to v75.9.1 in all dependant actions ([#420](https://github.com/tektronix/python-package-ci-cd/pull/420))
+- chore(python-deps): update dependency virtualenv to v20.29.3 in all dependant actions ([#419](https://github.com/tektronix/python-package-ci-cd/pull/419))
+- chore(python-deps): update dependency pylint to v3.3.5 for dev ([#417](https://github.com/tektronix/python-package-ci-cd/pull/417))
+- chore(gh-actions-deps): update github/codeql-action action to v3.28.11 in all dependant reusable workflows ([#418](https://github.com/tektronix/python-package-ci-cd/pull/418))
+
 ### Fixed
 
 - Added rust and cargo to the Docker image used for the update dependencies action.
