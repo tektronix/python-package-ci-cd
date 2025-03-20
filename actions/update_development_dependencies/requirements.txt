@@ -31,7 +31,7 @@ nodeenv==1.9.1
 packaging==24.2
 pexpect==4.9.0
 pkginfo==1.12.1.2
-platformdirs==4.3.6
+platformdirs==4.3.7
 poetry==1.8.5
 poetry-core==1.9.1
 poetry-plugin-export==1.8.0
