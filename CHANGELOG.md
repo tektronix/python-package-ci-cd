@@ -24,6 +24,27 @@ Things to be included in the next release go here.
 
 ---
 
+## v1.7.2 (2025-03-21)
+
+### Merged Pull Requests
+
+- chore(python-deps): update dependency setuptools to v77 in all dependant actions ([#439](https://github.com/tektronix/python-package-ci-cd/pull/439))
+- chore(python-deps): update dependency pre-commit to v4.2.0 for actions/update_development_dependencies and dev ([#438](https://github.com/tektronix/python-package-ci-cd/pull/438))
+- chore(python-deps): update dependency pyright to v1.1.397 for dev ([#437](https://github.com/tektronix/python-package-ci-cd/pull/437))
+- chore(python-deps): update dependency pylint to v3.3.6 for dev ([#436](https://github.com/tektronix/python-package-ci-cd/pull/436))
+- chore(python-deps): update dependency platformdirs to v4.3.7 in all dependant actions ([#435](https://github.com/tektronix/python-package-ci-cd/pull/435))
+- chore(python-deps): update dependency trove-classifiers to v2025.3.19.19 in all dependant actions ([#434](https://github.com/tektronix/python-package-ci-cd/pull/434))
+- chore(gh-actions-deps): update actions/download-artifact action to v4.2.1 in all dependant reusable workflows ([#433](https://github.com/tektronix/python-package-ci-cd/pull/433))
+- chore(gh-actions-deps): update github/codeql-action action to v3.28.12 in all dependant reusable workflows ([#432](https://github.com/tektronix/python-package-ci-cd/pull/432))
+- chore(gh-actions-deps): update actions/upload-artifact action to v4.6.2 in all dependant reusable workflows ([#431](https://github.com/tektronix/python-package-ci-cd/pull/431))
+- chore(gh-actions-deps): update actions/cache action to v4.2.3 in all dependant reusable workflows ([#430](https://github.com/tektronix/python-package-ci-cd/pull/430))
+
+### Changed
+
+- Bumped dependency versions.
+
+---
+
 ## v1.7.1 (2025-03-19)
 
 ### Merged Pull Requests

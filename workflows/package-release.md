@@ -135,7 +135,7 @@ concurrency:  # This concurrency is not required, but can be added if extra cont
   group: pypi
 jobs:
   package-release:
-    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-package-release.yml@v1.7.1
+    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-package-release.yml@v1.7.2
     with:
       package-name: my-package  # required
       repo-name: owner/my-package  # required
