@@ -40,7 +40,7 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 9c664b83c00e16dfa8e55d7d06ed2cb55c187ff8  # frozen: 39.205.1
+    rev: 56123a549b771d782af577235494fcce4ef14a6a  # frozen: 39.213.0
     hooks:
       - id: renovate-config-validator
         language_version: 20.18.0  # TODO: remove this line once https://github.com/renovatebot/pre-commit-hooks/issues/2460 is resolved
@@ -137,7 +137,7 @@ repos:
         always_run: true
         args: [audit, --json, --ignore-code=CVE-2019-8341]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 99abe27a5a16f301d9e0a3828181399dfbf54ebd  # frozen: v0.11.0
+    rev: 25a8c8da6c24a3b9a1a536e2674683dd0eead5d6  # frozen: v0.11.2
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
