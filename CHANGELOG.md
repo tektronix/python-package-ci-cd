@@ -24,6 +24,23 @@ Things to be included in the next release go here.
 
 ---
 
+## v1.7.3 (2025-04-04)
+
+### Merged Pull Requests
+
+- chore(python-deps): update dependency setuptools to v78 in all dependant actions ([#443](https://github.com/tektronix/python-package-ci-cd/pull/443))
+- chore(pre-commit-deps): pre-commit autoupdate ([#440](https://github.com/tektronix/python-package-ci-cd/pull/440))
+- chore(python-deps): update dependency typing-extensions to v4.13.0 in all dependant actions ([#445](https://github.com/tektronix/python-package-ci-cd/pull/445))
+- chore(gh-actions-deps): update actions/setup-python action to v5.5.0 in all dependant reusable workflows ([#444](https://github.com/tektronix/python-package-ci-cd/pull/444))
+- chore(python-deps): update dependency pyright to v1.1.398 for dev ([#442](https://github.com/tektronix/python-package-ci-cd/pull/442))
+- chore(gh-actions-deps): update github/codeql-action action to v3.28.13 in all dependant reusable workflows ([#441](https://github.com/tektronix/python-package-ci-cd/pull/441))
+
+### Changed
+
+- Bumped dependency versions.
+
+---
+
 ## v1.7.2 (2025-03-21)
 
 ### Merged Pull Requests
