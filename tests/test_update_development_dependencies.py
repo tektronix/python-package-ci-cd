@@ -4,6 +4,7 @@ import sys
 
 from collections.abc import Generator
 from pathlib import Path
+from typing import Any
 from unittest.mock import call, MagicMock, patch
 
 import pytest
@@ -191,6 +192,28 @@ def test_update_poetry_dependencies(
         mock_subproc_call.assert_has_calls(expected_calls, any_order=True)
 
 
+def _create_mock_pre_commit_autoupdate_call(repo_url: str) -> Any:  # noqa: ANN401
+    """Create a mock call for pre-commit autoupdate.
+
+    Args:
+        repo_url: The URL of the pre-commit repository.
+
+    Returns:
+        A call object representing the pre-commit autoupdate command.
+    """
+    return call(
+        [
+            PYTHON_EXECUTABLE,
+            "-m",
+            "pre_commit",
+            "autoupdate",
+            "--freeze",
+            "--repo",
+            repo_url,
+        ]
+    )
+
+
 def test_update_pre_commit_dependencies(
     repo_root_dir: Path,
     monkeypatch: pytest.MonkeyPatch,  # noqa: ARG001
@@ -213,61 +236,15 @@ def test_update_pre_commit_dependencies(
                     f"{repo_root_dir.resolve().as_posix()}",
                 ]
             ),
-            call(
-                [
-                    PYTHON_EXECUTABLE,
-                    "-m",
-                    "pre_commit",
-                    "autoupdate",
-                    "--freeze",
-                    "--repo",
-                    "https://github.com/pre-commit/pre-commit-hooks",
-                ]
+            _create_mock_pre_commit_autoupdate_call(
+                "https://github.com/pre-commit/pre-commit-hooks"
             ),
-            call(
-                [
-                    PYTHON_EXECUTABLE,
-                    "-m",
-                    "pre_commit",
-                    "autoupdate",
-                    "--freeze",
-                    "--repo",
-                    "https://github.com/Mateusz-Grzelinski/actionlint-py",
-                ]
+            _create_mock_pre_commit_autoupdate_call(
+                "https://github.com/Mateusz-Grzelinski/actionlint-py"
             ),
-            call(
-                [
-                    PYTHON_EXECUTABLE,
-                    "-m",
-                    "pre_commit",
-                    "autoupdate",
-                    "--freeze",
-                    "--repo",
-                    "https://github.com/lyz-code/yamlfix",
-                ]
-            ),
-            call(
-                [
-                    PYTHON_EXECUTABLE,
-                    "-m",
-                    "pre_commit",
-                    "autoupdate",
-                    "--freeze",
-                    "--repo",
-                    "https://github.com/AleksaC/hadolint-py",
-                ]
-            ),
-            call(
-                [
-                    PYTHON_EXECUTABLE,
-                    "-m",
-                    "pre_commit",
-                    "autoupdate",
-                    "--freeze",
-                    "--repo",
-                    "https://github.com/astral-sh/ruff-pre-commit",
-                ]
-            ),
+            _create_mock_pre_commit_autoupdate_call("https://github.com/lyz-code/yamlfix"),
+            _create_mock_pre_commit_autoupdate_call("https://github.com/AleksaC/hadolint-py"),
+            _create_mock_pre_commit_autoupdate_call("https://github.com/astral-sh/ruff-pre-commit"),
         ]
         assert mock_subproc_call.call_count == 6
         mock_subproc_call.assert_has_calls(expected_calls, any_order=True)

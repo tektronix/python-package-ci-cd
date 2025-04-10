@@ -64,19 +64,6 @@ def fixture_mock_pyproject_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch)
     return pyproject_file
 
 
-@pytest.fixture(name="mock_github_output_file")
-def fixture_mock_github_output_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
-    """Mock the GitHub output file.
-
-    Args:
-        tmp_path (fixture): The temporary path fixture.
-        monkeypatch (fixture): The monkeypatch fixture.
-    """
-    github_output_file = tmp_path / "github_output"
-    monkeypatch.setenv("GITHUB_OUTPUT", str(github_output_file))
-    return github_output_file
-
-
 def test_main(
     mock_testpypi_server: MagicMock,  # noqa: ARG001
     mock_pyproject_file: Path,
