@@ -28,7 +28,7 @@ maison==2.0.0
 more-itertools==10.6.0
 msgpack==1.1.0
 nodeenv==1.9.1
-packaging==24.2
+packaging==25.0
 pexpect==4.9.0
 pkginfo==1.12.1.2
 platformdirs==4.3.7
