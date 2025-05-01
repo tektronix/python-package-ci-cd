@@ -190,10 +190,10 @@ jobs:
           github-repository: ${{ github.repository }}
       - name: Verify the PR number from a fork
         run: |
-          if [ "${{ steps.fetch-pr-number-found-fork.outputs.number }}" != "31" ]; then
+          if [ "${{ steps.fetch-pr-number-found-fork.outputs.number }}" != "34" ]; then
             echo "The fetched PR number doesn't match the expected PR number."
-            echo "Expected: 31"
-            echo "Actual: ${{ steps.fetch-pr-number-found.outputs.number }}"
+            echo "Expected: 34"
+            echo "Actual: ${{ steps.fetch-pr-number-found-fork.outputs.number }}"
             exit 1
           fi
       - name: Fetch unknown PR number
