@@ -193,7 +193,7 @@ jobs:
           if [ "${{ steps.fetch-pr-number-found-fork.outputs.number }}" != "31" ]; then
             echo "The fetched PR number doesn't match the expected PR number."
             echo "Expected: 31"
-            echo "Actual: ${{ steps.fetch-pr-number-found.outputs.number }}"
+            echo "Actual: ${{ steps.fetch-pr-number-found-fork.outputs.number }}"
             exit 1
           fi
       - name: Fetch unknown PR number

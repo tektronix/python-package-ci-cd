@@ -22,6 +22,10 @@ Things to be included in the next release go here.
 
 - Bumped dependency versions.
 
+### Fixed
+
+- Fixed the `fetch_pr_number` action to work properly.
+
 ---
 
 ## v1.7.3 (2025-04-04)
