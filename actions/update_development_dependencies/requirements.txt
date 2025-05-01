@@ -3,7 +3,7 @@ attrs==25.3.0
 beautifulsoup4==4.13.4
 build==1.2.2.post1
 cachecontrol[filecache]==0.14.2
-certifi==2025.1.31
+certifi==2025.4.26
 cffi==1.17.1 ; (sys_platform == "darwin" or sys_platform == "linux") and (sys_platform == "darwin" or platform_python_implementation != "PyPy")
 cfgv==3.4.0
 charset-normalizer==3.4.1
