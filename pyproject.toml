@@ -160,6 +160,10 @@ score = true
 
 [tool.pyright]
 ignore = [
+  "**/*env*/**",
+  "**/*site*/**",
+  "**/.results_*/**",
+  "**/.tox/**",
   "temp_*.py"
 ]
 pythonPlatform = "All"
