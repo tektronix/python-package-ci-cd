@@ -7,7 +7,7 @@ fail if it cannot find any merged PRs since the last release, as this also means
 package is not ready for a new release.
 
 This action will populate two files in the
-[`python-semantic-release` templates directory](https://python-semantic-release.readthedocs.io/en/latest/configuration.html#config-changelog-template-dir).
+[`python-semantic-release` templates directory](https://python-semantic-release.readthedocs.io/en/stable/configuration/configuration.html#template-dir).
 One of those files will contain the contents of the `CHANGELOG.md` file in the
 repo prior to creating the new release. The other file will contain the
 contents of the `## Unreleased` section of the `CHANGELOG.md` file that
