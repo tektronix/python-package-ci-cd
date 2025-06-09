@@ -87,7 +87,6 @@ repos:
         args: [--number, --end-of-line, keep]
         additional_dependencies:
           - setuptools  # This is required since Python no longer installs setuptools by default in virtual environments
-          - mdformat-admon
           - mdformat-beautysh
 #          - mdformat-config
           - mdformat-footnote

@@ -27,7 +27,7 @@ Workflow named `Test code`, see the [example](#example) below for the correct ya
 >
 > - [dawidd6/action-download-artifact](https://github.com/dawidd6/action-download-artifact)
 > - [tektronix/python-package-ci-cd/actions/fetch_pr_number](https://github.com/tektronix/python-package-ci-cd)
->   - [actions/github-script](https://github.com/actions/github-script)
+>     - [actions/github-script](https://github.com/actions/github-script)
 > - [marocchino/sticky-pull-request-comment](https://github.com/marocchino/sticky-pull-request-comment)
 >
 > See the [Workflow file][workflow-file] for the currently used versions of each GitHub Action.
