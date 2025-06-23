@@ -40,11 +40,11 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 31d36377a7880aab518615176e285746dbd4e199  # frozen: 40.60.0
+    rev: 0d6f12545086b5365f41b58e205f03b293c9508e  # frozen: 41.6.0
     hooks:
       - id: renovate-config-validator
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 06e4cc849d03f3a59ca223a4046f4bb5bb2aba6d  # frozen: 0.33.0
+    rev: a1419a25b3ec6c91a963e044f03f6dc197930b10  # frozen: 0.33.1
     hooks:
       - id: check-dependabot
       - id: check-renovate
