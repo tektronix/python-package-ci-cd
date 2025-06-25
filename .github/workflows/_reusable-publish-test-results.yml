@@ -41,14 +41,14 @@ jobs:
           sha: ${{ github.event.workflow_run.head_sha }}
           github-repository: ${{ github.repository }}
       - name: Publish Test Results
-        uses: marocchino/sticky-pull-request-comment@67d0dec7b07ed060a405f9b2a64b8ab319fdd7db  # v2.9.2
+        uses: marocchino/sticky-pull-request-comment@d2ad0de260ae8b0235ce059e63f2949ba9e05943  # v2.9.3
         with:
           header: test-results-${{ matrix.os-name }}
           number: ${{ steps.fetch-pr-number.outputs.number || steps.fetch-pr-number-local.outputs.number }}
           recreate: true
           path: artifacts/.results_tests/github_report.md
       - name: Add workflow link to comment
-        uses: marocchino/sticky-pull-request-comment@67d0dec7b07ed060a405f9b2a64b8ab319fdd7db  # v2.9.2
+        uses: marocchino/sticky-pull-request-comment@d2ad0de260ae8b0235ce059e63f2949ba9e05943  # v2.9.3
         with:
           header: test-results-${{ matrix.os-name }}
           number: ${{ steps.fetch-pr-number.outputs.number || steps.fetch-pr-number-local.outputs.number }}
