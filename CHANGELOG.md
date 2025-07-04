@@ -24,6 +24,39 @@ Things to be included in the next release go here.
 
 ---
 
+## v1.7.6 (2025-07-04)
+
+### Merged Pull Requests
+
+- chore(pre-commit-deps): pre-commit autoupdate ([#545](https://github.com/tektronix/python-package-ci-cd/pull/545))
+- chore(gh-actions-deps): update github/codeql-action action to v3.29.1 in all dependant reusable workflows ([#557](https://github.com/tektronix/python-package-ci-cd/pull/557))
+- chore(gh-actions-deps): update marocchino/sticky-pull-request-comment action to v2.9.3 in all dependant reusable workflows ([#556](https://github.com/tektronix/python-package-ci-cd/pull/556))
+- chore(gh-actions-deps): update dawidd6/action-download-artifact action to v11 in all dependant reusable workflows ([#552](https://github.com/tektronix/python-package-ci-cd/pull/552))
+- chore(gh-actions-deps): update hynek/build-and-inspect-python-package action to v2.13.0 in all dependant reusable workflows ([#554](https://github.com/tektronix/python-package-ci-cd/pull/554))
+- chore(python-deps): update dependency certifi to v2025.6.15 in all dependant actions ([#553](https://github.com/tektronix/python-package-ci-cd/pull/553))
+- chore(gh-actions-deps): update anchore/scan-action action to v6.3.0 in all dependant reusable workflows ([#550](https://github.com/tektronix/python-package-ci-cd/pull/550))
+- chore(python-deps): update dependency urllib3 to v2.5.0 [security] ([#551](https://github.com/tektronix/python-package-ci-cd/pull/551))
+- chore(python-deps): update dependency msgpack to v1.1.1 in all dependant actions ([#549](https://github.com/tektronix/python-package-ci-cd/pull/549))
+- chore(gh-actions-deps): update anchore/sbom-action action to v0.20.1 in all dependant reusable workflows ([#548](https://github.com/tektronix/python-package-ci-cd/pull/548))
+- chore(gh-actions-deps): update actions/attest-build-provenance action to v2.4.0 in all dependant reusable workflows ([#546](https://github.com/tektronix/python-package-ci-cd/pull/546))
+- chore(gh-actions-deps): update github/codeql-action action to v3.29.0 in all dependant reusable workflows ([#547](https://github.com/tektronix/python-package-ci-cd/pull/547))
+- chore(gh-actions-deps): update stefanzweifel/git-auto-commit-action action to v6 in all dependant reusable workflows ([#543](https://github.com/tektronix/python-package-ci-cd/pull/543))
+- chore(python-deps): update dependency pyright to v1.1.402 for dev ([#544](https://github.com/tektronix/python-package-ci-cd/pull/544))
+- chore(python-deps): update dependency cryptography to v45.0.4 in all dependant actions ([#542](https://github.com/tektronix/python-package-ci-cd/pull/542))
+- chore(python-version): update python:3.13-alpine docker digest to 9b4929a in all dependant actions ([#541](https://github.com/tektronix/python-package-ci-cd/pull/541))
+- chore(python-version): update python:3.13-alpine docker digest to bd8f7ae in all dependant actions ([#540](https://github.com/tektronix/python-package-ci-cd/pull/540))
+- chore(python-deps): update dependency tomlkit to v0.13.3 in all dependant actions ([#539](https://github.com/tektronix/python-package-ci-cd/pull/539))
+- chore(python-deps): update dependency typing-extensions to v4.14.0 in all dependant actions ([#535](https://github.com/tektronix/python-package-ci-cd/pull/535))
+- chore(python-deps): update dependency requests to v2.32.4 [security] ([#538](https://github.com/tektronix/python-package-ci-cd/pull/538))
+- chore(gh-actions-deps): update github/codeql-action action to v3.28.19 in all dependant reusable workflows ([#536](https://github.com/tektronix/python-package-ci-cd/pull/536))
+- chore(python-version): update python:3.13-alpine docker digest to b4d2993 in all dependant actions ([#534](https://github.com/tektronix/python-package-ci-cd/pull/534))
+
+### Changed
+
+- Bumped dependency versions.
+
+---
+
 ## v1.7.5 (2025-06-04)
 
 ### Merged Pull Requests
