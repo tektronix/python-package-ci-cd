@@ -24,6 +24,40 @@ Things to be included in the next release go here.
 
 ---
 
+## v1.7.7 (2025-08-04)
+
+### Merged Pull Requests
+
+- chore(gh-actions-deps): update github/codeql-action action to v3.29.5 in all dependant reusable workflows ([#584](https://github.com/tektronix/python-package-ci-cd/pull/584))
+- chore(python-deps): update dependency pypi-simple to v1.7.0 for actions/create_unique_testpypi_version and actions/update_development_dependencies ([#583](https://github.com/tektronix/python-package-ci-cd/pull/583))
+- chore(pre-commit-deps): pre-commit autoupdate ([#567](https://github.com/tektronix/python-package-ci-cd/pull/567))
+- chore(python-deps): update dependency virtualenv to v20.32.0 in all dependant actions ([#577](https://github.com/tektronix/python-package-ci-cd/pull/577))
+- chore(gh-actions-deps): update github/codeql-action action to v3.29.4 in all dependant reusable workflows ([#581](https://github.com/tektronix/python-package-ci-cd/pull/581))
+- chore(gh-actions-deps): update anchore/scan-action action to v6.5.0 in all dependant reusable workflows ([#580](https://github.com/tektronix/python-package-ci-cd/pull/580))
+- chore(gh-actions-deps): update anchore/sbom-action action to v0.20.4 in all dependant reusable workflows ([#579](https://github.com/tektronix/python-package-ci-cd/pull/579))
+- chore(gh-actions-deps): update github/codeql-action action to v3.29.3 in all dependant reusable workflows ([#578](https://github.com/tektronix/python-package-ci-cd/pull/578))
+- chore(python-deps): update dependency distlib to v0.4.0 in all dependant actions ([#576](https://github.com/tektronix/python-package-ci-cd/pull/576))
+- chore(gh-actions-deps): update marocchino/sticky-pull-request-comment action to v2.9.4 in all dependant reusable workflows ([#575](https://github.com/tektronix/python-package-ci-cd/pull/575))
+- chore(gh-actions-deps): update anchore/sbom-action action to v0.20.3 in all dependant reusable workflows ([#574](https://github.com/tektronix/python-package-ci-cd/pull/574))
+- chore(python-deps): update dependency xattr to v1.2.0 in all dependant actions ([#572](https://github.com/tektronix/python-package-ci-cd/pull/572))
+- chore(python-deps): update dependency certifi to v2025.7.14 in all dependant actions ([#571](https://github.com/tektronix/python-package-ci-cd/pull/571))
+- chore(python-version): update python:3.13-alpine docker digest to 37b14db in all dependant actions ([#570](https://github.com/tektronix/python-package-ci-cd/pull/570))
+- chore(python-version): update python:3.13-alpine docker digest to 610020b in all dependant actions ([#569](https://github.com/tektronix/python-package-ci-cd/pull/569))
+- chore(python-version): update python:3.13-alpine docker digest to e088746 in all dependant actions ([#568](https://github.com/tektronix/python-package-ci-cd/pull/568))
+- chore(python-deps): update dependency pyright to v1.1.403 for dev ([#566](https://github.com/tektronix/python-package-ci-cd/pull/566))
+- chore(python-deps): update dependency certifi to v2025.7.9 in all dependant actions ([#565](https://github.com/tektronix/python-package-ci-cd/pull/565))
+- chore(python-deps): update dependency typing-extensions to v4.14.1 in all dependant actions ([#564](https://github.com/tektronix/python-package-ci-cd/pull/564))
+- chore(gh-actions-deps): update anchore/scan-action action to v6.4.0 in all dependant reusable workflows ([#562](https://github.com/tektronix/python-package-ci-cd/pull/562))
+- chore(gh-actions-deps): update anchore/sbom-action action to v0.20.2 in all dependant reusable workflows ([#560](https://github.com/tektronix/python-package-ci-cd/pull/560))
+- chore(python-deps): update dependency cryptography to v45.0.5 in all dependant actions ([#561](https://github.com/tektronix/python-package-ci-cd/pull/561))
+- chore(gh-actions-deps): update github/codeql-action action to v3.29.2 in all dependant reusable workflows ([#559](https://github.com/tektronix/python-package-ci-cd/pull/559))
+
+### Changed
+
+- Bumped dependency versions.
+
+---
+
 ## v1.7.6 (2025-07-04)
 
 ### Merged Pull Requests

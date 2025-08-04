@@ -135,7 +135,7 @@ concurrency:
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 jobs:
   test-code:
-    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-test-code.yml@v1.7.6
+    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-test-code.yml@v1.7.7
     with:
       repo-name: owner/repo  # required
       operating-systems-array: '["ubuntu", "windows", "macos"]'  # optional
