@@ -24,6 +24,46 @@ Things to be included in the next release go here.
 
 ---
 
+## v1.8.0 (2025-08-18)
+
+### Merged Pull Requests
+
+- chore(python-version): update python version in all dependant actions ([#617](https://github.com/tektronix/python-package-ci-cd/pull/617))
+- fix: Convert the development dependency updater action away from an apline docker image to allow rust-based dependencies to be installed properly ([#616](https://github.com/tektronix/python-package-ci-cd/pull/616))
+- chore(python-deps): update dependency pre-commit to v4.3.0 for actions/update_development_dependencies and dev ([#607](https://github.com/tektronix/python-package-ci-cd/pull/607))
+- chore(gh-actions-deps): update actions/checkout action to v5 in all dependant reusable workflows ([#612](https://github.com/tektronix/python-package-ci-cd/pull/612))
+- chore(python-deps): update dependency virtualenv to v20.34.0 in all dependant actions ([#615](https://github.com/tektronix/python-package-ci-cd/pull/615))
+- chore(gh-actions-deps): update github/codeql-action action to v3.29.9 in all dependant reusable workflows ([#614](https://github.com/tektronix/python-package-ci-cd/pull/614))
+- chore(python-version): update python:3.13-alpine docker digest to a70b35b in all dependant actions ([#609](https://github.com/tektronix/python-package-ci-cd/pull/609))
+- chore(python-version): update python:3.13-alpine docker digest to 8e4890b in all dependant actions ([#608](https://github.com/tektronix/python-package-ci-cd/pull/608))
+- chore(python-deps): update dependency identify to v2.6.13 in all dependant actions ([#606](https://github.com/tektronix/python-package-ci-cd/pull/606))
+- chore(python-deps): update dependency pylint to v3.3.8 for dev ([#605](https://github.com/tektronix/python-package-ci-cd/pull/605))
+- chore(python-deps): update dependency charset-normalizer to v3.4.3 in all dependant actions ([#604](https://github.com/tektronix/python-package-ci-cd/pull/604))
+- chore(gh-actions-deps): update github/codeql-action action to v3.29.8 in all dependant reusable workflows ([#603](https://github.com/tektronix/python-package-ci-cd/pull/603))
+- chore(python-version): update python:3.13-alpine docker digest to af1fd7a in all dependant actions ([#602](https://github.com/tektronix/python-package-ci-cd/pull/602))
+- chore(python-version): update python:3.13-alpine docker digest to 97990f8 in all dependant actions ([#601](https://github.com/tektronix/python-package-ci-cd/pull/601))
+- chore(python-version): update python:3.13-alpine docker digest to c28add7 in all dependant actions ([#600](https://github.com/tektronix/python-package-ci-cd/pull/600))
+- chore(python-version): update python:3.13-alpine docker digest to f66b117 in all dependant actions ([#599](https://github.com/tektronix/python-package-ci-cd/pull/599))
+- chore(gh-actions-deps): update actions/download-artifact action to v5 in all dependant reusable workflows ([#594](https://github.com/tektronix/python-package-ci-cd/pull/594))
+- chore(gh-actions-deps): update actions/cache action to v4.2.4 in all dependant reusable workflows ([#598](https://github.com/tektronix/python-package-ci-cd/pull/598))
+- chore(python-deps): update dependency trove-classifiers to v2025.8.6.13 in all dependant actions ([#596](https://github.com/tektronix/python-package-ci-cd/pull/596))
+- chore(python-deps): update dependency cryptography to v45.0.6 in all dependant actions ([#595](https://github.com/tektronix/python-package-ci-cd/pull/595))
+- chore(python-deps): update dependency virtualenv to v20.33.1 in all dependant actions ([#593](https://github.com/tektronix/python-package-ci-cd/pull/593))
+- chore(gh-actions-deps): update anchore/scan-action action to v6.5.1 in all dependant reusable workflows ([#592](https://github.com/tektronix/python-package-ci-cd/pull/592))
+- chore(python-deps): update dependency virtualenv to v20.33.0 in all dependant actions ([#591](https://github.com/tektronix/python-package-ci-cd/pull/591))
+- chore(python-deps): update dependency certifi to v2025.8.3 in all dependant actions ([#590](https://github.com/tektronix/python-package-ci-cd/pull/590))
+- chore(python-version): update python:3.13-alpine docker digest to f196fd2 in all dependant actions ([#589](https://github.com/tektronix/python-package-ci-cd/pull/589))
+- chore(gh-actions-deps): update github/codeql-action action to v3.29.7 in all dependant reusable workflows ([#588](https://github.com/tektronix/python-package-ci-cd/pull/588))
+- chore(python-version): update python:3.13-alpine docker digest to 38042d4 in all dependant actions ([#587](https://github.com/tektronix/python-package-ci-cd/pull/587))
+- chore(python-deps): update dependency build to v1.3.0 in all dependant actions ([#586](https://github.com/tektronix/python-package-ci-cd/pull/586))
+- chore(pre-commit-deps): pre-commit autoupdate ([#585](https://github.com/tektronix/python-package-ci-cd/pull/585))
+
+### Changed
+
+- Bumped dependency versions.
+
+---
+
 ## v1.7.7 (2025-08-04)
 
 ### Merged Pull Requests
