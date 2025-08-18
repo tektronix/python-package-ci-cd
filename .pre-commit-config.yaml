@@ -14,7 +14,7 @@ ci:
     - renovate-config-validator  # the LTS version of node is too large for pre-commit.ci
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: cef0300fd0fc4d2a87a85fa2093c6b283ea36f4b  # frozen: v5.0.0
+    rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c  # frozen: v6.0.0
     hooks:
       - id: check-yaml
         args: [--unsafe]
@@ -40,11 +40,11 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 943642a690b57e66b12a6f039bb4640b29e19130  # frozen: 41.43.0
+    rev: d6ceb117be62e7e6f6d4992ed00b80b3c8a4f9fd  # frozen: 41.79.0
     hooks:
       - id: renovate-config-validator
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 54da05914997e6b04e4db33ed6757d744984c68b  # frozen: 0.33.2
+    rev: 9b9df9f1d3bd9a5e7a52d8f61a3be3e29e73d127  # frozen: 0.33.3
     hooks:
       - id: check-dependabot
       - id: check-renovate
@@ -54,7 +54,7 @@ repos:
         args: [--verbose]
         files: ^(\.github/workflows/[^/]+|workflows/[^/]+)$
   - repo: https://github.com/Mateusz-Grzelinski/actionlint-py
-    rev: a185be0fd5b45112845b700d91b81050c75579e2  # frozen: v1.7.7.23
+    rev: f999ae59ac949d9b57aaa5569c2d60eb846b3a00  # frozen: v1.7.7.24
     hooks:
       - id: actionlint
         additional_dependencies: [pyflakes, shellcheck-py]
@@ -136,7 +136,7 @@ repos:
         always_run: true
         args: [audit, --json, --ignore-code=CVE-2019-8341]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 4cbc74d53fe5634e58e0e65db7d28939c9cec3f7  # frozen: v0.12.7
+    rev: 54a455f7ce629598b7535ff828fd5fb796f4b83f  # frozen: v0.12.9
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
