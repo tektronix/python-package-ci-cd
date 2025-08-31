@@ -56,7 +56,7 @@ toml==0.10.2
 toml-sort==0.24.2
 tomlkit==0.13.3
 trove-classifiers==2025.8.26.11
-typing-extensions==4.14.1
+typing-extensions==4.15.0
 urllib3==2.5.0
 virtualenv==20.34.0
 xattr==1.2.0 ; sys_platform == "darwin"
