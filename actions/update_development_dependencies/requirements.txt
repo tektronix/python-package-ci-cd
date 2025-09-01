@@ -51,7 +51,7 @@ ruyaml==0.91.0
 secretstorage==3.3.3 ; sys_platform == "linux"
 setuptools==80.9.0
 shellingham==1.5.4
-soupsieve==2.7
+soupsieve==2.8
 toml==0.10.2
 toml-sort==0.24.2
 tomlkit==0.13.3
