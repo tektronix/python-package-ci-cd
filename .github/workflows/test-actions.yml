@@ -15,7 +15,7 @@ jobs:
   test-create_unique_testpypi_version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
       - uses: ./actions/create_unique_testpypi_version
         id: create-version
         with:
@@ -33,7 +33,7 @@ jobs:
     env:
       UNIT_TESTING_FIND_UNRELEASED_CHANGELOG_ITEMS_ACTION: true
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
       - name: Overwrite CHANGELOG.md with dummy data
         run: |
           cat <<EOF > temp_changelog.md
@@ -153,7 +153,7 @@ jobs:
   test-update_development_dependencies:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
       - uses: ./actions/update_development_dependencies
         with:
           update-pre-commit: true
@@ -167,7 +167,7 @@ jobs:
   test-fetch_pr_number:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
       - name: Fetch known PR number
         uses: ./actions/fetch_pr_number
         id: fetch-pr-number-found
