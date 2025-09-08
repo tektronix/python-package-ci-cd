@@ -40,7 +40,7 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 93bef7d84e52b6ba3e608088f9cd1e292e3e1309  # frozen: 41.92.0
+    rev: 143c21926ee520cede087779dd942a20b2c5491c  # frozen: 41.98.0
     hooks:
       - id: renovate-config-validator
   - repo: https://github.com/python-jsonschema/check-jsonschema
@@ -59,19 +59,19 @@ repos:
       - id: actionlint
         additional_dependencies: [pyflakes, shellcheck-py]
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: c710c9f541ae452547fdce5c360929f007ec4867  # frozen: v4.8.3
+    rev: 186dd18042ad30269e157e17db271a34b71e3bcd  # frozen: v4.8.4
     hooks:
       - id: commitizen
         stages: [commit-msg]
   - repo: https://github.com/adamchainz/blacken-docs
-    rev: 78a9dcbecf4f755f65d1f3dec556bc249d723600  # frozen: 1.19.1
+    rev: dda8db18cfc68df532abf33b185ecd12d5b7b326  # frozen: 1.20.0
     hooks:
       - id: blacken-docs
         files: \.(rst|md|markdown|tex)$
         additional_dependencies: [black==24.8.0]  # This may need to be updated/removed in the future once ruff supports formatting Python code blocks in markdown
         args: [--line-length=100]
   - repo: https://github.com/lyz-code/yamlfix
-    rev: 8072181c0f2eab9f2dd8db2eb3b9556d7cd0bd74  # frozen: 1.17.0
+    rev: 881308160e4589cf886919438a3ed0acba42ea0e  # frozen: 1.18.0
     hooks:
       - id: yamlfix
   - repo: https://github.com/AleksaC/hadolint-py
@@ -136,7 +136,7 @@ repos:
         always_run: true
         args: [audit, --json, --ignore-code=CVE-2019-8341]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: db90487f48a9dd992d243ef63c156eaffddeaf28  # frozen: v0.12.11
+    rev: 60ef368a6f48dfb4317651017f66dbb055241a6c  # frozen: v0.12.12
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
