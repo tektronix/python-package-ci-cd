@@ -40,7 +40,7 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 143c21926ee520cede087779dd942a20b2c5491c  # frozen: 41.98.0
+    rev: 3bf2fa2789a96c59da1129426cf7145e99a87a76  # frozen: 41.114.0
     hooks:
       - id: renovate-config-validator
   - repo: https://github.com/python-jsonschema/check-jsonschema
@@ -59,7 +59,7 @@ repos:
       - id: actionlint
         additional_dependencies: [pyflakes, shellcheck-py]
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: 186dd18042ad30269e157e17db271a34b71e3bcd  # frozen: v4.8.4
+    rev: cc981fcb065527b6de0033b0cbf0432e69781901  # frozen: v4.9.1
     hooks:
       - id: commitizen
         stages: [commit-msg]
@@ -75,7 +75,7 @@ repos:
     hooks:
       - id: yamlfix
   - repo: https://github.com/AleksaC/hadolint-py
-    rev: e70baeefd566058716df2f29eae8fe8ffc213a9f  # frozen: v2.12.1b3
+    rev: 5e89f3a745f1cf67092d8e6ee7caf26c12d0a7b2  # frozen: v2.13.1
     hooks:
       - id: hadolint
         args: [--ignore=DL3008, --ignore=DL3018]
@@ -109,7 +109,7 @@ repos:
     hooks:
       - id: check-poetry
   - repo: https://github.com/pappasam/toml-sort
-    rev: 4ec24891e200ae663aa2a7cecd19516080777133  # frozen: v0.24.2
+    rev: 8c5db1c8081310adb476e1661c4d5d1fb6dbd96e  # frozen: v0.24.3
     hooks:
       - id: toml-sort-fix
   - repo: local
@@ -136,7 +136,7 @@ repos:
         always_run: true
         args: [audit, --json, --ignore-code=CVE-2019-8341]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 60ef368a6f48dfb4317651017f66dbb055241a6c  # frozen: v0.12.12
+    rev: 13a6bda8ea7612b3aec844ded16569d424b9a1ab  # frozen: v0.13.0
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
