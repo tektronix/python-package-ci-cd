@@ -47,7 +47,7 @@ poetry-plugin-export = "1.8.0"
 pre-commit = "4.3.0"
 pypi-simple = "1.8.0"
 toml-sort = "0.24.3"
-yamlfix = "1.17.0"
+yamlfix = "1.18.0"
 
 [tool.poetry.group.dev.dependencies]
 pip = "^25.0"
