@@ -60,4 +60,4 @@ typing-extensions==4.15.0
 urllib3==2.5.0
 virtualenv==20.34.0
 xattr==1.2.0 ; sys_platform == "darwin"
-yamlfix==1.17.0
+yamlfix==1.18.0
