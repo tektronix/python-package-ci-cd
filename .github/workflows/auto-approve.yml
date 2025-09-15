@@ -8,8 +8,9 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    if: (github.actor == 'renovate[bot]' && startsWith(github.head_ref, 'renovate/automerge/'))
-      || (github.actor == 'pre-commit-ci[bot]' && startsWith(github.head_ref, 'pre-commit-ci-update-config'))
+    if: ((github.actor == 'renovate[bot]' || github.actor == 'mend[bot]') && startsWith(github.head_ref,
+      'renovate/automerge/')) || (github.actor == 'pre-commit-ci[bot]' && startsWith(github.head_ref,
+      'pre-commit-ci-update-config'))
     steps:
       - uses: hmarr/auto-approve-action@f0939ea97e9205ef24d872e76833fa908a770363  # v4.0.0
       - name: Enable auto-merge for pre-commit.ci autoupdate PRs
