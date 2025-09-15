@@ -138,7 +138,7 @@ repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: 13a6bda8ea7612b3aec844ded16569d424b9a1ab  # frozen: v0.13.0
     hooks:
-      - id: ruff
+      - id: ruff-check
         args: [--fix, --exit-non-zero-on-fix]
       - id: ruff-format
   - repo: https://github.com/PyCQA/docformatter
