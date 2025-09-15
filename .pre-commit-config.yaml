@@ -75,7 +75,7 @@ repos:
     hooks:
       - id: yamlfix
   - repo: https://github.com/AleksaC/hadolint-py
-    rev: 5e89f3a745f1cf67092d8e6ee7caf26c12d0a7b2  # frozen: v2.13.1
+    rev: e70baeefd566058716df2f29eae8fe8ffc213a9f  # frozen: v2.12.1b3
     hooks:
       - id: hadolint
         args: [--ignore=DL3008, --ignore=DL3018]
