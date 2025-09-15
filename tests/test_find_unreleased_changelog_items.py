@@ -136,7 +136,7 @@ def test_main_no_unreleased_entries(
 """
     mock_changelog_file.write_text(changelog_content)
 
-    with pytest.raises(SystemExit, match="No unreleased entries were found in.*"):
+    with pytest.raises(SystemExit, match=r"No unreleased entries were found in.*"):
         main()
 
 
