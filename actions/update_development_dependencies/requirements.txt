@@ -55,7 +55,7 @@ soupsieve==2.8
 toml==0.10.2
 toml-sort==0.24.3
 tomlkit==0.13.3
-trove-classifiers==2025.9.9.12
+trove-classifiers==2025.9.11.17
 typing-extensions==4.15.0
 urllib3==2.5.0
 virtualenv==20.34.0
