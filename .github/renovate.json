@@ -150,6 +150,13 @@
             ],
             "semanticCommitScope": "python-version",
             "semanticCommitType": "chore"
+        },
+        {
+            "description": "Group all github-runners updates",
+            "groupName": "github-runners",
+            "matchDatasources": [
+                "github-runners"
+            ]
         }
     ],
     "platformCommit": "enabled",
