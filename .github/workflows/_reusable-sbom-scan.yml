@@ -29,7 +29,7 @@ jobs:
         with:
           subject-path: ${{ github.event.repository.name }}-sbom.spdx.json
       - name: Scan SBOM
-        uses: anchore/scan-action@1638637db639e0ade3258b51db49a9a137574c3e # v6.5.1
+        uses: anchore/scan-action@f6601287cdb1efc985d6b765bbf99cb4c0ac29d8 # v7.0.0
         id: scan
         with:
           sbom: ${{ github.event.repository.name }}-sbom.spdx.json
@@ -37,7 +37,7 @@ jobs:
           severity-cutoff: low
       - name: Scan SBOM (print results to console)
         if: ${{ always() && contains(fromJSON('["success", "failure"]'), steps.scan.outcome) }}
-        uses: anchore/scan-action@1638637db639e0ade3258b51db49a9a137574c3e # v6.5.1
+        uses: anchore/scan-action@f6601287cdb1efc985d6b765bbf99cb4c0ac29d8 # v7.0.0
         with:
           output-format: table
           sbom: ${{ github.event.repository.name }}-sbom.spdx.json
