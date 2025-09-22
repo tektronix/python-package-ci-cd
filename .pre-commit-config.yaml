@@ -40,11 +40,11 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 3bf2fa2789a96c59da1129426cf7145e99a87a76  # frozen: 41.114.0
+    rev: f3ce0c4d57e87b7cfafc6971d9b760212b838ffe  # frozen: 41.124.1
     hooks:
       - id: renovate-config-validator
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 9b9df9f1d3bd9a5e7a52d8f61a3be3e29e73d127  # frozen: 0.33.3
+    rev: 83987cd6ad8943c7f029b500b14aaf82c00a01fa  # frozen: 0.34.0
     hooks:
       - id: check-dependabot
       - id: check-renovate
@@ -75,7 +75,7 @@ repos:
     hooks:
       - id: yamlfix
   - repo: https://github.com/AleksaC/hadolint-py
-    rev: e70baeefd566058716df2f29eae8fe8ffc213a9f  # frozen: v2.12.1b3
+    rev: 458cb25edf664682e3e856a53a2f9af33e068297  # frozen: v2.14.0
     hooks:
       - id: hadolint
         args: [--ignore=DL3008, --ignore=DL3018]
@@ -136,7 +136,7 @@ repos:
         always_run: true
         args: [audit, --json, --ignore-code=CVE-2019-8341]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 13a6bda8ea7612b3aec844ded16569d424b9a1ab  # frozen: v0.13.0
+    rev: a113f03edeabb71305f025e6e14bd2cd68660e29  # frozen: v0.13.1
     hooks:
       - id: ruff-check
         args: [--fix, --exit-non-zero-on-fix]
