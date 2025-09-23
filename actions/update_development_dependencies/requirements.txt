@@ -8,7 +8,7 @@ cffi==2.0.0 ; (sys_platform == "darwin" or sys_platform == "linux") and (sys_pla
 cfgv==3.4.0
 charset-normalizer==3.4.3
 cleo==2.1.0
-click==8.2.1
+click==8.3.0
 colorama==0.4.6 ; (os_name == "nt" or platform_system == "Windows")
 crashtest==0.4.1
 cryptography==46.0.1 ; sys_platform == "linux"
