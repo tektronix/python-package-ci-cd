@@ -40,7 +40,7 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: f3ce0c4d57e87b7cfafc6971d9b760212b838ffe  # frozen: 41.124.1
+    rev: d4e2c6029a6803211ee0ebc63d225f3ad595312e  # frozen: 41.132.0
     hooks:
       - id: renovate-config-validator
   - repo: https://github.com/python-jsonschema/check-jsonschema
@@ -136,7 +136,7 @@ repos:
         always_run: true
         args: [audit, --json, --ignore-code=CVE-2019-8341]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: a113f03edeabb71305f025e6e14bd2cd68660e29  # frozen: v0.13.1
+    rev: f298305809c552671cc47e0fec0ba43e96c146a2  # frozen: v0.13.2
     hooks:
       - id: ruff-check
         args: [--fix, --exit-non-zero-on-fix]
