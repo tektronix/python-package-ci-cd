@@ -17,7 +17,7 @@ distro==1.9.0
 dulwich==0.21.7
 fastjsonschema==2.21.2
 filelock==3.19.1
-identify==2.6.14
+identify==2.6.15
 idna==3.10
 installer==0.7.0
 jaraco-classes==3.4.0
