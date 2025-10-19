@@ -6,7 +6,7 @@ cachecontrol[filecache]==0.14.3
 certifi==2025.10.5
 cffi==2.0.0 ; (sys_platform == "darwin" or sys_platform == "linux") and (sys_platform == "darwin" or platform_python_implementation != "PyPy")
 cfgv==3.4.0
-charset-normalizer==3.4.3
+charset-normalizer==3.4.4
 cleo==2.1.0
 click==8.3.0
 colorama==0.4.6 ; (os_name == "nt" or platform_system == "Windows")
