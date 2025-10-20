@@ -56,7 +56,7 @@ poetry-audit-plugin = "^0.4.0"
 poetry-plugin-export = "1.8.0"
 poetry-pre-commit-plugin = "^0.1.2"
 pre-commit = "4.3.0"
-pylint = "4.0.0"
+pylint = "4.0.1"
 pyright = {extras = ["nodejs"], version = "1.1.406"}
 tox = "^4.18.0"
 tox-gh-actions = "^3.2.0"
