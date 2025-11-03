@@ -28,7 +28,7 @@ jobs:
   publish-results:
     runs-on: ubuntu-latest
     steps:
-      - uses: tektronix/python-package-ci-cd/actions/fetch_pr_number@v1.8.1
+      - uses: tektronix/python-package-ci-cd/actions/fetch_pr_number@v1.8.2
         id: fetch-pr-number
         with:
           sha: ${{ github.event.workflow_run.head_sha }}  # required

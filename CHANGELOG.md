@@ -24,6 +24,69 @@ Things to be included in the next release go here.
 
 ---
 
+## v1.8.2 (2025-11-03)
+
+### Merged Pull Requests
+
+- chore(python-deps): update dependency virtualenv to v20.35.4 in all dependant actions ([#731](https://github.com/tektronix/python-package-ci-cd/pull/731))
+- chore(python-deps): update dependency pyright to v1.1.407 for dev ([#728](https://github.com/tektronix/python-package-ci-cd/pull/728))
+- chore(gh-actions-deps): update github artifact actions in all dependant reusable workflows ([#730](https://github.com/tektronix/python-package-ci-cd/pull/730))
+- chore(gh-actions-deps): update github/codeql-action action to v4.31.0 in all dependant reusable workflows ([#729](https://github.com/tektronix/python-package-ci-cd/pull/729))
+- chore(gh-actions-deps): update anchore/scan-action action to v7.1.0 in all dependant reusable workflows ([#727](https://github.com/tektronix/python-package-ci-cd/pull/727))
+- chore(gh-actions-deps): update anchore/sbom-action action to v0.20.9 in all dependant reusable workflows ([#726](https://github.com/tektronix/python-package-ci-cd/pull/726))
+- chore(python-deps): update dependency pylint to v4.0.2 for dev ([#725](https://github.com/tektronix/python-package-ci-cd/pull/725))
+- chore(gh-actions-deps): update github/codeql-action action to v4.30.9 in all dependant reusable workflows ([#723](https://github.com/tektronix/python-package-ci-cd/pull/723))
+- chore(python-deps): update dependency pydantic to v2.12.3 in all dependant actions ([#724](https://github.com/tektronix/python-package-ci-cd/pull/724))
+- chore(gh-actions-deps): update anchore/sbom-action action to v0.20.8 in all dependant reusable workflows ([#721](https://github.com/tektronix/python-package-ci-cd/pull/721))
+- chore(gh-actions-deps): update anchore/scan-action action to v7.0.2 in all dependant reusable workflows ([#722](https://github.com/tektronix/python-package-ci-cd/pull/722))
+- chore(python-deps): update dependency cryptography to v46.0.3 in all dependant actions ([#720](https://github.com/tektronix/python-package-ci-cd/pull/720))
+- chore(gh-actions-deps): update anchore/scan-action action to v7.0.1 in all dependant reusable workflows ([#718](https://github.com/tektronix/python-package-ci-cd/pull/718))
+- chore(gh-actions-deps): update anchore/sbom-action action to v0.20.7 in all dependant reusable workflows ([#717](https://github.com/tektronix/python-package-ci-cd/pull/717))
+- chore(python-deps): update dependency pylint to v4.0.1 for dev ([#716](https://github.com/tektronix/python-package-ci-cd/pull/716))
+- chore(gh-actions-deps): update actions/setup-node action to v6 in all dependant reusable workflows ([#715](https://github.com/tektronix/python-package-ci-cd/pull/715))
+- chore(python-deps): update dependency charset-normalizer to v3.4.4 in all dependant actions ([#714](https://github.com/tektronix/python-package-ci-cd/pull/714))
+- chore(python-deps): update dependency xattr to v1.3.0 in all dependant actions ([#713](https://github.com/tektronix/python-package-ci-cd/pull/713))
+- chore(python-deps): update dependency pylint to v4 for dev ([#711](https://github.com/tektronix/python-package-ci-cd/pull/711))
+- chore(python-deps): update dependency yamlfix to v1.19.0 for actions/update_development_dependencies ([#712](https://github.com/tektronix/python-package-ci-cd/pull/712))
+- chore(gh-actions-deps): update stefanzweifel/git-auto-commit-action action to v7 in all dependant reusable workflows ([#710](https://github.com/tektronix/python-package-ci-cd/pull/710))
+- chore(python-deps): update dependency idna to v3.11 in all dependant actions ([#709](https://github.com/tektronix/python-package-ci-cd/pull/709))
+- chore(python-deps): update pydantic dependencies in all dependant actions ([#676](https://github.com/tektronix/python-package-ci-cd/pull/676))
+- chore(gh-actions-deps): update hynek/build-and-inspect-python-package action to v2.14.0 in all dependant reusable workflows ([#708](https://github.com/tektronix/python-package-ci-cd/pull/708))
+- chore(gh-actions-deps): update github/codeql-action action to v4 in all dependant reusable workflows ([#706](https://github.com/tektronix/python-package-ci-cd/pull/706))
+- chore(python-deps): update dependency attrs to v25.4.0 in all dependant actions ([#699](https://github.com/tektronix/python-package-ci-cd/pull/699))
+- chore(python-deps): update dependency tomli to v2.3.0 for actions/create_unique_testpypi_version and docs ([#703](https://github.com/tektronix/python-package-ci-cd/pull/703))
+- chore(python-deps): update dependency virtualenv to v20.35.3 in all dependant actions ([#704](https://github.com/tektronix/python-package-ci-cd/pull/704))
+- chore(python-deps): update dependency filelock to v3.20.0 in all dependant actions ([#701](https://github.com/tektronix/python-package-ci-cd/pull/701))
+- chore(python-deps): update dependency beautifulsoup4 to v4.14.0 in all dependant actions ([#691](https://github.com/tektronix/python-package-ci-cd/pull/691))
+- chore(python-deps): update dependency platformdirs to v4.5.0 in all dependant actions ([#702](https://github.com/tektronix/python-package-ci-cd/pull/702))
+- chore(gh-actions-deps): update actions/dependency-review-action action to v4.8.0 in dev workflows ([#689](https://github.com/tektronix/python-package-ci-cd/pull/689))
+- chore(python-deps): update dependency certifi to v2025.10.5 in all dependant actions ([#700](https://github.com/tektronix/python-package-ci-cd/pull/700))
+- chore(python-deps): update dependency msgpack to v1.1.2 in all dependant actions ([#697](https://github.com/tektronix/python-package-ci-cd/pull/697))
+- chore(python-deps): update dependency pyright to v1.1.406 for dev ([#694](https://github.com/tektronix/python-package-ci-cd/pull/694))
+- chore(python-deps): update dependency pylint to v3.3.9 for dev ([#698](https://github.com/tektronix/python-package-ci-cd/pull/698))
+- chore(gh-actions-deps): update github/codeql-action action to v3.30.8 in all dependant reusable workflows ([#688](https://github.com/tektronix/python-package-ci-cd/pull/688))
+- chore(python-deps): update dependency maison to v2.0.2 in all dependant actions ([#696](https://github.com/tektronix/python-package-ci-cd/pull/696))
+- chore(gh-actions-deps): update actions/dependency-review-action action to v4.7.4 in dev workflows ([#687](https://github.com/tektronix/python-package-ci-cd/pull/687))
+- chore(python-deps): update dependency identify to v2.6.15 in all dependant actions ([#695](https://github.com/tektronix/python-package-ci-cd/pull/695))
+- chore(python-deps): update dependency cryptography to v46.0.2 in all dependant actions ([#692](https://github.com/tektronix/python-package-ci-cd/pull/692))
+- chore(pre-commit-deps): pre-commit autoupdate ([#678](https://github.com/tektronix/python-package-ci-cd/pull/678))
+- chore(python-deps): update dependency pyyaml to v6.0.3 in all dependant actions ([#685](https://github.com/tektronix/python-package-ci-cd/pull/685))
+- chore(python-version): update python:3.13-slim docker digest to 3a6ead7 in all dependant actions ([#684](https://github.com/tektronix/python-package-ci-cd/pull/684))
+- chore(gh-actions-deps): update github/codeql-action action to v3.30.4 in all dependant reusable workflows ([#683](https://github.com/tektronix/python-package-ci-cd/pull/683))
+- chore(python-version): update python:3.13-slim docker digest to 6cbc435 in all dependant actions ([#682](https://github.com/tektronix/python-package-ci-cd/pull/682))
+- chore(gh-actions-deps): update actions/cache action to v4.3.0 in all dependant reusable workflows ([#680](https://github.com/tektronix/python-package-ci-cd/pull/680))
+- chore(python-deps): update dependency click to v8.3.0 in all dependant actions ([#679](https://github.com/tektronix/python-package-ci-cd/pull/679))
+- chore(gh-actions-deps): update anchore/scan-action action to v7 in all dependant reusable workflows ([#677](https://github.com/tektronix/python-package-ci-cd/pull/677))
+- chore(gh-actions-deps): update dev workflow dependencies ([#626](https://github.com/tektronix/python-package-ci-cd/pull/626))
+- chore: Add grouping for GitHub runners updates in Renovate configuration ([#671](https://github.com/tektronix/python-package-ci-cd/pull/671))
+- chore(gh-actions-deps): update anchore/sbom-action action to v0.20.6 in all dependant reusable workflows ([#670](https://github.com/tektronix/python-package-ci-cd/pull/670))
+
+### Changed
+
+- Bumped dependency versions.
+
+---
+
 ## v1.8.1 (2025-09-17)
 
 ### Merged Pull Requests
