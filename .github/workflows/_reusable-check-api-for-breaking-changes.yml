@@ -37,7 +37,7 @@ jobs:
           griffe check --format=verbose --against="$(git rev-parse origin/main)" --search=src "$PACKAGE_NAME" 2>&1 | tee -a breaking_changes.md
       - name: Finish writing summary file
         run: echo "\`\`\`" >> breaking_changes.md
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: breaking_changes
           path: breaking_changes.md
