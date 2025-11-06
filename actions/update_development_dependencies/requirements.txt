@@ -44,7 +44,7 @@ pypi-simple==1.8.0
 pyproject-hooks==1.2.0
 pywin32-ctypes==0.2.3 ; sys_platform == "win32"
 pyyaml==6.0.3
-rapidfuzz==3.14.2
+rapidfuzz==3.14.3
 requests==2.32.5
 requests-toolbelt==1.0.0
 ruyaml==0.91.0
