@@ -182,8 +182,10 @@ strict = ["**"]
 typeCheckingMode = "strict"
 useLibraryCodeForTypes = true
 
-[tool.pytest.ini_options]
-addopts = "--cov-config=pyproject.toml"
+[tool.pytest]
+addopts = [
+  "--cov-config=pyproject.toml"
+]
 filterwarnings = [
 ]
 junit_family = "xunit2"
@@ -193,8 +195,10 @@ markers = [
   'order',
   'slow'
 ]
-pythonpath = "."
-xfail_strict = true
+pythonpath = [
+  "."
+]
+strict = true
 
 [tool.pytest_env]
 pytest_report_title = {skip_if_set = true, value = "Test Results"}
