@@ -40,7 +40,7 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 4230054f6d9ffc766b5551edf3d2ff09b134d8f0  # frozen: 42.19.6
+    rev: 578bc58fcaba931f742a47e8301c1b977f485857  # frozen: 42.21.1
     hooks:
       - id: renovate-config-validator
   - repo: https://github.com/python-jsonschema/check-jsonschema
@@ -87,15 +87,13 @@ repos:
         additional_dependencies:
           - setuptools  # This is required since Python no longer installs setuptools by default in virtual environments
           - mdformat-beautysh
-#          - mdformat-config
-          - mdformat-footnote
-          - mdformat-frontmatter
+          - mdformat-footnote>=0.1.2
+          - mdformat-front-matters
           - mdformat-gfm
           - mdformat-gfm-alerts
           - mdformat-mkdocs
           - mdformat-shfmt
           - mdformat-simple-breaks
-          - mdformat-tables
           - mdformat-toc
           - mdformat-web
           - mdformat-wikilink
