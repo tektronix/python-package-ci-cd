@@ -38,7 +38,7 @@ poetry-plugin-export==1.8.0
 pre-commit==4.5.0
 ptyprocess==0.7.0
 pycparser==2.23 ; (sys_platform == "darwin" or sys_platform == "linux") and (sys_platform == "darwin" or platform_python_implementation != "PyPy")
-pydantic==2.12.4
+pydantic==2.12.5
 pydantic-core==2.41.5
 pypi-simple==1.8.0
 pyproject-hooks==1.2.0
