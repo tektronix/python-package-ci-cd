@@ -70,6 +70,7 @@ class TestDocs:  # pylint: disable=no-self-use
         """Test creating html documentation."""
         subprocess.check_call(shlex.split(f"mkdocs build --verbose --site-dir={site_dir}"))  # noqa: S603
 
+    @pytest.mark.flaky(retries=2, delay=5)
     @pytest.mark.order(2)
     @pytest.mark.depends(on=["test_docs_html"])
     def test_docs_linkcheck(self, docs_server: str) -> None:
