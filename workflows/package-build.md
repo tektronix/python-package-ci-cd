@@ -63,7 +63,7 @@ concurrency:
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 jobs:
   package-build:
-    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-package-build.yml@v1.8.2
+    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-package-build.yml@v1.8.3
     with:
       package-name: my_package  # required
       python-versions-array: '["3.9", "3.10", "3.11", "3.12"]'  # required
