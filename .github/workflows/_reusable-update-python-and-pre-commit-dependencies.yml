@@ -107,7 +107,7 @@ jobs:
           pre-commit-repo-update-skip-list: ${{ inputs.pre-commit-repo-update-skip-list }}
           pre-commit-hook-skip-list: ${{ inputs.pre-commit-hook-skip-list }}
           export-dependency-groups: ${{ inputs.export-dependency-groups }}
-      - uses: stefanzweifel/git-auto-commit-action@28e16e81777b558cc906c8750092100bbb34c5e3  # v7.0.0
+      - uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9  # v7.1.0
         with:
           commit_message: 'chore: Update dependencies.'
           commit_user_name: ${{ inputs.commit-user-name }}
