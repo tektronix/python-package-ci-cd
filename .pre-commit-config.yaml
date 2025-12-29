@@ -40,7 +40,7 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 8e3b3a72fa0af07dda901080a8fa2f66bbec8754  # frozen: 42.66.0
+    rev: beb49d678f19bfacbb76b26c40cb871067dfd028  # frozen: 42.66.12
     hooks:
       - id: renovate-config-validator
   - repo: https://github.com/python-jsonschema/check-jsonschema
@@ -59,7 +59,7 @@ repos:
       - id: actionlint
         additional_dependencies: [pyflakes, shellcheck-py]
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: 9f3ec868c0429155a46b4819b625d47a8522a3d5  # frozen: v4.10.0
+    rev: cf03c8d5731387979d33bb5ff7af5dd311237e39  # frozen: v4.11.0
     hooks:
       - id: commitizen
         stages: [commit-msg]
