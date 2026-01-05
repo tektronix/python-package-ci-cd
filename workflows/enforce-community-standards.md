@@ -43,7 +43,7 @@ on:
     branches: [main]
 jobs:
   enforce-community-standards:
-    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-enforce-community-standards.yml@v1.8.3
+    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-enforce-community-standards.yml@v1.8.4
 ```
 
 [workflow-file]: ../.github/workflows/_reusable-enforce-community-standards.yml
