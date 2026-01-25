@@ -14,7 +14,7 @@ crashtest==0.4.1
 cryptography==46.0.3 ; sys_platform == "linux"
 distlib==0.4.0
 distro==1.9.0
-dulwich==0.21.7
+dulwich==0.25.2
 fastjsonschema==2.21.2
 filelock==3.20.3
 identify==2.6.16
