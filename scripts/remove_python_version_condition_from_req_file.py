@@ -8,7 +8,7 @@ import re
 from pathlib import Path
 
 # Regular expression to match only the python_version constraints
-PYTHON_VERSION_PATTERN = re.compile(r"python_version.*?(\sand\s*|$)")
+PYTHON_VERSION_PATTERN = re.compile(r"python_(?:full_)?version.*?(\sand\s*|$)")
 
 if __name__ == "__main__":  # pragma: no cover
     parser = argparse.ArgumentParser(
