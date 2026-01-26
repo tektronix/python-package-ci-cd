@@ -202,8 +202,6 @@ def export_requirements_files(python_executable: str, dependency_groups: list[st
         python_executable: The path to the python executable to use.
         dependency_groups: The list of dependency groups to export the requirements for.
     """
-    run_cmd_in_subprocess(f'"{python_executable}" -m poetry config warnings.export false')
-
     for group_output_pair in dependency_groups:
         if ":" in group_output_pair:
             group, output_folder = group_output_pair.split(":", maxsplit=1)
