@@ -264,7 +264,6 @@ def test_export_requirements_files(
 
         # Check the calls to subprocess.check_call
         expected_calls = [
-            call([PYTHON_EXECUTABLE, "-m", "poetry", "config", "warnings.export", "false"]),
             call(
                 [
                     PYTHON_EXECUTABLE,
@@ -279,7 +278,7 @@ def test_export_requirements_files(
                 ]
             ),
         ]
-        assert mock_subproc_call.call_count == 2
+        assert mock_subproc_call.call_count == 1
         mock_subproc_call.assert_has_calls(expected_calls, any_order=True)
 
 
@@ -292,7 +291,7 @@ def test_main(
         # Call the main function
         main()
         assert mock_subproc_call.called
-        assert mock_subproc_call.call_count == 13
+        assert mock_subproc_call.call_count == 12
 
 
 def test_main_no_install_dependencies(

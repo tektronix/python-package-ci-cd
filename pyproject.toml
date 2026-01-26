@@ -1,3 +1,9 @@
+[project]
+dynamic = ["version"]
+license = "Apache-2.0"
+name = "python-package-ci-cd"
+requires-python = "~=3.13.0"  # This needs to stay in sync with all CI workflows
+
 [tool]
 
 [tool.coverage.report]
@@ -27,15 +33,11 @@ wrap-descriptions = 100
 wrap-summaries = 0
 
 [tool.poetry]
-license = "Apache-2.0"
 package-mode = false
 version = "1.8.4"
 
-[tool.poetry.dependencies]
-python = "~3.13"  # This needs to stay in sync with all CI workflows
-
 [tool.poetry.group.actions-create_unique_testpypi_version.dependencies]
-poetry-core = "1.9.1"
+poetry-core = "2.3.0"
 pypi-simple = "1.8.0"
 tomli = "2.4.0"
 tomli-w = "1.2.0"
@@ -43,7 +45,7 @@ tomli-w = "1.2.0"
 [tool.poetry.group.actions-find_unreleased_changelog_items.dependencies]
 
 [tool.poetry.group.actions-update_development_dependencies.dependencies]
-poetry-plugin-export = "1.8.0"
+poetry-plugin-export = "1.10.0"
 pre-commit = "4.5.1"
 pypi-simple = "1.8.0"
 toml-sort = "0.24.3"
@@ -51,10 +53,10 @@ yamlfix = "1.19.1"
 
 [tool.poetry.group.dev.dependencies]
 pip = "^25.0"
-poetry = "^1.8.5"
-poetry-audit-plugin = "^0.4.0"
-poetry-plugin-export = "1.8.0"
-poetry-pre-commit-plugin = "^0.1.2"
+poetry = "^2.3.1"
+poetry-audit-plugin = "^1.0.0"
+poetry-plugin-export = "^1.10.0"
+poetry-pre-commit-plugin = "^0.2.2"
 pre-commit = "4.5.1"
 pylint = "4.0.4"
 pyright = {extras = ["nodejs"], version = "1.1.408"}
@@ -290,7 +292,7 @@ setenv =
     # Skip pre-commit checks that are not needed
     SKIP = file-contents-sorter
 commands_pre =
-    python -m poetry install --sync
+    python -m poetry sync
 commands =
     !tests: pre-commit run --all-files
     pytest -vv -k "not test_docs" --showlocals --cov --junitxml={tox_root}/.results_{envname}/results.xml --cov-report=term --cov-report=xml:{tox_root}/.coverage_{envname}.xml --cov-report=html:{tox_root}/.results_{envname}/html --self-contained-html --html={tox_root}/.results_{envname}/results.html
