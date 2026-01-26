@@ -5,8 +5,8 @@ certifi==2026.1.4
 charset-normalizer==3.4.4
 idna==3.11
 mailbits==0.2.3
-packaging==25.0
-poetry-core==1.9.1
+packaging==26.0
+poetry-core==2.3.0
 pydantic==2.12.5
 pydantic-core==2.41.5
 pypi-simple==1.8.0
@@ -15,4 +15,5 @@ soupsieve==2.8.3
 tomli==2.4.0
 tomli-w==1.2.0
 typing-extensions==4.15.0
+typing-inspection==0.4.2
 urllib3==2.6.3
