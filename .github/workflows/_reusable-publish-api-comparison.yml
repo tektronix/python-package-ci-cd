@@ -32,7 +32,7 @@ jobs:
           github-repository: ${{ github.repository }}
       - if: ${{ !endsWith(github.repository, '/python-package-ci-cd') }}  # Run the public action when this is run outside the python-package-ci-cd repository
         id: fetch-pr-number
-        uses: tektronix/python-package-ci-cd/actions/fetch_pr_number@v1.8.4
+        uses: tektronix/python-package-ci-cd/actions/fetch_pr_number@v1.8.5
         with:
           sha: ${{ github.event.workflow_run.head_sha }}
           github-repository: ${{ github.repository }}

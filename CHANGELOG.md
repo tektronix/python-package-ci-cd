@@ -24,6 +24,43 @@ Things to be included in the next release go here.
 
 ---
 
+## v1.8.5 (2026-01-27)
+
+### Merged Pull Requests
+
+- chore(gh-actions-deps): update actions/setup-python action to v6.2.0 in all dependant reusable workflows ([#831](https://github.com/tektronix/python-package-ci-cd/pull/831))
+- chore(pre-commit-deps): pre-commit autoupdate ([#800](https://github.com/tektronix/python-package-ci-cd/pull/800))
+- chore(gh-actions-deps): update anchore/sbom-action action to v0.22.0 in all dependant reusable workflows ([#828](https://github.com/tektronix/python-package-ci-cd/pull/828))
+- chore(gh-actions-deps): update anchore/scan-action action to v7.3.0 in all dependant reusable workflows ([#829](https://github.com/tektronix/python-package-ci-cd/pull/829))
+- Update poetry and dependencies to use Poetry v2 ([#827](https://github.com/tektronix/python-package-ci-cd/pull/827))
+- chore(python-deps): update dependency soupsieve to v2.8.3 in all dependant actions ([#824](https://github.com/tektronix/python-package-ci-cd/pull/824))
+- chore(python-deps): update dependency trove-classifiers to v2026 in all dependant actions ([#814](https://github.com/tektronix/python-package-ci-cd/pull/814))
+- chore(python-deps): update dependency soupsieve to v2.8.2 in all dependant actions ([#823](https://github.com/tektronix/python-package-ci-cd/pull/823))
+- chore(gh-actions-deps): update actions/setup-node action to v6.2.0 in all dependant reusable workflows ([#818](https://github.com/tektronix/python-package-ci-cd/pull/818))
+- chore(python-deps): update dependency tomlkit to v0.14.0 in all dependant actions ([#816](https://github.com/tektronix/python-package-ci-cd/pull/816))
+- chore(gh-actions-deps): update actions/checkout action to v6.0.2 in all dependant reusable workflows ([#820](https://github.com/tektronix/python-package-ci-cd/pull/820))
+- chore(gh-actions-deps): update actions/checkout action to v6.0.2 in dev workflows ([#821](https://github.com/tektronix/python-package-ci-cd/pull/821))
+- chore(gh-actions-deps): update actions/cache action to v5.0.2 in all dependant reusable workflows ([#819](https://github.com/tektronix/python-package-ci-cd/pull/819))
+- chore(python-deps): update dependency identify to v2.6.16 in all dependant actions ([#815](https://github.com/tektronix/python-package-ci-cd/pull/815))
+- chore(gh-actions-deps): update github/codeql-action action to v4.31.10 in all dependant reusable workflows ([#813](https://github.com/tektronix/python-package-ci-cd/pull/813))
+- chore(python-deps): update dependency tomli to v2.4.0 for actions/create_unique_testpypi_version and docs ([#812](https://github.com/tektronix/python-package-ci-cd/pull/812))
+- chore(python-deps): update dependency virtualenv to v20.36.1 [security] ([#811](https://github.com/tektronix/python-package-ci-cd/pull/811))
+- chore(python-deps): update dependency filelock to v3.20.3 [security] ([#810](https://github.com/tektronix/python-package-ci-cd/pull/810))
+- chore(python-deps): update dependency build to v1.4.0 in all dependant actions ([#809](https://github.com/tektronix/python-package-ci-cd/pull/809))
+- chore(gh-actions-deps): update anchore/sbom-action action to v0.21.1 in all dependant reusable workflows ([#807](https://github.com/tektronix/python-package-ci-cd/pull/807))
+- chore(gh-actions-deps): update anchore/scan-action action to v7.2.3 in all dependant reusable workflows ([#808](https://github.com/tektronix/python-package-ci-cd/pull/808))
+- chore(python-deps): update dependency pyright to v1.1.408 for dev ([#806](https://github.com/tektronix/python-package-ci-cd/pull/806))
+- chore(python-deps): update dependency virtualenv to v20.36.0 in all dependant actions ([#804](https://github.com/tektronix/python-package-ci-cd/pull/804))
+- chore(python-deps): update dependency certifi to v2026 in all dependant actions ([#803](https://github.com/tektronix/python-package-ci-cd/pull/803))
+- chore(python-deps): update dependency urllib3 to v2.6.3 [security] ([#802](https://github.com/tektronix/python-package-ci-cd/pull/802))
+- chore(python-deps): update dependency filelock to v3.20.2 in all dependant actions ([#801](https://github.com/tektronix/python-package-ci-cd/pull/801))
+
+### Changed
+
+- Bumped dependency versions.
+
+---
+
 ## v1.8.4 (2026-01-05)
 
 ### Merged Pull Requests

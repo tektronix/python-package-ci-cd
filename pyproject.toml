@@ -34,7 +34,7 @@ wrap-summaries = 0
 
 [tool.poetry]
 package-mode = false
-version = "1.8.4"
+version = "1.8.5"
 
 [tool.poetry.group.actions-create_unique_testpypi_version.dependencies]
 poetry-core = "2.3.0"
