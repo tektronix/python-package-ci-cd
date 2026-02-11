@@ -21,6 +21,7 @@ Things to be included in the next release go here.
 ### Changed
 
 - Bumped dependency versions.
+- Updated the `_reusable-sbom-scan` workflow to install a version of `setuptools` that provides access to `pkg_resources` to ensure subsequent installations of python packages can properly build.
 
 ---
 
