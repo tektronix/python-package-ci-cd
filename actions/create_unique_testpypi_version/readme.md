@@ -37,7 +37,7 @@ jobs:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
         with:
           fetch-depth: 0
-      - uses: tektronix/python-package-ci-cd/actions/create_unique_testpypi_version@v1.8.5
+      - uses: tektronix/python-package-ci-cd/actions/create_unique_testpypi_version@v1.9.0
         id: create-version
         with:
           package-name: my-package  # required

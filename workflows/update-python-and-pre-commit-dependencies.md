@@ -58,7 +58,7 @@ on:
 jobs:
   update-python-and-pre-commit-dependencies:
     if: ${{ github.actor == 'dependabot[bot]' && contains(github.head_ref, '/pip/') }}  # Only run the job for Dependabot PRs
-    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-update-python-and-pre-commit-dependencies.yml@v1.8.5
+    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-update-python-and-pre-commit-dependencies.yml@v1.9.0
     with:
       commit-user-name: 'User Name'
       commit-user-email: 'user-email'

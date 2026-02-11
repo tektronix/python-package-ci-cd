@@ -21,6 +21,37 @@ Things to be included in the next release go here.
 ### Changed
 
 - Bumped dependency versions.
+
+---
+
+## v1.9.0 (2026-02-11)
+
+### Merged Pull Requests
+
+- chore: update SBOM workflow to enable pre-installing user-specified python packages ([#853](https://github.com/tektronix/python-package-ci-cd/pull/853))
+- chore(python-deps): update dependency cryptography to v46.0.5 [security] ([#852](https://github.com/tektronix/python-package-ci-cd/pull/852))
+- chore(gh-actions-deps): update github/codeql-action action to v4.32.2 in all dependant reusable workflows ([#851](https://github.com/tektronix/python-package-ci-cd/pull/851))
+- chore(gh-actions-deps): update dawidd6/action-download-artifact action to v14 in all dependant reusable workflows ([#845](https://github.com/tektronix/python-package-ci-cd/pull/845))
+- chore(python-deps): update dependency pbs-installer to v2026.2.3 in all dependant actions ([#850](https://github.com/tektronix/python-package-ci-cd/pull/850))
+- chore(gh-actions-deps): update anchore/sbom-action action to v0.22.2 in all dependant reusable workflows ([#847](https://github.com/tektronix/python-package-ci-cd/pull/847))
+- chore(gh-actions-deps): update github/codeql-action action to v4.32.1 in all dependant reusable workflows ([#846](https://github.com/tektronix/python-package-ci-cd/pull/846))
+- chore(gh-actions-deps): update anchore/scan-action action to v7.3.2 in all dependant reusable workflows ([#848](https://github.com/tektronix/python-package-ci-cd/pull/848))
+- chore(python-deps): update poetry dependencies in all dependant actions ([#844](https://github.com/tektronix/python-package-ci-cd/pull/844))
+- chore(python-deps): update dependency rich to v14.3.2 in all dependant actions ([#843](https://github.com/tektronix/python-package-ci-cd/pull/843))
+- chore(gh-actions-deps): update dawidd6/action-download-artifact action to v13 in all dependant reusable workflows ([#842](https://github.com/tektronix/python-package-ci-cd/pull/842))
+- chore(gh-actions-deps): update actions/cache action to v5.0.3 in all dependant reusable workflows ([#840](https://github.com/tektronix/python-package-ci-cd/pull/840))
+- chore(python-deps): update dependency pip to v26 for dev ([#841](https://github.com/tektronix/python-package-ci-cd/pull/841))
+- chore(python-deps): update dependency pbs-installer to v2026.1.27 in all dependant actions ([#839](https://github.com/tektronix/python-package-ci-cd/pull/839))
+- chore(python-deps): update dependency cryptography to v46.0.4 in all dependant actions ([#837](https://github.com/tektronix/python-package-ci-cd/pull/837))
+- chore(gh-actions-deps): update anchore/sbom-action action to v0.22.1 in all dependant reusable workflows ([#835](https://github.com/tektronix/python-package-ci-cd/pull/835))
+- chore(gh-actions-deps): update actions/attest-build-provenance action to v3.2.0 in all dependant reusable workflows ([#833](https://github.com/tektronix/python-package-ci-cd/pull/833))
+- chore(gh-actions-deps): update github/codeql-action action to v4.32.0 in all dependant reusable workflows ([#834](https://github.com/tektronix/python-package-ci-cd/pull/834))
+- chore(gh-actions-deps): update anchore/scan-action action to v7.3.1 in all dependant reusable workflows ([#836](https://github.com/tektronix/python-package-ci-cd/pull/836))
+- chore(gh-actions-deps): update github/codeql-action action to v4.31.11 in all dependant reusable workflows ([#832](https://github.com/tektronix/python-package-ci-cd/pull/832))
+
+### Changed
+
+- Bumped dependency versions.
 - Updated the `sbom-scan` workflow to enable users to specify specific Python packages to install when setting up the environment via the new `pre-install-python-packages` input parameter.
 
 ---
