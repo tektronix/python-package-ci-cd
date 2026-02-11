@@ -2,6 +2,13 @@
 name: Create & Scan SBOM
 on:
   workflow_call:
+    inputs:
+      pre-install-python-packages:
+        description: Pre-install the specified Python packages before creating the
+          SBOM (this string will be directly passed to `pip install`).
+        required: false
+        type: string
+        default: ''
 permissions:
   security-events: write
   contents: write
@@ -17,8 +24,8 @@ jobs:
           python-version-file: pyproject.toml
       - name: Create lockfile and install dependencies
         run: |
-          pip install poetry
-          poetry install
+          python -m pip install --upgrade poetry ${{ inputs.pre-install-python-packages }}
+          python -m poetry sync
       - name: Create SBOM
         uses: anchore/sbom-action@28d71544de8eaf1b958d335707167c5f783590ad # v0.22.2
         with:

@@ -21,6 +21,7 @@ Things to be included in the next release go here.
 ### Changed
 
 - Bumped dependency versions.
+- Updated the `sbom-scan` workflow to enable users to specify specific Python packages to install when setting up the environment via the new `pre-install-python-packages` input parameter.
 
 ---
 

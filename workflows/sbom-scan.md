@@ -38,6 +38,12 @@ repository's Python package.
 > [!TIP]
 > See the [Workflow file][workflow-file] for implementation details.
 
+## Inputs
+
+| Input variable                | Necessity | Description                                                                                                                | Default |
+| ----------------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `pre-install-python-packages` | optional  | Pre-install the specified Python packages before creating the SBOM (this string will be directly passed to `pip install`). | ''      |
+
 ## Example
 
 ```yaml

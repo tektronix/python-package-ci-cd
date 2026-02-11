@@ -11,6 +11,8 @@ on:
 jobs:
   sbom-scan:
     uses: ./.github/workflows/_reusable-sbom-scan.yml
+    with:
+      pre-install-python-packages: setuptools wheel
     permissions:
       security-events: write
       contents: write

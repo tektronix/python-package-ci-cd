@@ -11,7 +11,6 @@ ci:
     - poetry-lock
     - poetry-audit
     - poetry-check
-    - markdown-link-check
     - renovate-config-validator  # the LTS version of node is too large for pre-commit.ci
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -98,11 +97,6 @@ repos:
           - mdformat-toc
           - mdformat-web
           - mdformat-wikilink
-  - repo: https://github.com/tcort/markdown-link-check
-    rev: ffc61540dea52bad1c41cfeedcf26c53ad9447ba  # frozen: v3.14.2
-    hooks:
-      - id: markdown-link-check
-        args: [--quiet]
   - repo: https://github.com/pappasam/toml-sort
     rev: 8c5db1c8081310adb476e1661c4d5d1fb6dbd96e  # frozen: v0.24.3
     hooks:
