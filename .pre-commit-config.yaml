@@ -11,7 +11,6 @@ ci:
     - poetry-lock
     - poetry-audit
     - poetry-check
-    - markdown-link-check
     - renovate-config-validator  # the LTS version of node is too large for pre-commit.ci
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
