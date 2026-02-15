@@ -66,7 +66,7 @@ soupsieve==2.8.3
 toml-sort==0.24.3
 tomlkit==0.14.0
 trove-classifiers==2026.1.14.14
-typer==0.21.1
+typer==0.21.2
 typing-extensions==4.15.0
 typing-inspection==0.4.2
 urllib3==2.6.3
