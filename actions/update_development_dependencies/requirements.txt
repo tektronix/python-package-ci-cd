@@ -17,7 +17,7 @@ distlib==0.4.0
 distro==1.9.0
 dulwich==0.25.2
 fastjsonschema==2.21.2
-filelock==3.20.3
+filelock==3.20.4
 findpython==0.7.1
 h11==0.16.0
 httpcore==1.0.9
