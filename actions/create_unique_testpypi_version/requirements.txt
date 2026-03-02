@@ -1,7 +1,7 @@
 annotated-types==0.7.0
 attrs==25.4.0
 beautifulsoup4==4.14.3
-certifi==2026.1.4
+certifi==2026.2.25
 charset-normalizer==3.4.4
 idna==3.11
 mailbits==0.2.3
