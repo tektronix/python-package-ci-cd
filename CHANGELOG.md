@@ -24,6 +24,33 @@ Things to be included in the next release go here.
 
 ---
 
+## v1.9.1 (2026-03-04)
+
+### Merged Pull Requests
+
+- chore(pre-commit-deps): pre-commit autoupdate ([#858](https://github.com/tektronix/python-package-ci-cd/pull/858))
+- chore(python-deps): update dependency certifi to v2026.2.25 in all dependant actions ([#878](https://github.com/tektronix/python-package-ci-cd/pull/878))
+- chore(gh-actions-deps): update github/codeql-action action to v4.32.4 in all dependant reusable workflows ([#874](https://github.com/tektronix/python-package-ci-cd/pull/874))
+- chore(python-deps): update dependency pylint to v4.0.5 for dev ([#873](https://github.com/tektronix/python-package-ci-cd/pull/873))
+- chore(gh-actions-deps): update actions/dependency-review-action action to v4.8.3 in dev workflows ([#872](https://github.com/tektronix/python-package-ci-cd/pull/872))
+- chore(python-deps): update dependency typer to v0.23.2 in all dependant actions ([#866](https://github.com/tektronix/python-package-ci-cd/pull/866))
+- chore(python-deps): update dependency rich to v14.3.3 in all dependant actions ([#871](https://github.com/tektronix/python-package-ci-cd/pull/871))
+- chore(gh-actions-deps): update github/codeql-action action to v4.32.3 in all dependant reusable workflows ([#865](https://github.com/tektronix/python-package-ci-cd/pull/865))
+- chore(python-deps): update dependency typer to v0.23.1 in all dependant actions ([#864](https://github.com/tektronix/python-package-ci-cd/pull/864))
+- chore(python-deps): update dependency pbs-installer to v2026.2.11 in all dependant actions ([#862](https://github.com/tektronix/python-package-ci-cd/pull/862))
+- chore(python-deps): update dependency filelock to v3.20.4 in all dependant actions ([#860](https://github.com/tektronix/python-package-ci-cd/pull/860))
+- chore(python-deps): update dependency platformdirs to v4.6.0 in all dependant actions ([#859](https://github.com/tektronix/python-package-ci-cd/pull/859))
+- chore(python-deps): update dependency typer to v0.23.0 in all dependant actions ([#857](https://github.com/tektronix/python-package-ci-cd/pull/857))
+- chore(python-deps): update dependency typer to v0.21.2 in all dependant actions ([#856](https://github.com/tektronix/python-package-ci-cd/pull/856))
+- chore(python-deps): update dependency setuptools to v82 in all dependant actions ([#855](https://github.com/tektronix/python-package-ci-cd/pull/855))
+- chore(python-deps): update dependency setuptools to v81 in all dependant actions ([#854](https://github.com/tektronix/python-package-ci-cd/pull/854))
+
+### Changed
+
+- Bumped dependency versions.
+
+---
+
 ## v1.9.0 (2026-02-11)
 
 ### Merged Pull Requests
