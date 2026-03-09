@@ -16,4 +16,4 @@ jobs:
         with:
           fail-on-severity: low
           comment-summary-in-pr: on-failure
-          show_patched_versions: true
+          show-patched-versions: true
