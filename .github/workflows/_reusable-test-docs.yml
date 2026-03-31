@@ -52,7 +52,7 @@ jobs:
         run: python -m pip install tox
       - name: Test
         run: tox -ve ${{ matrix.tox-env }}
-      - uses: vimtor/action-zip@1379ea20d4c5705669ba81fd626dd01b1c738f26  # v1.2
+      - uses: vimtor/action-zip@5407800dfb2b1b37d48df912330cb22f4ab6f422  # v1.3
         if: ${{ !cancelled() }}
         with:
           dest: ${{ matrix.tox-env }}_results.zip
