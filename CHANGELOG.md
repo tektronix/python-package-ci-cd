@@ -21,6 +21,7 @@ Things to be included in the next release go here.
 ### Changed
 
 - Bumped dependency versions.
+- Made the signing optional for the release workflow. This enables repos to use this workflow without the need for SSH signing keys if they don't require signed commits or tags.
 
 ---
 
