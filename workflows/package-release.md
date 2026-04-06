@@ -107,10 +107,10 @@ will be used to fill in the GitHub Release Notes.
 | Secret variable           | Necessity | Description                                                                                                                                                        |
 | ------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `checkout-token`          | required  | The token to use for checking out the repository, must have permissions to write back to the repository.                                                           |
-| `ssh-signing-key-private` | required  | A private SSH key associated with the account that owns the `checkout-token` that will be used to sign the commit and tag created by `python-semantic-release`.    |
-| `ssh-signing-key-public`  | required  | The public SSH key linked to the `secrets.ssh-signing-key-private` key that will be used to sign the commit and tag created by `python-semantic-release`.          |
-| `pypi-api-token`          | required  | The API token for the package on pypi.org. If `inputs.build-and-publish-python-package` is set to `true`, this input must be provided or the build will fail.      |
-| `test-pypi-api-token`     | required  | The API token for the package on test.pypi.org. If `inputs.build-and-publish-python-package` is set to `true`, this input must be provided or the build will fail. |
+| `ssh-signing-key-private` | optional  | A private SSH key associated with the account that owns the `checkout-token` that will be used to sign the commit and tag created by `python-semantic-release`.    |
+| `ssh-signing-key-public`  | optional  | The public SSH key linked to the `secrets.ssh-signing-key-private` key that will be used to sign the commit and tag created by `python-semantic-release`.          |
+| `pypi-api-token`          | optional  | The API token for the package on pypi.org. If `inputs.build-and-publish-python-package` is set to `true`, this input must be provided or the build will fail.      |
+| `test-pypi-api-token`     | optional  | The API token for the package on test.pypi.org. If `inputs.build-and-publish-python-package` is set to `true`, this input must be provided or the build will fail. |
 
 > [!CAUTION]
 > If a Python package is intended to be built and published, **the `pypi-api-token` and `test-pypi-api-token` secrets must be provided**.

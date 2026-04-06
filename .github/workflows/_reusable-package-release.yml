@@ -67,11 +67,11 @@ on:
       ssh-signing-key-private:
         description: A private SSH key associated with the account that owns the `checkout-token`
           that will be used to sign the commit and tag created by `python-semantic-release`.
-        required: true
+        required: false
       ssh-signing-key-public:
         description: The public SSH key linked to the `secrets.ssh-signing-key-private`
           key that will be used to sign the commit and tag created by `python-semantic-release`.
-        required: true
+        required: false
       pypi-api-token:
         description: The API token for the package on pypi.org. If `build-and-publish-python-package`
           is set to `true`, this input must be provided or the build will fail.
