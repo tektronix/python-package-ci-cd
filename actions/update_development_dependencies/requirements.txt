@@ -41,7 +41,7 @@ nodeenv==1.10.0
 packaging==26.0
 pbs-installer==2026.3.25
 pkginfo==1.12.1.2
-platformdirs==4.9.4
+platformdirs==4.9.6
 poetry==2.3.3
 poetry-core==2.3.2
 poetry-plugin-export==1.10.0
