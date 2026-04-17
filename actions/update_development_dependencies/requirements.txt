@@ -57,7 +57,7 @@ pyyaml==6.0.3
 rapidfuzz==3.14.5
 requests==2.33.1
 requests-toolbelt==1.0.0
-rich==14.3.4
+rich==15.0.0
 ruyaml==0.91.0
 secretstorage==3.5.0 ; sys_platform == "linux"
 setuptools==82.0.1
