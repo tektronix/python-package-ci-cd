@@ -1,8 +1,8 @@
 """Create a unique post-release version for test.pypi.org.
 
-This script will find the latest version of the package on test.pypi.org and create a new
-post-release version, incrementing the `.postN` version if necessary. It will then write that
-new version number back to the pyproject.toml file.
+This script will find the latest version of the package on test.pypi.org and create a new version,
+incrementing the `.postN` version if necessary. It will then write that new version number back to
+the pyproject.toml file.
 
 This script will also set the value of a GitHub Actions output variable named `new-version` to the
 newly created version number.
