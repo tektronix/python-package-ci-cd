@@ -5,7 +5,7 @@ certifi==2026.2.25
 charset-normalizer==3.4.7
 idna==3.11
 mailbits==0.2.3
-packaging==26.0
+packaging==26.1
 poetry-core==2.3.2
 pydantic==2.12.5
 pydantic-core==2.41.5
