@@ -38,7 +38,7 @@ mdurl==0.1.2
 more-itertools==11.0.2
 msgpack==1.1.2
 nodeenv==1.10.0
-packaging==26.0
+packaging==26.1
 pbs-installer==2026.4.7
 pkginfo==1.12.1.2
 platformdirs==4.9.6
