@@ -174,8 +174,6 @@ jobs:
         with:
           sha: 7a6fb39bda8ace8217530c3bc79407333462fc30
           github-repository: ${{ github.repository }}
-          max-attempts: 2
-          retry-delay: 2
       - name: Verify the PR number
         run: |
           if [ "${{ steps.fetch-pr-number-found.outputs.number }}" != "30" ]; then
@@ -190,8 +188,6 @@ jobs:
         with:
           sha: 9163270797352721c78d82054f6ead259f2f7366
           github-repository: ${{ github.repository }}
-          max-attempts: 2
-          retry-delay: 2
       - name: Verify the PR number from a fork
         run: |
           if [ "${{ steps.fetch-pr-number-found-fork.outputs.number }}" != "34" ]; then
