@@ -7,8 +7,8 @@ idna==3.13
 mailbits==0.2.3
 packaging==26.1
 poetry-core==2.3.2
-pydantic==2.12.5
-pydantic-core==2.41.5
+pydantic==2.13.3
+pydantic-core==2.46.3
 pypi-simple==1.8.0
 requests==2.33.1
 soupsieve==2.8.3
