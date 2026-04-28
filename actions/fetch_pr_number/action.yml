@@ -19,7 +19,7 @@ inputs:
     required: false
 outputs:
   number:
-    description: The pull request number.
+    description: The PR number.
     value: ${{ steps.fetch-pr.outputs.result }}
 runs:
   using: composite
@@ -27,123 +27,45 @@ runs:
     - name: Fetch PR number
       id: fetch-pr
       uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3  # v9.0.0
-      env:
-        INPUT_SHA: ${{ inputs.sha }}
-        INPUT_REPO: ${{ inputs.github-repository }}
-        INPUT_RETRY_DELAY: ${{ inputs.retry-delay }}
-        INPUT_MAX_ATTEMPTS: ${{ inputs.max-attempts }}
       with:
         script: |-
-          const sha = process.env.INPUT_SHA;
-          const repoFull = process.env.INPUT_REPO;
-          const maxAttempts = Number(process.env.INPUT_MAX_ATTEMPTS ?? '5');
-          const retryDelaySec = Number(process.env.INPUT_RETRY_DELAY ?? '120');
-          // Validate inputs
-          if (!sha) core.setFailed('Missing input: sha');
-          if (!repoFull || !repoFull.includes('/')) {
-            core.setFailed(`Invalid github-repository: "${repoFull}"`);
-          }
-          if (!Number.isFinite(maxAttempts) || maxAttempts < 1) {
-            core.setFailed(`Invalid max-attempts: "${process.env.INPUT_MAX_ATTEMPTS}"`);
-          }
-          if (!Number.isFinite(retryDelaySec) || retryDelaySec < 0) {
-            core.setFailed(`Invalid retry-delay: "${process.env.INPUT_RETRY_DELAY}"`);
-          }
-          const [owner, repo] = repoFull.split('/');
-          const shortSha = sha.substring(0, 7);
+          const maxAttempts = ${{ inputs.max-attempts }};
+          const retryDelaySeconds = ${{ inputs.retry-delay }};
+          const sha = '${{ inputs.sha }}';
+          const [owner, repo] = '${{ inputs.github-repository }}'.split('/');
+          let attempt = 0;
           let pullRequestNumber;
-          // Helper function to search PRs in a given state
-          async function searchPRsByState(state) {
-            const response = await github.rest.pulls.list({
-              owner, repo, state,
-              sort: 'updated',
-              direction: 'desc',
-              per_page: 50,
-            });
-            for (const pr of response.data || []) {
-              // Check head SHA
-              if (pr.head?.sha === sha) return pr.number;
-              // Check merge commit SHA
-              if (pr.merge_commit_sha === sha) return pr.number;
-              // Check merge commit message for orphaned commits (squash-merged)
-              if (pr.merge_commit_sha) {
-                try {
-                  const commit = await github.rest.repos.getCommit({
-                    owner, repo, ref: pr.merge_commit_sha,
-                  });
-                  if (commit.data?.commit?.message?.includes(shortSha)) {
-                    return pr.number;
-                  }
-                } catch (e) {
-                  core.debug(`Failed to check merge commit for PR #${pr.number}: ${e.message}`);
-                }
-              }
-            }
-            return null;
-          }
-          for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+          while (attempt < maxAttempts) {
             try {
-              core.info(`Attempt ${attempt}/${maxAttempts}: looking up PR for ${owner}/${repo}@${sha}`);
-              // Method 1: Search by SHA (most reliable)
-              try {
-                const result = await github.rest.search.issuesAndPullRequests({
-                  q: `repo:${owner}/${repo} is:pr sha:${sha}`,
-                });
-                if (result.data?.items?.length > 0) {
-                  pullRequestNumber = result.data.items[0].number;
-                  core.info(`Found PR #${pullRequestNumber} via search API`);
-                  break;
-                }
-              } catch (e) {
-                core.debug(`Search API failed: ${e.message}`);
+              // Use listPullRequestsAssociatedWithCommit instead of the deprecated
+              // search.issuesAndPullRequests endpoint. This endpoint also works for
+              // PRs from forks.
+              const response = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                owner,
+                repo,
+                commit_sha: sha,
+                per_page: 100,
+              });
+              const items = response.data;
+              if (items.length < 1) {
+                throw new Error(`No PRs found for commit ${sha}`);
               }
-              // Method 2: Commit association API
-              try {
-                const result = await github.rest.repos.listPullRequestsAssociatedWithCommit({
-                  owner, repo, commit_sha: sha, per_page: 10,
-                });
-                if (result.data?.length > 0) {
-                  pullRequestNumber = result.data[0].number;
-                  core.info(`Found PR #${pullRequestNumber} via commit association`);
-                  break;
-                }
-              } catch (e) {
-                core.debug(`Commit association failed: ${e.message}`);
-              }
-              // Method 3: Search closed PRs (handles squash-merged & orphaned commits)
-              try {
-                core.debug(`Searching closed PRs`);
-                const prNum = await searchPRsByState('closed');
-                if (prNum) {
-                  pullRequestNumber = prNum;
-                  core.info(`Found PR #${pullRequestNumber} in closed PRs`);
-                  break;
-                }
-              } catch (e) {
-                core.debug(`Closed PR search failed: ${e.message}`);
-              }
-              // Method 4: Search open PRs
-              try {
-                core.debug(`Searching open PRs`);
-                const prNum = await searchPRsByState('open');
-                if (prNum) {
-                  pullRequestNumber = prNum;
-                  core.info(`Found PR #${pullRequestNumber} in open PRs`);
-                  break;
-                }
-              } catch (e) {
-                core.debug(`Open PR search failed: ${e.message}`);
-              }
-              if (!pullRequestNumber) {
-                throw new Error('No PRs found matching the commit SHA');
-              }
-            } catch (err) {
-              core.warning(`Attempt ${attempt}/${maxAttempts} failed: ${err.message}`);
-              if (attempt < maxAttempts) {
-                core.info(`Waiting ${retryDelaySec} seconds before retrying...`);
-                await new Promise(r => setTimeout(r, retryDelaySec * 1000));
+              // Prefer an open PR; otherwise fall back to the most recently updated one.
+              const openPr = items.find(pr => pr.state === 'open');
+              const selectedPr = openPr || items.sort(
+                (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
+              )[0];
+              pullRequestNumber = selectedPr.number;
+              console.info("Pull request number is", pullRequestNumber);
+              break; // Exit loop on success
+            } catch (error) {
+              console.error(`Attempt ${attempt + 1} failed:`, error.message);
+              if (attempt < maxAttempts - 1) { // Check if not last attempt
+                console.log(`Waiting for ${retryDelaySeconds} seconds before retrying...`);
+                await new Promise(resolve => setTimeout(resolve, retryDelaySeconds * 1000));
               }
             }
+            attempt++;
           }
           if (!pullRequestNumber) {
             core.setFailed(`Failed to fetch PR number after ${maxAttempts} attempts`);
