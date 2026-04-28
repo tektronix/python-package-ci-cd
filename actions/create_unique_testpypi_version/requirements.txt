@@ -3,7 +3,7 @@ attrs==26.1.0
 beautifulsoup4==4.14.3
 certifi==2026.4.22
 charset-normalizer==3.4.7
-idna==3.12
+idna==3.13
 mailbits==0.2.3
 packaging==26.1
 poetry-core==2.3.2
