@@ -9,7 +9,7 @@ cffi==2.0.0 ; (platform_python_implementation != "PyPy" or sys_platform == "darw
 cfgv==3.5.0
 charset-normalizer==3.4.7
 cleo==2.1.0
-click==8.3.2
+click==8.3.3
 colorama==0.4.6 ; (os_name == "nt" or platform_system == "Windows" or sys_platform == "win32")
 crashtest==0.4.1
 cryptography==46.0.7 ; sys_platform == "linux"
