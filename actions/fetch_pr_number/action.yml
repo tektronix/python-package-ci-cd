@@ -32,27 +32,64 @@ runs:
           const maxAttempts = ${{ inputs.max-attempts }};
           const retryDelaySeconds = ${{ inputs.retry-delay }};
           const sha = '${{ inputs.sha }}';
-          const [owner, repo] = '${{ inputs.github-repository }}'.split('/');
+          const repository = '${{ inputs.github-repository }}';
+          const [owner, repo] = repository.split('/');
           let attempt = 0;
           let pullRequestNumber;
           while (attempt < maxAttempts) {
             try {
-              // Use listPullRequestsAssociatedWithCommit instead of the deprecated
-              // search.issuesAndPullRequests endpoint. This endpoint also works for
-              // PRs from forks.
-              const response = await github.rest.repos.listPullRequestsAssociatedWithCommit({
-                owner,
-                repo,
-                commit_sha: sha,
-                per_page: 100,
-              });
-              const items = response.data;
-              if (items.length < 1) {
+              // First, try the REST endpoint that lists PRs associated with a commit.
+              // This is fast and reliable for same-repo PRs, but it can miss PRs from
+              // forks (e.g. when triggered via workflow_run with head_sha pointing at
+              // a fork commit), so we fall back to GraphQL search in that case.
+              let prs = [];
+              try {
+                const restResponse = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                  owner,
+                  repo,
+                  commit_sha: sha,
+                  per_page: 100,
+                });
+                prs = restResponse.data.map(pr => ({
+                  number: pr.number,
+                  state: pr.state,
+                  updated_at: pr.updated_at,
+                }));
+              } catch (restError) {
+                console.warn(`REST lookup failed, will try GraphQL search:`, restError.message);
+              }
+              if (prs.length < 1) {
+                // Fall back to GraphQL search, which still supports the `sha:` qualifier
+                // and finds PRs from forks. This replaces the deprecated REST
+                // search.issuesAndPullRequests endpoint.
+                const graphqlResponse = await github.graphql(
+                  `query($q: String!) {
+                    search(query: $q, type: ISSUE, first: 100) {
+                      nodes {
+                        ... on PullRequest {
+                          number
+                          state
+                          updatedAt
+                        }
+                      }
+                    }
+                  }`,
+                  { q: `repo:${repository} is:pr sha:${sha}` }
+                );
+                prs = (graphqlResponse.search.nodes || [])
+                  .filter(n => n && typeof n.number === 'number')
+                  .map(n => ({
+                    number: n.number,
+                    state: (n.state || '').toLowerCase(),
+                    updated_at: n.updatedAt,
+                  }));
+              }
+              if (prs.length < 1) {
                 throw new Error(`No PRs found for commit ${sha}`);
               }
               // Prefer an open PR; otherwise fall back to the most recently updated one.
-              const openPr = items.find(pr => pr.state === 'open');
-              const selectedPr = openPr || items.sort(
+              const openPr = prs.find(pr => pr.state === 'open');
+              const selectedPr = openPr || prs.sort(
                 (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
               )[0];
               pullRequestNumber = selectedPr.number;
