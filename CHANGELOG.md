@@ -18,6 +18,10 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Fixed
+
+- Fixed the `fetch_pr_number` action to properly fetch PR numbers after recent GitHub API changes.
+
 ### Changed
 
 - Bumped dependency versions.
