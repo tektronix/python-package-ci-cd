@@ -111,15 +111,23 @@ runs:
               //    after a squash-merge dropped them from the base branch
               //    (typical for merged Dependabot PRs and merged fork PRs).
               //
-              //    For PRs whose current head.sha doesn't match (e.g. fork PRs
-              //    where we're looking for an *intermediate* commit on the
+              //    For PRs from forks whose current head.sha doesn't match
+              //    (e.g. when looking for an *intermediate* commit on the
               //    fork branch, not the latest head or the squash-merge),
-              //    collect the PR as a candidate and, after the cheap pass,
-              //    inspect its commit list via pulls.listCommits.
+              //    collect the PR as a fork candidate and, after the cheap
+              //    pass, inspect its commit list via pulls.listCommits.
               if (prs.length < 1) {
-                const maxPages = 20; // up to 2000 PRs scanned in the cheap pass
-                const maxDeepInspect = 50; // cap on listCommits calls
-                const candidates = [];
+                const baseRepoLower = repository.toLowerCase();
+                // Quick pass scans up to maxQuickPages*100 PRs on head/merge SHA.
+                const maxQuickPages = 50; // up to 5000 PRs scanned in the cheap pass
+                // Deep inspection is restricted to fork PRs (where head repo
+                // differs from the base repo). Non-fork PRs that don't match
+                // head/merge SHA in the quick pass cannot match an
+                // intermediate commit either, because their intermediate
+                // commits would have been resolved by step 1 or 2 (they live
+                // in the base repo's object DB and are reachable via PR refs).
+                const forkCandidates = [];
+                const maxDeepInspect = 200; // cap on listCommits calls
                 try {
                   const iterator = github.paginate.iterator(github.rest.pulls.list, {
                     owner,
@@ -138,22 +146,26 @@ runs:
                         prs = [normalize(pr)];
                         break outer;
                       }
-                      candidates.push(pr);
+                      const headRepoFullName =
+                        (pr.head && pr.head.repo && pr.head.repo.full_name) || '';
+                      if (headRepoFullName
+                        && headRepoFullName.toLowerCase() !== baseRepoLower) {
+                        forkCandidates.push(pr);
+                      }
                     }
-                    if (page >= maxPages) {
+                    if (page >= maxQuickPages) {
                       break;
                     }
                   }
                 } catch (paginateError) {
                   console.warn(`PR pagination lookup failed:`, paginateError.message);
                 }
-                // Deep inspection: for the first N candidates, fetch the PR's
-                // full commit list and look for the target SHA. This resolves
-                // intermediate commits on a PR branch (most relevant for fork
-                // PRs whose intermediate commits are not addressable via the
-                // base repo's branch tips).
-                if (prs.length < 1 && candidates.length > 0) {
-                  const toInspect = candidates.slice(0, maxDeepInspect);
+                // Deep inspection of fork PRs only: fetch the PR's full
+                // commit list and look for the target SHA. This resolves
+                // intermediate commits on a fork PR's head branch, which
+                // are not addressable via the base repo's branch tips.
+                if (prs.length < 1 && forkCandidates.length > 0) {
+                  const toInspect = forkCandidates.slice(0, maxDeepInspect);
                   for (const pr of toInspect) {
                     try {
                       const commitsIterator = github.paginate.iterator(
