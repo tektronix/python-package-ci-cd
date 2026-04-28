@@ -34,15 +34,50 @@ runs:
           const sha = '${{ inputs.sha }}';
           const repository = '${{ inputs.github-repository }}';
           const [owner, repo] = repository.split('/');
+          // Try to discover head-repo / head-branch automatically. When this
+          // action is invoked from a `workflow_run`-triggered workflow (the
+          // typical use case for fork PR support), the payload contains a
+          // `workflow_run` object with the head repo and branch we need.
+          let headRepoFullName = '';
+          let headBranch = '';
+          const wr = (context.payload && context.payload.workflow_run) || null;
+          if (wr) {
+            headRepoFullName = (wr.head_repository && wr.head_repository.full_name) || '';
+            headBranch = wr.head_branch || '';
+          }
+          // Fallback: if we still don't know, ask the API about the current run
+          // and walk back to the triggering workflow_run if any. This also helps
+          // when the action is nested inside a reusable workflow.
+          if ((!headRepoFullName || !headBranch) && process.env.GITHUB_RUN_ID) {
+            try {
+              const runResp = await github.rest.actions.getWorkflowRun({
+                owner,
+                repo,
+                run_id: Number(process.env.GITHUB_RUN_ID),
+              });
+              const triggering = runResp.data.triggering_actor ? runResp.data : null;
+              // Prefer referenced workflow_run head info if present, else use this run's head info.
+              headRepoFullName = headRepoFullName
+                || (runResp.data.head_repository && runResp.data.head_repository.full_name)
+                || '';
+              headBranch = headBranch || runResp.data.head_branch || '';
+            } catch (lookupError) {
+              console.warn(`Could not auto-discover head repo/branch:`, lookupError.message);
+            }
+          }
           let attempt = 0;
           let pullRequestNumber;
+          // Helper: normalize a PR-like object into our common shape.
+          const normalize = (pr) => ({
+            number: pr.number,
+            state: (pr.state || '').toLowerCase(),
+            updated_at: pr.updated_at || pr.updatedAt,
+          });
           while (attempt < maxAttempts) {
             try {
-              // First, try the REST endpoint that lists PRs associated with a commit.
-              // This is fast and reliable for same-repo PRs, but it can miss PRs from
-              // forks (e.g. when triggered via workflow_run with head_sha pointing at
-              // a fork commit), so we fall back to GraphQL search in that case.
               let prs = [];
+              // 1. REST: list PRs associated with the commit in the BASE repo.
+              //    Works for same-repo PRs and merged PRs.
               try {
                 const restResponse = await github.rest.repos.listPullRequestsAssociatedWithCommit({
                   owner,
@@ -50,39 +85,78 @@ runs:
                   commit_sha: sha,
                   per_page: 100,
                 });
-                prs = restResponse.data.map(pr => ({
-                  number: pr.number,
-                  state: pr.state,
-                  updated_at: pr.updated_at,
-                }));
+                prs = restResponse.data.map(normalize);
               } catch (restError) {
-                console.warn(`REST lookup failed, will try GraphQL search:`, restError.message);
+                console.warn(`Base-repo REST lookup failed:`, restError.message);
               }
+              // 2. REST: same lookup against the HEAD repo (the fork), where
+              //    the commit actually lives for fork-based PRs.
+              if (prs.length < 1 && headRepoFullName && headRepoFullName.includes('/')) {
+                const [headOwner, headRepo] = headRepoFullName.split('/');
+                try {
+                  const headRestResponse = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                    owner: headOwner,
+                    repo: headRepo,
+                    commit_sha: sha,
+                    per_page: 100,
+                  });
+                  // Only keep PRs that target the base repository we care about.
+                  prs = headRestResponse.data
+                    .filter(pr => pr.base
+                      && pr.base.repo
+                      && pr.base.repo.full_name
+                      && pr.base.repo.full_name.toLowerCase() === repository.toLowerCase())
+                    .map(normalize);
+                } catch (headRestError) {
+                  console.warn(`Head-repo REST lookup failed:`, headRestError.message);
+                }
+              }
+              // 3. GraphQL search by SHA. Replaces the deprecated REST
+              //    search.issuesAndPullRequests endpoint and can find some
+              //    fork PRs that the REST endpoints miss.
               if (prs.length < 1) {
-                // Fall back to GraphQL search, which still supports the `sha:` qualifier
-                // and finds PRs from forks. This replaces the deprecated REST
-                // search.issuesAndPullRequests endpoint.
-                const graphqlResponse = await github.graphql(
-                  `query($q: String!) {
-                    search(query: $q, type: ISSUE, first: 100) {
-                      nodes {
-                        ... on PullRequest {
-                          number
-                          state
-                          updatedAt
+                try {
+                  const graphqlResponse = await github.graphql(
+                    `query($q: String!) {
+                      search(query: $q, type: ISSUE, first: 100) {
+                        nodes {
+                          ... on PullRequest {
+                            number
+                            state
+                            updatedAt
+                          }
                         }
                       }
-                    }
-                  }`,
-                  { q: `repo:${repository} is:pr sha:${sha}` }
-                );
-                prs = (graphqlResponse.search.nodes || [])
-                  .filter(n => n && typeof n.number === 'number')
-                  .map(n => ({
-                    number: n.number,
-                    state: (n.state || '').toLowerCase(),
-                    updated_at: n.updatedAt,
-                  }));
+                    }`,
+                    { q: `repo:${repository} is:pr sha:${sha}` }
+                  );
+                  prs = (graphqlResponse.search.nodes || [])
+                    .filter(n => n && typeof n.number === 'number')
+                    .map(normalize);
+                } catch (graphqlError) {
+                  console.warn(`GraphQL search failed:`, graphqlError.message);
+                }
+              }
+              // 4. List PRs by head branch (head_owner:head_branch) and pick
+              //    the one whose head SHA matches. This is the canonical
+              //    workaround for fork PRs in `workflow_run` workflows.
+              if (prs.length < 1 && headRepoFullName && headRepoFullName.includes('/') && headBranch) {
+                const headOwner = headRepoFullName.split('/')[0];
+                try {
+                  const listResponse = await github.rest.pulls.list({
+                    owner,
+                    repo,
+                    state: 'all',
+                    head: `${headOwner}:${headBranch}`,
+                    per_page: 100,
+                  });
+                  let matched = listResponse.data.filter(pr => pr.head && pr.head.sha === sha);
+                  // If no exact SHA match (e.g. branch was force-pushed since),
+                  // fall back to any PR for this head branch.
+                  prs = (matched.length > 0 ? matched : listResponse.data).map(normalize);
+                } catch (listError) {
+                  console.warn(`Head-branch PR list lookup failed:`, listError.message);
+                }
               }
               if (prs.length < 1) {
                 throw new Error(`No PRs found for commit ${sha}`);
