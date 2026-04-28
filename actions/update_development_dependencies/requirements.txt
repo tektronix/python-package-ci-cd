@@ -2,7 +2,7 @@ annotated-types==0.7.0
 anyio==4.13.0
 attrs==26.1.0
 beautifulsoup4==4.14.3
-build==1.4.3
+build==1.4.4
 cachecontrol==0.14.4
 certifi==2026.4.22
 cffi==2.0.0 ; (platform_python_implementation != "PyPy" or sys_platform == "darwin") and (sys_platform == "linux" or sys_platform == "darwin")
