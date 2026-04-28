@@ -55,6 +55,7 @@ runs:
               core.info(
                 `Attempt ${attempt}/${maxAttempts}: looking up PR for ${owner}/${repo}@${sha}`
               );
+              // First try: get commit details to find associated PRs
               const response =
                 await github.rest.repos.listPullRequestsAssociatedWithCommit({
                   owner,
@@ -62,12 +63,23 @@ runs:
                   commit_sha: sha,
                   per_page: 1,
                 });
-              if (!response.data || response.data.length === 0) {
-                throw new Error('No PRs associated with commit yet');
+              if (response.data && response.data.length > 0) {
+                pullRequestNumber = response.data[0].number;
+                core.info(`Found PR #${pullRequestNumber} via commit association`);
+                break;
               }
-              pullRequestNumber = response.data[0].number;
-              core.info(`Found PR #${pullRequestNumber}`);
-              break;
+              // Fallback: search by commit SHA in PR list
+              core.info(`No direct commit association found, searching PRs by head SHA`);
+              const searchResponse = await github.rest.search.issuesAndPullRequests({
+                q: `repo:${owner}/${repo} is:pr sha:${sha}`,
+                per_page: 1,
+              });
+              if (searchResponse.data && searchResponse.data.items && searchResponse.data.items.length > 0) {
+                pullRequestNumber = searchResponse.data.items[0].number;
+                core.info(`Found PR #${pullRequestNumber} via search`);
+                break;
+              }
+              throw new Error('No PRs associated with commit');
             } catch (err) {
               core.warning(`Attempt ${attempt} failed: ${err.message}`);
               if (attempt < maxAttempts) {
