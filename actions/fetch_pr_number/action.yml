@@ -110,8 +110,16 @@ runs:
               //    miss, e.g. commits that only exist on `refs/pull/N/head`
               //    after a squash-merge dropped them from the base branch
               //    (typical for merged Dependabot PRs and merged fork PRs).
+              //
+              //    For PRs whose current head.sha doesn't match (e.g. fork PRs
+              //    where we're looking for an *intermediate* commit on the
+              //    fork branch, not the latest head or the squash-merge),
+              //    collect the PR as a candidate and, after the cheap pass,
+              //    inspect its commit list via pulls.listCommits.
               if (prs.length < 1) {
-                const maxPages = 20; // up to 2000 PRs
+                const maxPages = 20; // up to 2000 PRs scanned in the cheap pass
+                const maxDeepInspect = 50; // cap on listCommits calls
+                const candidates = [];
                 try {
                   const iterator = github.paginate.iterator(github.rest.pulls.list, {
                     owner,
@@ -130,6 +138,7 @@ runs:
                         prs = [normalize(pr)];
                         break outer;
                       }
+                      candidates.push(pr);
                     }
                     if (page >= maxPages) {
                       break;
@@ -137,6 +146,35 @@ runs:
                   }
                 } catch (paginateError) {
                   console.warn(`PR pagination lookup failed:`, paginateError.message);
+                }
+                // Deep inspection: for the first N candidates, fetch the PR's
+                // full commit list and look for the target SHA. This resolves
+                // intermediate commits on a PR branch (most relevant for fork
+                // PRs whose intermediate commits are not addressable via the
+                // base repo's branch tips).
+                if (prs.length < 1 && candidates.length > 0) {
+                  const toInspect = candidates.slice(0, maxDeepInspect);
+                  for (const pr of toInspect) {
+                    try {
+                      const commitsIterator = github.paginate.iterator(
+                        github.rest.pulls.listCommits,
+                        { owner, repo, pull_number: pr.number, per_page: 100 }
+                      );
+                      let matched = false;
+                      for await (const { data } of commitsIterator) {
+                        if (data.some(c => c.sha === sha)) {
+                          matched = true;
+                          break;
+                        }
+                      }
+                      if (matched) {
+                        prs = [normalize(pr)];
+                        break;
+                      }
+                    } catch (commitsError) {
+                      console.warn(`pulls.listCommits failed for PR #${pr.number}:`, commitsError.message);
+                    }
+                  }
                 }
               }
               if (prs.length < 1) {
