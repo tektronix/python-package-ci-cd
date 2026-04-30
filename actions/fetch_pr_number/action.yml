@@ -82,13 +82,14 @@ runs:
               // NEWEST PR that currently contains it on its branch (e.g.
               // when a later PR was rebased on top of an earlier one from
               // the same fork).
-              const candidatesByNumber = new Map(); // number -> { normalized, headRepoFullName }
+              const candidatesByNumber = new Map(); // number -> { normalized, headRepoFullName, headRef }
               const addCandidateFromGraphql = (n) => {
                 if (typeof n.number === 'number' && !candidatesByNumber.has(n.number)) {
                   candidatesByNumber.set(n.number, {
                     normalized: normalize(n),
                     headRepoFullName:
                       (n.headRepository && n.headRepository.nameWithOwner) || '',
+                    headRef: '', // GraphQL query doesn't fetch this; resolved later if needed
                   });
                 }
               };
@@ -98,6 +99,7 @@ runs:
                     normalized: normalize(pr),
                     headRepoFullName:
                       (pr.head && pr.head.repo && pr.head.repo.full_name) || '',
+                    headRef: (pr.head && pr.head.ref) || '',
                   });
                 }
               };
@@ -205,21 +207,37 @@ runs:
               //    superset of the others and is the most specific / most
               //    recent owner of the commit. Tiebreaker: highest PR
               //    number.
-              const maxDeepInspect = 200; // cap on listCommits calls
+              const maxDeepInspect = 10; // hard cap to stay under GitHub's secondary rate limit
               const baseRepoLowerForFork = repository.toLowerCase();
               // Determine if the single candidate from steps 1/2 is a fork PR,
-              // and remember the fork owner so we can look up sibling fork PRs.
-              // We use the headRepoFullName already captured during steps 1/2
-              // to avoid an extra REST round-trip.
+              // and remember the fork owner + head branch so we can look up
+              // sibling PRs from the SAME fork branch only. We use the data
+              // already captured during steps 1/2 to avoid an extra REST
+              // round-trip (GraphQL doesn't fetch head ref though, so we may
+              // need one pulls.get to learn the branch name).
               let singleCandidateIsFork = false;
               let singleCandidateForkOwner = null;
+              let singleCandidateHeadRef = null;
               if (prs.length === 1) {
                 const cached = candidatesByNumber.get(prs[0].number);
-                const headRepo = (cached && cached.headRepoFullName) || '';
+                let headRepo = (cached && cached.headRepoFullName) || '';
+                let headRef = (cached && cached.headRef) || '';
+                // If headRef wasn't captured (GraphQL-only candidate), fetch it.
+                if (headRepo && !headRef) {
+                  try {
+                    const detail = await github.rest.pulls.get({
+                      owner, repo, pull_number: prs[0].number,
+                    });
+                    headRepo = (detail.data.head && detail.data.head.repo
+                      && detail.data.head.repo.full_name) || headRepo;
+                    headRef = (detail.data.head && detail.data.head.ref) || '';
+                  } catch (_) { /* ignore */ }
+                }
                 if (headRepo
                   && headRepo.toLowerCase() !== baseRepoLowerForFork) {
                   singleCandidateIsFork = true;
                   singleCandidateForkOwner = headRepo.split('/')[0];
+                  singleCandidateHeadRef = headRef || null;
                 }
               }
               const needsDeepInspect = prs.length > 1
@@ -232,19 +250,20 @@ runs:
                 let poolEntries;
                 if (prs.length >= 1) {
                   // Start with the existing candidate(s) and ALSO look for
-                  // sibling PRs from the SAME fork owner that may be a
-                  // superset of the existing candidate. We query directly
-                  // by head owner instead of paginating all PRs, because
-                  // active repos have far too many same-repo PRs to scan
-                  // through looking for the fork PRs we care about.
+                  // sibling PRs from the SAME fork branch. We filter by the
+                  // exact head ref (owner:branch) so we get only PRs whose
+                  // head branch is the one that actually contains the
+                  // commit — not every PR the fork owner has ever opened.
+                  // This keeps the API call count tiny and avoids triggering
+                  // GitHub's secondary rate limit.
                   const existingNumbers = new Set(prs.map(p => p.number));
                   poolEntries = prs.map(p => ({ number: p.number, prObj: null }));
-                  if (singleCandidateForkOwner) {
+                  if (singleCandidateForkOwner && singleCandidateHeadRef) {
                     try {
                       const siblings = await github.paginate(github.rest.pulls.list, {
                         owner, repo,
                         state: 'all',
-                        head: singleCandidateForkOwner,
+                        head: `${singleCandidateForkOwner}:${singleCandidateHeadRef}`,
                         per_page: 100,
                       });
                       for (const pr of siblings) {
@@ -261,10 +280,12 @@ runs:
                     .slice(0, maxDeepInspect)
                     .map(p => ({ number: p.number, prObj: p }));
                 }
-                // Run listCommits in parallel for all pool entries. Each
-                // worker also short-circuits its own pagination as soon as
-                // the SHA is found AND the PR's head/last commit is known.
-                const inspectOne = async (entry) => {
+                // Run listCommits SERIALLY for all pool entries. Parallel
+                // requests trigger GitHub's secondary rate limit (HTTP 403)
+                // when the pool has more than a couple of PRs. Each inspection
+                // is short-circuited by the head-SHA fast path when possible.
+                const matches = [];
+                for (const entry of poolEntries.slice(0, maxDeepInspect)) {
                   try {
                     let prObj = entry.prObj;
                     if (!prObj) {
@@ -274,17 +295,18 @@ runs:
                       prObj = detail.data;
                     }
                     const headSha = prObj && prObj.head && prObj.head.sha;
-                    // Fast path: if the PR's head IS the SHA, we can skip
-                    // listing commits entirely — this is the strongest
-                    // possible match.
+                    // Fast path: if the PR's head IS the SHA, skip listing
+                    // commits entirely and stop scanning further PRs — this
+                    // is the strongest possible match.
                     if (headSha === sha) {
-                      return {
+                      matches.push({
                         number: entry.number,
                         normalized: normalize(prObj),
                         totalCount: prObj.commits || 1,
                         isHead: true,
                         isLast: true,
-                      };
+                      });
+                      break;
                     }
                     const commitsIterator = github.paginate.iterator(
                       github.rest.pulls.listCommits,
@@ -302,23 +324,19 @@ runs:
                         matched = true;
                       }
                     }
-                    if (!matched) return null;
-                    return {
-                      number: entry.number,
-                      normalized: normalize(prObj),
-                      totalCount,
-                      isHead: false,
-                      isLast: lastCommitSha === sha,
-                    };
+                    if (matched) {
+                      matches.push({
+                        number: entry.number,
+                        normalized: normalize(prObj),
+                        totalCount,
+                        isHead: false,
+                        isLast: lastCommitSha === sha,
+                      });
+                    }
                   } catch (commitsError) {
                     console.warn(`Deep inspect failed for PR #${entry.number}:`, commitsError.message);
-                    return null;
                   }
-                };
-                const results = await Promise.all(
-                  poolEntries.slice(0, maxDeepInspect).map(inspectOne)
-                );
-                const matches = results.filter(Boolean);
+                }
                 if (matches.length > 0) {
                   matches.sort((a, b) => {
                     // Strongest signal: PR's current head equals the SHA.
