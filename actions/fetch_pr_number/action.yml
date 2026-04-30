@@ -51,6 +51,9 @@ runs:
           //   - commits that originated on a fork.
           // It replaces the deprecated REST search.issuesAndPullRequests
           // endpoint which previously powered this action.
+          //
+          // We also fetch headRepository so we can detect fork PRs without an
+          // extra REST round-trip later.
           const associatedPullRequestsQuery = `
             query($owner: String!, $repo: String!, $sha: GitObjectID!) {
               repository(owner: $owner, name: $repo) {
@@ -62,6 +65,7 @@ runs:
                         state
                         updatedAt
                         baseRepository { nameWithOwner }
+                        headRepository { nameWithOwner }
                       }
                     }
                   }
@@ -70,7 +74,35 @@ runs:
             }`;
           while (attempt < maxAttempts) {
             try {
-              let prs = [];
+              // Collect candidate PRs from multiple sources, then pick the
+              // best one. We do NOT return immediately on the first source
+              // that yields a result, because GitHub's authoritative
+              // commit-to-PR attribution can point at the OLDEST PR that
+              // introduced the commit, while callers typically want the
+              // NEWEST PR that currently contains it on its branch (e.g.
+              // when a later PR was rebased on top of an earlier one from
+              // the same fork).
+              const candidatesByNumber = new Map(); // number -> { normalized, headRepoFullName, headRef }
+              const addCandidateFromGraphql = (n) => {
+                if (typeof n.number === 'number' && !candidatesByNumber.has(n.number)) {
+                  candidatesByNumber.set(n.number, {
+                    normalized: normalize(n),
+                    headRepoFullName:
+                      (n.headRepository && n.headRepository.nameWithOwner) || '',
+                    headRef: '', // GraphQL query doesn't fetch this; resolved later if needed
+                  });
+                }
+              };
+              const addCandidateFromRest = (pr) => {
+                if (typeof pr.number === 'number' && !candidatesByNumber.has(pr.number)) {
+                  candidatesByNumber.set(pr.number, {
+                    normalized: normalize(pr),
+                    headRepoFullName:
+                      (pr.head && pr.head.repo && pr.head.repo.full_name) || '',
+                    headRef: (pr.head && pr.head.ref) || '',
+                  });
+                }
+              };
               // 1. GraphQL associatedPullRequests on the commit object.
               try {
                 const graphqlResponse = await github.graphql(
@@ -79,55 +111,47 @@ runs:
                 );
                 const commit = graphqlResponse.repository && graphqlResponse.repository.object;
                 const nodes = (commit && commit.associatedPullRequests && commit.associatedPullRequests.nodes) || [];
-                prs = nodes
+                nodes
                   .filter(n => n && typeof n.number === 'number')
                   // Only keep PRs whose base is the repository we care about.
                   .filter(n => !n.baseRepository
                     || (n.baseRepository.nameWithOwner || '').toLowerCase() === repository.toLowerCase())
-                  .map(normalize);
+                  .forEach(addCandidateFromGraphql);
               } catch (graphqlError) {
                 console.warn(`GraphQL associatedPullRequests lookup failed:`, graphqlError.message);
               }
-              // 2. REST fallback: list PRs associated with the commit. This is
-              //    redundant with (1) for most cases but cheap insurance if the
-              //    GraphQL call ever degrades.
-              if (prs.length < 1) {
-                try {
-                  const restResponse = await github.rest.repos.listPullRequestsAssociatedWithCommit({
-                    owner,
-                    repo,
-                    commit_sha: sha,
-                    per_page: 100,
-                  });
-                  prs = restResponse.data.map(normalize);
-                } catch (restError) {
-                  console.warn(`REST associated-PRs lookup failed:`, restError.message);
-                }
+              // 2. REST: list PRs associated with the commit. Often returns
+              //    the same set as (1) but occasionally surfaces additional
+                //    PRs (or vice versa).
+              try {
+                const restResponse = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                  owner,
+                  repo,
+                  commit_sha: sha,
+                  per_page: 100,
+                });
+                restResponse.data.forEach(addCandidateFromRest);
+              } catch (restError) {
+                console.warn(`REST associated-PRs lookup failed:`, restError.message);
               }
-              // 3. Final fallback: paginate through PRs (newest first) and
-              //    match the SHA against each PR's head.sha or
-              //    merge_commit_sha. This catches cases the previous lookups
-              //    miss, e.g. commits that only exist on `refs/pull/N/head`
+              let prs = Array.from(candidatesByNumber.values()).map(v => v.normalized);
+              // 3. Final fallback: if neither (1) nor (2) found anything,
+              //    paginate through PRs (newest first) and match the SHA
+              //    against each PR's head.sha or merge_commit_sha. This
+              //    catches commits that only exist on `refs/pull/N/head`
               //    after a squash-merge dropped them from the base branch
               //    (typical for merged Dependabot PRs and merged fork PRs).
               //
               //    For PRs from forks whose current head.sha doesn't match
               //    (e.g. when looking for an *intermediate* commit on the
               //    fork branch, not the latest head or the squash-merge),
-              //    collect the PR as a fork candidate and, after the cheap
-              //    pass, inspect its commit list via pulls.listCommits.
+              //    collect the PR as a fork candidate and inspect its
+              //    commit list via pulls.listCommits below.
+              const forkCandidates = [];
               if (prs.length < 1) {
                 const baseRepoLower = repository.toLowerCase();
                 // Quick pass scans up to maxQuickPages*100 PRs on head/merge SHA.
                 const maxQuickPages = 50; // up to 5000 PRs scanned in the cheap pass
-                // Deep inspection is restricted to fork PRs (where head repo
-                // differs from the base repo). Non-fork PRs that don't match
-                // head/merge SHA in the quick pass cannot match an
-                // intermediate commit either, because their intermediate
-                // commits would have been resolved by step 1 or 2 (they live
-                // in the base repo's object DB and are reachable via PR refs).
-                const forkCandidates = [];
-                const maxDeepInspect = 200; // cap on listCommits calls
                 try {
                   const iterator = github.paginate.iterator(github.rest.pulls.list, {
                     owner,
@@ -160,43 +184,177 @@ runs:
                 } catch (paginateError) {
                   console.warn(`PR pagination lookup failed:`, paginateError.message);
                 }
-                // Deep inspection of fork PRs only: fetch the PR's full
-                // commit list and look for the target SHA. This resolves
-                // intermediate commits on a fork PR's head branch, which
-                // are not addressable via the base repo's branch tips.
-                if (prs.length < 1 && forkCandidates.length > 0) {
-                  const toInspect = forkCandidates.slice(0, maxDeepInspect);
-                  for (const pr of toInspect) {
+              }
+              // 4. Decide whether to deep-inspect commit lists to pick the
+              //    best PR among multiple candidates.
+              //
+              //    Trigger conditions:
+              //    a. We have multiple candidates from steps 1/2 — same
+              //       commit attributed to several PRs by GitHub.
+              //    b. We have a single candidate from steps 1/2 but it's a
+              //       FORK PR — newer fork PRs (rebased on top of an older
+              //       one from the same fork) often share commits with the
+              //       older PR, but GitHub's commit-to-PR index points only
+              //       at the older PR. We need to look forward at newer
+              //       fork PRs to find a longer commit list containing the
+              //       same SHA.
+              //    c. Steps 1/2 found nothing and step 3's quick pass
+              //       collected fork candidates.
+              //
+              //    The same commit can appear in multiple PRs when their
+              //    branches share history. We prefer the PR with the
+              //    LONGEST commit list containing the SHA — that PR is a
+              //    superset of the others and is the most specific / most
+              //    recent owner of the commit. Tiebreaker: highest PR
+              //    number.
+              const maxDeepInspect = 10; // hard cap to stay under GitHub's secondary rate limit
+              const baseRepoLowerForFork = repository.toLowerCase();
+              // Determine if the single candidate from steps 1/2 is a fork PR,
+              // and remember the fork owner + head branch so we can look up
+              // sibling PRs from the SAME fork branch only. We use the data
+              // already captured during steps 1/2 to avoid an extra REST
+              // round-trip (GraphQL doesn't fetch head ref though, so we may
+              // need one pulls.get to learn the branch name).
+              let singleCandidateIsFork = false;
+              let singleCandidateForkOwner = null;
+              let singleCandidateHeadRef = null;
+              if (prs.length === 1) {
+                const cached = candidatesByNumber.get(prs[0].number);
+                let headRepo = (cached && cached.headRepoFullName) || '';
+                let headRef = (cached && cached.headRef) || '';
+                // If headRef wasn't captured (GraphQL-only candidate), fetch it.
+                if (headRepo && !headRef) {
+                  try {
+                    const detail = await github.rest.pulls.get({
+                      owner, repo, pull_number: prs[0].number,
+                    });
+                    headRepo = (detail.data.head && detail.data.head.repo
+                      && detail.data.head.repo.full_name) || headRepo;
+                    headRef = (detail.data.head && detail.data.head.ref) || '';
+                  } catch (_) { /* ignore */ }
+                }
+                if (headRepo
+                  && headRepo.toLowerCase() !== baseRepoLowerForFork) {
+                  singleCandidateIsFork = true;
+                  singleCandidateForkOwner = headRepo.split('/')[0];
+                  singleCandidateHeadRef = headRef || null;
+                }
+              }
+              const needsDeepInspect = prs.length > 1
+                || singleCandidateIsFork
+                || (prs.length < 1 && forkCandidates.length > 0);
+              if (needsDeepInspect) {
+                // Build the inspection pool, carrying along the already-fetched
+                // PR objects so the listCommits stage doesn't need pulls.get.
+                // poolEntries: Array<{ number, prObj | null }>
+                let poolEntries;
+                if (prs.length >= 1) {
+                  // Start with the existing candidate(s) and ALSO look for
+                  // sibling PRs from the SAME fork branch. We filter by the
+                  // exact head ref (owner:branch) so we get only PRs whose
+                  // head branch is the one that actually contains the
+                  // commit — not every PR the fork owner has ever opened.
+                  // This keeps the API call count tiny and avoids triggering
+                  // GitHub's secondary rate limit.
+                  const existingNumbers = new Set(prs.map(p => p.number));
+                  poolEntries = prs.map(p => ({ number: p.number, prObj: null }));
+                  if (singleCandidateForkOwner && singleCandidateHeadRef) {
                     try {
-                      const commitsIterator = github.paginate.iterator(
-                        github.rest.pulls.listCommits,
-                        { owner, repo, pull_number: pr.number, per_page: 100 }
-                      );
-                      let matched = false;
-                      for await (const { data } of commitsIterator) {
-                        if (data.some(c => c.sha === sha)) {
-                          matched = true;
-                          break;
-                        }
+                      const siblings = await github.paginate(github.rest.pulls.list, {
+                        owner, repo,
+                        state: 'all',
+                        head: `${singleCandidateForkOwner}:${singleCandidateHeadRef}`,
+                        per_page: 100,
+                      });
+                      for (const pr of siblings) {
+                        if (existingNumbers.has(pr.number)) continue;
+                        poolEntries.push({ number: pr.number, prObj: pr });
+                        if (poolEntries.length >= maxDeepInspect) break;
                       }
-                      if (matched) {
-                        prs = [normalize(pr)];
-                        break;
-                      }
-                    } catch (commitsError) {
-                      console.warn(`pulls.listCommits failed for PR #${pr.number}:`, commitsError.message);
+                    } catch (siblingError) {
+                      console.warn(`Sibling fork-PR lookup failed:`, siblingError.message);
                     }
                   }
+                } else {
+                  poolEntries = forkCandidates
+                    .slice(0, maxDeepInspect)
+                    .map(p => ({ number: p.number, prObj: p }));
+                }
+                // Run listCommits SERIALLY for all pool entries. Parallel
+                // requests trigger GitHub's secondary rate limit (HTTP 403)
+                // when the pool has more than a couple of PRs. Each inspection
+                // is short-circuited by the head-SHA fast path when possible.
+                const matches = [];
+                for (const entry of poolEntries.slice(0, maxDeepInspect)) {
+                  try {
+                    let prObj = entry.prObj;
+                    if (!prObj) {
+                      const detail = await github.rest.pulls.get({
+                        owner, repo, pull_number: entry.number,
+                      });
+                      prObj = detail.data;
+                    }
+                    const headSha = prObj && prObj.head && prObj.head.sha;
+                    // Fast path: if the PR's head IS the SHA, skip listing
+                    // commits entirely and stop scanning further PRs — this
+                    // is the strongest possible match.
+                    if (headSha === sha) {
+                      matches.push({
+                        number: entry.number,
+                        normalized: normalize(prObj),
+                        totalCount: prObj.commits || 1,
+                        isHead: true,
+                        isLast: true,
+                      });
+                      break;
+                    }
+                    const commitsIterator = github.paginate.iterator(
+                      github.rest.pulls.listCommits,
+                      { owner, repo, pull_number: entry.number, per_page: 100 }
+                    );
+                    let matched = false;
+                    let totalCount = 0;
+                    let lastCommitSha = null;
+                    for await (const { data } of commitsIterator) {
+                      totalCount += data.length;
+                      if (data.length > 0) {
+                        lastCommitSha = data[data.length - 1].sha;
+                      }
+                      if (!matched && data.some(c => c.sha === sha)) {
+                        matched = true;
+                      }
+                    }
+                    if (matched) {
+                      matches.push({
+                        number: entry.number,
+                        normalized: normalize(prObj),
+                        totalCount,
+                        isHead: false,
+                        isLast: lastCommitSha === sha,
+                      });
+                    }
+                  } catch (commitsError) {
+                    console.warn(`Deep inspect failed for PR #${entry.number}:`, commitsError.message);
+                  }
+                }
+                if (matches.length > 0) {
+                  matches.sort((a, b) => {
+                    // Strongest signal: PR's current head equals the SHA.
+                    if (a.isHead !== b.isHead) return a.isHead ? -1 : 1;
+                    // Next: PR where the SHA is the last commit in its list.
+                    if (a.isLast !== b.isLast) return a.isLast ? -1 : 1;
+                    // Next: PR with the LONGEST commit list (superset wins).
+                    if (a.totalCount !== b.totalCount) return b.totalCount - a.totalCount;
+                    // Finally: highest PR number (newest wins).
+                    return b.number - a.number;
+                  });
+                  prs = [matches[0].normalized];
                 }
               }
               if (prs.length < 1) {
                 throw new Error(`No PRs found for commit ${sha}`);
               }
-              // Prefer an open PR; otherwise fall back to the most recently updated one.
-              const openPr = prs.find(pr => pr.state === 'open');
-              const selectedPr = openPr || prs.sort(
-                (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
-              )[0];
+              const selectedPr = prs[0];
               pullRequestNumber = selectedPr.number;
               console.info("Pull request number is", pullRequestNumber);
               break; // Exit loop on success
