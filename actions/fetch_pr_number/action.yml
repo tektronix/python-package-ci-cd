@@ -191,8 +191,10 @@ runs:
               //    number.
               const maxDeepInspect = 200; // cap on listCommits calls
               const baseRepoLowerForFork = repository.toLowerCase();
-              // Determine if the single candidate from steps 1/2 is a fork PR.
+              // Determine if the single candidate from steps 1/2 is a fork PR,
+              // and remember the fork owner so we can look up sibling fork PRs.
               let singleCandidateIsFork = false;
+              let singleCandidateForkOwner = null;
               if (prs.length === 1) {
                 try {
                   const detail = await github.rest.pulls.get({
@@ -203,6 +205,7 @@ runs:
                   if (headRepo
                     && headRepo.toLowerCase() !== baseRepoLowerForFork) {
                     singleCandidateIsFork = true;
+                    singleCandidateForkOwner = headRepo.split('/')[0];
                   }
                 } catch (_) { /* ignore */ }
               }
@@ -213,42 +216,30 @@ runs:
                 // Build the inspection pool.
                 let poolNumbers;
                 if (prs.length >= 1) {
-                  // Start with the existing candidate(s) and ALSO scan newer
-                  // fork PRs (higher numbers) so we can find a superset PR.
+                  // Start with the existing candidate(s) and ALSO look for
+                  // sibling PRs from the SAME fork owner that may be a
+                  // superset of the existing candidate. We query directly
+                  // by head owner instead of paginating all PRs, because
+                  // active repos have far too many same-repo PRs to scan
+                  // through looking for the fork PRs we care about.
                   const existingNumbers = new Set(prs.map(p => p.number));
                   poolNumbers = Array.from(existingNumbers);
-                  try {
-                    const iterator = github.paginate.iterator(github.rest.pulls.list, {
-                      owner, repo,
-                      state: 'all',
-                      sort: 'created',
-                      direction: 'desc',
-                      per_page: 100,
-                    });
-                    let scanned = 0;
-                    const minExisting = Math.min(...existingNumbers);
-                    outerScan: for await (const { data } of iterator) {
-                      for (const pr of data) {
-                        scanned++;
-                        if (pr.number <= minExisting) {
-                          // Older than every existing candidate; nothing
-                          // useful below this point for finding a superset.
-                          break outerScan;
-                        }
+                  if (singleCandidateForkOwner) {
+                    try {
+                      const siblings = await github.paginate(github.rest.pulls.list, {
+                        owner, repo,
+                        state: 'all',
+                        head: singleCandidateForkOwner,
+                        per_page: 100,
+                      });
+                      for (const pr of siblings) {
                         if (existingNumbers.has(pr.number)) continue;
-                        // Only consider fork PRs as additional candidates.
-                        const headRepoFullName =
-                          (pr.head && pr.head.repo && pr.head.repo.full_name) || '';
-                        if (headRepoFullName
-                          && headRepoFullName.toLowerCase() !== baseRepoLowerForFork) {
-                          poolNumbers.push(pr.number);
-                          if (poolNumbers.length >= maxDeepInspect) break outerScan;
-                        }
-                        if (scanned >= 500) break outerScan;
+                        poolNumbers.push(pr.number);
+                        if (poolNumbers.length >= maxDeepInspect) break;
                       }
+                    } catch (siblingError) {
+                      console.warn(`Sibling fork-PR lookup failed:`, siblingError.message);
                     }
-                  } catch (scanError) {
-                    console.warn(`Newer-fork-PR scan failed:`, scanError.message);
                   }
                 } else {
                   poolNumbers = forkCandidates
