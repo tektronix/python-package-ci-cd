@@ -24,6 +24,22 @@ Things to be included in the next release go here.
 
 ---
 
+## v1.9.4 (2026-05-04)
+
+### Merged Pull Requests
+
+- chore(python-deps): update dependency trove-classifiers to v2026.4.28.13 in all dependant actions ([#980](https://github.com/tektronix/python-package-ci-cd/pull/980))
+- chore(python-deps): update dependency typer to v0.25.0 in all dependant actions ([#978](https://github.com/tektronix/python-package-ci-cd/pull/978))
+- chore(python-deps): update dependency cryptography to v47 in all dependant actions ([#976](https://github.com/tektronix/python-package-ci-cd/pull/976))
+- chore(python-deps): update dependency packaging to v26.2 in all dependant actions ([#975](https://github.com/tektronix/python-package-ci-cd/pull/975))
+- fix: improve PR number resolution logic with enhanced matching criteria ([#977](https://github.com/tektronix/python-package-ci-cd/pull/977))
+
+### Changed
+
+- Bumped dependency versions.
+
+---
+
 ## v1.9.3 (2026-04-28)
 
 ### Merged Pull Requests
