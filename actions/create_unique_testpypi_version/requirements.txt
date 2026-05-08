@@ -6,7 +6,7 @@ charset-normalizer==3.4.7
 idna==3.13
 mailbits==0.2.3
 packaging==26.2
-poetry-core==2.3.2
+poetry-core==2.4.0
 pydantic==2.13.3
 pydantic-core==2.46.3
 pypi-simple==1.8.0
