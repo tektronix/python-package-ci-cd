@@ -55,7 +55,7 @@ pyproject-hooks==1.2.0
 pywin32-ctypes==0.2.3 ; sys_platform == "win32"
 pyyaml==6.0.3
 rapidfuzz==3.14.5
-requests==2.34.1
+requests==2.34.2
 requests-toolbelt==1.0.0
 rich==15.0.0
 ruyaml==0.91.0
