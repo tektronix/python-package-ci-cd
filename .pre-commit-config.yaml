@@ -40,7 +40,7 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 2a27c9fda39c7c05bc7488a10920c7700979c263  # frozen: 43.150.0
+    rev: a619ca7a48fb76413179a0df20f6b0095035f0c2  # frozen: 43.207.3
     hooks:
       - id: renovate-config-validator
   - repo: https://github.com/python-jsonschema/check-jsonschema
@@ -59,7 +59,7 @@ repos:
       - id: actionlint
         additional_dependencies: [pyflakes, shellcheck-py]
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: 0fedbbe40de438359fdf74bb0ef645ed23063999  # frozen: v4.16.2
+    rev: 2a4ac6555711923a159f74cd3a324c785ac8f145  # frozen: v4.16.3
     hooks:
       - id: commitizen
         stages: [commit-msg]
@@ -139,7 +139,7 @@ repos:
         files: ^(.*/)?(poetry\.lock|pyproject\.toml)$
         args: [--strict]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 0c7b6c989466a93942def1f84baf36ddfcd60c83  # frozen: v0.15.14
+    rev: 0671d8ab202c4ac093b78433ae5baf74f3fc7246  # frozen: v0.15.15
     hooks:
       - id: ruff-check
         args: [--fix, --exit-non-zero-on-fix]
