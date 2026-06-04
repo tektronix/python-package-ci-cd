@@ -24,6 +24,67 @@ Things to be included in the next release go here.
 
 ---
 
+## v1.9.5 (2026-06-04)
+
+### Merged Pull Requests
+
+- chore(python-deps): update dependency virtualenv to v21.4.1 in all dependant actions ([#1035](https://github.com/tektronix/python-package-ci-cd/pull/1035))
+- chore(python-deps): update dependency platformdirs to v4.10.0 in all dependant actions ([#1036](https://github.com/tektronix/python-package-ci-cd/pull/1036))
+- chore(python-deps): update dependency typer to v0.26.3 in all dependant actions ([#1041](https://github.com/tektronix/python-package-ci-cd/pull/1041))
+- chore(python-deps): update dependency idna to v3.17 in all dependant actions ([#1037](https://github.com/tektronix/python-package-ci-cd/pull/1037))
+- chore(pre-commit-deps): pre-commit autoupdate ([#982](https://github.com/tektronix/python-package-ci-cd/pull/982))
+- chore(python-deps): update dependency typer to v0.26.2 in all dependant actions ([#1033](https://github.com/tektronix/python-package-ci-cd/pull/1033))
+- chore(python-deps): update dependency typer to v0.26.1 in all dependant actions ([#1031](https://github.com/tektronix/python-package-ci-cd/pull/1031))
+- chore(python-deps): update dependency more-itertools to v11.1.0 in all dependant actions ([#1025](https://github.com/tektronix/python-package-ci-cd/pull/1025))
+- chore(python-deps): update dependency idna to v3.16 in all dependant actions ([#1021](https://github.com/tektronix/python-package-ci-cd/pull/1021))
+- chore(gh-actions-deps): update github/codeql-action action to v4.36.0 in all dependant reusable workflows ([#1024](https://github.com/tektronix/python-package-ci-cd/pull/1024))
+- chore(python-deps): update dependency click to v8.4.1 in all dependant actions ([#1022](https://github.com/tektronix/python-package-ci-cd/pull/1022))
+- chore(python-deps): update dependency trove-classifiers to v2026.5.22.10 in all dependant actions ([#1023](https://github.com/tektronix/python-package-ci-cd/pull/1023))
+- chore(python-deps): update dependency soupsieve to v2.8.4 in all dependant actions ([#1029](https://github.com/tektronix/python-package-ci-cd/pull/1029))
+- fix: add safety dependency with version pin to allow all pre-commit hooks to execute properly and prevent crashes in poetry ([#1030](https://github.com/tektronix/python-package-ci-cd/pull/1030))
+- chore(python-deps): update dependency trove-classifiers to v2026.5.20.19 in all dependant actions ([#1020](https://github.com/tektronix/python-package-ci-cd/pull/1020))
+- chore(python-deps): update dependency trove-classifiers to v2026.5.20.13 in all dependant actions ([#1019](https://github.com/tektronix/python-package-ci-cd/pull/1019))
+- chore(python-deps): update dependency certifi to v2026.5.20 in all dependant actions ([#1018](https://github.com/tektronix/python-package-ci-cd/pull/1018))
+- chore(gh-actions-deps): update codecov/codecov-action action to v6.0.1 in all dependant reusable workflows ([#1017](https://github.com/tektronix/python-package-ci-cd/pull/1017))
+- chore(python-deps): update dependency click to v8.4.0 in all dependant actions ([#1016](https://github.com/tektronix/python-package-ci-cd/pull/1016))
+- chore(python-deps): update dependency jaraco-functools to v4.5.0 in all dependant actions ([#1015](https://github.com/tektronix/python-package-ci-cd/pull/1015))
+- chore(gh-actions-deps): update github/codeql-action action to v4.35.5 in all dependant reusable workflows ([#1014](https://github.com/tektronix/python-package-ci-cd/pull/1014))
+- chore(python-deps): update dependency requests to v2.34.2 in all dependant actions ([#1013](https://github.com/tektronix/python-package-ci-cd/pull/1013))
+- chore(python-deps): update dependency requests to v2.34.1 in all dependant actions ([#1007](https://github.com/tektronix/python-package-ci-cd/pull/1007))
+- chore(gh-actions-deps): update hynek/build-and-inspect-python-package action to v2.18.0 in all dependant reusable workflows ([#1005](https://github.com/tektronix/python-package-ci-cd/pull/1005))
+- chore(python-deps): update dependency virtualenv to v21.3.3 in all dependant actions ([#1012](https://github.com/tektronix/python-package-ci-cd/pull/1012))
+- chore(python-deps): update dependency idna to v3.15 in all dependant actions ([#1010](https://github.com/tektronix/python-package-ci-cd/pull/1010))
+- chore(python-deps): update dependency virtualenv to v21.3.2 in all dependant actions ([#1009](https://github.com/tektronix/python-package-ci-cd/pull/1009))
+- chore(python-deps): update dependency pbs-installer to v2026.5.10 in all dependant actions ([#1008](https://github.com/tektronix/python-package-ci-cd/pull/1008))
+- chore(python-deps): update dependency installer to v1.0.1 in all dependant actions ([#1006](https://github.com/tektronix/python-package-ci-cd/pull/1006))
+- chore(python-deps): update dependency idna to v3.14 in all dependant actions ([#1004](https://github.com/tektronix/python-package-ci-cd/pull/1004))
+- chore(python-deps): update dependency tomlkit to v0.15.0 in all dependant actions ([#1003](https://github.com/tektronix/python-package-ci-cd/pull/1003))
+- chore(python-deps): update dependency poetry to v2.4.1 in all dependant actions ([#1002](https://github.com/tektronix/python-package-ci-cd/pull/1002))
+- chore(gh-actions-deps): update actions/dependency-review-action action to v5 in dev workflows ([#1000](https://github.com/tektronix/python-package-ci-cd/pull/1000))
+- chore(gh-actions-deps): update github/codeql-action action to v4.35.4 in all dependant reusable workflows ([#998](https://github.com/tektronix/python-package-ci-cd/pull/998))
+- chore(python-deps): update dependency pbs-installer to v2026.5.8 in all dependant actions ([#1001](https://github.com/tektronix/python-package-ci-cd/pull/1001))
+- chore(python-deps): update dependency trove-classifiers to v2026.5.7.17 in all dependant actions ([#999](https://github.com/tektronix/python-package-ci-cd/pull/999))
+- chore(python-deps): update dependency markdown-it-py to v4.2.0 in all dependant actions ([#996](https://github.com/tektronix/python-package-ci-cd/pull/996))
+- chore(python-deps): update dependency urllib3 to v2.7.0 [security] ([#994](https://github.com/tektronix/python-package-ci-cd/pull/994))
+- chore(python-deps): update pydantic dependencies in all dependant actions ([#995](https://github.com/tektronix/python-package-ci-cd/pull/995))
+- chore(python-deps): update dependency cryptography to v48 in all dependant actions ([#991](https://github.com/tektronix/python-package-ci-cd/pull/991))
+- chore(python-deps): update dependency pbs-installer to v2026.5.4 in all dependant actions ([#993](https://github.com/tektronix/python-package-ci-cd/pull/993))
+- chore(python-deps): update dependency virtualenv to v21.3.1 in all dependant actions ([#992](https://github.com/tektronix/python-package-ci-cd/pull/992))
+- chore(python-deps): update poetry dependencies in all dependant actions ([#988](https://github.com/tektronix/python-package-ci-cd/pull/988))
+- chore(python-deps): include findpython and installer in poetry dependencies grouping ([#989](https://github.com/tektronix/python-package-ci-cd/pull/989))
+- chore(gh-actions-deps): update phoenix-actions/test-reporting action to v16 in all dependant reusable workflows ([#987](https://github.com/tektronix/python-package-ci-cd/pull/987))
+- chore(python-deps): update dependency virtualenv to v21.3.0 in all dependant actions ([#979](https://github.com/tektronix/python-package-ci-cd/pull/979))
+- chore(gh-actions-deps): update github/codeql-action action to v4.35.3 in all dependant reusable workflows ([#986](https://github.com/tektronix/python-package-ci-cd/pull/986))
+- chore(gh-actions-deps): update dawidd6/action-download-artifact action to v21 in all dependant reusable workflows ([#981](https://github.com/tektronix/python-package-ci-cd/pull/981))
+- chore(python-deps): update dependency build to v1.5.0 in all dependant actions ([#983](https://github.com/tektronix/python-package-ci-cd/pull/983))
+- chore(python-deps): update dependency typer to v0.25.1 in all dependant actions ([#985](https://github.com/tektronix/python-package-ci-cd/pull/985))
+
+### Changed
+
+- Bumped dependency versions.
+
+---
+
 ## v1.9.4 (2026-05-04)
 
 ### Merged Pull Requests
