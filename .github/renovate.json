@@ -92,6 +92,7 @@
             "matchPackageNames": [
                 "certifi",
                 "trove-classifiers",
+                "pbs-installer",
                 "idna"
             ],
             "matchUpdateTypes": [
