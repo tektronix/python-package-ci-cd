@@ -15,7 +15,6 @@
             "additionalBranchPrefix": "{{#if (equals manager 'github-actions')}}gh-actions{{else}}{{categories}}{{/if}}-deps/",
             "description": "Set the branch prefix and minimum release age for all updates except the main Python version",
             "matchDepNames": [
-                "*",
                 "!python"
             ],
             "minimumReleaseAge": "5 days"
