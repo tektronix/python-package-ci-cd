@@ -8,7 +8,7 @@ mailbits==0.2.3
 packaging==26.2
 poetry-core==2.4.0
 pydantic==2.13.4
-pydantic-core==2.46.4
+pydantic-core==2.47.0
 pypi-simple==1.8.0
 requests==2.34.2
 soupsieve==2.8.4
