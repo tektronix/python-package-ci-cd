@@ -43,7 +43,7 @@ pbs-installer==2026.6.10
 pkginfo==1.12.1.2
 platformdirs==4.10.0
 poetry==2.4.1
-poetry-core==2.4.0
+poetry-core==2.4.1
 poetry-plugin-export==1.10.0
 pre-commit==4.6.0
 pycparser==3.0 ; (platform_python_implementation != "PyPy" or sys_platform == "darwin") and implementation_name != "PyPy" and (sys_platform == "linux" or sys_platform == "darwin")
