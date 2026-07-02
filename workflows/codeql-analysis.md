@@ -43,7 +43,7 @@ on:
     branches: [main]
 jobs:
   analyze:
-    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-codeql-analysis.yml@v1.9.5
+    uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-codeql-analysis.yml@v1.9.6
     with:
       languages-array: '["python", "javascript"]'
       codeql-queries: security-extended,security-and-quality

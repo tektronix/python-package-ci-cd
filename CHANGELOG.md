@@ -24,6 +24,42 @@ Things to be included in the next release go here.
 
 ---
 
+## v1.9.6 (2026-07-02)
+
+### Merged Pull Requests
+
+- chore(python-deps): update dependency pbs-installer to v2026.6.10 in all dependant actions ([#1069](https://github.com/tektronix/python-package-ci-cd/pull/1069))
+- chore(python-deps): update dependency virtualenv to v21.4.3 in all dependant actions ([#1068](https://github.com/tektronix/python-package-ci-cd/pull/1068))
+- chore(python-deps): update dependency msgpack to v1.2.0 in all dependant actions ([#1067](https://github.com/tektronix/python-package-ci-cd/pull/1067))
+- chore(gh-actions-deps): update codecov/codecov-action action to v7 in all dependant reusable workflows ([#1062](https://github.com/tektronix/python-package-ci-cd/pull/1062))
+- chore(python-deps): update dependency beautifulsoup4 to v4.15.0 in all dependant actions ([#1063](https://github.com/tektronix/python-package-ci-cd/pull/1063))
+- chore(python-deps): update dependency filelock to v3.29.3 in all dependant actions ([#1066](https://github.com/tektronix/python-package-ci-cd/pull/1066))
+- chore(python-deps): update dependency cryptography to v48.0.1 in all dependant actions ([#1065](https://github.com/tektronix/python-package-ci-cd/pull/1065))
+- chore(python-deps): update dependency distlib to v0.4.2 in all dependant actions ([#1064](https://github.com/tektronix/python-package-ci-cd/pull/1064))
+- chore(renovate): refine dependency matching to exclude Python ([#1061](https://github.com/tektronix/python-package-ci-cd/pull/1061))
+- chore(python-deps): update dependency pbs-installer to v2026.6.2 in all dependant actions ([#1059](https://github.com/tektronix/python-package-ci-cd/pull/1059))
+- chore(renovate): add pbs-installer to package name matching for updates ([#1058](https://github.com/tektronix/python-package-ci-cd/pull/1058))
+- chore(python-deps): update dependency idna to v3.18 in all dependant actions ([#1056](https://github.com/tektronix/python-package-ci-cd/pull/1056))
+- chore(python-deps): update dependency trove-classifiers to v2026.6.1.19 in all dependant actions ([#1047](https://github.com/tektronix/python-package-ci-cd/pull/1047))
+- chore(python-deps): update dependency typer to v0.26.5 in all dependant actions ([#1045](https://github.com/tektronix/python-package-ci-cd/pull/1045))
+- chore(python-deps): update dependency distlib to v0.4.1 in all dependant actions ([#1049](https://github.com/tektronix/python-package-ci-cd/pull/1049))
+- chore(gh-actions-deps): update github/codeql-action action to v4.36.2 in all dependant reusable workflows ([#1055](https://github.com/tektronix/python-package-ci-cd/pull/1055))
+- chore(python-deps): update dependency filelock to v3.29.1 in all dependant actions ([#1054](https://github.com/tektronix/python-package-ci-cd/pull/1054))
+- chore(python-deps): update dependency pyright to v1.1.410 for dev ([#1046](https://github.com/tektronix/python-package-ci-cd/pull/1046))
+- chore(gh-actions-deps): update dev workflow dependencies to v6.0.3 ([#1053](https://github.com/tektronix/python-package-ci-cd/pull/1053))
+- chore(gh-actions-deps): update github/codeql-action action to v4.36.1 in all dependant reusable workflows ([#1048](https://github.com/tektronix/python-package-ci-cd/pull/1048))
+- chore(gh-actions-deps): update actions/checkout action to v6.0.3 in all dependant reusable workflows ([#1050](https://github.com/tektronix/python-package-ci-cd/pull/1050))
+- chore(gh-actions-deps): update codecov/codecov-action action to v6.0.2 in all dependant reusable workflows ([#1052](https://github.com/tektronix/python-package-ci-cd/pull/1052))
+- chore(python-deps): update dependency virtualenv to v21.4.2 in all dependant actions ([#1044](https://github.com/tektronix/python-package-ci-cd/pull/1044))
+- chore(python-deps): update dependency dulwich to v1.2.6 in all dependant actions ([#1043](https://github.com/tektronix/python-package-ci-cd/pull/1043))
+- chore(python-deps): update dependency typer to v0.26.4 in all dependant actions ([#1042](https://github.com/tektronix/python-package-ci-cd/pull/1042))
+
+### Changed
+
+- Bumped dependency versions.
+
+---
+
 ## v1.9.5 (2026-06-04)
 
 ### Merged Pull Requests
