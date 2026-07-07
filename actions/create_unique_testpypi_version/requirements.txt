@@ -14,6 +14,6 @@ requests==2.34.2
 soupsieve==2.8.4
 tomli==2.4.1
 tomli-w==1.2.0
-typing-extensions==4.15.0
+typing-extensions==4.16.0
 typing-inspection==0.4.2
 urllib3==2.7.0

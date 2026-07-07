@@ -67,7 +67,7 @@ toml-sort==0.24.4
 tomlkit==0.15.0
 trove-classifiers==2026.6.1.19
 typer==0.26.8
-typing-extensions==4.15.0
+typing-extensions==4.16.0
 typing-inspection==0.4.2
 urllib3==2.7.0
 virtualenv==21.5.1
