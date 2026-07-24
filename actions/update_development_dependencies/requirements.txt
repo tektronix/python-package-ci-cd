@@ -39,7 +39,7 @@ more-itertools==11.1.0
 msgpack==1.2.1
 nodeenv==1.10.0
 packaging==26.2
-pbs-installer==2026.6.10
+pbs-installer==2026.7.18
 pkginfo==1.12.1.2
 platformdirs==4.10.1
 poetry==2.4.1
