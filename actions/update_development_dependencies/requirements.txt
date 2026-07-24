@@ -62,7 +62,7 @@ ruyaml==0.91.0
 secretstorage==3.5.0 ; sys_platform == "linux"
 setuptools==83.0.0
 shellingham==1.5.4
-soupsieve==2.8.4
+soupsieve==2.9
 toml-sort==0.24.4
 tomlkit==0.15.1
 trove-classifiers==2026.6.1.19
