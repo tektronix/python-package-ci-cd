@@ -219,6 +219,7 @@ flake8-pytest-style = {mark-parentheses = false}
 flake8-quotes = {docstring-quotes = "double"}
 ignore = [
   "COM812",  # Trailing comma missing (handled by the formatter)
+  "CPY001",  # Missing copyright notice at top of file (allowed)
   "FIX002",  # Line contains TO DO, consider resolving the issue
   "INP001",  # File is part of an implicit namespace package. Add an `__init__.py`.
   "ISC001",  # single-line-implicit-string-concatenation (handled by formatter)
