@@ -13,6 +13,8 @@ jobs:
     uses: ./.github/workflows/_reusable-sbom-scan.yml
     with:
       pre-install-python-packages: setuptools wheel
+      production-dependency-groups: >-
+        actions-create_unique_testpypi_version,actions-find_unreleased_changelog_items,actions-update_development_dependencies
     permissions:
       security-events: write
       contents: write

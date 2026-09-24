@@ -18,9 +18,22 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Added
+
+- Opt-in `production-dependency-groups` input on the `sbom-scan` reusable workflow. When set to a
+    comma-separated list of Poetry dependency groups, only vulnerabilities in those groups fail the
+    build and appear in the uploaded SARIF; vulnerabilities found only in other groups are reported as
+    workflow warnings. When empty (the default), every vulnerability fails the build as before.
+
 ### Changed
 
 - Bumped dependency versions.
+
+### Security
+
+- Avoid script injection in the `sbom-scan` reusable workflow by passing
+    `pre-install-python-packages` through an environment variable and expanding it as a quoted bash
+    array when calling `pip install`.
 
 ---
 

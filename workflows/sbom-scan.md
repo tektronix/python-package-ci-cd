@@ -7,6 +7,12 @@ uses the default version of Python available on the runner, and will use the lat
 version of [`poetry`](https://pypi.org/project/poetry/) to generate the lock file for the calling
 repository's Python package.
 
+By default, every vulnerability found in the SBOM fails the build and is uploaded as SARIF (to the
+workflow artifact and the GitHub Security tab). Callers can opt in to treat only selected Poetry
+dependency groups as production: vulnerabilities in those groups still fail the build and appear in
+SARIF, while vulnerabilities found only in other (development) groups are reported as workflow
+warnings and are omitted from the uploaded SARIF.
+
 > [!IMPORTANT]
 > In order to use this workflow, the Python package must be using the
 > [Poetry package manager](https://python-poetry.org/).
@@ -40,9 +46,10 @@ repository's Python package.
 
 ## Inputs
 
-| Input variable                | Necessity | Description                                                                                                                | Default |
-| ----------------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `pre-install-python-packages` | optional  | Pre-install the specified Python packages before creating the SBOM (this string will be directly passed to `pip install`). | ''      |
+| Input variable                 | Necessity | Description                                                                                                                                                                                                                                                                                            | Default |
+| ------------------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `pre-install-python-packages`  | optional  | Pre-install the specified Python packages before creating the SBOM (this string will be directly passed to `pip install`).                                                                                                                                                                             | ''      |
+| `production-dependency-groups` | optional  | Comma-separated list of Poetry dependency groups treated as production. When set, only vulnerabilities in these groups fail the build and appear in the uploaded SARIF; vulnerabilities found only in other groups are reported as workflow warnings. When empty, every vulnerability fails the build. | ''      |
 
 ## Example
 
@@ -58,6 +65,8 @@ on:
 jobs:
   sbom-scan:
     uses: tektronix/python-package-ci-cd/.github/workflows/_reusable-sbom-scan.yml@v1.9.6
+    with:
+      production-dependency-groups: main
     permissions:
       security-events: write
       contents: write
