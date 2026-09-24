@@ -9,6 +9,16 @@ on:
         required: false
         type: string
         default: ''
+      production-dependency-groups:
+        description: >-
+          Comma-separated list of Poetry dependency groups treated as production.
+          When set, only vulnerabilities in these groups fail the build and appear
+          in the uploaded SARIF; vulnerabilities found only in other groups are
+          reported as workflow warnings. When empty (default), every vulnerability
+          fails the build.
+        required: false
+        type: string
+        default: ''
 permissions:
   security-events: write
   contents: write
@@ -23,8 +33,14 @@ jobs:
         with:
           python-version-file: pyproject.toml
       - name: Create lockfile and install dependencies
+        env:
+          PRE_INSTALL_PACKAGES: ${{ inputs.pre-install-python-packages }}
         run: |
-          python -m pip install --upgrade poetry ${{ inputs.pre-install-python-packages }}
+          extra=()
+          if [ -n "${PRE_INSTALL_PACKAGES}" ]; then
+            read -r -a extra <<< "${PRE_INSTALL_PACKAGES}"
+          fi
+          python -m pip install --upgrade poetry poetry-plugin-export "${extra[@]}"
           python -m poetry sync
       - name: Create SBOM
         uses: anchore/sbom-action@3ad7283483fc7af8ff2b4ea19663c2d5ca935e26 # v0.24.2
@@ -35,20 +51,115 @@ jobs:
         if: ${{ !(github.event.pull_request.head.repo.fork || github.event.workflow_call.pull_request.head.repo.fork) && !contains(fromJSON('["dependabot[bot]", "renovate[bot]"]'), github.actor) }}
         with:
           subject-path: ${{ github.event.repository.name }}-sbom.spdx.json
-      - name: Scan SBOM
-        uses: anchore/scan-action@8964e60c6fabdb85fdbbbfd9834d8f19c97a3086 # v7.4.1
-        id: scan
+      - name: Export production dependencies
+        if: ${{ inputs.production-dependency-groups != '' }}
+        env:
+          PRODUCTION_GROUPS: ${{ inputs.production-dependency-groups }}
+        run: |
+          mkdir -p .sbom-production
+          python -m poetry export --only "${PRODUCTION_GROUPS}" --without-hashes -f requirements.txt -o .sbom-production/requirements.txt
+      - name: Create production SBOM
+        if: ${{ inputs.production-dependency-groups != '' }}
+        uses: anchore/sbom-action@3ad7283483fc7af8ff2b4ea19663c2d5ca935e26 # v0.24.2
         with:
-          sbom: ${{ github.event.repository.name }}-sbom.spdx.json
-          fail-build: true
-          severity-cutoff: low
-      - name: Scan SBOM (print results to console)
-        if: ${{ always() && contains(fromJSON('["success", "failure"]'), steps.scan.outcome) }}
+          path: .sbom-production
+          format: spdx-json
+          output-file: ${{ github.event.repository.name }}-production-sbom.spdx.json
+      - name: Scan full SBOM (print results to console)
         uses: anchore/scan-action@8964e60c6fabdb85fdbbbfd9834d8f19c97a3086 # v7.4.1
         with:
           output-format: table
           sbom: ${{ github.event.repository.name }}-sbom.spdx.json
           fail-build: false
+          severity-cutoff: low
+      - name: Scan full SBOM (JSON)
+        if: ${{ inputs.production-dependency-groups != '' }}
+        uses: anchore/scan-action@8964e60c6fabdb85fdbbbfd9834d8f19c97a3086 # v7.4.1
+        id: scan-all-json
+        with:
+          output-format: json
+          output-file: full-sbom-scan.json
+          sbom: ${{ github.event.repository.name }}-sbom.spdx.json
+          fail-build: false
+          severity-cutoff: low
+      - name: Scan production SBOM (print results to console)
+        if: ${{ inputs.production-dependency-groups != '' }}
+        uses: anchore/scan-action@8964e60c6fabdb85fdbbbfd9834d8f19c97a3086 # v7.4.1
+        with:
+          output-format: table
+          sbom: ${{ github.event.repository.name }}-production-sbom.spdx.json
+          fail-build: false
+          severity-cutoff: low
+      - name: Scan production SBOM (JSON)
+        if: ${{ inputs.production-dependency-groups != '' }}
+        uses: anchore/scan-action@8964e60c6fabdb85fdbbbfd9834d8f19c97a3086 # v7.4.1
+        id: scan-production-json
+        with:
+          output-format: json
+          output-file: production-sbom-scan.json
+          sbom: ${{ github.event.repository.name }}-production-sbom.spdx.json
+          fail-build: false
+          severity-cutoff: low
+      - name: Report development-only vulnerabilities as warnings
+        if: ${{ inputs.production-dependency-groups != '' }}
+        env:
+          FULL_JSON: ${{ steps.scan-all-json.outputs.json }}
+          PROD_JSON: ${{ steps.scan-production-json.outputs.json }}
+        run: |
+          # Key: vulnerability.id|normalized-package-name|version (PEP 503-style name).
+          match_key='(.vulnerability.id) + "|" + ((.artifact.name // "") | ascii_downcase | gsub("[_.]"; "-")) + "|" + (.artifact.version // "")'
+          jq -r "[.matches[]? | (${match_key})] | unique | .[]" "${PROD_JSON}" > prod-keys.txt
+          {
+            echo '## SBOM vulnerability summary'
+            echo
+            echo '### Production dependency vulnerabilities (fail the build)'
+            echo
+            echo '| ID | Severity | Package | Version |'
+            echo '| --- | --- | --- | --- |'
+            jq -r '
+              .matches[]? |
+              "| \(.vulnerability.id) | \(.vulnerability.severity // "Unknown") | \(.artifact.name) | \(.artifact.version) |"
+            ' "${PROD_JSON}"
+            echo
+            echo '### Development-only dependency vulnerabilities (warnings)'
+            echo
+            echo '| ID | Severity | Package | Version |'
+            echo '| --- | --- | --- | --- |'
+          } >> "${GITHUB_STEP_SUMMARY}"
+          jq -r '
+            .matches[]? |
+            "::error title=Production dependency vulnerability::\(.vulnerability.id) \(.vulnerability.severity // "Unknown") in \(.artifact.name)@\(.artifact.version)"
+          ' "${PROD_JSON}"
+
+          # Emit table rows and ::warning:: annotations for matches only in the full scan.
+          jq -r --rawfile prod_keys prod-keys.txt '
+            ($prod_keys | split("\n") | map(select(length > 0)) | map({key: ., value: true}) | from_entries) as $prod |
+            .matches[]? |
+            (
+              (.vulnerability.id) + "|" +
+              ((.artifact.name // "") | ascii_downcase | gsub("[_.]"; "-")) + "|" +
+              (.artifact.version // "")
+            ) as $key |
+            select(($prod[$key] | not)) |
+            "| \(.vulnerability.id) | \(.vulnerability.severity // "Unknown") | \(.artifact.name) | \(.artifact.version) |"
+          ' "${FULL_JSON}" >> "${GITHUB_STEP_SUMMARY}"
+          jq -r --rawfile prod_keys prod-keys.txt '
+            ($prod_keys | split("\n") | map(select(length > 0)) | map({key: ., value: true}) | from_entries) as $prod |
+            .matches[]? |
+            (
+              (.vulnerability.id) + "|" +
+              ((.artifact.name // "") | ascii_downcase | gsub("[_.]"; "-")) + "|" +
+              (.artifact.version // "")
+            ) as $key |
+            select(($prod[$key] | not)) |
+            "::warning title=Dev dependency vulnerability::\(.vulnerability.id) \(.vulnerability.severity // "Unknown") in \(.artifact.name)@\(.artifact.version)"
+          ' "${FULL_JSON}"
+      - name: Scan SBOM
+        uses: anchore/scan-action@8964e60c6fabdb85fdbbbfd9834d8f19c97a3086 # v7.4.1
+        id: scan
+        with:
+          sbom: ${{ inputs.production-dependency-groups != '' && format('{0}-production-sbom.spdx.json', github.event.repository.name) || format('{0}-sbom.spdx.json', github.event.repository.name) }}
+          fail-build: true
           severity-cutoff: low
       - name: Upload SBOM scan SARIF report as a workflow artifact
         if: ${{ always() && contains(fromJSON('["success", "failure"]'), steps.scan.outcome) }}
