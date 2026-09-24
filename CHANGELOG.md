@@ -32,8 +32,8 @@ Things to be included in the next release go here.
 ### Security
 
 - Avoid script injection in the `sbom-scan` reusable workflow by passing
-  `pre-install-python-packages` through an environment variable and expanding it as a quoted bash
-  array when calling `pip install`.
+    `pre-install-python-packages` through an environment variable and expanding it as a quoted bash
+    array when calling `pip install`.
 
 ---
 
