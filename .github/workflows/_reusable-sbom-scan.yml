@@ -66,7 +66,7 @@ jobs:
           format: spdx-json
           output-file: ${{ github.event.repository.name }}-production-sbom.spdx.json
       - name: Scan full SBOM (print results to console)
-        uses: anchore/scan-action@8964e60c6fabdb85fdbbbfd9834d8f19c97a3086 # v7.4.1
+        uses: anchore/scan-action@27805bf3b4e84b4a5c980df22ed233c00390a439 # v7.4.2
         with:
           output-format: table
           sbom: ${{ github.event.repository.name }}-sbom.spdx.json
@@ -74,7 +74,7 @@ jobs:
           severity-cutoff: low
       - name: Scan full SBOM (JSON)
         if: ${{ inputs.production-dependency-groups != '' }}
-        uses: anchore/scan-action@8964e60c6fabdb85fdbbbfd9834d8f19c97a3086 # v7.4.1
+        uses: anchore/scan-action@27805bf3b4e84b4a5c980df22ed233c00390a439 # v7.4.2
         id: scan-all-json
         with:
           output-format: json
@@ -84,7 +84,7 @@ jobs:
           severity-cutoff: low
       - name: Scan production SBOM (print results to console)
         if: ${{ inputs.production-dependency-groups != '' }}
-        uses: anchore/scan-action@8964e60c6fabdb85fdbbbfd9834d8f19c97a3086 # v7.4.1
+        uses: anchore/scan-action@27805bf3b4e84b4a5c980df22ed233c00390a439 # v7.4.2
         with:
           output-format: table
           sbom: ${{ github.event.repository.name }}-production-sbom.spdx.json
@@ -92,7 +92,7 @@ jobs:
           severity-cutoff: low
       - name: Scan production SBOM (JSON)
         if: ${{ inputs.production-dependency-groups != '' }}
-        uses: anchore/scan-action@8964e60c6fabdb85fdbbbfd9834d8f19c97a3086 # v7.4.1
+        uses: anchore/scan-action@27805bf3b4e84b4a5c980df22ed233c00390a439 # v7.4.2
         id: scan-production-json
         with:
           output-format: json
@@ -155,7 +155,7 @@ jobs:
             "::warning title=Dev dependency vulnerability::\(.vulnerability.id) \(.vulnerability.severity // "Unknown") in \(.artifact.name)@\(.artifact.version)"
           ' "${FULL_JSON}"
       - name: Scan SBOM
-        uses: anchore/scan-action@8964e60c6fabdb85fdbbbfd9834d8f19c97a3086 # v7.4.1
+        uses: anchore/scan-action@27805bf3b4e84b4a5c980df22ed233c00390a439 # v7.4.2
         id: scan
         with:
           sbom: ${{ inputs.production-dependency-groups != '' && format('{0}-production-sbom.spdx.json', github.event.repository.name) || format('{0}-sbom.spdx.json', github.event.repository.name) }}
