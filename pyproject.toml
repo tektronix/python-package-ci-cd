@@ -37,7 +37,7 @@ package-mode = false
 version = "1.10.0"
 
 [tool.poetry.group.actions-create_unique_testpypi_version.dependencies]
-poetry-core = "2.4.0"
+poetry-core = "2.4.1"
 pypi-simple = "1.8.0"
 tomli = "2.4.1"
 tomli-w = "1.2.0"
@@ -45,7 +45,7 @@ tomli-w = "1.2.0"
 [tool.poetry.group.actions-find_unreleased_changelog_items.dependencies]
 
 [tool.poetry.group.actions-update_development_dependencies.dependencies]
-poetry-plugin-export = "1.10.0"
+poetry-plugin-export = "1.10.1"
 pre-commit = "4.6.2"
 pypi-simple = "1.8.0"
 toml-sort = "0.24.4"
