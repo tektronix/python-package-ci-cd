@@ -65,7 +65,7 @@ shellingham==1.5.4
 soupsieve==2.9.2
 toml-sort==0.25.0
 tomlkit==0.15.1
-trove-classifiers==2026.6.1.19
+trove-classifiers==2026.9.21.13
 typer==0.27.2
 typing-extensions==4.16.0
 typing-inspection==0.4.4
