@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Download and Extract Artifacts
-        uses: dawidd6/action-download-artifact@634d83b91986fcec9be314054943fa5c976aeb0e  # v25
+        uses: dawidd6/action-download-artifact@27e4ae67c24b67d3b54bc6d6a45475be1e28031b  # v26
         with:
           run_id: ${{ github.event.workflow_run.id }}
           name: breaking_changes
