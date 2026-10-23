@@ -64,7 +64,7 @@ setuptools==84.0.0
 shellingham==1.5.4
 soupsieve==2.10
 toml-sort==0.25.0
-tomlkit==0.15.1
+tomlkit==0.15.2
 trove-classifiers==2026.9.21.13
 typer==0.27.2
 typing-extensions==4.16.0
