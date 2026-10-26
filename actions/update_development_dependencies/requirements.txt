@@ -35,7 +35,7 @@ mailbits==0.2.3
 maison==2.0.2
 markdown-it-py==4.2.0
 mdurl==0.1.2
-more-itertools==11.1.0
+more-itertools==11.2.1
 msgpack==1.2.3
 nodeenv==1.11.0
 packaging==26.3
