@@ -9,7 +9,7 @@ ci:
     - pylint
     - pyright
     - poetry-lock
-    - poetry-audit
+    - osv-scanner
     - poetry-check
     - renovate-config-validator  # the LTS version of node is too large for pre-commit.ci
 repos:
@@ -123,16 +123,6 @@ repos:
         pass_filenames: false
         always_run: true
         files: ^(.*/)?(poetry\.lock|pyproject\.toml)$
-      - id: poetry-audit
-        name: poetry-audit
-        entry: poetry audit
-        language: system
-        pass_filenames: false
-        files: ^(.*/)?(poetry\.lock|pyproject\.toml)$
-        always_run: true
-        args:
-          - --json
-          - --ignore-code=CVE-2026-81726  # nltk is a transitive dependency
       - id: poetry-check
         name: poetry-check
         entry: poetry check
@@ -140,6 +130,11 @@ repos:
         pass_filenames: false
         files: ^(.*/)?(poetry\.lock|pyproject\.toml)$
         args: [--strict]
+  - repo: https://github.com/google/osv-scanner
+    rev: bfe2f84abd2f09fe0b83ba7f6dad40d296762f40  # frozen: v2.7.0
+    hooks:
+      - id: osv-scanner
+        args: [scan, source, --lockfile=poetry.lock]
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: 1f1e8bf348ff38fc88619a38d3ca4d9c56abea49  # frozen: v0.16.5
     hooks:
