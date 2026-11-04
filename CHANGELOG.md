@@ -24,6 +24,45 @@ Things to be included in the next release go here.
 
 ---
 
+## v1.10.2 (2026-11-04)
+
+### Merged Pull Requests
+
+- chore(python-deps): update dependency filelock to v4.2.1 [security] ([#1273](https://github.com/tektronix/python-package-ci-cd/pull/1273))
+- chore(gh-actions-deps): update github/codeql-action action to v4.39.0 in all dependant reusable workflows ([#1264](https://github.com/tektronix/python-package-ci-cd/pull/1264))
+- chore(python-deps): update dependency pylint to v4.1.3 for dev ([#1248](https://github.com/tektronix/python-package-ci-cd/pull/1248))
+- chore(gh-actions-deps): update dawidd6/action-download-artifact action to v27 in all dependant reusable workflows ([#1246](https://github.com/tektronix/python-package-ci-cd/pull/1246))
+- chore(python-deps): update dependency virtualenv to v21.14.13 [security] ([#1271](https://github.com/tektronix/python-package-ci-cd/pull/1271))
+- chore(python-deps): update dependency pbs-installer to v2026.10.13 in all dependant actions ([#1270](https://github.com/tektronix/python-package-ci-cd/pull/1270))
+- chore(python-deps): update dependency typer to v0.27.3 in all dependant actions ([#1262](https://github.com/tektronix/python-package-ci-cd/pull/1262))
+- chore(python-deps): update dependency virtualenv to v21.14.11 in all dependant actions ([#1268](https://github.com/tektronix/python-package-ci-cd/pull/1268))
+- chore(python-deps): update dependency virtualenv to v21.14.10 in all dependant actions ([#1267](https://github.com/tektronix/python-package-ci-cd/pull/1267))
+- chore(gh-actions-deps): update actions/setup-node action to v7.1.0 in all dependant reusable workflows ([#1263](https://github.com/tektronix/python-package-ci-cd/pull/1263))
+- chore(python-deps): update dependency virtualenv to v21.14.9 [security] ([#1259](https://github.com/tektronix/python-package-ci-cd/pull/1259))
+- chore(python-deps): update dependency tomlkit to v0.15.2 in all dependant actions ([#1261](https://github.com/tektronix/python-package-ci-cd/pull/1261))
+- chore(python-deps): update dependency pkginfo to v1.13.3 in all dependant actions ([#1260](https://github.com/tektronix/python-package-ci-cd/pull/1260))
+- chore(python-deps): update dependency cryptography to v50.0.2 in all dependant actions ([#1256](https://github.com/tektronix/python-package-ci-cd/pull/1256))
+- chore(python-deps): update dependency pbs-installer to v2026.9.29 in all dependant actions ([#1247](https://github.com/tektronix/python-package-ci-cd/pull/1247))
+- chore(python-deps): update dependency msgpack to v1.2.3 in all dependant actions ([#1244](https://github.com/tektronix/python-package-ci-cd/pull/1244))
+- chore(python-deps): update dependency dulwich to v1.2.17 in all dependant actions ([#1258](https://github.com/tektronix/python-package-ci-cd/pull/1258))
+- chore(python-deps): update dependency distlib to v0.4.4 in all dependant actions ([#1257](https://github.com/tektronix/python-package-ci-cd/pull/1257))
+- chore(python-deps): update dependency pylint to v4.0.10 for dev ([#1245](https://github.com/tektronix/python-package-ci-cd/pull/1245))
+- chore(gh-actions-deps): update github/codeql-action action to v4.38.3 in all dependant reusable workflows ([#1254](https://github.com/tektronix/python-package-ci-cd/pull/1254))
+- chore(python-deps): update dependency charset-normalizer to v3.5.2 in all dependant actions ([#1255](https://github.com/tektronix/python-package-ci-cd/pull/1255))
+- chore(python-deps): update dependency certifi to v2026.10.19 [security] ([#1253](https://github.com/tektronix/python-package-ci-cd/pull/1253))
+- chore(gh-actions-deps): update anchore/sbom-action action to v0.24.3 in all dependant reusable workflows ([#1252](https://github.com/tektronix/python-package-ci-cd/pull/1252))
+- chore(gh-actions-deps): update actions/upload-artifact action to v7.0.2 in all dependant reusable workflows ([#1251](https://github.com/tektronix/python-package-ci-cd/pull/1251))
+- chore(python-deps): update dependency filelock to v4.0.5 in all dependant actions ([#1241](https://github.com/tektronix/python-package-ci-cd/pull/1241))
+- chore(gh-actions-deps): update actions/download-artifact action to v8.0.2 in all dependant reusable workflows ([#1250](https://github.com/tektronix/python-package-ci-cd/pull/1250))
+- chore(python-deps): update dependency platformdirs to v4.12.1 in all dependant actions ([#1242](https://github.com/tektronix/python-package-ci-cd/pull/1242))
+- chore(pre-commit): update args for linting to ignore CVE-2026-81726 for nltk transitive dependency ([#1249](https://github.com/tektronix/python-package-ci-cd/pull/1249))
+
+### Changed
+
+- Bumped dependency versions.
+
+---
+
 ## v1.10.1 (2026-10-05)
 
 ### Merged Pull Requests
