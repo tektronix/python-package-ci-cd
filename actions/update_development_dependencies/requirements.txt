@@ -68,7 +68,7 @@ tomlkit==0.15.2
 trove-classifiers==2026.9.21.13
 typer==0.27.3
 typing-extensions==4.16.0
-typing-inspection==0.4.4
+typing-inspection==0.4.5
 urllib3==2.8.0
 virtualenv==21.15.5
 win32-setctime==1.2.1 ; sys_platform == "win32"
