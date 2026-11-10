@@ -15,7 +15,7 @@ crashtest==0.4.1
 cryptography==50.0.2 ; sys_platform == "linux"
 distlib==0.4.4
 distro==1.9.0
-dulwich==1.2.20
+dulwich==1.2.21
 fastjsonschema==2.22.3
 filelock==4.2.7
 findpython==0.8.0
