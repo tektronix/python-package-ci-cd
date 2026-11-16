@@ -30,7 +30,7 @@ jaraco-context==6.1.2
 jaraco-functools==4.6.0
 jeepney==0.9.0 ; sys_platform == "linux"
 keyring==25.7.0
-loguru==0.7.3
+loguru==0.8.0
 mailbits==0.2.3
 maison==2.0.2
 markdown-it-py==4.2.0
