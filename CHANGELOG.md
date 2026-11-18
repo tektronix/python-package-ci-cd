@@ -21,6 +21,9 @@ Things to be included in the next release go here.
 ### Changed
 
 - Bumped dependency versions.
+- The production SBOM created by the `sbom-scan` reusable workflow is now uploaded as a workflow
+    artifact and attached to releases as `<repository-name>-production-sbom.spdx.json` instead of
+    `<repository-name>-<job-id>-2.spdx.json`.
 
 ---
 

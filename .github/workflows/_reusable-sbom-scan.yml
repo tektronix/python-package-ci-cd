@@ -65,6 +65,7 @@ jobs:
           path: .sbom-production
           format: spdx-json
           output-file: ${{ github.event.repository.name }}-production-sbom.spdx.json
+          artifact-name: ${{ github.event.repository.name }}-production-sbom.spdx.json
       - name: Scan full SBOM (print results to console)
         uses: anchore/scan-action@27805bf3b4e84b4a5c980df22ed233c00390a439 # v7.4.2
         with:
