@@ -73,6 +73,15 @@ commands =
 | `node-version`   | required  | The version of Node.js to install.                                                                                                                       |                          |
 | `python-version` | required  | The version of Python to install. It can also be the string 'pyproject.toml', indicating to use the defined Python version from the pyproject.toml file. |                          |
 | `tox-env-array`  | optional  | A valid JSON array of tox environments to run.                                                                                                           | `'["docs", "doctests"]'` |
+| `use-tox-uv`     | optional  | A boolean indicating if the [`tox-uv`](https://github.com/tox-dev/tox-uv) plugin should be installed alongside tox. See the note below.                  | `false`                  |
+
+> [!NOTE]
+> When `use-tox-uv` is `true`, tox creates its virtual environments with
+> [`tox-uv`](https://github.com/tox-dev/tox-uv), and those environments don't include `pip`. If
+> your tox configuration overrides `install_command` with a command that calls `pip` (for example
+> `python -I -m pip install {opts} {packages}`), tox will fail with `No module named pip`. Remove
+> the override so tox-uv can install packages with uv, or set `uv_seed = true` in your tox
+> configuration to add `pip` to the environments.
 
 ## Example
 
@@ -94,6 +103,7 @@ jobs:
       node-version: 20  # required
       python-version: '3.11'  # required
       tox-env-array: '["docs", "doctests"]'  # optional
+      use-tox-uv: true  # optional
 ```
 
 [workflow-file]: ../.github/workflows/_reusable-test-docs.yml

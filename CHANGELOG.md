@@ -18,6 +18,10 @@ Valid subsections within a version are:
 
 Things to be included in the next release go here.
 
+### Added
+
+- Added an optional `use-tox-uv` input to the `_reusable-test-code.yml` and `_reusable-test-docs.yml` workflows that installs [`tox-uv`](https://github.com/tox-dev/tox-uv) alongside tox, and documented the caveat for tox configurations that override `install_command`.
+
 ### Changed
 
 - Bumped dependency versions.
@@ -26,6 +30,7 @@ Things to be included in the next release go here.
     `<repository-name>-create-and-scan-sbom.spdx.json`) and
     `<repository-name>-production-sbom.spdx.json` (production SBOM, previously
     `<repository-name>-create-and-scan-sbom-2.spdx.json`).
+- Removed this repository's tox `install_command` override, which isn't needed and doesn't work in environments created by `tox-uv`.
 
 ---
 

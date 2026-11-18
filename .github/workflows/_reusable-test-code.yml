@@ -33,6 +33,13 @@ on:
         required: false
         default: '[]'
         type: string
+      use-tox-uv:
+        description: A boolean indicating if the tox-uv plugin should be installed
+          alongside tox, so that tox uses uv to create virtual environments and install
+          packages.
+        required: false
+        default: false
+        type: boolean
     secrets:
       codecov-token:
         description: The token to use to upload coverage results to Codecov. Only
@@ -69,7 +76,7 @@ jobs:
           python-version-file: ${{ matrix.python-version }}
           check-latest: true
       - name: Install dependencies
-        run: python -m pip install tox tox-gh-actions
+        run: python -m pip install tox tox-gh-actions${{ inputs.use-tox-uv && ' tox-uv' || '' }}
       - name: Set up pre-commit cache
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
@@ -113,7 +120,7 @@ jobs:
         with:
           python-version-file: pyproject.toml
       - name: Install tox
-        run: python -m pip install tox
+        run: python -m pip install tox${{ inputs.use-tox-uv && ' tox-uv' || '' }}
       - name: Run tox
         id: run-tox
         run: tox -ve tests
