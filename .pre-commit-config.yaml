@@ -40,14 +40,16 @@ repos:
       - id: remove-tabs
       - id: forbid-tabs
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 66aa87b54ea1eb8d84f613942b4233db5f6ac749  # frozen: 44.52.1
+    rev: 1778698dee4d96c53b85cd148c625cfd0ca015ba  # frozen: 44.252.6
     hooks:
       - id: renovate-config-validator
   - repo: https://github.com/python-jsonschema/check-jsonschema
     rev: c4654a7e007c9619a5eb63c39a456572a0fa1851  # frozen: 0.38.0
     hooks:
       - id: check-dependabot
-      - id: check-renovate
+      # TODO: re-enable once check-jsonschema vendors a Renovate schema that accepts
+      #  `dependencyDashboard` as an object (https://github.com/renovatebot/renovate/pull/47732)
+      # - id: check-renovate
       - id: check-github-actions
         files: action\.(yml|yaml)
       - id: check-github-workflows
