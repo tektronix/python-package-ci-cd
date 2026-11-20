@@ -17,6 +17,13 @@ on:
         required: false
         default: '["docs", "doctests"]'
         type: string
+      use-tox-uv:
+        description: A boolean indicating if the tox-uv plugin should be installed
+          alongside tox, so that tox uses uv to create virtual environments and install
+          packages.
+        required: false
+        default: false
+        type: boolean
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }} (Reusable)
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
@@ -49,7 +56,7 @@ jobs:
           python-version-file: ${{ inputs.python-version }}
           check-latest: true
       - name: Install tox
-        run: python -m pip install tox
+        run: python -m pip install tox${{ inputs.use-tox-uv && ' tox-uv' || '' }}
       - name: Test
         run: tox -ve ${{ matrix.tox-env }}
       - uses: vimtor/action-zip@5407800dfb2b1b37d48df912330cb22f4ab6f422  # v1.3

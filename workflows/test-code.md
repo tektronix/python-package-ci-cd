@@ -113,6 +113,15 @@ commands_pre =
 | `operating-systems-array` | optional  | A valid JSON array of operating system names to run tests on.                                                                                                                                                                                   | `'["ubuntu", "windows", "macos"]'` |
 | `upload-to-codecov`       | optional  | A boolean indicating if coverage results should be uploaded to Codecov.                                                                                                                                                                         | `false`                            |
 | `enable-retry-os-array`   | optional  | A valid JSON array of operating system names where retries should be allowed. This only applies to the 'test-general' job matrix, and if an OS is provided that OS will receive 3 total attempts to successfully execute the 'tox run' command. | `'[]'`                             |
+| `use-tox-uv`              | optional  | A boolean indicating if the [`tox-uv`](https://github.com/tox-dev/tox-uv) plugin should be installed alongside tox, so that tox uses uv to create virtual environments and install packages. See the note below.                                | `false`                            |
+
+> [!NOTE]
+> When `use-tox-uv` is `true`, tox creates its virtual environments with
+> [`tox-uv`](https://github.com/tox-dev/tox-uv), and those environments don't include `pip`. If
+> your tox configuration overrides `install_command` with a command that calls `pip` (for example
+> `python -I -m pip install {opts} {packages}`), tox will fail with `No module named pip`. Remove
+> the override so tox-uv can install packages with uv, or set `uv_seed = true` in your tox
+> configuration to add `pip` to the environments.
 
 ## Secrets
 
@@ -142,6 +151,7 @@ jobs:
       python-versions-array: '["3.9", "3.10", "3.11", "3.12"]'  # required
       upload-to-codecov: true  # optional
       enable-retry-os-array: '["macos"]'  # optional
+      use-tox-uv: true  # optional
     secrets:
       codecov-token: ${{ secrets.CODECOV_TOKEN }}  # optional
 ```
