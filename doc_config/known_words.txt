@@ -42,6 +42,7 @@ tektronix
 testpypi
 toml
 update_development_dependencies
+uv
 vimtor
 white_check_mark
 www

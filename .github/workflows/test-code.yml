@@ -19,5 +19,6 @@ jobs:
       python-versions-array: '["pyproject.toml"]'
       upload-to-codecov: true
       enable-retry-os-array: '["macos"]'
+      use-tox-uv: true
     secrets:
       codecov-token: ${{ secrets.CODECOV_TOKEN }}
